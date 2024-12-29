@@ -20,7 +20,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fml.InterModComms;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.function.Function;
 
@@ -65,9 +64,7 @@ public class TOPCompat implements Function<ITheOneProbe, Void> {
                     var biomes = crop.getRequiredBiomes();
                     if (!biomes.isEmpty()) {
                         var biome = level.getBiome(pos);
-                        var id = ForgeRegistries.BIOMES.getKey(biome.value());
-
-                        if (!biomes.contains(id)) {
+                        if (biomes.stream().noneMatch(biome::is)) {
                             info.text(ModTooltips.INVALID_BIOME.color(ChatFormatting.RED).build());
                         }
                     }

@@ -22,7 +22,6 @@ import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -152,8 +151,7 @@ public class MysticalCropBlock extends CropBlock implements ICropProvider {
 
         if (!biomes.isEmpty()) {
             var biome = level.getBiome(pos);
-            var biomeId = ForgeRegistries.BIOMES.getKey(biome.value());
-            return biomes.contains(biomeId);
+            return biomes.stream().anyMatch(biome::is);
         }
 
         return true;
