@@ -21,7 +21,6 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -138,11 +137,11 @@ public class MysticalCropBlock extends CropBlock implements ICropProvider {
         return this.crop.getEssenceItem();
     }
 
-    private boolean canGrow(Level world, BlockPos pos) {
+    private boolean canGrow(Level level, BlockPos pos) {
         var crux = this.crop.getCruxBlock();
 
         if (crux != null) {
-            var block = world.getBlockState(pos.below(2)).getBlock();
+            var block = level.getBlockState(pos.below(2)).getBlock();
             if (block != crux)
                 return false;
         }
@@ -150,9 +149,8 @@ public class MysticalCropBlock extends CropBlock implements ICropProvider {
         var biomes = this.crop.getRequiredBiomes();
 
         if (!biomes.isEmpty()) {
-            var biome = world.getBiome(pos);
-            var biomeId = ForgeRegistries.BIOMES.getKey(biome.value());
-            return biomes.contains(biomeId);
+            var biome = level.getBiome(pos);
+            return biomes.stream().anyMatch(biome::is);
         }
 
         return true;
