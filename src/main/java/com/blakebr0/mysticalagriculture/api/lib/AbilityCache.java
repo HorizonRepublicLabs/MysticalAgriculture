@@ -6,11 +6,12 @@ import net.minecraft.world.entity.player.Player;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 public class AbilityCache {
     private static final HashMap<String, Runnable> EMPTY_MAP = new HashMap<>();
-    private final Map<String, Map<String, Runnable>> cache = new HashMap<>();
+    private final Map<String, Map<String, Runnable>> cache = new ConcurrentHashMap<>();
 
     /**
      * Add a user to the cache for the specified augment id, meaning they have it equipped currently
@@ -20,7 +21,7 @@ public class AbilityCache {
      */
     public void add(Augment augment, Player player, Runnable onRemove) {
         var key = getPlayerKey(player);
-        this.cache.computeIfAbsent(augment.getId().toString(), s -> new HashMap<>()).put(key, onRemove);
+        this.cache.computeIfAbsent(augment.getId().toString(), s -> new ConcurrentHashMap<>()).put(key, onRemove);
     }
 
     /**
