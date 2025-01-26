@@ -3,16 +3,16 @@
   "neoforge:conditions": [
     {
       "type": "mysticalagriculture:crop_enabled",
-      "crop": "mysticalagriculture:slime"
+      "crop": "mysticalagriculture:pig"
     }
   ],
   "input": {
-    "item": "mysticalagriculture:slime_essence",
+    "item": "mysticalagriculture:pig_essence",
     "count": 12
   },
   "entities": [
     {
-      "entity": "minecraft:slime",
+      "entity": "minecraft:pig",
       "weight": 1
     }
   ]
