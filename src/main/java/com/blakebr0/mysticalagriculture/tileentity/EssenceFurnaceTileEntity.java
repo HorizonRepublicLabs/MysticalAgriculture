@@ -121,7 +121,7 @@ public abstract class EssenceFurnaceTileEntity extends AbstractFurnaceBlockEntit
                 ++tile.cookingProgress;
                 if (tile.cookingProgress == tile.cookingTotalTime) {
                     tile.cookingProgress = 0;
-                    tile.cookingTotalTime = (int) (getTotalCookTime(level, tile) * tile.getTier().getCookTimeMultiplier());
+                    tile.cookingTotalTime = Math.max(1, (int) (getTotalCookTime(level, tile) * tile.getTier().getCookTimeMultiplier()));
                     if (tile.burn(recipe, tile.items, i)) {
                         tile.setRecipeUsed(recipe);
                     }
@@ -154,7 +154,7 @@ public abstract class EssenceFurnaceTileEntity extends AbstractFurnaceBlockEntit
         }
 
         if (slot == 0 && !flag) {
-            this.cookingTotalTime = (int) (getTotalCookTime(level, this) * this.getTier().getCookTimeMultiplier());
+            this.cookingTotalTime = Math.max(1, (int) (getTotalCookTime(level, this) * this.getTier().getCookTimeMultiplier()));
             this.cookingProgress = 0;
             this.setChanged();
         }
