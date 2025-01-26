@@ -9,27 +9,29 @@
           "type": "minecraft:alternatives",
           "children": [
             {
-              "name": "mysticalagriculture:soulstone",
               "type": "minecraft:item",
+              "name": "mysticalagriculture:soulstone",
               "conditions": [
                 {
                   "condition": "minecraft:match_tool",
                   "predicate": {
-                    "minecraft:enchantments": [
-                      {
-                        "enchantments": "minecraft:silk_touch",
-                        "levels": {
-                          "min": 1
+                    "predicates": {
+                      "minecraft:enchantments": [
+                        {
+                          "enchantments": "minecraft:silk_touch",
+                          "levels": {
+                            "min": 1
+                          }
                         }
-                      }
-                    ]
+                      ]
+                    }
                   }
                 }
               ]
             },
             {
-              "name": "mysticalagriculture:soulstone_cobble",
               "type": "minecraft:item",
+              "name": "mysticalagriculture:soulstone_cobble",
               "conditions": [
                 {
                   "condition": "minecraft:survives_explosion"
