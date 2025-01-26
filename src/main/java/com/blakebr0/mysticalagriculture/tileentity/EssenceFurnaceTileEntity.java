@@ -43,22 +43,6 @@ public abstract class EssenceFurnaceTileEntity extends AbstractFurnaceBlockEntit
         return (int) (super.getBurnDuration(stack) * this.getTier().getBurnTimeMultiplier());
     }
 
-    public void setItem(int slot, ItemStack stack) {
-        ItemStack itemstack = this.items.get(slot);
-        boolean flag = !stack.isEmpty() && stack.sameItem(itemstack) && ItemStack.tagMatches(stack, itemstack);
-        this.items.set(slot, stack);
-        if (stack.getCount() > this.getMaxStackSize()) {
-            stack.setCount(this.getMaxStackSize());
-        }
-
-        if (slot == 0 && !flag) {
-            this.cookingTotalTime = (int) (getTotalCookTime(level, this) * this.getTier().getCookTimeMultiplier());
-            this.cookingProgress = 0;
-            this.setChanged();
-        }
-
-    }
-
     protected boolean canBurn(Recipe<?> recipe, NonNullList<ItemStack> items, int maxStackSize) {
         if (!items.get(0).isEmpty() && recipe != null) {
             ItemStack itemstack = ((Recipe<WorldlyContainer>) recipe).assemble(this);
@@ -137,7 +121,7 @@ public abstract class EssenceFurnaceTileEntity extends AbstractFurnaceBlockEntit
                 ++tile.cookingProgress;
                 if (tile.cookingProgress == tile.cookingTotalTime) {
                     tile.cookingProgress = 0;
-                    tile.cookingTotalTime = (int) (getTotalCookTime(level, tile) * tile.getTier().getCookTimeMultiplier());
+                    tile.cookingTotalTime = Math.max(1, (int) (getTotalCookTime(level, tile) * tile.getTier().getCookTimeMultiplier()));
                     if (tile.burn(recipe, tile.items, i)) {
                         tile.setRecipeUsed(recipe);
                     }
@@ -161,8 +145,23 @@ public abstract class EssenceFurnaceTileEntity extends AbstractFurnaceBlockEntit
         }
     }
 
-    private static int getTotalCookTime(Level p_222693_, AbstractFurnaceBlockEntity p_222694_) {
-        return p_222694_.quickCheck.getRecipeFor(p_222694_, p_222693_).map(AbstractCookingRecipe::getCookingTime).orElse(200);
+    public void setItem(int slot, ItemStack stack) {
+        ItemStack itemstack = this.items.get(slot);
+        boolean flag = !stack.isEmpty() && ItemStack.isSameItemSameTags(itemstack, stack);
+        this.items.set(slot, stack);
+        if (stack.getCount() > this.getMaxStackSize()) {
+            stack.setCount(this.getMaxStackSize());
+        }
+
+        if (slot == 0 && !flag) {
+            this.cookingTotalTime = Math.max(1, (int) (getTotalCookTime(level, this) * this.getTier().getCookTimeMultiplier()));
+            this.cookingProgress = 0;
+            this.setChanged();
+        }
+    }
+
+    private static int getTotalCookTime(Level level, AbstractFurnaceBlockEntity tile) {
+        return tile.quickCheck.getRecipeFor(tile, level).map(AbstractCookingRecipe::getCookingTime).orElse(200);
     }
 
     public abstract FurnaceTier getTier();
