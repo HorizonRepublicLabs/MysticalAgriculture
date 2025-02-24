@@ -31,9 +31,7 @@ public class TinkeringTableBlock extends BaseTileEntityBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final VoxelShape TABLE_SHAPE = VoxelShapeBuilder.builder()
             .cuboid(1, 0, 1, 15, 4, 15).cuboid(3.5, 5, 3.5, 12.5, 9, 12.5)
-            .cuboid(0, 10, 0, 16, 13, 16).cuboid(3, 12.8, 14.8, 13, 13.8, 15.8)
-            .cuboid(14.8, 12.8, 3, 15.8, 13.8, 13).cuboid(3, 12.8, 0.2, 13, 13.8, 1.2)
-            .cuboid(1, 13, 1, 15, 14, 15).cuboid(0.2, 12.8, 3, 1.2, 13.8, 13)
+            .cuboid(0, 10, 0, 16, 13, 16).cuboid(1, 13, 1, 15, 14, 15)
             .cuboid(2.5, 4, 2.5, 13.5, 5, 13.5).cuboid(2.5, 9, 2.5, 13.5, 10, 13.5)
             .cuboid(0, 0, 0, 1, 3, 3).cuboid(0, 0, 13, 1, 3, 16)
             .cuboid(15, 0, 0, 16, 3, 3).cuboid(15, 0, 13, 16, 3, 16)
