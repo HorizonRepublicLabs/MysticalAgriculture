@@ -7,6 +7,7 @@ import com.blakebr0.cucumber.inventory.CachedRecipe;
 import com.blakebr0.cucumber.inventory.SidedItemStackHandlerWrapper;
 import com.blakebr0.cucumber.tileentity.BaseInventoryTileEntity;
 import com.blakebr0.cucumber.util.Localizable;
+import com.blakebr0.cucumber.util.Utils;
 import com.blakebr0.mysticalagriculture.api.crafting.ISouliumSpawnerRecipe;
 import com.blakebr0.mysticalagriculture.block.SouliumSpawnerBlock;
 import com.blakebr0.mysticalagriculture.container.SouliumSpawnerContainer;
@@ -341,12 +342,7 @@ public class SouliumSpawnerTileEntity extends BaseInventoryTileEntity implements
         if (entities >= 32)
             return false;
 
-        var positions = BlockPos.betweenClosedStream(
-                this.getBlockPos().offset(-SPAWN_RADIUS, 0, -SPAWN_RADIUS),
-                this.getBlockPos().offset(SPAWN_RADIUS, 0, SPAWN_RADIUS)
-        ).map(BlockPos::immutable).toList();
-
-        var pos = positions.get(this.level.random.nextInt(positions.size()));
+        var pos = this.findSpawnPosition();
 
         entity.setUUID(UUID.randomUUID());
         entity.moveTo(pos.getX(), pos.getY(), pos.getZ(), this.level.random.nextFloat() * 360F, 0);
@@ -358,7 +354,7 @@ public class SouliumSpawnerTileEntity extends BaseInventoryTileEntity implements
         int attempts = 20;
 
         while (attempts-- > 0 && !this.canEntitySpawn(entity)) {
-            pos = positions.get(this.level.random.nextInt(positions.size()));
+            pos = this.findSpawnPosition();
 
             entity.moveTo(pos.getX(), pos.getY(), pos.getZ(), this.level.random.nextFloat() * 360F, 0);
         }
@@ -373,6 +369,15 @@ public class SouliumSpawnerTileEntity extends BaseInventoryTileEntity implements
 
     private boolean canEntitySpawn(Entity entity) {
         return this.level != null && this.level.isUnobstructed(entity) && !this.level.containsAnyLiquid(entity.getBoundingBox());
+    }
+
+    private BlockPos findSpawnPosition() {
+        var size = SPAWN_RADIUS * 2 + 1;
+        var index = Utils.randInt(0, (int) Math.pow(size, 2));
+        var xOffset = (index % size) - SPAWN_RADIUS;
+        var zOffset = (index / size) - SPAWN_RADIUS;
+
+        return this.getBlockPos().offset(xOffset, 0, zOffset);
     }
 
     private void onInventoryChanged() {
