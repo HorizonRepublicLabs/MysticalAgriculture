@@ -29,9 +29,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class HarvesterTileEntity extends BaseInventoryTileEntity implements MenuProvider, IUpgradeableMachine {
     private static final int FUEL_TICK_MULTIPLIER = 20;
     public static final int OPERATION_TIME = 100;
@@ -43,13 +40,12 @@ public class HarvesterTileEntity extends BaseInventoryTileEntity implements Menu
     private final BaseItemStackHandler inventory;
     private final UpgradeItemStackHandler upgradeInventory;
     private final DynamicEnergyStorage energy;
-    private List<BlockPos> positions;
-    private BlockPos lastPosition = BlockPos.ZERO;
     private MachineUpgradeTier tier;
     private Direction direction;
     private int progress;
     private int fuelLeft;
     private int fuelItemValue;
+    private int lastScanIndex = -1;
     private boolean isRunning;
 
     public HarvesterTileEntity(BlockPos pos, BlockState state) {
@@ -86,8 +82,8 @@ public class HarvesterTileEntity extends BaseInventoryTileEntity implements Menu
         this.progress = tag.getInt("Progress");
         this.fuelLeft = tag.getInt("FuelLeft");
         this.fuelItemValue = tag.getInt("FuelItemValue");
+        this.lastScanIndex = tag.getInt("LastScanIndex");
         this.energy.deserializeNBT(lookup, tag.get("Energy"));
-        this.lastPosition = BlockPos.of(tag.getLong("LastPosition"));
         this.upgradeInventory.deserializeNBT(lookup, tag.getCompound("UpgradeInventory"));
     }
 
@@ -98,8 +94,8 @@ public class HarvesterTileEntity extends BaseInventoryTileEntity implements Menu
         tag.putInt("Progress", this.progress);
         tag.putInt("FuelLeft", this.fuelLeft);
         tag.putInt("FuelItemValue", this.fuelItemValue);
+        tag.putInt("LastScanIndex", this.lastScanIndex);
         tag.putInt("Energy", this.energy.getEnergyStored());
-        tag.putLong("LastPosition", this.lastPosition.asLong());
         tag.put("UpgradeInventory", this.upgradeInventory.serializeNBT(lookup));
     }
 
@@ -134,12 +130,8 @@ public class HarvesterTileEntity extends BaseInventoryTileEntity implements Menu
         var direction = state.getValue(HarvesterBlock.FACING);
 
         if (tier != tile.tier || direction != tile.direction) {
-            var range = tier != null ? BASE_RANGE + tier.getAddedRange() : BASE_RANGE;
-            var center = pos.relative(direction, range + 1);
-
             tile.tier = tier;
             tile.direction = direction;
-            tile.positions = getWorkingArea(center, range, direction);
 
             if (tier == null) {
                 tile.energy.resetMaxEnergyStorage();
@@ -251,58 +243,29 @@ public class HarvesterTileEntity extends BaseInventoryTileEntity implements Menu
         return (int) (FUEL_USAGE * this.tier.getFuelUsageMultiplier());
     }
 
-    private static List<BlockPos> getWorkingArea(BlockPos center, int range, Direction direction) {
-        var positions = new ArrayList<BlockPos>();
-
-        switch (direction) {
-            case NORTH -> {
-                for (int x = -range; x < range + 1; x++) {
-                    for (int z = -range; z < range + 1; z++) {
-                        positions.add(new BlockPos(center.getX() + x, center.getY(), center.getZ() + z));
-                    }
-                }
-            }
-            case SOUTH -> {
-                for (int x = range; x > -range - 1; x--) {
-                    for (int z = range; z > -range - 1; z--) {
-                        positions.add(new BlockPos(center.getX() + x, center.getY(), center.getZ() + z));
-                    }
-                }
-            }
-            case EAST -> {
-                for (int z = -range; z < range + 1; z++) {
-                    for (int x = range; x > -range - 1; x--) {
-                        positions.add(new BlockPos(center.getX() + x, center.getY(), center.getZ() + z));
-                    }
-                }
-            }
-            case WEST -> {
-                for (int z = range; z > -range - 1; z--) {
-                    for (int x = -range; x < range + 1; x++) {
-                        positions.add(new BlockPos(center.getX() + x, center.getY(), center.getZ() + z));
-                    }
-                }
-            }
-        }
-
-        return positions;
-    }
-
     private BlockPos findNextPosition() {
-        if (this.lastPosition == null) {
-            this.lastPosition = this.positions.get(0);
-            return this.lastPosition;
+        var range = tier != null ? BASE_RANGE + tier.getAddedRange() : BASE_RANGE;
+        var size = range * 2 + 1;
+
+        var index = this.lastScanIndex + 1;
+        if (index >= (int) Math.pow(size, 2)) {
+            index = 0;
         }
 
-        var index = this.positions.indexOf(this.lastPosition);
-        if (index == -1 || index >= this.positions.size() - 1) {
-            this.lastPosition = this.positions.get(0);
-            return this.lastPosition;
-        }
+        this.lastScanIndex = index;
 
-        this.lastPosition = this.positions.get(index + 1);
+        var xOffset = (index % size) - range;
+        var zOffset = (index / size) - range;
 
-        return this.lastPosition;
+        var center = this.getBlockPos().relative(direction, range + 1);
+
+        return switch (direction) {
+            case Direction.NORTH -> new BlockPos(center.getX() + xOffset, center.getY(), center.getZ() - zOffset);
+            case Direction.SOUTH -> new BlockPos(center.getX() - xOffset, center.getY(), center.getZ() + zOffset);
+            case Direction.EAST -> new BlockPos(center.getX() + zOffset, center.getY(), center.getZ() + xOffset);
+            case Direction.WEST -> new BlockPos(center.getX() - zOffset, center.getY(), center.getZ() - xOffset);
+            default -> center;
+        };
     }
 
     private void addItemToInventory(ItemStack stack, Level level, BlockPos pos) {
