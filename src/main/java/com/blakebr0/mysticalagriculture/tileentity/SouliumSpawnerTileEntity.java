@@ -217,10 +217,14 @@ public class SouliumSpawnerTileEntity extends BaseInventoryTileEntity implements
                     tile.progress++;
                     tile.energy.extractEnergy(tile.getFuelUsage(), false);
 
-                    if (tile.progress >= tile.getOperationTime() && tile.attemptSpawn(recipe)) {
-                        tile.inventory.setStackInSlot(0, StackHelper.shrink(input, recipe.getInputCount(), false));
-                        tile.progress = 0;
-                        tile.sendSpawnParticles();
+                    if (tile.progress >= tile.getOperationTime()) {
+                        if (tile.attemptSpawn(recipe)) {
+                            tile.inventory.setStackInSlot(0, StackHelper.shrink(input, recipe.getInputCount(), false));
+                            tile.progress = 0;
+                            tile.sendSpawnParticles();
+                        } else {
+                            tile.progress = 0;
+                        }
                     }
 
                     tile.setChangedFast();
