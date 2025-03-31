@@ -269,6 +269,11 @@ public class SoulExtractorTileEntity extends BaseInventoryTileEntity implements 
             return stack.getItem() instanceof SoulJarItem && MobSoulUtils.isJarFull(stack);
         }
 
+        if (slot == 1) {
+            var stack = this.inventory.getStackInSlot(1);
+            return !FurnaceBlockEntity.isFuel(stack);
+        }
+
         return false;
     }
 }

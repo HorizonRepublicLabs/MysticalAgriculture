@@ -25,6 +25,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CropBlock;
+import net.minecraft.world.level.block.entity.FurnaceBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.capabilities.Capability;
@@ -223,8 +224,8 @@ public class HarvesterTileEntity extends BaseInventoryTileEntity implements Menu
 
     public static BaseItemStackHandler createInventoryHandler(Runnable onContentsChanged) {
         return BaseItemStackHandler.create(16, onContentsChanged, builder -> {
-            builder.setCanInsert((slot, stack) -> slot == 0 && ForgeHooks.getBurnTime(stack, null) > 0);
-            builder.setCanExtract(slot -> slot > 0);
+            builder.setCanInsert((slot, stack) -> slot == 0 && FurnaceBlockEntity.isFuel(stack));
+            builder.setCanExtract(slot -> slot > 0 || (slot == 0 && !FurnaceBlockEntity.isFuel(builder.getStackInSlot(slot))));
         });
     }
 
