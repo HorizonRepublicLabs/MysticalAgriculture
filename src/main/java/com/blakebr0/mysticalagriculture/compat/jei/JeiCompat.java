@@ -26,6 +26,7 @@ import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.registration.ISubtypeRegistration;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -70,13 +71,19 @@ public final class JeiCompat implements IModPlugin {
 
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
-        registration.addRecipes(InfusionCategory.RECIPE_TYPE, RecipeHelper.byTypeValues(ModRecipeTypes.INFUSION.get()));
-        registration.addRecipes(AwakeningCategory.RECIPE_TYPE, RecipeHelper.byTypeValues(ModRecipeTypes.AWAKENING.get()));
-        registration.addRecipes(EnchanterCategory.RECIPE_TYPE, RecipeHelper.byTypeValues(ModRecipeTypes.ENCHANTER.get()));
-        registration.addRecipes(ReprocessorCategory.RECIPE_TYPE, RecipeHelper.byTypeValues(ModRecipeTypes.REPROCESSOR.get()));
-        registration.addRecipes(SoulExtractorCategory.RECIPE_TYPE, RecipeHelper.byTypeValues(ModRecipeTypes.SOUL_EXTRACTION.get()));
-        registration.addRecipes(SouliumSpawnerCategory.RECIPE_TYPE, RecipeHelper.byTypeValues(ModRecipeTypes.SOULIUM_SPAWNER.get()));
-        registration.addRecipes(CruxCategory.RECIPE_TYPE, CruxRecipe.getGeneratedRecipes());
+        var level = Minecraft.getInstance().level;
+        if (level != null) {
+            var manager = level.getRecipeManager();
+
+            registration.addRecipes(InfusionCategory.RECIPE_TYPE, RecipeHelper.byTypeValues(manager, ModRecipeTypes.INFUSION.get()));
+            registration.addRecipes(AwakeningCategory.RECIPE_TYPE, RecipeHelper.byTypeValues(manager, ModRecipeTypes.AWAKENING.get()));
+            registration.addRecipes(EnchanterCategory.RECIPE_TYPE, RecipeHelper.byTypeValues(manager, ModRecipeTypes.ENCHANTER.get()));
+            registration.addRecipes(ReprocessorCategory.RECIPE_TYPE, RecipeHelper.byTypeValues(manager, ModRecipeTypes.REPROCESSOR.get()));
+            registration.addRecipes(SoulExtractorCategory.RECIPE_TYPE, RecipeHelper.byTypeValues(manager, ModRecipeTypes.SOUL_EXTRACTION.get()));
+            registration.addRecipes(SouliumSpawnerCategory.RECIPE_TYPE, RecipeHelper.byTypeValues(manager, ModRecipeTypes.SOULIUM_SPAWNER.get()));
+
+            registration.addRecipes(CruxCategory.RECIPE_TYPE, CruxRecipe.getGeneratedRecipes());
+        }
 
         registration.addIngredientInfo(
                 new ItemStack(ModItems.COGNIZANT_DUST.get()),
