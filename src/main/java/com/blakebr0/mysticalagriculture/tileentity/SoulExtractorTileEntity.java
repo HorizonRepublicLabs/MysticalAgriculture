@@ -60,7 +60,7 @@ public class SoulExtractorTileEntity extends BaseInventoryTileEntity implements 
         this.inventory = createInventoryHandler(this::setChangedFast);
         this.upgradeInventory = new UpgradeItemStackHandler();
         this.energy = new DynamicEnergyStorage(FUEL_CAPACITY, this::setChangedFast);
-        this.inventoryCapabilities = SidedItemStackHandlerWrapper.create(this.inventory, new Direction[] { Direction.UP, Direction.DOWN, Direction.NORTH }, this::canInsertStackSided, this::canExtractStackSided);
+        this.inventoryCapabilities = SidedItemStackHandlerWrapper.create(this.inventory, new Direction[] { Direction.UP, Direction.DOWN, Direction.NORTH }, this::canInsertStackSided, null);
         this.recipe = new CachedRecipe<>(ModRecipeTypes.SOUL_EXTRACTION.get());
     }
 
@@ -210,7 +210,21 @@ public class SoulExtractorTileEntity extends BaseInventoryTileEntity implements 
     }
 
     public static BaseItemStackHandler createInventoryHandler(Runnable onContentsChanged) {
-        return BaseItemStackHandler.create(3, onContentsChanged);
+        return BaseItemStackHandler.create(3, onContentsChanged, builder -> {
+            builder.setCanExtract(slot -> {
+                if (slot == 2) {
+                    var stack = builder.getStackInSlot(2);
+                    return stack.getItem() instanceof SoulJarItem && MobSoulUtils.isJarFull(stack);
+                }
+
+                if (slot == 1) {
+                    var stack = builder.getStackInSlot(1);
+                    return !FurnaceBlockEntity.isFuel(stack);
+                }
+
+                return false;
+            });
+        });
     }
 
     public ISoulExtractionRecipe getActiveRecipe() {
@@ -259,20 +273,6 @@ public class SoulExtractorTileEntity extends BaseInventoryTileEntity implements 
             return FurnaceBlockEntity.isFuel(stack);
         if (slot == 2 && direction == Direction.NORTH)
             return stack.getItem() instanceof SoulJarItem;
-
-        return false;
-    }
-
-    private boolean canExtractStackSided(int slot, Direction direction) {
-        if (slot == 2 && direction == Direction.DOWN) {
-            var stack = this.inventory.getStackInSlot(2);
-            return stack.getItem() instanceof SoulJarItem && MobSoulUtils.isJarFull(stack);
-        }
-
-        if (slot == 1) {
-            var stack = this.inventory.getStackInSlot(1);
-            return !FurnaceBlockEntity.isFuel(stack);
-        }
 
         return false;
     }
