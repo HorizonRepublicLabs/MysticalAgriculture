@@ -257,7 +257,7 @@ public class EssenceFurnaceTileEntity extends BaseInventoryTileEntity implements
 
     public static BaseItemStackHandler createInventoryHandler(OnContentsChangedFunction onContentsChanged) {
         return BaseItemStackHandler.create(3, onContentsChanged, builder -> {
-            builder.setOutputSlots(2);
+            builder.setCanExtract(slot -> slot == 2 || (slot == 1 && !FurnaceBlockEntity.isFuel(builder.getStackInSlot(slot))));
         });
     }
 }
