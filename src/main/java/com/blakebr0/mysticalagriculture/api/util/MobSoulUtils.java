@@ -128,7 +128,7 @@ public class MobSoulUtils {
 
         double requirement = type.getSoulRequirement();
         if (containedType == null) {
-            stack.set(MysticalAgricultureDataComponentTypes.SOUL_JAR, new SoulJarComponent(type.getId(), amount));
+            stack.set(MysticalAgricultureDataComponentTypes.SOUL_JAR, new SoulJarComponent(type.getId(), Math.min(requirement, amount)));
             return Math.max(0, amount - requirement);
         } else {
             double souls = getSouls(stack);
