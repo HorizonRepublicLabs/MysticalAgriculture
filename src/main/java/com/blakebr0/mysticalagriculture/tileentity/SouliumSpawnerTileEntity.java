@@ -269,6 +269,7 @@ public class SouliumSpawnerTileEntity extends BaseInventoryTileEntity implements
     public static BaseItemStackHandler createInventoryHandler(Runnable onContentsChanged) {
         return BaseItemStackHandler.create(2, onContentsChanged, builder -> {
             builder.addSlotLimit(0, 512);
+            builder.setCanExtract(slot -> (slot == 1 && !FurnaceBlockEntity.isFuel(builder.getStackInSlot(slot))));
         });
     }
 
