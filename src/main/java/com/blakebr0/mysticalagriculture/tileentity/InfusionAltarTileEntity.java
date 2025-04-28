@@ -38,7 +38,7 @@ public class InfusionAltarTileEntity extends BaseInventoryTileEntity implements 
 
     public InfusionAltarTileEntity(BlockPos pos, BlockState state) {
         super(ModTileEntities.INFUSION_ALTAR.get(), pos, state);
-        this.inventory = createInventoryHandler((slot) -> this.setChangedFast());
+        this.inventory = createInventoryHandler((slot) -> this.setChanged());
         this.recipeInventory = BaseItemStackHandler.create(9);
         this.recipe = new CachedRecipe<>(ModRecipeTypes.INFUSION.get());
     }

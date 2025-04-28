@@ -1,6 +1,7 @@
 package com.blakebr0.mysticalagriculture.block;
 
 import com.blakebr0.cucumber.block.BaseTileEntityBlock;
+import com.blakebr0.cucumber.helper.BlockHelper;
 import com.blakebr0.cucumber.lib.Tooltips;
 import com.blakebr0.cucumber.util.Formatting;
 import com.blakebr0.mysticalagriculture.init.ModTileEntities;
@@ -93,11 +94,6 @@ public class ReprocessorBlock extends BaseTileEntityBlock {
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, RUNNING);
-    }
-
-    @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
         if (Screen.hasShiftDown()) {
             var speed = Formatting.number(ReprocessorTileEntity.OPERATION_TIME).withStyle(ChatFormatting.WHITE);
@@ -110,6 +106,21 @@ public class ReprocessorBlock extends BaseTileEntityBlock {
         } else {
             tooltip.add(Tooltips.HOLD_SHIFT_FOR_INFO.build());
         }
+    }
+
+    @Override
+    protected boolean hasAnalogOutputSignal(BlockState state) {
+        return true;
+    }
+
+    @Override
+    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+        return BlockHelper.getRedstoneSignalFromInventory(level.getBlockEntity(pos));
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(FACING, RUNNING);
     }
 
     @Override

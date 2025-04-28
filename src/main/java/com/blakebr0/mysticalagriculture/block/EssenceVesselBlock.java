@@ -1,6 +1,7 @@
 package com.blakebr0.mysticalagriculture.block;
 
 import com.blakebr0.cucumber.block.BaseTileEntityBlock;
+import com.blakebr0.cucumber.helper.BlockHelper;
 import com.blakebr0.cucumber.util.VoxelShapeBuilder;
 import com.blakebr0.mysticalagriculture.tileentity.EssenceVesselTileEntity;
 import net.minecraft.core.BlockPos;
@@ -93,5 +94,15 @@ public class EssenceVesselBlock extends BaseTileEntityBlock {
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return VESSEL_SHAPE;
+    }
+
+    @Override
+    protected boolean hasAnalogOutputSignal(BlockState state) {
+        return true;
+    }
+
+    @Override
+    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+        return BlockHelper.getRedstoneSignalFromInventory(level.getBlockEntity(pos));
     }
 }

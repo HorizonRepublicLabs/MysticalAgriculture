@@ -1,6 +1,7 @@
 package com.blakebr0.mysticalagriculture.block;
 
 import com.blakebr0.cucumber.block.BaseTileEntityBlock;
+import com.blakebr0.cucumber.helper.BlockHelper;
 import com.blakebr0.cucumber.helper.StackHelper;
 import com.blakebr0.cucumber.util.VoxelShapeBuilder;
 import com.blakebr0.mysticalagriculture.init.ModTileEntities;
@@ -113,6 +114,16 @@ public class InfusionAltarBlock extends BaseTileEntityBlock {
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
         tooltip.add(ModTooltips.ACTIVATE_WITH_REDSTONE.build());
+    }
+
+    @Override
+    protected boolean hasAnalogOutputSignal(BlockState state) {
+        return true;
+    }
+
+    @Override
+    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+        return BlockHelper.getRedstoneSignalFromInventory(level.getBlockEntity(pos));
     }
 
     @Override

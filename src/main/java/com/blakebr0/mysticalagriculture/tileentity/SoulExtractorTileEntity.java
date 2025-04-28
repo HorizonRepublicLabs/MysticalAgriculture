@@ -57,7 +57,7 @@ public class SoulExtractorTileEntity extends BaseInventoryTileEntity implements 
 
     public SoulExtractorTileEntity(BlockPos pos, BlockState state) {
         super(ModTileEntities.SOUL_EXTRACTOR.get(), pos, state);
-        this.inventory = createInventoryHandler((slot) -> this.setChangedFast());
+        this.inventory = createInventoryHandler((slot) -> this.setChanged());
         this.upgradeInventory = new UpgradeItemStackHandler();
         this.energy = new DynamicEnergyStorage(FUEL_CAPACITY, this::setChangedFast);
         this.sidedInventoryWrappers = SidedInventoryWrapper.create(this.inventory, List.of(Direction.UP, Direction.DOWN, Direction.NORTH), this::canInsertStackSided, null);

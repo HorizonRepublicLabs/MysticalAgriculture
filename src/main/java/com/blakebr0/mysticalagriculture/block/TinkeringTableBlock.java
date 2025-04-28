@@ -1,6 +1,7 @@
 package com.blakebr0.mysticalagriculture.block;
 
 import com.blakebr0.cucumber.block.BaseTileEntityBlock;
+import com.blakebr0.cucumber.helper.BlockHelper;
 import com.blakebr0.cucumber.util.VoxelShapeBuilder;
 import com.blakebr0.mysticalagriculture.tileentity.TinkeringTableTileEntity;
 import net.minecraft.core.BlockPos;
@@ -96,6 +97,16 @@ public class TinkeringTableBlock extends BaseTileEntityBlock {
     @Override
     public BlockState mirror(BlockState state, Mirror mirror) {
         return state.rotate(mirror.getRotation(state.getValue(FACING)));
+    }
+
+    @Override
+    protected boolean hasAnalogOutputSignal(BlockState state) {
+        return true;
+    }
+
+    @Override
+    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+        return BlockHelper.getRedstoneSignalFromInventory(level.getBlockEntity(pos));
     }
 
     @Override

@@ -374,7 +374,7 @@ public class SouliumSpawnerTileEntity extends BaseInventoryTileEntity implements
 
     private void onInventoryChanged() {
         this.reloadActiveRecipe();
-        this.setChangedFast();
+        this.setChanged();
     }
 
     private void reloadActiveRecipe() {

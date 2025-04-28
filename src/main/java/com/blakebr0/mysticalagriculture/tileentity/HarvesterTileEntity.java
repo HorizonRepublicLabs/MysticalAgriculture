@@ -51,7 +51,7 @@ public class HarvesterTileEntity extends BaseInventoryTileEntity implements Menu
 
     public HarvesterTileEntity(BlockPos pos, BlockState state) {
         super(ModTileEntities.HARVESTER.get(), pos, state);
-        this.inventory = createInventoryHandler((slot) -> this.setChangedFast());
+        this.inventory = createInventoryHandler((slot) -> this.setChanged());
         this.upgradeInventory = new UpgradeItemStackHandler();
         this.energy = new DynamicEnergyStorage(FUEL_CAPACITY, this::setChangedFast);
     }
