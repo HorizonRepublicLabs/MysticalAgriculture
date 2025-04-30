@@ -360,7 +360,7 @@ public class SouliumSpawnerTileEntity extends BaseInventoryTileEntity implements
     }
 
     private boolean canEntitySpawn(Entity entity) {
-        return this.level != null && this.level.isUnobstructed(entity) && !this.level.containsAnyLiquid(entity.getBoundingBox());
+        return this.level != null && this.level.isUnobstructed(entity);
     }
 
     private BlockPos findSpawnPosition() {
