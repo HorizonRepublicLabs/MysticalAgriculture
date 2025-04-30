@@ -1,9 +1,12 @@
 package com.blakebr0.mysticalagriculture.lib;
 
 import com.blakebr0.cucumber.util.Tooltip;
+import com.blakebr0.mysticalagriculture.api.components.AOEAugmentOffsetComponent;
+import com.blakebr0.mysticalagriculture.api.tinkering.AOEAugment;
 import com.blakebr0.mysticalagriculture.api.util.AugmentUtils;
 import com.blakebr0.mysticalagriculture.api.util.TinkerableUtils;
 import com.blakebr0.mysticalagriculture.client.ClientPlayerProxy;
+import com.blakebr0.mysticalagriculture.init.ModDataComponentTypes;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
@@ -52,6 +55,7 @@ public final class ModTooltips {
     public static final Tooltip UPGRADE_FUEL_CAPACITY = new Tooltip("tooltip.mysticalagriculture.upgrade_fuel_capacity");
     public static final Tooltip UPGRADE_AREA = new Tooltip("tooltip.mysticalagriculture.upgrade_area");
     public static final Tooltip MISSING_ESSENCES = new Tooltip("tooltip.mysticalagriculture.missing_essences", ChatFormatting.WHITE);
+    public static final Tooltip AOE_OFFSET_TOOLTIP = new Tooltip("tooltip.mysticalagriculture.aoe_offset");
 
     public static Component getTooltipForTier(int tier) {
         return TIER.args(TinkerableUtils.getTooltipForTier(tier)).color(ChatFormatting.GRAY).build();
@@ -74,6 +78,16 @@ public final class ModTooltips {
 
             if (augment != null && augment.hasSetBonus() && TinkerableUtils.hasArmorSetMinimumTier(player, augment.getTier())) {
                 name.withStyle(ChatFormatting.GREEN);
+            }
+
+            if (augment instanceof AOEAugment) {
+                var offset = stack.getOrDefault(ModDataComponentTypes.AOE_AUGMENT_OFFSET, AOEAugmentOffsetComponent.DEFAULT);
+                if (offset.isOffset()) {
+                    var horizontalOffset = String.format("%+d", offset.horizontalOffset());
+                    var verticalOffset = String.format("%+d", offset.verticalOffset());
+
+                    name.append(ModTooltips.AOE_OFFSET_TOOLTIP.args(horizontalOffset, verticalOffset).prepend(" (").append(")").build());
+                }
             }
 
             tooltip.add(Component.literal(" - ").withStyle(ChatFormatting.GRAY).append(name));
