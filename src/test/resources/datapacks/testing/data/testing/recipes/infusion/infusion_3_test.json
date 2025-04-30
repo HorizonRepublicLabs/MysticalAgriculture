@@ -12,15 +12,9 @@
     },
     {
       "item": "minecraft:carrot"
-    },
-    {
-      "item": "minecraft:carrot"
-    },
-    {
-      "item": "minecraft:carrot"
     }
   ],
   "result": {
-    "id": "minecraft:potato"
+    "id": "minecraft:magenta_dye"
   }
 }
