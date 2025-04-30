@@ -16,6 +16,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 
 public class InfusionCategory implements IRecipeCategory<IInfusionRecipe> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(MysticalAgriculture.MOD_ID, "textures/jei/infusion.png");
@@ -59,15 +60,85 @@ public class InfusionCategory implements IRecipeCategory<IInfusionRecipe> {
         var output = recipe.getResultItem(level.registryAccess());
 
         builder.addSlot(RecipeIngredientRole.INPUT, 33, 33).addIngredients(inputs.get(0));
-        builder.addSlot(RecipeIngredientRole.INPUT, 7, 7).addIngredients(inputs.get(1));
-        builder.addSlot(RecipeIngredientRole.INPUT, 33, 1).addIngredients(inputs.get(2));
-        builder.addSlot(RecipeIngredientRole.INPUT, 59, 7).addIngredients(inputs.get(3));
-        builder.addSlot(RecipeIngredientRole.INPUT, 65, 33).addIngredients(inputs.get(4));
-        builder.addSlot(RecipeIngredientRole.INPUT, 59, 59).addIngredients(inputs.get(5));
-        builder.addSlot(RecipeIngredientRole.INPUT, 33, 64).addIngredients(inputs.get(6));
-        builder.addSlot(RecipeIngredientRole.INPUT, 7, 59).addIngredients(inputs.get(7));
-        builder.addSlot(RecipeIngredientRole.INPUT, 1, 33).addIngredients(inputs.get(8));
+
+        var pedestals = (int) inputs.stream().filter(i -> !i.isEmpty()).count() - 1;
+
+        switch (pedestals) {
+            case 1 -> addSlot(builder, SlotPosition.NORTH, inputs.get(1));
+            case 2 -> {
+                addSlot(builder, SlotPosition.NORTH, inputs.get(1));
+                addSlot(builder, SlotPosition.SOUTH, inputs.get(2));
+            }
+            case 3 -> {
+                addSlot(builder, SlotPosition.WEST, inputs.get(1));
+                addSlot(builder, SlotPosition.NORTH, inputs.get(2));
+                addSlot(builder, SlotPosition.EAST, inputs.get(3));
+            }
+            case 4 -> {
+                addSlot(builder, SlotPosition.NORTH, inputs.get(1));
+                addSlot(builder, SlotPosition.EAST, inputs.get(2));
+                addSlot(builder, SlotPosition.SOUTH, inputs.get(3));
+                addSlot(builder, SlotPosition.WEST, inputs.get(4));
+            }
+            case 5 -> {
+                addSlot(builder, SlotPosition.NORTH_WEST, inputs.get(1));
+                addSlot(builder, SlotPosition.NORTH, inputs.get(2));
+                addSlot(builder, SlotPosition.NORTH_EAST, inputs.get(3));
+                addSlot(builder, SlotPosition.SOUTH_EAST, inputs.get(4));
+                addSlot(builder, SlotPosition.SOUTH_WEST, inputs.get(5));
+            }
+            case 6 -> {
+                addSlot(builder, SlotPosition.NORTH_WEST, inputs.get(1));
+                addSlot(builder, SlotPosition.NORTH, inputs.get(2));
+                addSlot(builder, SlotPosition.NORTH_EAST, inputs.get(3));
+                addSlot(builder, SlotPosition.SOUTH_EAST, inputs.get(4));
+                addSlot(builder, SlotPosition.SOUTH, inputs.get(5));
+                addSlot(builder, SlotPosition.SOUTH_WEST, inputs.get(6));
+            }
+            case 7 -> {
+                addSlot(builder, SlotPosition.WEST, inputs.get(1));
+                addSlot(builder, SlotPosition.NORTH_WEST, inputs.get(2));
+                addSlot(builder, SlotPosition.NORTH, inputs.get(3));
+                addSlot(builder, SlotPosition.NORTH_EAST, inputs.get(4));
+                addSlot(builder, SlotPosition.EAST, inputs.get(5));
+                addSlot(builder, SlotPosition.SOUTH_EAST, inputs.get(6));
+                addSlot(builder, SlotPosition.SOUTH_WEST, inputs.get(7));
+            }
+            case 8 -> {
+                addSlot(builder, SlotPosition.NORTH_WEST, inputs.get(1));
+                addSlot(builder, SlotPosition.NORTH, inputs.get(2));
+                addSlot(builder, SlotPosition.NORTH_EAST, inputs.get(3));
+                addSlot(builder, SlotPosition.EAST, inputs.get(4));
+                addSlot(builder, SlotPosition.SOUTH_EAST, inputs.get(5));
+                addSlot(builder, SlotPosition.SOUTH, inputs.get(6));
+                addSlot(builder, SlotPosition.SOUTH_WEST, inputs.get(7));
+                addSlot(builder, SlotPosition.WEST, inputs.get(8));
+            }
+        }
 
         builder.addSlot(RecipeIngredientRole.OUTPUT, 123, 33).addItemStack(output);
+    }
+
+    private static void addSlot(IRecipeLayoutBuilder builder, SlotPosition position, Ingredient ingredient) {
+        builder.addSlot(RecipeIngredientRole.INPUT, position.x, position.y).addIngredients(ingredient);
+    }
+
+    private enum SlotPosition {
+        NORTH_WEST(7, 7),
+        NORTH(33, 1),
+        NORTH_EAST(59, 7),
+        EAST(65, 33),
+        SOUTH_EAST(59, 59),
+        SOUTH(33, 64),
+        SOUTH_WEST(7, 59),
+        WEST(1, 33);
+
+        final int x;
+        final int y;
+
+        SlotPosition(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
     }
 }
