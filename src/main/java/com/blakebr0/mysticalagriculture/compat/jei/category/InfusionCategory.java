@@ -60,9 +60,9 @@ public class InfusionCategory implements IRecipeCategory<IInfusionRecipe> {
         var inputs = recipe.getIngredients();
         var output = recipe.getResultItem(level.registryAccess());
 
-        builder.addSlot(RecipeIngredientRole.INPUT, 33, 33).addIngredients(inputs.get(0));
+        builder.addSlot(RecipeIngredientRole.INPUT, 33, 33).addIngredients(input);
 
-        var pedestals = (int) inputs.stream().filter(i -> !i.isEmpty()).count() - 1;
+        var pedestals = (int) inputs.stream().filter(i -> !i.isEmpty()).count();
 
         switch (pedestals) {
             case 1 -> addSlot(builder, SlotPosition.NORTH, inputs.get(0));
