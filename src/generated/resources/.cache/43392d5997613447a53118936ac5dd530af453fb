@@ -1,4 +1,4 @@
-// 1.21	2024-08-16T14:11:00.5618422	Mystical Agriculture item model generator
+// 1.21.1	2025-05-26T12:55:04.8992729	Mystical Agriculture item model generator
 e1edc02b041c3259cf941617688795d37b15c9b4 assets/mysticalagriculture/models/item/absorption_iii_augment.json
 e1edc02b041c3259cf941617688795d37b15c9b4 assets/mysticalagriculture/models/item/absorption_ii_augment.json
 e1edc02b041c3259cf941617688795d37b15c9b4 assets/mysticalagriculture/models/item/absorption_iv_augment.json
@@ -208,6 +208,8 @@ e1edc02b041c3259cf941617688795d37b15c9b4 assets/mysticalagriculture/models/item/
 e1edc02b041c3259cf941617688795d37b15c9b4 assets/mysticalagriculture/models/item/pathing_aoe_i_augment.json
 c12a3e1ecd13418b18379af75430d98fc5a26535 assets/mysticalagriculture/models/item/peridot_essence.json
 663c3a9244c4232702cfe523ee39fb9157d94e9e assets/mysticalagriculture/models/item/peridot_seeds.json
+c0b7ffe7eb260a08f9a89f7e707149f81bbe737b assets/mysticalagriculture/models/item/phantom_essence.json
+eec871f75a3b997e97d27c21be93223b82a33a70 assets/mysticalagriculture/models/item/phantom_seeds.json
 57091f90975c16a710228231f3cdae5ef56afd30 assets/mysticalagriculture/models/item/pig_essence.json
 0170e3d26eeaac2c718399fdccc9bdb718974d9c assets/mysticalagriculture/models/item/pig_iron_essence.json
 ff44058f1864612b3310d42b9d0538ac59423289 assets/mysticalagriculture/models/item/pig_iron_seeds.json

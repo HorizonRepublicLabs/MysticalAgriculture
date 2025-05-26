@@ -60,6 +60,7 @@ public final class ModCrops {
     public static final Crop SKELETON = new Crop(MysticalAgriculture.resource("skeleton"), CropTier.THREE, CropType.MOB, LazyIngredient.item("mysticalagriculture:soul_jar", MobSoulUtils.makeComponentMap(ModMobSoulTypes.SKELETON)));
     public static final Crop CREEPER = new Crop(MysticalAgriculture.resource("creeper"), CropTier.THREE, CropType.MOB, LazyIngredient.item("mysticalagriculture:soul_jar", MobSoulUtils.makeComponentMap(ModMobSoulTypes.CREEPER)));
     public static final Crop SPIDER = new Crop(MysticalAgriculture.resource("spider"), CropTier.THREE, CropType.MOB, LazyIngredient.item("mysticalagriculture:soul_jar", MobSoulUtils.makeComponentMap(ModMobSoulTypes.SPIDER)));
+    public static final Crop PHANTOM = new Crop(MysticalAgriculture.resource("phantom"), CropTier.THREE, CropType.MOB, LazyIngredient.item("mysticalagriculture:soul_jar", MobSoulUtils.makeComponentMap(ModMobSoulTypes.PHANTOM)));
     public static final Crop RABBIT = new Crop(MysticalAgriculture.resource("rabbit"), CropTier.THREE, CropType.MOB, LazyIngredient.item("mysticalagriculture:soul_jar", MobSoulUtils.makeComponentMap(ModMobSoulTypes.RABBIT)));
 
     public static final Crop GOLD = new Crop(MysticalAgriculture.resource("gold"), CropTier.FOUR, CropType.RESOURCE, LazyIngredient.tag("c:ingots/gold"));
@@ -246,6 +247,7 @@ public final class ModCrops {
         registry.register(SKELETON);
         registry.register(CREEPER);
         registry.register(SPIDER);
+        registry.register(PHANTOM);
         registry.register(RABBIT);
 
         registry.register(GOLD);

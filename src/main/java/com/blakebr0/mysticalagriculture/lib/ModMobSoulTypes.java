@@ -32,6 +32,7 @@ public final class ModMobSoulTypes {
     public static final MobSoulType SKELETON = new MobSoulType(MysticalAgriculture.resource("skeleton"), SKELETON_IDS, "skeleton", 10, 12698049);
     public static final MobSoulType CREEPER = new MobSoulType(MysticalAgriculture.resource("creeper"), ResourceLocation.parse("minecraft:creeper"), 10, 894731);
     public static final MobSoulType SPIDER = new MobSoulType(MysticalAgriculture.resource("spider"), SPIDER_IDS, "spider", 10, 3419431);
+    public static final MobSoulType PHANTOM = new MobSoulType(MysticalAgriculture.resource("phantom"), ResourceLocation.parse("minecraft:phantom"), 6, 0x374377);
     public static final MobSoulType RABBIT = new MobSoulType(MysticalAgriculture.resource("rabbit"), ResourceLocation.parse("minecraft:rabbit"), 6, 10051392);
     public static final MobSoulType BREEZE = new MobSoulType(MysticalAgriculture.resource("breeze"), ResourceLocation.parse("minecraft:breeze"), 4, 0x7982c7);
     public static final MobSoulType BLAZE = new MobSoulType(MysticalAgriculture.resource("blaze"), ResourceLocation.parse("minecraft:blaze"), 10, 16167425);
@@ -58,6 +59,7 @@ public final class ModMobSoulTypes {
         registry.register(SKELETON);
         registry.register(CREEPER);
         registry.register(SPIDER);
+        registry.register(PHANTOM);
         registry.register(RABBIT);
         registry.register(BREEZE);
         registry.register(BLAZE);
