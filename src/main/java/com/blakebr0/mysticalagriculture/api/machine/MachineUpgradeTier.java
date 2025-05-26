@@ -39,12 +39,24 @@ public enum MachineUpgradeTier {
         return this.operationTimeMultiplier;
     }
 
+    public int getOperationTime(int base) {
+        return (int) (base * this.operationTimeMultiplier);
+    }
+
     public double getFuelUsageMultiplier() {
         return this.fuelUsageMultiplier;
     }
 
+    public int getFuelUsage(int base) {
+        return (int) (base * this.fuelUsageMultiplier);
+    }
+
     public double getFuelCapacityMultiplier() {
         return this.fuelCapacityMultiplier;
+    }
+
+    public int getFuelCapacity(int base) {
+        return (int) (base * this.fuelCapacityMultiplier);
     }
 
     public int getAddedRange() {
