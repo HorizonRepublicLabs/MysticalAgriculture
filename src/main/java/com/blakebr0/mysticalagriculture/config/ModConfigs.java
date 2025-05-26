@@ -18,6 +18,7 @@ public final class ModConfigs {
     public static final ModConfigSpec.BooleanValue ESSENCE_FARMLAND_CONVERSION;
     public static final ModConfigSpec.BooleanValue SEED_CRAFTING_RECIPES;
     public static final ModConfigSpec.BooleanValue ENCHANTABLE_SUPREMIUM_TOOLS;
+    public static final ModConfigSpec.BooleanValue UNBREAKABLE_SUPREMIUM_ARMOR;
     public static final ModConfigSpec.BooleanValue FAKE_PLAYER_WATERING;
     public static final ModConfigSpec.BooleanValue AWAKENED_SUPREMIUM_SET_BONUS;
 
@@ -35,7 +36,7 @@ public final class ModConfigs {
                 .comment("The percentage chance that a passive or hostile mob will drop an Inferium Essence when killed.")
                 .defineInRange("inferiumDropChance", 0.2, 0.0, 1.0);
         INFUSION_CRYSTAL_USES = common
-                .comment("The amount of uses the basic Infusion Crystal should have.")
+                .comment("The number of uses the basic Infusion Crystal should have.")
                 .defineInRange("infusionCrystalUses", 1000, 10, Integer.MAX_VALUE);
         GROWTH_ACCELERATOR_COOLDOWN = common
                 .comment("The amount of time in seconds between each Growth Accelerator growth tick.")
@@ -59,14 +60,17 @@ public final class ModConfigs {
                 .comment("Should the Ender Dragon drop Cognizant Dust when killed with a Mystical Enlightenment enchanted essence weapon?")
                 .define("dragonDropsCognizant", true);
         ESSENCE_FARMLAND_CONVERSION = common
-                .comment("Should right clicking on Farmland with an Essence create Essence Farmland?")
+                .comment("Should right-clicking on Farmland with an Essence create Essence Farmland?")
                 .define("essenceFarmlandConversion", true);
         SEED_CRAFTING_RECIPES = common
                 .comment("Should vanilla crafting recipes for seeds be generated?")
                 .define("seedCraftingRecipes", false);
         ENCHANTABLE_SUPREMIUM_TOOLS = common
-                .comment("Should Supremium Tools be enchantable in an Enchanting Table?")
+                .comment("Should Supremium & Awakened Supremium Tools be enchantable in an Enchanting Table?")
                 .define("enchantableSupremiumTools", true);
+        UNBREAKABLE_SUPREMIUM_ARMOR = common
+                .comment("Should Supremium & Awakened Supremium Armor be unbreakable?")
+                .define("unbreakableSupremiumArmor", false);
         FAKE_PLAYER_WATERING = common
                 .comment("Should fake players be able to use watering cans?")
                 .define("fakePlayerWatering", true);

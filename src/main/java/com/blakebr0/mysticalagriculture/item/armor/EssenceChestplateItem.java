@@ -11,6 +11,7 @@ import com.blakebr0.mysticalagriculture.init.ModItems;
 import com.blakebr0.mysticalagriculture.lib.ModTooltips;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -21,6 +22,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.Unbreakable;
 import net.minecraft.world.level.Level;
 
 import java.util.ArrayList;
@@ -33,7 +35,16 @@ public class EssenceChestplateItem extends BaseArmorItem implements ITinkerable 
     private final int slots;
 
     public EssenceChestplateItem(Holder<ArmorMaterial> material, int maxDamageFactor, int tinkerableTier, int slots) {
-        super(material, Type.CHESTPLATE, maxDamageFactor, p -> p.component(ModDataComponentTypes.EQUIPPED_AUGMENTS, new ArrayList<>(slots)));
+        super(material, Type.CHESTPLATE, maxDamageFactor, p -> {
+            p.component(ModDataComponentTypes.EQUIPPED_AUGMENTS, new ArrayList<>(slots));
+
+            // Supremium+ armor can be unbreakable if enabled
+            if (tinkerableTier >= 5 && ModConfigs.UNBREAKABLE_SUPREMIUM_ARMOR.get()) {
+                p.component(DataComponents.UNBREAKABLE, new Unbreakable(true));
+            }
+
+            return p;
+        });
         this.tinkerableTier = tinkerableTier;
         this.slots = slots;
     }
