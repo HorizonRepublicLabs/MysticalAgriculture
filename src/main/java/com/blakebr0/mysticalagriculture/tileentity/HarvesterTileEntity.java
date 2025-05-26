@@ -7,12 +7,12 @@ import com.blakebr0.cucumber.inventory.BaseItemStackHandler;
 import com.blakebr0.cucumber.inventory.OnContentsChangedFunction;
 import com.blakebr0.cucumber.tileentity.BaseInventoryTileEntity;
 import com.blakebr0.cucumber.util.Localizable;
+import com.blakebr0.mysticalagriculture.api.machine.IUpgradeableMachine;
+import com.blakebr0.mysticalagriculture.api.machine.MachineUpgradeItemStackHandler;
+import com.blakebr0.mysticalagriculture.api.machine.MachineUpgradeTier;
 import com.blakebr0.mysticalagriculture.block.HarvesterBlock;
 import com.blakebr0.mysticalagriculture.container.HarvesterContainer;
-import com.blakebr0.mysticalagriculture.container.inventory.UpgradeItemStackHandler;
 import com.blakebr0.mysticalagriculture.init.ModTileEntities;
-import com.blakebr0.mysticalagriculture.util.IUpgradeableMachine;
-import com.blakebr0.mysticalagriculture.util.MachineUpgradeTier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -39,7 +39,7 @@ public class HarvesterTileEntity extends BaseInventoryTileEntity implements Menu
     public static final int BASE_RANGE = 1;
 
     private final BaseItemStackHandler inventory;
-    private final UpgradeItemStackHandler upgradeInventory;
+    private final MachineUpgradeItemStackHandler upgradeInventory;
     private final DynamicEnergyStorage energy;
     private MachineUpgradeTier tier;
     private Direction direction;
@@ -52,7 +52,7 @@ public class HarvesterTileEntity extends BaseInventoryTileEntity implements Menu
     public HarvesterTileEntity(BlockPos pos, BlockState state) {
         super(ModTileEntities.HARVESTER.get(), pos, state);
         this.inventory = createInventoryHandler((slot) -> this.setChanged());
-        this.upgradeInventory = new UpgradeItemStackHandler();
+        this.upgradeInventory = new MachineUpgradeItemStackHandler();
         this.energy = new DynamicEnergyStorage(FUEL_CAPACITY, this::setChangedFast);
     }
 
@@ -72,7 +72,7 @@ public class HarvesterTileEntity extends BaseInventoryTileEntity implements Menu
     }
 
     @Override
-    public UpgradeItemStackHandler getUpgradeInventory() {
+    public MachineUpgradeItemStackHandler getUpgradeInventory() {
         return this.upgradeInventory;
     }
 

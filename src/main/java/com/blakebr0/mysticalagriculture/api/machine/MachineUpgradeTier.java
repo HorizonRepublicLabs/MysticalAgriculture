@@ -1,4 +1,4 @@
-package com.blakebr0.mysticalagriculture.util;
+package com.blakebr0.mysticalagriculture.api.machine;
 
 import com.blakebr0.mysticalagriculture.api.crop.CropTier;
 import net.minecraft.ChatFormatting;

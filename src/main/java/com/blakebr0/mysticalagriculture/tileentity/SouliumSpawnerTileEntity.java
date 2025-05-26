@@ -10,13 +10,13 @@ import com.blakebr0.cucumber.tileentity.BaseInventoryTileEntity;
 import com.blakebr0.cucumber.util.Localizable;
 import com.blakebr0.cucumber.util.Utils;
 import com.blakebr0.mysticalagriculture.api.crafting.ISouliumSpawnerRecipe;
+import com.blakebr0.mysticalagriculture.api.machine.IUpgradeableMachine;
+import com.blakebr0.mysticalagriculture.api.machine.MachineUpgradeItemStackHandler;
+import com.blakebr0.mysticalagriculture.api.machine.MachineUpgradeTier;
 import com.blakebr0.mysticalagriculture.block.SouliumSpawnerBlock;
 import com.blakebr0.mysticalagriculture.container.SouliumSpawnerContainer;
-import com.blakebr0.mysticalagriculture.container.inventory.UpgradeItemStackHandler;
 import com.blakebr0.mysticalagriculture.init.ModRecipeTypes;
 import com.blakebr0.mysticalagriculture.init.ModTileEntities;
-import com.blakebr0.mysticalagriculture.util.IUpgradeableMachine;
-import com.blakebr0.mysticalagriculture.util.MachineUpgradeTier;
 import com.blakebr0.mysticalagriculture.util.RecipeIngredientCache;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -54,7 +54,7 @@ public class SouliumSpawnerTileEntity extends BaseInventoryTileEntity implements
     public static final int SPAWN_RADIUS = 3;
 
     private final BaseItemStackHandler inventory;
-    private final UpgradeItemStackHandler upgradeInventory;
+    private final MachineUpgradeItemStackHandler upgradeInventory;
     private final DynamicEnergyStorage energy;
     private final SidedInventoryWrapper[] sidedInventoryWrappers;
     private final CachedRecipe<CraftingInput, ISouliumSpawnerRecipe> recipe;
@@ -69,7 +69,7 @@ public class SouliumSpawnerTileEntity extends BaseInventoryTileEntity implements
     public SouliumSpawnerTileEntity(BlockPos pos, BlockState state) {
         super(ModTileEntities.SOULIUM_SPAWNER.get(), pos, state);
         this.inventory = createInventoryHandler((slot) -> this.onInventoryChanged());
-        this.upgradeInventory = new UpgradeItemStackHandler();
+        this.upgradeInventory = new MachineUpgradeItemStackHandler();
         this.energy = new DynamicEnergyStorage(FUEL_CAPACITY, this::setChangedFast);
         this.sidedInventoryWrappers = SidedInventoryWrapper.create(this.inventory, List.of(Direction.UP, Direction.DOWN, Direction.NORTH), this::canInsertStackSided, null);
         this.recipe = new CachedRecipe<>(ModRecipeTypes.SOULIUM_SPAWNER.get());
@@ -134,7 +134,7 @@ public class SouliumSpawnerTileEntity extends BaseInventoryTileEntity implements
     }
 
     @Override
-    public UpgradeItemStackHandler getUpgradeInventory() {
+    public MachineUpgradeItemStackHandler getUpgradeInventory() {
         return this.upgradeInventory;
     }
 

@@ -3,7 +3,7 @@ package com.blakebr0.mysticalagriculture.container;
 import com.blakebr0.cucumber.container.BaseContainerMenu;
 import com.blakebr0.cucumber.inventory.BaseItemStackHandler;
 import com.blakebr0.cucumber.inventory.slot.BaseItemStackHandlerSlot;
-import com.blakebr0.mysticalagriculture.container.inventory.UpgradeItemStackHandler;
+import com.blakebr0.mysticalagriculture.api.machine.MachineUpgradeItemStackHandler;
 import com.blakebr0.mysticalagriculture.init.ModItems;
 import com.blakebr0.mysticalagriculture.init.ModMenuTypes;
 import com.blakebr0.mysticalagriculture.init.ModRecipeTypes;
@@ -17,16 +17,17 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.items.SlotItemHandler;
 
 public class SoulExtractorContainer extends BaseContainerMenu {
     private SoulExtractorContainer(MenuType<?> type, int id, Inventory playerInventory, FriendlyByteBuf buffer) {
-        this(type, id, playerInventory, SoulExtractorTileEntity.createInventoryHandler(), new UpgradeItemStackHandler(), buffer.readBlockPos());
+        this(type, id, playerInventory, SoulExtractorTileEntity.createInventoryHandler(), new MachineUpgradeItemStackHandler(), buffer.readBlockPos());
     }
 
-    private SoulExtractorContainer(MenuType<?> type, int id, Inventory playerInventory, BaseItemStackHandler inventory, UpgradeItemStackHandler upgradeInventory, BlockPos pos) {
+    private SoulExtractorContainer(MenuType<?> type, int id, Inventory playerInventory, BaseItemStackHandler inventory, MachineUpgradeItemStackHandler upgradeInventory, BlockPos pos) {
         super(type, id, pos);
 
-        this.addSlot(new BaseItemStackHandlerSlot(upgradeInventory, 0, 152, 9));
+        this.addSlot(new SlotItemHandler(upgradeInventory, 0, 152, 9));
         this.addSlot(new BaseItemStackHandlerSlot(inventory, 0, 74, 52));
         this.addSlot(new BaseItemStackHandlerSlot(inventory, 1, 30, 56));
         this.addSlot(new BaseItemStackHandlerSlot(inventory, 2, 134, 52));
@@ -99,7 +100,7 @@ public class SoulExtractorContainer extends BaseContainerMenu {
         return new SoulExtractorContainer(ModMenuTypes.SOUL_EXTRACTOR.get(), windowId, playerInventory, buffer);
     }
 
-    public static SoulExtractorContainer create(int windowId, Inventory playerInventory, BaseItemStackHandler inventory, UpgradeItemStackHandler upgradeInventory, BlockPos pos) {
+    public static SoulExtractorContainer create(int windowId, Inventory playerInventory, BaseItemStackHandler inventory, MachineUpgradeItemStackHandler upgradeInventory, BlockPos pos) {
         return new SoulExtractorContainer(ModMenuTypes.SOUL_EXTRACTOR.get(), windowId, playerInventory, inventory, upgradeInventory, pos);
     }
 }

@@ -9,13 +9,13 @@ import com.blakebr0.cucumber.inventory.SidedInventoryWrapper;
 import com.blakebr0.cucumber.tileentity.BaseInventoryTileEntity;
 import com.blakebr0.cucumber.util.Localizable;
 import com.blakebr0.mysticalagriculture.api.crafting.IReprocessorRecipe;
+import com.blakebr0.mysticalagriculture.api.machine.IUpgradeableMachine;
+import com.blakebr0.mysticalagriculture.api.machine.MachineUpgradeItemStackHandler;
+import com.blakebr0.mysticalagriculture.api.machine.MachineUpgradeTier;
 import com.blakebr0.mysticalagriculture.block.ReprocessorBlock;
 import com.blakebr0.mysticalagriculture.container.ReprocessorContainer;
-import com.blakebr0.mysticalagriculture.container.inventory.UpgradeItemStackHandler;
 import com.blakebr0.mysticalagriculture.init.ModRecipeTypes;
 import com.blakebr0.mysticalagriculture.init.ModTileEntities;
-import com.blakebr0.mysticalagriculture.util.IUpgradeableMachine;
-import com.blakebr0.mysticalagriculture.util.MachineUpgradeTier;
 import com.blakebr0.mysticalagriculture.util.RecipeIngredientCache;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -43,7 +43,7 @@ public class ReprocessorTileEntity extends BaseInventoryTileEntity implements Me
     public static final int FUEL_CAPACITY = 80000;
 
     private final BaseItemStackHandler inventory;
-    private final UpgradeItemStackHandler upgradeInventory;
+    private final MachineUpgradeItemStackHandler upgradeInventory;
     private final DynamicEnergyStorage energy;
     private final SidedInventoryWrapper[] sidedInventoryWrappers;
     private final CachedRecipe<CraftingInput, IReprocessorRecipe> recipe;
@@ -56,7 +56,7 @@ public class ReprocessorTileEntity extends BaseInventoryTileEntity implements Me
     public ReprocessorTileEntity(BlockPos pos, BlockState state) {
         super(ModTileEntities.REPROCESSOR.get(), pos, state);
         this.inventory = createInventoryHandler((slot) -> this.setChanged());
-        this.upgradeInventory = new UpgradeItemStackHandler();
+        this.upgradeInventory = new MachineUpgradeItemStackHandler();
         this.energy = new DynamicEnergyStorage(FUEL_CAPACITY, this::setChangedFast);
         this.sidedInventoryWrappers = SidedInventoryWrapper.create(this.inventory, List.of(Direction.UP, Direction.DOWN, Direction.NORTH), this::canInsertStackSided, null);
         this.recipe = new CachedRecipe<>(ModRecipeTypes.REPROCESSOR.get());
@@ -100,7 +100,7 @@ public class ReprocessorTileEntity extends BaseInventoryTileEntity implements Me
     }
 
     @Override
-    public UpgradeItemStackHandler getUpgradeInventory() {
+    public MachineUpgradeItemStackHandler getUpgradeInventory() {
         return this.upgradeInventory;
     }
 

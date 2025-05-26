@@ -3,9 +3,10 @@ package com.blakebr0.mysticalagriculture.item;
 import com.blakebr0.cucumber.item.BaseItem;
 import com.blakebr0.cucumber.lib.Tooltips;
 import com.blakebr0.cucumber.util.Formatting;
+import com.blakebr0.mysticalagriculture.api.machine.IMachineUpgrade;
+import com.blakebr0.mysticalagriculture.api.machine.IUpgradeableMachine;
+import com.blakebr0.mysticalagriculture.api.machine.MachineUpgradeTier;
 import com.blakebr0.mysticalagriculture.lib.ModTooltips;
-import com.blakebr0.mysticalagriculture.util.IUpgradeableMachine;
-import com.blakebr0.mysticalagriculture.util.MachineUpgradeTier;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
@@ -16,7 +17,7 @@ import net.minecraft.world.item.context.UseOnContext;
 
 import java.util.List;
 
-public class MachineUpgradeItem extends BaseItem {
+public class MachineUpgradeItem extends BaseItem implements IMachineUpgrade {
     private final MachineUpgradeTier tier;
 
     public MachineUpgradeItem(MachineUpgradeTier tier) {
@@ -65,6 +66,7 @@ public class MachineUpgradeItem extends BaseItem {
         }
     }
 
+    @Override
     public MachineUpgradeTier getTier() {
         return this.tier;
     }
