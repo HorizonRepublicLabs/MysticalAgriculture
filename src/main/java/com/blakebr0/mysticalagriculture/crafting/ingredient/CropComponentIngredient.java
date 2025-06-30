@@ -62,20 +62,12 @@ public class CropComponentIngredient implements ICustomIngredient {
 
     private void initMatchingStacks() {
         var crop = CropRegistry.getInstance().getCropById(this.crop);
-        var stack = switch (this.type) {
-            case ESSENCE -> new ItemStack(crop.getTier().getEssence());
-            case SEED -> new ItemStack(crop.getType().getCraftingSeed());
-            case MATERIAL -> {
-                var material = crop.getCraftingMaterial();
-                if (material.hasNoItems()) {
-                    yield ItemStack.EMPTY;
-                }
 
-                yield material.getItems()[0];
-            }
+        this.stacks = switch (this.type) {
+            case ESSENCE -> new ItemStack[] { new ItemStack(crop.getTier().getEssence()) };
+            case SEED -> new ItemStack[] { new ItemStack(crop.getType().getCraftingSeed()) };
+            case MATERIAL -> crop.getCraftingMaterial().getItems();
         };
-
-        this.stacks = new ItemStack[] { stack };
     }
 
     public static Ingredient of(ResourceLocation crop, ComponentType type) {
