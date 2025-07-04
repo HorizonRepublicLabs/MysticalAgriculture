@@ -58,7 +58,39 @@ public class EnchanterRecipe implements IEnchanterRecipe {
 
     @Override
     public ItemStack assemble(CraftingInput inventory, HolderLookup.Provider provider) {
-        return this.getEnchantedOutputItemStack(inventory);
+        return this.assemble(inventory, provider, this.getMaxResultEnchantmentLevel(inventory));
+    }
+
+    @Override
+    public ItemStack assemble(CraftingInput inventory, HolderLookup.Provider provider, int level) {
+        var stack = inventory.getItem(2);
+
+        if (this.enchantment.value().canEnchant(stack)) {
+            var enchantments = new ItemEnchantments.Mutable(EnchantmentHelper.getEnchantmentsForCrafting(stack));
+            var newLevel = level;
+
+            for (var enchantment : enchantments.keySet()) {
+                if (enchantment == this.enchantment && enchantments.getLevel(enchantment) >= newLevel)
+                    return ItemStack.EMPTY;
+
+                if (enchantment != this.enchantment && Enchantment.areCompatible(enchantment, this.enchantment))
+                    return ItemStack.EMPTY;
+            }
+
+            enchantments.set(enchantment, newLevel);
+
+            var result = stack.copyWithCount(1);
+
+            EnchantmentHelper.setEnchantments(result, enchantments.toImmutable());
+
+            return result;
+        }
+
+        if (stack.is(Items.BOOK)) {
+            return EnchantedBookItem.createForEnchantment(new EnchantmentInstance(this.enchantment, level));
+        }
+
+        return ItemStack.EMPTY;
     }
 
     @Override
@@ -90,11 +122,16 @@ public class EnchanterRecipe implements IEnchanterRecipe {
 
     @Override
     public NonNullList<ItemStack> getRemainingItems(CraftingInput inventory) {
+        return this.getRemainingItems(inventory, this.getMaxResultEnchantmentLevel(inventory));
+    }
+
+    @Override
+    public NonNullList<ItemStack> getRemainingItems(CraftingInput inventory, int level) {
         var remaining = NonNullList.withSize(inventory.size(), ItemStack.EMPTY);
 
         for (int i = 0; i < 2; i++) {
             var stack = inventory.getItem(i);
-            var count = this.inputs.get(i).getCount() * this.getOutputEnchantmentLevel(inventory);
+            var count = this.inputs.get(i).getCount() * level;
 
             remaining.set(i, stack.copyWithCount(stack.getCount() - count));
         }
@@ -120,38 +157,8 @@ public class EnchanterRecipe implements IEnchanterRecipe {
         return this.inputs.get(index).getCount();
     }
 
-    private ItemStack getEnchantedOutputItemStack(RecipeInput inventory) {
-        var stack = inventory.getItem(2);
-
-        if (this.enchantment.value().canEnchant(stack)) {
-            var enchantments = new ItemEnchantments.Mutable(EnchantmentHelper.getEnchantmentsForCrafting(stack));
-            var newLevel = this.getOutputEnchantmentLevel(inventory);
-
-            for (var enchantment : enchantments.keySet()) {
-                if (enchantment == this.enchantment && enchantments.getLevel(enchantment) >= newLevel)
-                    return ItemStack.EMPTY;
-
-                if (enchantment != this.enchantment && Enchantment.areCompatible(enchantment, this.enchantment))
-                    return ItemStack.EMPTY;
-            }
-
-            enchantments.set(enchantment, newLevel);
-
-            var result = stack.copyWithCount(1);
-
-            EnchantmentHelper.setEnchantments(result, enchantments.toImmutable());
-
-            return result;
-        }
-
-        if (stack.is(Items.BOOK)) {
-            return EnchantedBookItem.createForEnchantment(new EnchantmentInstance(this.enchantment, this.getOutputEnchantmentLevel(inventory)));
-        }
-
-        return ItemStack.EMPTY;
-    }
-
-    private int getOutputEnchantmentLevel(RecipeInput inventory) {
+    @Override
+    public int getMaxResultEnchantmentLevel(RecipeInput inventory) {
         var level = 0;
 
         for (var i = 0; i < this.inputs.size(); i++) {
