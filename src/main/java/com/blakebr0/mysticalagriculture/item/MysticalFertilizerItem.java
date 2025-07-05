@@ -35,18 +35,13 @@ public class MysticalFertilizerItem extends BaseItem {
         var pos = context.getClickedPos();
         var player = context.getPlayer();
         var level = context.getLevel();
-        var direction = context.getClickedFace();
 
-        if (player == null || !player.mayUseItemAt(pos.relative(direction), direction, stack)) {
-            return InteractionResult.FAIL;
-        } else {
-            if (applyFertilizer(stack, level, pos, player)) {
-                if (!level.isClientSide()) {
-                    level.levelEvent(1505, pos, 0);
-                }
-
-                return InteractionResult.SUCCESS;
+        if (applyFertilizer(stack, level, pos, player)) {
+            if (!level.isClientSide()) {
+                level.levelEvent(1505, pos, 0);
             }
+
+            return InteractionResult.SUCCESS;
         }
 
         return InteractionResult.PASS;
@@ -60,9 +55,11 @@ public class MysticalFertilizerItem extends BaseItem {
     public static boolean applyFertilizer(ItemStack stack, Level level, BlockPos pos, Player player) {
         var state = level.getBlockState(pos);
 
-        if (player != null) {
+        {
             var event = EventHooks.fireBonemealEvent(player, level, pos, state, stack);
-            if (event.isCanceled()) return event.isSuccessful();
+            if (event.isCanceled()) {
+                return event.isSuccessful();
+            }
         }
 
         var block = state.getBlock();

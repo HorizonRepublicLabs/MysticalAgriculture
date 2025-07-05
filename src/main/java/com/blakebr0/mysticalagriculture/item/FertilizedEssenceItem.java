@@ -18,6 +18,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.neoforged.neoforge.event.EventHooks;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -34,18 +35,13 @@ public class FertilizedEssenceItem extends BaseItem {
         var pos = context.getClickedPos();
         var player = context.getPlayer();
         var level = context.getLevel();
-        var direction = context.getClickedFace();
 
-        if (player == null || !player.mayUseItemAt(pos.relative(direction), direction, stack)) {
-            return InteractionResult.FAIL;
-        } else {
-            if (applyFertilizer(stack, level, pos, player)) {
-                if (!level.isClientSide()){
-                    level.levelEvent(1505, pos, 0);
-                }
-
-                return InteractionResult.SUCCESS;
+        if (applyFertilizer(stack, level, pos, player)) {
+            if (!level.isClientSide()){
+                level.levelEvent(1505, pos, 0);
             }
+
+            return InteractionResult.SUCCESS;
         }
 
         return InteractionResult.PASS;
@@ -57,12 +53,12 @@ public class FertilizedEssenceItem extends BaseItem {
         tooltip.add(ModTooltips.FERTILIZED_ESSENCE_CHANCE.args(chance + "%").build());
     }
 
-    public static boolean applyFertilizer(ItemStack stack, Level level, BlockPos pos, Player player){
+    public static boolean applyFertilizer(ItemStack stack, Level level, BlockPos pos, @Nullable Player player) {
         var state = level.getBlockState(pos);
 
-        if (player != null) {
-            var event = EventHooks.fireBonemealEvent(player, level, pos, state, stack);
-            if (event.isCanceled()) return event.isSuccessful();
+        var event = EventHooks.fireBonemealEvent(player, level, pos, state, stack);
+        if (event.isCanceled()) {
+            return event.isSuccessful();
         }
 
         var block = state.getBlock();
