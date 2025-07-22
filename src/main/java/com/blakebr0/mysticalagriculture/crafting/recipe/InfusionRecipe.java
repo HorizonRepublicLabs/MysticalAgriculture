@@ -30,7 +30,7 @@ public class InfusionRecipe implements IInfusionRecipe {
     // for CraftTweaker recipes
     private BiFunction<Integer, ItemStack, ItemStack> transformer;
 
-    // the input is specified separately in JSON but is part of the ingredients list in practice
+    // the input is specified separately in JSON but is part of the ingredient list in practice
     public InfusionRecipe(Ingredient input, NonNullList<Ingredient> inputs, ItemStack result, boolean transferComponents) {
         this.input = input;
         this.inputs = inputs;
@@ -110,12 +110,15 @@ public class InfusionRecipe implements IInfusionRecipe {
 
         if (this.transformer != null) {
             var used = new boolean[remaining.size()];
+            var inputs = NonNullList.<Ingredient>create();
+
+            inputs.add(this.input);
+            inputs.addAll(this.inputs);
 
             for (int i = 0; i < remaining.size(); i++) {
                 var stack = inventory.getItem(i);
-
-                for (int j = 0; j < this.inputs.size(); j++) {
-                    var input = this.inputs.get(j);
+                for (int j = 0; j < inputs.size(); j++) {
+                    var input = inputs.get(j);
 
                     if (!used[j] && input.test(stack)) {
                         var ingredient = this.transformer.apply(j, stack);

@@ -30,7 +30,9 @@ public final class InfusionCrafting implements IRecipeManager<IInfusionRecipe> {
         var id = CraftTweakerConstants.rl(this.fixRecipeName(name));
         var recipe = new InfusionRecipe(input.asVanillaIngredient(), toIngredientsList(inputs), output.getInternal(), transferNBT);
 
-        recipe.setTransformer((slot, stack) -> inputs[slot].getRemainingItem(new MCItemStack(stack)).getInternal());
+        recipe.setTransformer((slot, stack) -> slot == 0
+                ? input.getRemainingItem(new MCItemStack(stack)).getInternal()
+                : inputs[slot - 1].getRemainingItem(new MCItemStack(stack)).getInternal());
 
         CraftTweakerAPI.apply(new ActionAddRecipe<>(this, new RecipeHolder<>(id, recipe)));
     }

@@ -31,7 +31,9 @@ public final class AwakeningCrafting implements IRecipeManager<IAwakeningRecipe>
         var id = CraftTweakerConstants.rl(this.fixRecipeName(name));
         var recipe = new AwakeningRecipe(input.asVanillaIngredient(), toIngredientsList(inputs), toItemStackList(essences), output.getInternal(), transferComponents);
 
-        recipe.setTransformer((slot, stack) -> inputs[slot].getRemainingItem(new MCItemStack(stack)).getInternal());
+        recipe.setTransformer((slot, stack) -> slot == 0
+                ? input.getRemainingItem(new MCItemStack(stack)).getInternal()
+                : inputs[slot - 1].getRemainingItem(new MCItemStack(stack)).getInternal());
 
         CraftTweakerAPI.apply(new ActionAddRecipe<>(this, new RecipeHolder<>(id, recipe)));
     }

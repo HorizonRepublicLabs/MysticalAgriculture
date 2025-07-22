@@ -37,6 +37,7 @@ public class AwakeningRecipe implements IAwakeningRecipe {
     // for CraftTweaker recipes
     private BiFunction<Integer, ItemStack, ItemStack> transformer;
 
+    // the input is specified separately in JSON but is part of the ingredient list in practice
     public AwakeningRecipe(Ingredient input, NonNullList<Ingredient> inputs, NonNullList<ItemStack> essences, ItemStack result, boolean transferComponents) {
         this.input = input;
         this.essences = essences;
@@ -150,9 +151,13 @@ public class AwakeningRecipe implements IAwakeningRecipe {
 
                 if (this.transformer != null) {
                     var used = new boolean[remaining.size()];
+                    var inputs = NonNullList.<Ingredient>create();
 
-                    for (int j = 0; j < this.inputs.size(); j += 2) {
-                        var input = this.inputs.get(j);
+                    inputs.add(this.input);
+                    inputs.addAll(this.inputs);
+
+                    for (int j = 0; j < inputs.size(); j += 2) {
+                        var input = inputs.get(j);
 
                         if (!used[j] && input.test(stack)) {
                             var index = Math.floorDiv(i, 2);
