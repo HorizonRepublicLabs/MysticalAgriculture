@@ -99,9 +99,9 @@ public class InfusionAltarTileEntity extends BaseInventoryTileEntity implements 
                     var inventory = tile.toCraftingInput();
                     var remaining = recipe.getRemainingItems(inventory);
 
-                    for (var i = 0; i < pedestals.size(); i++) {
-                        var pedestal = pedestals.get(i);
-                        pedestal.getInventory().setStackInSlot(0, remaining.get(i + 1));
+                    for (var i = 1; i < remaining.size(); i++) {
+                        var pedestal = pedestals.get(i - 1);
+                        pedestal.getInventory().setStackInSlot(0, remaining.get(i));
                         tile.spawnParticles(ParticleTypes.SMOKE, pedestal.getBlockPos(), 1.2D, 20);
                     }
 

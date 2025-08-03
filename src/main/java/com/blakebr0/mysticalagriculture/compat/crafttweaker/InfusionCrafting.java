@@ -38,10 +38,10 @@ public final class InfusionCrafting implements IRecipeManager<IInfusionRecipe> {
     }
 
     private static NonNullList<Ingredient> toIngredientsList(IIngredient... iingredients) {
-        var ingredients = NonNullList.withSize(8, Ingredient.EMPTY);
+        var ingredients = NonNullList.<Ingredient>create();
 
-        for (int i = 0; i < iingredients.length; i++) {
-            ingredients.set(i, iingredients[i].asVanillaIngredient());
+        for (var iingredient : iingredients) {
+            ingredients.add(iingredient.asVanillaIngredient());
         }
 
         return ingredients;
