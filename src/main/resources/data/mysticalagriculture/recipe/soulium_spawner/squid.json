@@ -13,6 +13,10 @@
   "entities": [
     {
       "entity": "minecraft:squid",
+      "weight": 9
+    },
+    {
+      "entity": "minecraft:glow_squid",
       "weight": 1
     }
   ]
