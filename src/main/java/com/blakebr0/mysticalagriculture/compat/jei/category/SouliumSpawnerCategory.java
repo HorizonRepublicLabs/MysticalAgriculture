@@ -1,9 +1,11 @@
 package com.blakebr0.mysticalagriculture.compat.jei.category;
 
+import com.blakebr0.cucumber.util.Formatting;
 import com.blakebr0.cucumber.util.Localizable;
 import com.blakebr0.mysticalagriculture.MysticalAgriculture;
 import com.blakebr0.mysticalagriculture.api.crafting.ISouliumSpawnerRecipe;
 import com.blakebr0.mysticalagriculture.init.ModBlocks;
+import com.blakebr0.mysticalagriculture.lib.ModTooltips;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -15,15 +17,17 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.random.WeightedEntry;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SpawnEggItem;
+import net.minecraft.world.item.component.CustomData;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 public class SouliumSpawnerCategory implements IRecipeCategory<ISouliumSpawnerRecipe> {
     private static final ResourceLocation TEXTURE = MysticalAgriculture.resource("textures/jei/soulium_spawner.png");
@@ -74,7 +78,21 @@ public class SouliumSpawnerCategory implements IRecipeCategory<ISouliumSpawnerRe
 
         builder.addSlot(RecipeIngredientRole.INPUT, 1, 5).addItemStacks(inputs);
 
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 61, 5).addItemStacks(outputs);
+        var totalWeight = recipe.getEntityTypes().unwrap()
+                .stream().mapToInt(w -> w.weight().asInt()).sum();
+
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 61, 5)
+                .addItemStacks(outputs)
+                .addRichTooltipCallback((slots, tooltip) -> slots.getDisplayedItemStack().ifPresent(stack -> {
+                    var data = stack.get(DataComponents.CUSTOM_DATA);
+                    if (data == null || !data.contains("Weight"))
+                        return;
+
+                    var weight = data.getUnsafe().getInt("Weight");
+                    var chance = ((double) weight / (double) totalWeight) * 100D;
+
+                    tooltip.add(ModTooltips.CHANCE.args(Formatting.percent(chance)).build());
+                }));
     }
 
     private static List<ItemStack> createInputsList(ISouliumSpawnerRecipe recipe) {
@@ -86,12 +104,23 @@ public class SouliumSpawnerCategory implements IRecipeCategory<ISouliumSpawnerRe
     }
 
     private static List<ItemStack> createOutputsList(ISouliumSpawnerRecipe recipe) {
-        return recipe.getEntityTypes().unwrap()
-                .stream()
-                .map(WeightedEntry.Wrapper::data)
-                .map(SpawnEggItem::byId)
-                .filter(Objects::nonNull)
-                .map(ItemStack::new)
-                .toList();
+        var entries = recipe.getEntityTypes().unwrap();
+        var outputs = new ArrayList<ItemStack>();
+
+        for (var entry : entries) {
+            var item = SpawnEggItem.byId(entry.data());
+            if (item == null)
+                continue;
+
+            var tag = new CompoundTag();
+            tag.putInt("Weight", entry.weight().asInt());
+
+            var stack = new ItemStack(item);
+            stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
+
+            outputs.add(stack);
+        }
+
+        return outputs;
     }
 }

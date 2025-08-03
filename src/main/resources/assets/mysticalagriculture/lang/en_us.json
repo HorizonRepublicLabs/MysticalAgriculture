@@ -277,6 +277,7 @@
   "tooltip.mysticalagriculture.set_bonus": "Set Bonus: %s",
   "tooltip.mysticalagriculture.augments": "Augments:",
   "tooltip.mysticalagriculture.required_biomes": "Required Biomes:",
+  "tooltip.mysticalagriculture.chance": "%s Chance",
   "tooltip.mysticalagriculture.secondary_chance": "Secondary Chance: %s",
   "tooltip.mysticalagriculture.inferium_output": "Inferium Output: %s",
   "tooltip.mysticalagriculture.cooking_speed": "Cooking Speed: %s",
