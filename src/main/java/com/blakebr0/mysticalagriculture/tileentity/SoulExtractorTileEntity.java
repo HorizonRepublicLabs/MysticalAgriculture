@@ -200,18 +200,18 @@ public class SoulExtractorTileEntity extends BaseInventoryTileEntity implements 
 
     public static BaseItemStackHandler createInventoryHandler(OnContentsChangedFunction onContentsChanged) {
         return BaseItemStackHandler.create(3, onContentsChanged, builder -> {
-            builder.setCanExtract(slot -> {
-                if (slot == 2) {
+            builder.setCanInsert((slot, stack) -> switch (slot) {
+                case 1 -> FurnaceBlockEntity.isFuel(stack);
+                case 2 -> stack.getItem() instanceof SoulJarItem;
+                default -> true;
+            });
+            builder.setCanExtract(slot -> switch (slot) {
+                case 1 -> !FurnaceBlockEntity.isFuel(builder.getStackInSlot(1));
+                case 2 -> {
                     var stack = builder.getStackInSlot(2);
-                    return stack.getItem() instanceof SoulJarItem && MobSoulUtils.isJarFull(stack);
+                    yield stack.getItem() instanceof SoulJarItem && MobSoulUtils.isJarFull(stack);
                 }
-
-                if (slot == 1) {
-                    var stack = builder.getStackInSlot(1);
-                    return !FurnaceBlockEntity.isFuel(stack);
-                }
-
-                return false;
+                default -> false;
             });
         });
     }
