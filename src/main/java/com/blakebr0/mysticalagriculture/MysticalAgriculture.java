@@ -1,6 +1,7 @@
 package com.blakebr0.mysticalagriculture;
 
 import com.blakebr0.mysticalagriculture.api.MysticalAgricultureAPI;
+import com.blakebr0.mysticalagriculture.api.MysticalAgricultureConfigValues;
 import com.blakebr0.mysticalagriculture.client.EssenceVesselColorManager;
 import com.blakebr0.mysticalagriculture.client.ModClientExtensions;
 import com.blakebr0.mysticalagriculture.client.ModClientTooltipComponentFactories;
@@ -149,5 +150,17 @@ public final class MysticalAgriculture {
 		augmentRegistry.set(null, AugmentRegistry.getInstance());
 		soulTypeRegistry.setAccessible(true);
 		soulTypeRegistry.set(null, MobSoulTypeRegistry.getInstance());
+
+		var configValues = api.getDeclaredField("configValues");
+
+		configValues.setAccessible(true);
+		configValues.set(null, new MysticalAgricultureConfigValues(
+				ModConfigs.INFERIUM_DROP_CHANCE,
+				ModConfigs.FERTILIZED_ESSENCE_DROP_CHANCE,
+				ModConfigs.SECONDARY_SEED_DROPS,
+				ModConfigs.ENCHANTABLE_SUPREMIUM_TOOLS,
+				ModConfigs.UNBREAKABLE_SUPREMIUM_ARMOR,
+				ModConfigs.FAKE_PLAYER_WATERING
+		));
 	}
 }

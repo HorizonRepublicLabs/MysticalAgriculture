@@ -12,6 +12,8 @@ public class MysticalAgricultureAPI {
     private static IAugmentRegistry augmentRegistry;
     private static IMobSoulTypeRegistry soulTypeRegistry;
 
+    private static MysticalAgricultureConfigValues configValues;
+
     /**
      * The registry in which all crops, crop tiers, and crop types are stored
      * @return the crop registry
@@ -34,6 +36,14 @@ public class MysticalAgricultureAPI {
      */
     public static IMobSoulTypeRegistry getMobSoulTypeRegistry() {
         return soulTypeRegistry;
+    }
+
+    /**
+     * Config values defined in the {@code mysticalagriculture-common.toml} config file
+     * @return mod config values
+     */
+    public static MysticalAgricultureConfigValues getConfigValues() {
+        return configValues;
     }
 
     /**
