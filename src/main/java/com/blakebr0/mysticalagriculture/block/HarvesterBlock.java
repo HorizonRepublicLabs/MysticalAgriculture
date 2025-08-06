@@ -100,12 +100,14 @@ public class HarvesterBlock extends BaseTileEntityBlock {
 
             var area = Component.literal(rangeString + "x" + rangeString).withStyle(ChatFormatting.WHITE);
             var speed = Formatting.number(HarvesterTileEntity.OPERATION_TIME).withStyle(ChatFormatting.WHITE);
-            var fuelRate = Formatting.number(HarvesterTileEntity.SCAN_FUEL_USAGE).withStyle(ChatFormatting.WHITE);
+            var scanFuelUsage = Formatting.number(HarvesterTileEntity.SCAN_FUEL_USAGE).withStyle(ChatFormatting.WHITE);
+            var fuelRate = Formatting.number(HarvesterTileEntity.FUEL_USAGE).withStyle(ChatFormatting.WHITE);
             var fuelCapacity = Formatting.number(HarvesterTileEntity.FUEL_CAPACITY).withStyle(ChatFormatting.WHITE);
 
             tooltip.add(ModTooltips.MACHINE_AREA.args(area).build());
             tooltip.add(ModTooltips.MACHINE_SPEED.args(speed).build());
-            tooltip.add(ModTooltips.MACHINE_FUEL_RATE.args(fuelRate).build());
+            tooltip.add(ModTooltips.MACHINE_SCAN_FUEL_USAGE.args(scanFuelUsage).build());
+            tooltip.add(ModTooltips.MACHINE_FUEL_USAGE.args(fuelRate).build());
             tooltip.add(ModTooltips.MACHINE_FUEL_CAPACITY.args(fuelCapacity).build());
         } else {
             tooltip.add(Tooltips.HOLD_SHIFT_FOR_INFO.build());

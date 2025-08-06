@@ -290,6 +290,8 @@
   "tooltip.mysticalagriculture.machine_speed": "Operation Speed: %st",
   "tooltip.mysticalagriculture.machine_fuel_rate": "Fuel Usage: %s/t",
   "tooltip.mysticalagriculture.machine_fuel_capacity": "Fuel Capacity: %s",
+  "tooltip.mysticalagriculture.machine_fuel_usage": "Fuel Usage: %s",
+  "tooltip.mysticalagriculture.machine_scan_fuel_usage": "Scan Fuel Usage: %s",
   "tooltip.mysticalagriculture.machine_area": "Area: %s",
   "tooltip.mysticalagriculture.machine_spawn_radius": "Spawn Radius: %s",
   "tooltip.mysticalagriculture.tool_area": "Area: %s",
