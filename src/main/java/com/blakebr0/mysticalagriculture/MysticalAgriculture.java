@@ -158,6 +158,7 @@ public final class MysticalAgriculture {
 				ModConfigs.INFERIUM_DROP_CHANCE,
 				ModConfigs.FERTILIZED_ESSENCE_DROP_CHANCE,
 				ModConfigs.SECONDARY_SEED_DROPS,
+                ModConfigs.REQUIRES_EFFECTIVE_FARMLAND,
 				ModConfigs.ENCHANTABLE_SUPREMIUM_TOOLS,
 				ModConfigs.UNBREAKABLE_SUPREMIUM_ARMOR,
 				ModConfigs.FAKE_PLAYER_WATERING

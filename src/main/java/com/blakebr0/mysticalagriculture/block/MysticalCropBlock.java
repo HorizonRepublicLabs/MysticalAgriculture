@@ -5,6 +5,7 @@ import com.blakebr0.mysticalagriculture.api.crop.Crop;
 import com.blakebr0.mysticalagriculture.api.crop.ICropProvider;
 import com.blakebr0.mysticalagriculture.config.ModConfigs;
 import com.blakebr0.mysticalagriculture.init.ModItems;
+import com.blakebr0.mysticalagriculture.lib.ModCrops;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -144,6 +145,12 @@ public class MysticalCropBlock extends CropBlock implements ICropProvider {
         if (crux != null) {
             var block = level.getBlockState(pos.below(2)).getBlock();
             if (block != crux)
+                return false;
+        }
+
+        if (ModConfigs.REQUIRES_EFFECTIVE_FARMLAND.get() && this.crop != ModCrops.INFERIUM) {
+            var farmland = level.getBlockState(pos.below()).getBlock();
+            if (!this.crop.getTier().isEffectiveFarmland(farmland))
                 return false;
         }
 

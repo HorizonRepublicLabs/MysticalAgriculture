@@ -11,6 +11,7 @@ public final class ModConfigs {
     public static final ModConfigSpec.IntValue GROWTH_ACCELERATOR_COOLDOWN;
     public static final ModConfigSpec.DoubleValue FERTILIZED_ESSENCE_DROP_CHANCE;
     public static final ModConfigSpec.BooleanValue SECONDARY_SEED_DROPS;
+    public static final ModConfigSpec.BooleanValue REQUIRES_EFFECTIVE_FARMLAND;
     public static final ModConfigSpec.BooleanValue WITHER_DROPS_ESSENCE;
     public static final ModConfigSpec.BooleanValue WITHER_DROPS_COGNIZANT;
     public static final ModConfigSpec.BooleanValue DRAGON_DROPS_ESSENCE;
@@ -47,6 +48,9 @@ public final class ModConfigs {
         SECONDARY_SEED_DROPS = common
                 .comment("Should crops have a chance of dropping a second seed when harvested?")
                 .define("secondarySeedDrops", true);
+        REQUIRES_EFFECTIVE_FARMLAND = common
+                .comment("Should resource crops need to be planted on their effective Farmland to grow?")
+                .define("requiresEffectiveFarmland", false);
         WITHER_DROPS_ESSENCE = common
                 .comment("Should the Wither drop essence when killed with an essence weapon?")
                 .define("witherDropsEssence", true);

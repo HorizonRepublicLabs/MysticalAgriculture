@@ -7,6 +7,7 @@ import com.blakebr0.mysticalagriculture.block.InferiumCropBlock;
 import com.blakebr0.mysticalagriculture.block.InfusedFarmlandBlock;
 import com.blakebr0.mysticalagriculture.block.MysticalCropBlock;
 import com.blakebr0.mysticalagriculture.config.ModConfigs;
+import com.blakebr0.mysticalagriculture.lib.ModCrops;
 import com.blakebr0.mysticalagriculture.lib.ModTooltips;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -40,6 +41,13 @@ public class JadeCompat implements IWailaPlugin {
                 var downPos = pos.below();
                 var level = accessor.getLevel();
                 var belowBlock = level.getBlockState(downPos).getBlock();
+
+                if (ModConfigs.REQUIRES_EFFECTIVE_FARMLAND.get() && crop != ModCrops.INFERIUM) {
+                    var farmland = crop.getTier().getFarmland();
+                    if (farmland != null) {
+                        tooltip.add(ModTooltips.REQUIRES_EFFECTIVE_FARMLAND.args(farmland.getName().withStyle(crop.getTier().getTextColor())).build());
+                    }
+                }
 
                 if (ModConfigs.SECONDARY_SEED_DROPS.get()) {
                     var secondaryChance = crop.getSecondaryChance(belowBlock);

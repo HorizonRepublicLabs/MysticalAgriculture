@@ -5,6 +5,7 @@ import com.blakebr0.mysticalagriculture.api.crop.ICropProvider;
 import com.blakebr0.mysticalagriculture.api.farmland.IEssenceFarmland;
 import com.blakebr0.mysticalagriculture.block.InferiumCropBlock;
 import com.blakebr0.mysticalagriculture.config.ModConfigs;
+import com.blakebr0.mysticalagriculture.lib.ModCrops;
 import com.blakebr0.mysticalagriculture.lib.ModTooltips;
 import com.blakebr0.mysticalagriculture.tileentity.EssenceVesselTileEntity;
 import mcjty.theoneprobe.api.IProbeHitData;
@@ -42,6 +43,13 @@ public class TOPCompat implements Function<ITheOneProbe, Void> {
                     var belowBlock = level.getBlockState(pos.below()).getBlock();
 
                     info.text(ModTooltips.TIER.args(crop.getTier().getDisplayName()).build());
+
+                    if (ModConfigs.REQUIRES_EFFECTIVE_FARMLAND.get() && crop != ModCrops.INFERIUM) {
+                        var farmland = crop.getTier().getFarmland();
+                        if (farmland != null) {
+                            info.text(ModTooltips.REQUIRES_EFFECTIVE_FARMLAND.args(farmland.getName()).build());
+                        }
+                    }
 
                     if (ModConfigs.SECONDARY_SEED_DROPS.get()) {
                         double secondaryChance = crop.getSecondaryChance(belowBlock);
