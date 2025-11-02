@@ -1,5 +1,5 @@
 {
-  "parent": "mysticalagriculture:block/mystical_resource_crop_7",
+  "parent": "mysticalagriculture:block/mystical_mob_crop_7",
   "textures": {
     "flower": "mysticalagriculture:block/flower/breeze_flower"
   }
