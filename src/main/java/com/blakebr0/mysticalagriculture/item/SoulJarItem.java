@@ -9,11 +9,16 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.List;
 
 public class SoulJarItem extends BaseItem {
     private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("0.00");
+
+    static {
+        DECIMAL_FORMAT.setRoundingMode(RoundingMode.DOWN);
+    }
 
     public SoulJarItem() {
         super(p -> p.stacksTo(1));
