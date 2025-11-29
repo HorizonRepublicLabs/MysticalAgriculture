@@ -1,4 +1,4 @@
-// 1.21.1	2025-11-02T14:06:55.3363583	Mystical Agriculture block model generator
+// 1.21.1	2025-11-29T14:43:58.5443526	Mystical Agriculture block model generator
 fb1d30ef7f1b2ac8e439c0555e6707859f1732dc assets/mysticalagriculture/blockstates/air_crop.json
 37d337eac18b11031639dfa59d79dafb0b07b5ce assets/mysticalagriculture/blockstates/aluminum_crop.json
 0419c82ef3fc707e2dc26802e2a81f21a3f212c2 assets/mysticalagriculture/blockstates/amethyst_bronze_crop.json
@@ -103,6 +103,7 @@ f04bcfcd152958cd584946348b456d27bad8c189 assets/mysticalagriculture/blockstates/
 d676d0f2e05405f6219345906cec0ccfcbf2f152 assets/mysticalagriculture/blockstates/ruby_crop.json
 e765c956e7fc99a621ed5af805af114cb89478d5 assets/mysticalagriculture/blockstates/saltpeter_crop.json
 219cc9a62de2f4a0d1cd047ef07988c2b91ada28 assets/mysticalagriculture/blockstates/sapphire_crop.json
+3546663fe68a996b1316a35117251756d4e82b8c assets/mysticalagriculture/blockstates/sculk_crop.json
 4e955e4fc41e8506a560e2e34b8c51ce8d979be7 assets/mysticalagriculture/blockstates/sheep_crop.json
 5a50f06cd6f0c2a6d581c877c8a45c7248285481 assets/mysticalagriculture/blockstates/signalum_crop.json
 79e5cf8ee4babf11740173a0759ad5fa46be5022 assets/mysticalagriculture/blockstates/silicon_crop.json
@@ -237,6 +238,7 @@ c57583011b430957a24a3989c383084dd2e13430 assets/mysticalagriculture/models/block
 ca398ec66cd263417a43b2ba2770d89462d8fb52 assets/mysticalagriculture/models/block/ruby_crop.json
 79fa14aa643713f207f385afd96704fd6ae50b75 assets/mysticalagriculture/models/block/saltpeter_crop.json
 78f3788dc747008fe6b95442f6c271392fdebd23 assets/mysticalagriculture/models/block/sapphire_crop.json
+6d6264ed78aca8b8c284237af6af8a5873fa2050 assets/mysticalagriculture/models/block/sculk_crop.json
 32f6d41841c0b3d634292755e3ce2fd17ae00eb1 assets/mysticalagriculture/models/block/sheep_crop.json
 ab0efdc44bebb26b648a344c3dcbae93e4809c92 assets/mysticalagriculture/models/block/signalum_crop.json
 c2590f507b61014df289222fcadf8fa439c11bed assets/mysticalagriculture/models/block/silicon_crop.json

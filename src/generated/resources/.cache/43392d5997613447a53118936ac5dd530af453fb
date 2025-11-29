@@ -1,4 +1,4 @@
-// 1.21.1	2025-05-26T12:55:04.8992729	Mystical Agriculture item model generator
+// 1.21.1	2025-11-29T14:43:58.552855	Mystical Agriculture item model generator
 e1edc02b041c3259cf941617688795d37b15c9b4 assets/mysticalagriculture/models/item/absorption_iii_augment.json
 e1edc02b041c3259cf941617688795d37b15c9b4 assets/mysticalagriculture/models/item/absorption_ii_augment.json
 e1edc02b041c3259cf941617688795d37b15c9b4 assets/mysticalagriculture/models/item/absorption_iv_augment.json
@@ -247,6 +247,8 @@ b7c64b4eda142908ec9ba16261057339f9694584 assets/mysticalagriculture/models/item/
 d427e3882570ef770f1dfb8302611d4e73b4fe82 assets/mysticalagriculture/models/item/saltpeter_seeds.json
 0c92f4fac9036eaaa2ed73a086325c8bd64f90f4 assets/mysticalagriculture/models/item/sapphire_essence.json
 54ef470df70443d997e1ab4e15edbd6cbc365d1e assets/mysticalagriculture/models/item/sapphire_seeds.json
+3337ae9323ce8cbfcc93a2496b4f9cbd984038f9 assets/mysticalagriculture/models/item/sculk_essence.json
+dcd48e338080715aef6a19f85a1cde434fe6d74f assets/mysticalagriculture/models/item/sculk_seeds.json
 21d4ac47f80e0e6984f78376616f620ce9a88e29 assets/mysticalagriculture/models/item/sheep_essence.json
 d678309ada2978ad54f4133cdb54cb1eb1987245 assets/mysticalagriculture/models/item/sheep_seeds.json
 d60bd65f4cf422eaff550b380bc41e4b57536752 assets/mysticalagriculture/models/item/signalum_essence.json

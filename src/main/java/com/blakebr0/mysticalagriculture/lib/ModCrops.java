@@ -56,6 +56,7 @@ public final class ModCrops {
     public static final Crop REDSTONE = new Crop(MysticalAgriculture.resource("redstone"), CropTier.THREE, CropType.RESOURCE, LazyIngredient.tag("c:dusts/redstone"));
     public static final Crop OBSIDIAN = new Crop(MysticalAgriculture.resource("obsidian"), CropTier.THREE, CropType.RESOURCE, LazyIngredient.item("minecraft:obsidian"));
     public static final Crop PRISMARINE = new Crop(MysticalAgriculture.resource("prismarine"), CropTier.THREE, CropType.RESOURCE, LazyIngredient.item("mysticalagriculture:prismarine_agglomeratio"));
+    public static final Crop SCULK = new Crop(MysticalAgriculture.resource("sculk"), CropTier.THREE, CropType.RESOURCE, LazyIngredient.item("minecraft:sculk"));
     public static final Crop ZOMBIE = new Crop(MysticalAgriculture.resource("zombie"), CropTier.THREE, CropType.MOB, LazyIngredient.item("mysticalagriculture:soul_jar", MobSoulUtils.makeComponentMap(ModMobSoulTypes.ZOMBIE)));
     public static final Crop SKELETON = new Crop(MysticalAgriculture.resource("skeleton"), CropTier.THREE, CropType.MOB, LazyIngredient.item("mysticalagriculture:soul_jar", MobSoulUtils.makeComponentMap(ModMobSoulTypes.SKELETON)));
     public static final Crop CREEPER = new Crop(MysticalAgriculture.resource("creeper"), CropTier.THREE, CropType.MOB, LazyIngredient.item("mysticalagriculture:soul_jar", MobSoulUtils.makeComponentMap(ModMobSoulTypes.CREEPER)));
@@ -243,6 +244,7 @@ public final class ModCrops {
         registry.register(REDSTONE);
         registry.register(OBSIDIAN);
         registry.register(PRISMARINE);
+        registry.register(SCULK);
         registry.register(ZOMBIE);
         registry.register(SKELETON);
         registry.register(CREEPER);

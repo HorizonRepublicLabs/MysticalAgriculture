@@ -1,4 +1,4 @@
-// 1.21.1	2025-11-02T14:09:14.316435	Recipes
+// 1.21.1	2025-11-29T14:43:58.5558557	Recipes
 231da6992d24aad1d5cbc483f2975edddef7fb8d data/mysticalagriculture/recipe/seed/crafting/air.json
 263dd26f879474c7f97666c353032ad9532134d2 data/mysticalagriculture/recipe/seed/crafting/aluminum.json
 a361309d5855654c123923fe5d5a776651738660 data/mysticalagriculture/recipe/seed/crafting/amethyst.json
@@ -103,6 +103,7 @@ fddec7ae793951c80392543b48bc4ccd5f03a36e data/mysticalagriculture/recipe/seed/cr
 0f9b7ae73bfd59b4ca3933040d81b85dd8858b33 data/mysticalagriculture/recipe/seed/crafting/ruby.json
 db0dfeb568aeaf859f30f41f26c2dccd3c427cb7 data/mysticalagriculture/recipe/seed/crafting/saltpeter.json
 f7671d9a4bfd8702142e9ba08f305eb9ee5c69b0 data/mysticalagriculture/recipe/seed/crafting/sapphire.json
+c1a8f33ad36a2375c8e57b450bbc2f7997b61ec6 data/mysticalagriculture/recipe/seed/crafting/sculk.json
 3638104a9e77a2bdb4574f06a6a7ff97933e7a0a data/mysticalagriculture/recipe/seed/crafting/sheep.json
 f312738d2a5a0126d12d1b0a446dbf941a8e652d data/mysticalagriculture/recipe/seed/crafting/signalum.json
 85ecc41d2c4873f050de75c7f30f50b9ddce6992 data/mysticalagriculture/recipe/seed/crafting/silicon.json
@@ -237,6 +238,7 @@ a030c0b107bd66c0d492451db590fdbdde3cbf3c data/mysticalagriculture/recipe/seed/in
 a7634fd41c2d7578dbc0ef054cbf501defcf7d01 data/mysticalagriculture/recipe/seed/infusion/ruby.json
 8b5c66e27595df20acc71fd9fb78c2ec94939d2c data/mysticalagriculture/recipe/seed/infusion/saltpeter.json
 a9790e2ef21fa8f6dd8a2fd5820d44f353fb970e data/mysticalagriculture/recipe/seed/infusion/sapphire.json
+4acc13d2b8d19125b8d263bbf23096f3e5ec10af data/mysticalagriculture/recipe/seed/infusion/sculk.json
 6f791e24ed310eb4b0cd19ca7ec8b16ddc6c9e9f data/mysticalagriculture/recipe/seed/infusion/sheep.json
 650f693ec836258bf602f0524cbee2785938a303 data/mysticalagriculture/recipe/seed/infusion/signalum.json
 e80cc83225eeca8d6937d3f9b879994fc421a4e4 data/mysticalagriculture/recipe/seed/infusion/silicon.json
@@ -372,6 +374,7 @@ a758f1fdcee3d1359b738f4418033774fb7fc1a5 data/mysticalagriculture/recipe/seed/re
 a1e6cc520e8e81fa49bd638792fb9ce9b24eb85f data/mysticalagriculture/recipe/seed/reprocessor/ruby.json
 b4c597c65cd0cac22db70eb4583ec4e533b1e57d data/mysticalagriculture/recipe/seed/reprocessor/saltpeter.json
 adfd238ca87cb9fbd714d61bffa2233f820d323b data/mysticalagriculture/recipe/seed/reprocessor/sapphire.json
+371e1c3722ba45bab4d9339132e371773a5dbb2f data/mysticalagriculture/recipe/seed/reprocessor/sculk.json
 8eedcf89c8e6bdff00d51cc7de26f104cc2ac1be data/mysticalagriculture/recipe/seed/reprocessor/sheep.json
 1a72e344f2d2b859fe0484c044c197bef2137b46 data/mysticalagriculture/recipe/seed/reprocessor/signalum.json
 4354ac9c6ca02f637ddba3c26dabc264134b082d data/mysticalagriculture/recipe/seed/reprocessor/silicon.json
