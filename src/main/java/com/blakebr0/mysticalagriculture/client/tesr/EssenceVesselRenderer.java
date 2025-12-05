@@ -1,7 +1,7 @@
 package com.blakebr0.mysticalagriculture.client.tesr;
 
 import com.blakebr0.mysticalagriculture.MysticalAgriculture;
-import com.blakebr0.mysticalagriculture.client.EssenceVesselColorManager;
+import com.blakebr0.mysticalagriculture.crafting.EssenceVesselColorManager;
 import com.blakebr0.mysticalagriculture.tileentity.EssenceVesselTileEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;

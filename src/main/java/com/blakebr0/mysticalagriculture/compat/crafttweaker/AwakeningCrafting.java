@@ -1,10 +1,14 @@
 package com.blakebr0.mysticalagriculture.compat.crafttweaker;
 
+import com.blakebr0.cucumber.helper.ParsingHelper;
+import com.blakebr0.mysticalagriculture.MysticalAgriculture;
 import com.blakebr0.mysticalagriculture.api.crafting.IAwakeningRecipe;
+import com.blakebr0.mysticalagriculture.crafting.EssenceVesselColorManager;
 import com.blakebr0.mysticalagriculture.crafting.recipe.AwakeningRecipe;
 import com.blakebr0.mysticalagriculture.init.ModRecipeTypes;
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.CraftTweakerConstants;
+import com.blamejared.crafttweaker.api.action.base.IRuntimeAction;
 import com.blamejared.crafttweaker.api.action.recipe.ActionAddRecipe;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import com.blamejared.crafttweaker.api.ingredient.IIngredient;
@@ -38,6 +42,11 @@ public final class AwakeningCrafting implements IRecipeManager<IAwakeningRecipe>
         CraftTweakerAPI.apply(new ActionAddRecipe<>(this, new RecipeHolder<>(id, recipe)));
     }
 
+    @ZenCodeType.Method
+    public void setEssenceVesselColor(IItemStack stack, String color) {
+        CraftTweakerAPI.apply(new SetEssenceVesselColorAction(stack, color));
+    }
+
     private static NonNullList<Ingredient> toIngredientsList(IIngredient... iingredients) {
         var ingredients = NonNullList.withSize(4, Ingredient.EMPTY);
 
@@ -56,5 +65,22 @@ public final class AwakeningCrafting implements IRecipeManager<IAwakeningRecipe>
         }
 
         return itemStacks;
+    }
+
+    record SetEssenceVesselColorAction(IItemStack stack, String color) implements IRuntimeAction {
+        @Override
+        public void apply() {
+            EssenceVesselColorManager.INSTANCE.addColor(stack.getInternal(), ParsingHelper.parseHex(color, color));
+        }
+
+        @Override
+        public String describe() {
+            return "Setting the Essence Vessel color for the item %s to %s.".formatted(stack.getDisplayName().getString(), color);
+        }
+
+        @Override
+        public String systemName() {
+            return MysticalAgriculture.NAME;
+        }
     }
 }

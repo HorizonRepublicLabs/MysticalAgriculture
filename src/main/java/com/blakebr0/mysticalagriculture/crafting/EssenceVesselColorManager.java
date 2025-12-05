@@ -1,7 +1,8 @@
-package com.blakebr0.mysticalagriculture.client;
+package com.blakebr0.mysticalagriculture.crafting;
 
 import com.blakebr0.cucumber.helper.ParsingHelper;
 import com.blakebr0.mysticalagriculture.MysticalAgriculture;
+import com.blakebr0.mysticalagriculture.network.payloads.SyncEssenceVesselColorsPayload;
 import com.google.common.base.Stopwatch;
 import com.google.gson.JsonParser;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -11,23 +12,38 @@ import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModLoader;
-import net.neoforged.neoforge.client.event.RegisterClientReloadListenersEvent;
+import net.neoforged.neoforge.event.AddReloadListenerEvent;
+import net.neoforged.neoforge.event.OnDatapackSyncEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
 
-@Deprecated
 public class EssenceVesselColorManager implements PreparableReloadListener {
     public static final EssenceVesselColorManager INSTANCE = new EssenceVesselColorManager();
 
-    private final HashMap<String, Integer> colors = new HashMap<>();
+    private final Map<String, Integer> colors = new HashMap<>();
 
     @SubscribeEvent
-    public void onRegisterClientReloadListeners(RegisterClientReloadListenersEvent event) {
-        event.registerReloadListener(this);
+    public void onAddReloadListeners(AddReloadListenerEvent event) {
+        event.addListener(this);
+    }
+
+    @SubscribeEvent
+    public void onDataPackSync(OnDatapackSyncEvent event) {
+        var payload = new SyncEssenceVesselColorsPayload(this.colors);
+        var player = event.getPlayer();
+
+        // send the new caches to the client
+        if (player != null) {
+            PacketDistributor.sendToPlayer(player, payload);
+        } else {
+            PacketDistributor.sendToAllPlayers(payload);
+        }
     }
 
     @Override
@@ -41,12 +57,26 @@ public class EssenceVesselColorManager implements PreparableReloadListener {
 
     public int getColor(ItemStack stack) {
         var id = BuiltInRegistries.ITEM.getKey(stack.getItem());
+        var color = com.blakebr0.mysticalagriculture.client.EssenceVesselColorManager.INSTANCE.getColor(stack);
+        if (color != 0xFFFFFF)
+            return color;
+
         return this.colors.getOrDefault(id.toString(), 0xFFFFFF);
+    }
+
+    public void addColor(ItemStack stack, int color) {
+        var id = BuiltInRegistries.ITEM.getKey(stack.getItem());
+        this.colors.put(id.toString(), color);
+    }
+
+    public void setColors(Map<String, Integer> colors) {
+        this.colors.clear();
+        this.colors.putAll(colors);
     }
 
     private void load(ResourceManager manager) {
         var stopwatch = Stopwatch.createStarted();
-        var resources = manager.listResources("essence_vessel_colors.json", s -> s.getPath().endsWith(".json"));
+        var resources = manager.listResources("mysticalagriculture/essence_vessel_colors.json", s -> s.getPath().endsWith(".json"));
 
         this.colors.clear();
 

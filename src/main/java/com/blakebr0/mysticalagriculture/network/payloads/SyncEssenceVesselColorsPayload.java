@@ -1,0 +1,39 @@
+package com.blakebr0.mysticalagriculture.network.payloads;
+
+import com.blakebr0.mysticalagriculture.MysticalAgriculture;
+import com.blakebr0.mysticalagriculture.crafting.EssenceVesselColorManager;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
+
+import java.util.Map;
+
+public record SyncEssenceVesselColorsPayload(Map<String, Integer> colors) implements CustomPacketPayload {
+    public static final Type<SyncEssenceVesselColorsPayload> TYPE = new Type<>(MysticalAgriculture.resource("sync_essence_vessel_colors"));
+
+    public static final StreamCodec<RegistryFriendlyByteBuf, SyncEssenceVesselColorsPayload> STREAM_CODEC = StreamCodec.of(
+            SyncEssenceVesselColorsPayload::toNetwork, SyncEssenceVesselColorsPayload::fromNetwork
+    );
+
+    @Override
+    public Type<SyncEssenceVesselColorsPayload> type() {
+        return TYPE;
+    }
+
+    private static SyncEssenceVesselColorsPayload fromNetwork(RegistryFriendlyByteBuf buffer) {
+        var colors = buffer.readMap(FriendlyByteBuf::readUtf, FriendlyByteBuf::readVarInt);
+        return new SyncEssenceVesselColorsPayload(colors);
+    }
+
+    private static void toNetwork(RegistryFriendlyByteBuf buffer, SyncEssenceVesselColorsPayload payload) {
+        buffer.writeMap(payload.colors, FriendlyByteBuf::writeUtf, FriendlyByteBuf::writeVarInt);
+    }
+
+    public static void handleClient(SyncEssenceVesselColorsPayload payload, IPayloadContext context) {
+        context.enqueueWork(() -> {
+            EssenceVesselColorManager.INSTANCE.setColors(payload.colors);
+        });
+    }
+}

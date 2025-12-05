@@ -25,6 +25,11 @@ public record ReloadIngredientCachePayload(Map<RecipeType<?>, Map<Item, List<Ing
             ReloadIngredientCachePayload::toNetwork, ReloadIngredientCachePayload::fromNetwork
     );
 
+    @Override
+    public Type<ReloadIngredientCachePayload> type() {
+        return TYPE;
+    }
+
     private static ReloadIngredientCachePayload fromNetwork(RegistryFriendlyByteBuf buffer) {
         var caches = new HashMap<RecipeType<?>, Map<Item, List<Ingredient>>>();
         var types = buffer.readVarInt();
@@ -92,11 +97,6 @@ public record ReloadIngredientCachePayload(Map<RecipeType<?>, Map<Item, List<Ing
 
             buffer.writeResourceLocation(id);
         }
-    }
-
-    @Override
-    public Type<ReloadIngredientCachePayload> type() {
-        return TYPE;
     }
 
     public static void handleClient(ReloadIngredientCachePayload payload, IPayloadContext context) {

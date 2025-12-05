@@ -2,7 +2,6 @@ package com.blakebr0.mysticalagriculture;
 
 import com.blakebr0.mysticalagriculture.api.MysticalAgricultureAPI;
 import com.blakebr0.mysticalagriculture.api.MysticalAgricultureConfigValues;
-import com.blakebr0.mysticalagriculture.client.EssenceVesselColorManager;
 import com.blakebr0.mysticalagriculture.client.ModClientExtensions;
 import com.blakebr0.mysticalagriculture.client.ModClientTooltipComponentFactories;
 import com.blakebr0.mysticalagriculture.client.ModMenuScreens;
@@ -16,6 +15,7 @@ import com.blakebr0.mysticalagriculture.client.handler.GuiOverlayHandler;
 import com.blakebr0.mysticalagriculture.compat.TOPCompat;
 import com.blakebr0.mysticalagriculture.config.ModConfigs;
 import com.blakebr0.mysticalagriculture.crafting.DynamicRecipeManager;
+import com.blakebr0.mysticalagriculture.crafting.EssenceVesselColorManager;
 import com.blakebr0.mysticalagriculture.data.ModDataGenerators;
 import com.blakebr0.mysticalagriculture.handler.AugmentHandler;
 import com.blakebr0.mysticalagriculture.handler.ExperienceCapsuleHandler;
@@ -92,7 +92,7 @@ public final class MysticalAgriculture {
 			bus.register(new ModClientTooltipComponentFactories());
 			bus.register(new ModMenuScreens());
 			bus.register(new ModClientExtensions());
-			bus.register(EssenceVesselColorManager.INSTANCE);
+			bus.register(com.blakebr0.mysticalagriculture.client.EssenceVesselColorManager.INSTANCE);
 		}
 
 		mod.registerConfig(ModConfig.Type.STARTUP, ModConfigs.COMMON, "mysticalagriculture-common.toml");
@@ -110,6 +110,7 @@ public final class MysticalAgriculture {
 		NeoForge.EVENT_BUS.register(new AugmentHandler());
 		NeoForge.EVENT_BUS.register(new TinkerableHandler());
 		NeoForge.EVENT_BUS.register(DynamicRecipeManager.INSTANCE);
+        NeoForge.EVENT_BUS.register(EssenceVesselColorManager.INSTANCE);
 		NeoForge.EVENT_BUS.register(RecipeIngredientCache.INSTANCE);
 
 		CropRegistry.getInstance().onCommonSetup();
