@@ -116,7 +116,6 @@ dependencies {
 }
 
 java.withSourcesJar()
-java.withJavadocJar()
 
 tasks.register('apiJar', Jar) {
     from(sourceSets.main.output) {
