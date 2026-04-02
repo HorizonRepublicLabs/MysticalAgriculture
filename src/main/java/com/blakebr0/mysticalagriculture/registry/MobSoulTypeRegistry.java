@@ -3,7 +3,7 @@ package com.blakebr0.mysticalagriculture.registry;
 import com.blakebr0.mysticalagriculture.MysticalAgriculture;
 import com.blakebr0.mysticalagriculture.api.registry.IMobSoulTypeRegistry;
 import com.blakebr0.mysticalagriculture.api.soul.MobSoulType;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.LivingEntity;
 
 import java.util.Collections;
@@ -17,8 +17,8 @@ import java.util.stream.Collectors;
 public final class MobSoulTypeRegistry implements IMobSoulTypeRegistry {
     private static final MobSoulTypeRegistry INSTANCE = new MobSoulTypeRegistry();
 
-    private final Map<ResourceLocation, MobSoulType> mobSoulTypes = new LinkedHashMap<>();
-    private final Set<ResourceLocation> usedEntityIds = new HashSet<>();
+    private final Map<Identifier, MobSoulType> mobSoulTypes = new LinkedHashMap<>();
+    private final Set<Identifier> usedEntityIds = new HashSet<>();
 
     @Override
     public void register(MobSoulType mobSoulType) {
@@ -42,7 +42,7 @@ public final class MobSoulTypeRegistry implements IMobSoulTypeRegistry {
     }
 
     @Override
-    public MobSoulType getMobSoulTypeById(ResourceLocation id) {
+    public MobSoulType getMobSoulTypeById(Identifier id) {
         return this.mobSoulTypes.get(id);
     }
 
@@ -52,12 +52,12 @@ public final class MobSoulTypeRegistry implements IMobSoulTypeRegistry {
     }
 
     @Override
-    public Set<ResourceLocation> getUsedEntityIds() {
+    public Set<Identifier> getUsedEntityIds() {
         return Collections.unmodifiableSet(this.usedEntityIds);
     }
 
     @Override
-    public boolean addEntityTo(MobSoulType type, ResourceLocation entity) {
+    public boolean addEntityTo(MobSoulType type, Identifier entity) {
         if (!this.usedEntityIds.contains(entity)) {
             this.usedEntityIds.add(entity);
 
@@ -70,7 +70,7 @@ public final class MobSoulTypeRegistry implements IMobSoulTypeRegistry {
     }
 
     @Override
-    public boolean removeEntityFrom(MobSoulType type, ResourceLocation entity) {
+    public boolean removeEntityFrom(MobSoulType type, Identifier entity) {
         if (type.getEntityIds().contains(entity)) {
             type.getEntityIds().remove(entity);
 

@@ -10,11 +10,11 @@ import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 
 public class SouliumSpawnerScreen extends BaseContainerScreen<SouliumSpawnerContainer> {
-    private static final ResourceLocation BACKGROUND = MysticalAgriculture.resource("textures/gui/soulium_spawner.png");
+    private static final Identifier BACKGROUND = MysticalAgriculture.resource("textures/gui/soulium_spawner.png");
     private SouliumSpawnerTileEntity tile;
 
     public SouliumSpawnerScreen(SouliumSpawnerContainer container, Inventory inv, Component title) {

@@ -1,12 +1,14 @@
 package com.blakebr0.mysticalagriculture.block;
 
-import com.blakebr0.cucumber.util.Localizable;
 import com.blakebr0.mysticalagriculture.api.crop.Crop;
 import com.blakebr0.mysticalagriculture.api.crop.ICropProvider;
 import com.blakebr0.mysticalagriculture.config.ModConfigs;
 import com.blakebr0.mysticalagriculture.init.ModItems;
 import com.blakebr0.mysticalagriculture.lib.ModCrops;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
@@ -17,7 +19,7 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CropBlock;
-import net.minecraft.world.level.block.FarmBlock;
+import net.minecraft.world.level.block.FarmlandBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
@@ -31,8 +33,8 @@ public class MysticalCropBlock extends CropBlock implements ICropProvider {
     private static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 4.0D, 16.0D);
     private final Crop crop;
 
-    public MysticalCropBlock(Crop crop) {
-        super(Properties.ofFullCopy(Blocks.WHEAT));
+    public MysticalCropBlock(Identifier id, Crop crop) {
+        super(Properties.ofFullCopy(Blocks.WHEAT).setId(ResourceKey.create(Registries.BLOCK, id)));
         this.crop = crop;
     }
 
@@ -54,10 +56,11 @@ public class MysticalCropBlock extends CropBlock implements ICropProvider {
         return SHAPE;
     }
 
-    @Override
-    public String getDescriptionId() {
-        return Localizable.of("block.mysticalagriculture.mystical_crop").args(this.crop.getDisplayName()).buildString();
-    }
+//    TODO crop desc key
+//    @Override
+//    public String getDescriptionId() {
+//        return Localizable.of("block.mysticalagriculture.mystical_crop").args(this.crop.getDisplayName()).buildString();
+//    }
 
     @Override
     public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
@@ -122,7 +125,7 @@ public class MysticalCropBlock extends CropBlock implements ICropProvider {
 
     @Override
     protected boolean mayPlaceOn(BlockState state, BlockGetter level, BlockPos pos) {
-        return state.getBlock() instanceof FarmBlock;
+        return state.getBlock() instanceof FarmlandBlock;
     }
 
     @Override
@@ -158,7 +161,7 @@ public class MysticalCropBlock extends CropBlock implements ICropProvider {
 
         if (!biomes.isEmpty()) {
             var biome = level.getBiome(pos).getKey();
-            return biome != null && biomes.contains(biome.location());
+            return biome != null && biomes.contains(biome.identifier());
         }
 
         return true;

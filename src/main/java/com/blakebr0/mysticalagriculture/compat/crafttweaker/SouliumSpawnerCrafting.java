@@ -12,7 +12,7 @@ import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import com.blamejared.crafttweaker.api.ingredient.IIngredient;
 import com.blamejared.crafttweaker.api.recipe.manager.base.IRecipeManager;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.random.WeightedEntry;
 import net.minecraft.util.random.WeightedRandomList;
 import net.minecraft.world.entity.EntityType;
@@ -54,7 +54,7 @@ public final class SouliumSpawnerCrafting implements IRecipeManager<ISouliumSpaw
 
         for (var entity : entities) {
             var entityIDParts = entity.split("@");
-            var entityTypeID = ResourceLocation.parse(entityIDParts[0]);
+            var entityTypeID = Identifier.parse(entityIDParts[0]);
             var entityType = BuiltInRegistries.ENTITY_TYPE.get(entityTypeID);
             var weight = 1;
 

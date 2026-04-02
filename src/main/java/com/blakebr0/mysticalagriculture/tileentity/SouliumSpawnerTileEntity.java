@@ -2,7 +2,7 @@ package com.blakebr0.mysticalagriculture.tileentity;
 
 import com.blakebr0.cucumber.energy.DynamicEnergyStorage;
 import com.blakebr0.cucumber.helper.StackHelper;
-import com.blakebr0.cucumber.inventory.BaseItemStackHandler;
+import com.blakebr0.cucumber.inventory.CItemStacksHandler;
 import com.blakebr0.cucumber.inventory.CachedRecipe;
 import com.blakebr0.cucumber.inventory.OnContentsChangedFunction;
 import com.blakebr0.cucumber.inventory.SidedInventoryWrapper;
@@ -27,6 +27,7 @@ import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
@@ -53,7 +54,7 @@ public class SouliumSpawnerTileEntity extends BaseInventoryTileEntity implements
     public static final int FUEL_CAPACITY = 80000;
     public static final int SPAWN_RADIUS = 3;
 
-    private final BaseItemStackHandler inventory;
+    private final CItemStacksHandler inventory;
     private final MachineUpgradeItemStackHandler upgradeInventory;
     private final DynamicEnergyStorage energy;
     private final SidedInventoryWrapper[] sidedInventoryWrappers;
@@ -76,7 +77,7 @@ public class SouliumSpawnerTileEntity extends BaseInventoryTileEntity implements
     }
 
     @Override
-    public BaseItemStackHandler getInventory() {
+    public CItemStacksHandler getInventory() {
         return this.inventory;
     }
 
@@ -121,6 +122,17 @@ public class SouliumSpawnerTileEntity extends BaseInventoryTileEntity implements
         super.handleUpdateTag(tag, lookup);
 
         this.reloadActiveRecipe();
+    }
+
+    @Override
+    public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+        super.preRemoveSideEffects(pos, state);
+
+        if (this.level != null) {
+            var upgrade = this.upgradeInventory.getResource(0).toStack(this.upgradeInventory.getAmountAsInt(0));
+
+            Containers.dropItemStack(this.level, pos.getX(), pos.getY(), pos.getZ(), upgrade);
+        }
     }
 
     @Override
@@ -249,12 +261,12 @@ public class SouliumSpawnerTileEntity extends BaseInventoryTileEntity implements
         }
     }
 
-    public static BaseItemStackHandler createInventoryHandler() {
+    public static CItemStacksHandler createInventoryHandler() {
         return createInventoryHandler(null);
     }
 
-    public static BaseItemStackHandler createInventoryHandler(OnContentsChangedFunction onContentsChanged) {
-        return BaseItemStackHandler.create(2, onContentsChanged, builder -> {
+    public static CItemStacksHandler createInventoryHandler(OnContentsChangedFunction onContentsChanged) {
+        return CItemStacksHandler.create(2, onContentsChanged, builder -> {
             builder.addSlotLimit(0, 512);
             builder.setCanInsert((slot, stack) -> switch (slot) {
                 case 1 -> FurnaceBlockEntity.isFuel(stack);

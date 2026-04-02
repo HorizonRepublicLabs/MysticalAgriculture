@@ -12,7 +12,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.fml.ModList;
 
-import java.util.List;
+import java.util.function.Consumer;
 
 public final class ModTooltips {
     public static final Tooltip EMPTY = new Tooltip("tooltip.mysticalagriculture.empty");
@@ -27,8 +27,6 @@ public final class ModTooltips {
     public static final Tooltip CHANCE = new Tooltip("tooltip.mysticalagriculture.chance");
     public static final Tooltip SECONDARY_CHANCE = new Tooltip("tooltip.mysticalagriculture.secondary_chance");
     public static final Tooltip INFERIUM_OUTPUT = new Tooltip("tooltip.mysticalagriculture.inferium_output");
-    public static final Tooltip COOKING_SPEED = new Tooltip("tooltip.mysticalagriculture.cooking_speed");
-    public static final Tooltip FUEL_EFFICIENCY = new Tooltip("tooltip.mysticalagriculture.fuel_efficiency");
     public static final Tooltip REQUIRES_EFFECTIVE_FARMLAND = new Tooltip("tooltip.mysticalagriculture.requires_effective_farmland");
     public static final Tooltip REQUIRES_CRUX = new Tooltip("tooltip.mysticalagriculture.requires_crux");
     public static final Tooltip INVALID_BIOME = new Tooltip("tooltip.mysticalagriculture.invalid_biome");
@@ -62,23 +60,23 @@ public final class ModTooltips {
     public static final Tooltip AOE_OFFSET_TOOLTIP = new Tooltip("tooltip.mysticalagriculture.aoe_offset");
 
     public static Component getTooltipForTier(int tier) {
-        return TIER.args(TinkerableUtils.getTooltipForTier(tier)).color(ChatFormatting.GRAY).build();
+        return TIER.args(TinkerableUtils.getTooltipForTier(tier)).color(ChatFormatting.GRAY).toComponent();
     }
 
     public static Component getAddedByTooltip(String modid) {
         var name = ModList.get().getModFileById(modid).getMods().getFirst().getDisplayName();
-        return ModTooltips.ADDED_BY.args(name).build();
+        return ModTooltips.ADDED_BY.args(name).toComponent();
     }
 
-    public static void addAugmentListToTooltip(List<Component> tooltip, ItemStack stack, int slots) {
-        tooltip.add(ModTooltips.AUGMENTS.build());
+    public static void addAugmentListToTooltip(Consumer<Component> tooltip, ItemStack stack, int slots) {
+        tooltip.accept(ModTooltips.AUGMENTS.toComponent());
 
         var augments = AugmentUtils.getAugments(stack);
         var player = ClientPlayerProxy.getPlayer();
 
         for (int i = 0; i < slots; i++) {
             var augment = i < augments.size() ? augments.get(i) : null;
-            var name = augment != null ? augment.getDisplayName() : ModTooltips.EMPTY.build();
+            var name = augment != null ? augment.getDisplayName() : ModTooltips.EMPTY.toComponent();
 
             if (augment != null && augment.hasSetBonus() && TinkerableUtils.hasArmorSetMinimumTier(player, augment.getTier())) {
                 name.withStyle(ChatFormatting.GREEN);
@@ -90,11 +88,11 @@ public final class ModTooltips {
                     var horizontalOffset = String.format("%+d", offset.horizontalOffset());
                     var verticalOffset = String.format("%+d", offset.verticalOffset());
 
-                    name.append(ModTooltips.AOE_OFFSET_TOOLTIP.args(horizontalOffset, verticalOffset).prepend(" (").append(")").build());
+                    name.append(" (").append(ModTooltips.AOE_OFFSET_TOOLTIP.args(horizontalOffset, verticalOffset).toComponent().append(")"));
                 }
             }
 
-            tooltip.add(Component.literal(" - ").withStyle(ChatFormatting.GRAY).append(name));
+            tooltip.accept(Component.literal(" - ").withStyle(ChatFormatting.GRAY).append(name));
         }
     }
 }

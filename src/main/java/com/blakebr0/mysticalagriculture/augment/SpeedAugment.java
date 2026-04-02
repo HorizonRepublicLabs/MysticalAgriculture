@@ -4,7 +4,7 @@ import com.blakebr0.cucumber.helper.ColorHelper;
 import com.blakebr0.mysticalagriculture.api.lib.AbilityCache;
 import com.blakebr0.mysticalagriculture.api.tinkering.Augment;
 import com.blakebr0.mysticalagriculture.api.tinkering.AugmentType;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
@@ -14,7 +14,7 @@ import java.util.EnumSet;
 public class SpeedAugment extends Augment {
     private final int amplifier;
 
-    public SpeedAugment(ResourceLocation id, int tier, int amplifier) {
+    public SpeedAugment(Identifier id, int tier, int amplifier) {
         super(id, tier, EnumSet.of(AugmentType.LEGGINGS), getColor(0xAD524D, tier), getColor(0x240805, tier));
         this.amplifier = amplifier;
     }

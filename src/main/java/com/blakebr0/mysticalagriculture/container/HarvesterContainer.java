@@ -1,8 +1,8 @@
 package com.blakebr0.mysticalagriculture.container;
 
 import com.blakebr0.cucumber.container.BaseContainerMenu;
-import com.blakebr0.cucumber.inventory.BaseItemStackHandler;
-import com.blakebr0.cucumber.inventory.slot.BaseItemStackHandlerSlot;
+import com.blakebr0.cucumber.inventory.CItemStacksHandler;
+import com.blakebr0.cucumber.inventory.slot.CItemStacksHandlerSlot;
 import com.blakebr0.mysticalagriculture.api.machine.MachineUpgradeItemStackHandler;
 import com.blakebr0.mysticalagriculture.init.ModMenuTypes;
 import com.blakebr0.mysticalagriculture.item.MachineUpgradeItem;
@@ -21,15 +21,15 @@ public class HarvesterContainer extends BaseContainerMenu {
         this(type, id, playerInventory, HarvesterTileEntity.createInventoryHandler(), new MachineUpgradeItemStackHandler(), buffer.readBlockPos());
     }
 
-    private HarvesterContainer(MenuType<?> type, int id, Inventory playerInventory, BaseItemStackHandler inventory, MachineUpgradeItemStackHandler upgradeInventory, BlockPos pos) {
+    private HarvesterContainer(MenuType<?> type, int id, Inventory playerInventory, CItemStacksHandler inventory, MachineUpgradeItemStackHandler upgradeInventory, BlockPos pos) {
         super(type, id, pos);
 
         this.addSlot(new SlotItemHandler(upgradeInventory, 0, 152, 9));
-        this.addSlot(new BaseItemStackHandlerSlot(inventory, 0, 30, 56));
+        this.addSlot(new CItemStacksHandlerSlot(inventory, 0, 30, 56));
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 5; j++) {
-                this.addSlot(new BaseItemStackHandlerSlot(inventory, 1 + j + i * 5, 80 + j * 18, 42 + i * 18));
+                this.addSlot(new CItemStacksHandlerSlot(inventory, 1 + j + i * 5, 80 + j * 18, 42 + i * 18));
             }
         }
 
@@ -98,7 +98,7 @@ public class HarvesterContainer extends BaseContainerMenu {
         return new HarvesterContainer(ModMenuTypes.HARVESTER.get(), windowId, playerInventory, buffer);
     }
 
-    public static HarvesterContainer create(int windowId, Inventory playerInventory, BaseItemStackHandler inventory, MachineUpgradeItemStackHandler upgradeInventory, BlockPos pos) {
+    public static HarvesterContainer create(int windowId, Inventory playerInventory, CItemStacksHandler inventory, MachineUpgradeItemStackHandler upgradeInventory, BlockPos pos) {
         return new HarvesterContainer(ModMenuTypes.HARVESTER.get(), windowId, playerInventory, inventory, upgradeInventory, pos);
     }
 }

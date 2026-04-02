@@ -31,7 +31,7 @@ public class AbilityCache {
      */
     public void add(String augment, Player player, Runnable onRemove) {
         var key = getPlayerKey(player);
-        this.cache.computeIfAbsent(augment, s -> new ConcurrentHashMap<>()).put(key, onRemove);
+        this.cache.computeIfAbsent(augment, _ -> new ConcurrentHashMap<>()).put(key, onRemove);
     }
 
     /**
@@ -110,6 +110,6 @@ public class AbilityCache {
     }
 
     private static String getPlayerKey(Player player) {
-        return player.getGameProfile().getName() + ":" + player.level().isClientSide();
+        return player.getGameProfile().name() + ":" + player.level().isClientSide();
     }
 }

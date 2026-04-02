@@ -8,7 +8,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.TagsProvider;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
@@ -34,7 +34,7 @@ public class ItemTagsJsonGenerator extends TagsProvider<Item> {
     }
 
     @Override
-    protected Path getPath(ResourceLocation id) {
+    protected Path getPath(Identifier id) {
         return this.output.getOutputFolder().resolve("data/" + id.getNamespace() + "/tags/item/" + id.getPath() + ".json");
     }
 

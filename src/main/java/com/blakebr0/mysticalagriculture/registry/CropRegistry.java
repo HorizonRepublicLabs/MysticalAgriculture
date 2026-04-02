@@ -9,7 +9,7 @@ import com.blakebr0.mysticalagriculture.api.registry.ICropRegistry;
 import com.blakebr0.mysticalagriculture.block.MysticalCropBlock;
 import com.blakebr0.mysticalagriculture.item.MysticalEssenceItem;
 import com.blakebr0.mysticalagriculture.item.MysticalSeedsItem;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.registries.RegisterEvent;
@@ -23,9 +23,9 @@ import java.util.Map;
 public final class CropRegistry implements ICropRegistry {
     private static final CropRegistry INSTANCE = new CropRegistry();
 
-    private Map<ResourceLocation, Crop> crops = new LinkedHashMap<>();
-    private Map<ResourceLocation, CropTier> tiers = new LinkedHashMap<>();
-    private Map<ResourceLocation, CropType> types = new LinkedHashMap<>();
+    private Map<Identifier, Crop> crops = new LinkedHashMap<>();
+    private Map<Identifier, CropTier> tiers = new LinkedHashMap<>();
+    private Map<Identifier, CropType> types = new LinkedHashMap<>();
     private boolean allowRegistration = false;
     private PluginConfig currentPluginConfig = null;
 
@@ -68,7 +68,7 @@ public final class CropRegistry implements ICropRegistry {
     }
 
     @Override
-    public Crop getCropById(ResourceLocation id) {
+    public Crop getCropById(Identifier id) {
         return this.crops.get(id);
     }
 
@@ -83,7 +83,7 @@ public final class CropRegistry implements ICropRegistry {
     }
 
     @Override
-    public CropTier getTierById(ResourceLocation id) {
+    public CropTier getTierById(Identifier id) {
         return this.tiers.get(id);
     }
 
@@ -93,7 +93,7 @@ public final class CropRegistry implements ICropRegistry {
     }
 
     @Override
-    public CropType getTypeById(ResourceLocation id) {
+    public CropType getTypeById(Identifier id) {
         return this.types.get(id);
     }
 
@@ -122,13 +122,14 @@ public final class CropRegistry implements ICropRegistry {
 
         crops.stream().filter(Crop::shouldRegisterCropBlock).forEach(c -> {
             var crop = c.getCropBlock();
+            var id = MysticalAgriculture.resource(c.getNameWithSuffix("crop"));
+
             if (crop == null) {
-                var defaultCrop = new MysticalCropBlock(c);
+                var defaultCrop = new MysticalCropBlock(id, c);
                 crop = defaultCrop;
                 c.setCropBlock(() -> defaultCrop, true);
             }
 
-            var id = MysticalAgriculture.resource(c.getNameWithSuffix("crop"));
 
             registry.register(id, crop);
         });
@@ -154,13 +155,14 @@ public final class CropRegistry implements ICropRegistry {
 
         crops.stream().filter(Crop::shouldRegisterSeedsItem).forEach(c -> {
             var seeds = c.getSeedsItem();
+            var id = MysticalAgriculture.resource(c.getNameWithSuffix("seeds"));
+
             if (seeds == null) {
-                var defaultSeeds = new MysticalSeedsItem(c);
+                var defaultSeeds = new MysticalSeedsItem(id, c);
                 seeds = defaultSeeds;
                 c.setSeedsItem(() -> defaultSeeds, true);
             }
 
-            var id = MysticalAgriculture.resource(c.getNameWithSuffix("seeds"));
 
             registry.register(id, seeds);
         });
@@ -185,8 +187,8 @@ public final class CropRegistry implements ICropRegistry {
         );
     }
 
-    private Map<ResourceLocation, Crop> getSortedCropsMap(Collection<Crop> crops) {
-        var sorted = new LinkedHashMap<ResourceLocation, Crop>();
+    private Map<Identifier, Crop> getSortedCropsMap(Collection<Crop> crops) {
+        var sorted = new LinkedHashMap<Identifier, Crop>();
 
         crops.stream().sorted(Comparator.comparingInt(c -> c.getTier().getValue())).forEach(c -> {
             sorted.put(c.getId(), c);

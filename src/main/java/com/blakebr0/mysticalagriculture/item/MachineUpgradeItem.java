@@ -7,21 +7,22 @@ import com.blakebr0.mysticalagriculture.api.machine.IMachineUpgrade;
 import com.blakebr0.mysticalagriculture.api.machine.IUpgradeableMachine;
 import com.blakebr0.mysticalagriculture.api.machine.MachineUpgradeTier;
 import com.blakebr0.mysticalagriculture.lib.ModTooltips;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.context.UseOnContext;
 
-import java.util.List;
+import java.util.function.Consumer;
 
 public class MachineUpgradeItem extends BaseItem implements IMachineUpgrade {
     private final MachineUpgradeTier tier;
 
-    public MachineUpgradeItem(MachineUpgradeTier tier) {
-        super();
+    public MachineUpgradeItem(Identifier id, MachineUpgradeTier tier) {
+        super(id);
         this.tier = tier;
     }
 
@@ -50,19 +51,19 @@ public class MachineUpgradeItem extends BaseItem implements IMachineUpgrade {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-        if (Screen.hasShiftDown()) {
+    public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> builder, TooltipFlag flag) {
+        if (flag.hasShiftDown()) {
             var speed = Formatting.number(1 / this.tier.getOperationTimeMultiplier()).withStyle(this.tier.getTextColor());
             var fuelRate = Formatting.number(this.tier.getFuelUsageMultiplier()).withStyle(this.tier.getTextColor());
             var fuelCapacity = Formatting.number(this.tier.getFuelCapacityMultiplier()).withStyle(this.tier.getTextColor());
             var area = Formatting.number(this.tier.getAddedRange()).withStyle(this.tier.getTextColor());
 
-            tooltip.add(ModTooltips.UPGRADE_SPEED.args(speed).build());
-            tooltip.add(ModTooltips.UPGRADE_FUEL_RATE.args(fuelRate).build());
-            tooltip.add(ModTooltips.UPGRADE_FUEL_CAPACITY.args(fuelCapacity).build());
-            tooltip.add(ModTooltips.UPGRADE_AREA.args(area).build());
+            builder.accept(ModTooltips.UPGRADE_SPEED.args(speed).toComponent());
+            builder.accept(ModTooltips.UPGRADE_FUEL_RATE.args(fuelRate).toComponent());
+            builder.accept(ModTooltips.UPGRADE_FUEL_CAPACITY.args(fuelCapacity).toComponent());
+            builder.accept(ModTooltips.UPGRADE_AREA.args(area).toComponent());
         } else {
-            tooltip.add(Tooltips.HOLD_SHIFT_FOR_INFO.build());
+            builder.accept(Tooltips.HOLD_SHIFT_FOR_INFO.toComponent());
         }
     }
 

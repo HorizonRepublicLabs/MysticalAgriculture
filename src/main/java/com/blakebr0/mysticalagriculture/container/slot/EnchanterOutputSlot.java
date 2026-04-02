@@ -1,6 +1,6 @@
 package com.blakebr0.mysticalagriculture.container.slot;
 
-import com.blakebr0.cucumber.inventory.BaseItemStackHandler;
+import com.blakebr0.cucumber.inventory.CItemStacksHandler;
 import com.blakebr0.mysticalagriculture.init.ModRecipeTypes;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
@@ -10,9 +10,9 @@ import net.minecraft.world.item.ItemStack;
 
 public class EnchanterOutputSlot extends Slot {
     private final AbstractContainerMenu container;
-    private final BaseItemStackHandler matrix;
+    private final CItemStacksHandler matrix;
 
-    public EnchanterOutputSlot(AbstractContainerMenu container, BaseItemStackHandler matrix, Container inventory, int index, int xPosition, int yPosition) {
+    public EnchanterOutputSlot(AbstractContainerMenu container, CItemStacksHandler matrix, Container inventory, int index, int xPosition, int yPosition) {
         super(inventory, index, xPosition, yPosition);
         this.container = container;
         this.matrix = matrix;

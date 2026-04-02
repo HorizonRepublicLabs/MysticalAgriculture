@@ -2,21 +2,20 @@ package com.blakebr0.mysticalagriculture.item;
 
 import com.blakebr0.cucumber.item.BaseItem;
 import com.blakebr0.cucumber.util.Utils;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
 public class ExperienceDropletItem extends BaseItem {
-    public ExperienceDropletItem() {
-        super();
+    public ExperienceDropletItem(Identifier id) {
+        super(id);
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+    public InteractionResult use(Level level, Player player, InteractionHand hand) {
         var stack = player.getItemInHand(hand);
         int used = 0;
 
@@ -45,6 +44,6 @@ public class ExperienceDropletItem extends BaseItem {
         if (!player.isCreative())
             stack.shrink(used);
 
-        return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
+        return InteractionResult.SUCCESS;
     }
 }

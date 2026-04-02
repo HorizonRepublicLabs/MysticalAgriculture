@@ -5,11 +5,12 @@ import com.blakebr0.cucumber.helper.BlockHelper;
 import com.blakebr0.cucumber.util.VoxelShapeBuilder;
 import com.blakebr0.mysticalagriculture.tileentity.EssenceVesselTileEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -43,8 +44,8 @@ public class EssenceVesselBlock extends BaseTileEntityBlock {
             Shapes.box(0.25, 0.125, 0.25, 0.75, 0.1875, 0.75)
     ).build();
 
-    public EssenceVesselBlock() {
-        super(SoundType.STONE, 10.0F, 12.0F, true);
+    public EssenceVesselBlock(Identifier id) {
+        super(id, SoundType.STONE, 10.0F, 12.0F, true);
     }
 
     @Override
@@ -53,7 +54,12 @@ public class EssenceVesselBlock extends BaseTileEntityBlock {
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return VESSEL_SHAPE;
+    }
+
+    @Override
+    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         var tile = level.getBlockEntity(pos);
 
         if (tile instanceof EssenceVesselTileEntity vessel) {
@@ -75,25 +81,7 @@ public class EssenceVesselBlock extends BaseTileEntityBlock {
             }
         }
 
-        return ItemInteractionResult.SUCCESS;
-    }
-
-    @Override
-    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (state.getBlock() != newState.getBlock()) {
-            var tile = level.getBlockEntity(pos);
-
-            if (tile instanceof EssenceVesselTileEntity vessel) {
-                Containers.dropContents(level, pos, vessel.getInventory().getStacks());
-            }
-        }
-
-        super.onRemove(state, level, pos, newState, isMoving);
-    }
-
-    @Override
-    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return VESSEL_SHAPE;
+        return InteractionResult.SUCCESS;
     }
 
     @Override
@@ -102,7 +90,7 @@ public class EssenceVesselBlock extends BaseTileEntityBlock {
     }
 
     @Override
-    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos, Direction direction) {
         return BlockHelper.getRedstoneSignalFromInventory(level.getBlockEntity(pos));
     }
 }

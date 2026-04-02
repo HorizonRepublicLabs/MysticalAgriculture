@@ -42,7 +42,7 @@ import com.blakebr0.mysticalagriculture.registry.CropRegistry;
 import com.blakebr0.mysticalagriculture.registry.MobSoulTypeRegistry;
 import com.blakebr0.mysticalagriculture.registry.PluginRegistry;
 import com.blakebr0.mysticalagriculture.util.RecipeIngredientCache;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -84,7 +84,7 @@ public final class MysticalAgriculture {
 		bus.register(new NetworkHandler());
 		bus.register(new RegisterCapabilityHandler());
 
-		if (FMLEnvironment.dist == Dist.CLIENT) {
+		if (FMLEnvironment.getDist() == Dist.CLIENT) {
 			bus.register(new ColorHandler());
 			bus.register(new ModelHandler());
 			bus.register(new ModTESRs());
@@ -134,8 +134,8 @@ public final class MysticalAgriculture {
 		}
 	}
 
-	public static ResourceLocation resource(String path) {
-		return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
+	public static Identifier resource(String path) {
+		return Identifier.fromNamespaceAndPath(MOD_ID, path);
 	}
 
 	private static void initAPI() throws NoSuchFieldException, IllegalAccessException {

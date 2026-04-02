@@ -23,7 +23,7 @@ public class MobSoulUtils {
      * Creates a {@link DataComponentMap} with the necessary components for this mob soul type using the provided soul amount
      *
      * @param type  the mob soul type
-     * @param souls the amount of souls in this tag
+     * @param souls the number of souls in this tag
      * @return a {@link DataComponentMap} for the specified mob soul type
      */
     public static DataComponentMap makeComponentMap(MobSoulType type, double souls) {
@@ -32,10 +32,10 @@ public class MobSoulUtils {
     }
 
     /**
-     * Get a new soul jar filled with the provided amount of souls of the provided mob soul type
+     * Get a new soul jar filled with the provided number of souls of the provided mob soul type
      *
      * @param type  the mob soul type
-     * @param souls the amount of souls in this soul jar
+     * @param souls the number of souls in this soul jar
      * @param item  the soul jar item instance
      * @return the soul jar
      */

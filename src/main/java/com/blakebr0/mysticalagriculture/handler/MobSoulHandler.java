@@ -48,7 +48,8 @@ public final class MobSoulHandler {
     }
 
     private static List<ItemStack> getValidSoulJars(Player player, MobSoulType type) {
-        return player.getInventory().items.stream()
+        return player.getInventory().getNonEquipmentItems()
+                .stream()
                 .filter(s -> s.getItem() instanceof SoulJarItem)
                 .filter(s -> MobSoulUtils.canAddTypeToJar(s, type))
                 .sorted((a, b) -> MobSoulUtils.getType(a) != null ? -1 : MobSoulUtils.getType(b) != null ? 0 : 1)

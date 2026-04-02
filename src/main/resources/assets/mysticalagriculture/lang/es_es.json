@@ -280,8 +280,6 @@
   "tooltip.mysticalagriculture.chance": "%s de probabilidad",
   "tooltip.mysticalagriculture.secondary_chance": "Oportunidad secundaria: %s",
   "tooltip.mysticalagriculture.inferium_output": "Salida de inferium: %s",
-  "tooltip.mysticalagriculture.cooking_speed": "Velocidad de cocción: %s",
-  "tooltip.mysticalagriculture.fuel_efficiency": "Eficiencia de combustible: %s",
   "tooltip.mysticalagriculture.requires_effective_farmland": "Debe plantarse en %s",
   "tooltip.mysticalagriculture.requires_crux": "Requiere %s debajo",
   "tooltip.mysticalagriculture.invalid_biome": "Bioma inválido",

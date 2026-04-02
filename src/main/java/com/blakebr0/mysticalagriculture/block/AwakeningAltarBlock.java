@@ -3,23 +3,26 @@ package com.blakebr0.mysticalagriculture.block;
 import com.blakebr0.cucumber.block.BaseTileEntityBlock;
 import com.blakebr0.cucumber.helper.BlockHelper;
 import com.blakebr0.cucumber.helper.StackHelper;
+import com.blakebr0.cucumber.iface.IHoverTextProvider;
 import com.blakebr0.cucumber.util.VoxelShapeBuilder;
 import com.blakebr0.mysticalagriculture.init.ModTileEntities;
 import com.blakebr0.mysticalagriculture.item.WandItem;
 import com.blakebr0.mysticalagriculture.lib.ModTooltips;
 import com.blakebr0.mysticalagriculture.tileentity.AwakeningAltarTileEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.SoundType;
@@ -31,9 +34,9 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import java.util.List;
+import java.util.function.Consumer;
 
-public class AwakeningAltarBlock extends BaseTileEntityBlock {
+public class AwakeningAltarBlock extends BaseTileEntityBlock implements IHoverTextProvider {
     public static final VoxelShape ALTAR_SHAPE = VoxelShapeBuilder.builder()
             .cuboid(0, 0, 0, 16, 8, 16).cuboid(3, 13, 3, 13, 14, 13)
             .cuboid(6, 10, 6, 10, 11, 10).cuboid(5, 11, 5, 11, 13, 11)
@@ -47,8 +50,8 @@ public class AwakeningAltarBlock extends BaseTileEntityBlock {
             .cuboid(14, 8, 0.25, 15.75, 9, 2).cuboid(0.25, 8, 0.25, 2, 9, 2)
             .cuboid(5, 8, 5, 11, 10, 11).build();
 
-    public AwakeningAltarBlock() {
-        super(SoundType.STONE, 10.0F, 12.0F, true);
+    public AwakeningAltarBlock(Identifier id) {
+        super(id, SoundType.STONE, 10.0F, 12.0F, true);
     }
 
     @Override
@@ -57,7 +60,17 @@ public class AwakeningAltarBlock extends BaseTileEntityBlock {
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return ALTAR_SHAPE;
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> builder, TooltipFlag flag) {
+        builder.accept(ModTooltips.ACTIVATE_WITH_REDSTONE.toComponent());
+    }
+
+    @Override
+    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         var tile = level.getBlockEntity(pos);
 
         if (tile instanceof AwakeningAltarTileEntity altar) {
@@ -90,30 +103,7 @@ public class AwakeningAltarBlock extends BaseTileEntityBlock {
             }
         }
 
-        return ItemInteractionResult.SUCCESS;
-    }
-
-    @Override
-    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (state.getBlock() != newState.getBlock()) {
-            var tile = level.getBlockEntity(pos);
-
-            if (tile instanceof AwakeningAltarTileEntity altar) {
-                Containers.dropContents(level, pos, altar.getInventory().getStacks());
-            }
-        }
-
-        super.onRemove(state, level, pos, newState, isMoving);
-    }
-
-    @Override
-    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return ALTAR_SHAPE;
-    }
-
-    @Override
-    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(ModTooltips.ACTIVATE_WITH_REDSTONE.build());
+        return InteractionResult.SUCCESS;
     }
 
     @Override
@@ -122,7 +112,7 @@ public class AwakeningAltarBlock extends BaseTileEntityBlock {
     }
 
     @Override
-    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos, Direction direction) {
         return BlockHelper.getRedstoneSignalFromInventory(level.getBlockEntity(pos));
     }
 

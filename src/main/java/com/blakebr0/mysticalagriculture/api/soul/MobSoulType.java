@@ -4,8 +4,8 @@ import com.blakebr0.mysticalagriculture.api.registry.IMobSoulTypeRegistry;
 import com.google.common.collect.Sets;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.FastColor;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.ARGB;
 import net.minecraft.world.entity.LivingEntity;
 
 import java.util.Set;
@@ -16,8 +16,8 @@ import java.util.Set;
  * Use or extend this class for your mob soul types
  */
 public class MobSoulType {
-    private final ResourceLocation id;
-    private final Set<ResourceLocation> entityIds;
+    private final Identifier id;
+    private final Set<Identifier> entityIds;
     private double soulRequirement;
     private int color;
     private String entityDisplayNameKey = null;
@@ -29,14 +29,14 @@ public class MobSoulType {
      *
      * @param id              the id of this mob soul type
      * @param entityId        the entity type of this mob soul type
-     * @param soulRequirement the amount of souls the soul jar can hold of this mob soul type
+     * @param soulRequirement the number of souls the soul jar can hold of this mob soul type
      * @param color           the color of this mob soul type
      */
-    public MobSoulType(ResourceLocation id, ResourceLocation entityId, double soulRequirement, int color) {
+    public MobSoulType(Identifier id, Identifier entityId, double soulRequirement, int color) {
         this.id = id;
         this.entityIds = Sets.newHashSet(entityId);
         this.soulRequirement = soulRequirement;
-        this.color = FastColor.ARGB32.color(204, color);
+        this.color = ARGB.color(204, color);
         this.enabled = true;
     }
 
@@ -46,15 +46,15 @@ public class MobSoulType {
      * @param id                   the id of this mob soul type
      * @param entityId             the entity type of this mob soul type
      * @param entityDisplayNameKey the key used to create a translation key for the entity tooltip, automatically prepends 'mobSoulTpye.(modid).'
-     * @param soulRequirement      the amount of souls the soul jar can hold of this mob soul type
+     * @param soulRequirement      the number of souls the soul jar can hold of this mob soul type
      * @param color                the color of this mob soul type
      */
-    public MobSoulType(ResourceLocation id, ResourceLocation entityId, String entityDisplayNameKey, double soulRequirement, int color) {
+    public MobSoulType(Identifier id, Identifier entityId, String entityDisplayNameKey, double soulRequirement, int color) {
         this.id = id;
         this.entityIds = Sets.newHashSet(entityId);
         this.soulRequirement = soulRequirement;
         this.entityDisplayNameKey = entityDisplayNameKey;
-        this.color = FastColor.ARGB32.color(204, color);
+        this.color = ARGB.color(204, color);
         this.enabled = true;
     }
 
@@ -67,12 +67,12 @@ public class MobSoulType {
      * @param soulRequirement      the amount of souls the soul jar can hold of this mob soul type
      * @param color                the color of this mob soul type
      */
-    public MobSoulType(ResourceLocation id, Set<ResourceLocation> entityIds, String entityDisplayNameKey, double soulRequirement, int color) {
+    public MobSoulType(Identifier id, Set<Identifier> entityIds, String entityDisplayNameKey, double soulRequirement, int color) {
         this.id = id;
         this.entityIds = entityIds;
         this.soulRequirement = soulRequirement;
         this.entityDisplayNameKey = entityDisplayNameKey;
-        this.color = FastColor.ARGB32.color(204, color);
+        this.color = ARGB.color(204, color);
         this.enabled = true;
     }
 
@@ -81,7 +81,7 @@ public class MobSoulType {
      * and the path is used for {@link MobSoulType#getName()}
      * @return the id of this mob soul type
      */
-    public ResourceLocation getId() {
+    public Identifier getId() {
         return this.id;
     }
 
@@ -106,12 +106,12 @@ public class MobSoulType {
 
     /**
      * The resource location ids of the entity types for this mob soul type.
-     * Don't modify this directly, use {@link IMobSoulTypeRegistry#addEntityTo(MobSoulType, ResourceLocation)} or
-     * {@link IMobSoulTypeRegistry#removeEntityFrom(MobSoulType, ResourceLocation)}
+     * Don't modify this directly, use {@link IMobSoulTypeRegistry#addEntityTo(MobSoulType, Identifier)} or
+     * {@link IMobSoulTypeRegistry#removeEntityFrom(MobSoulType, Identifier)}
      *
      * @return the ids of the entities for this mob soul type
      */
-    public Set<ResourceLocation> getEntityIds() {
+    public Set<Identifier> getEntityIds() {
         return this.entityIds;
     }
 
@@ -149,7 +149,7 @@ public class MobSoulType {
      * @param color the new color of this mob soul type
      */
     public MobSoulType setColor(int color) {
-        this.color = FastColor.ARGB32.color(204, color);
+        this.color = ARGB.color(204, color);
         return this;
     }
 
@@ -157,7 +157,7 @@ public class MobSoulType {
      * Checks if the supplied entity is valid for this mob soul type
      *
      * @param entity the entity to test
-     * @return is the entity valid
+     * @return is the entity valid?
      */
     public boolean isEntityApplicable(LivingEntity entity) {
         var id = BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType());
@@ -205,7 +205,7 @@ public class MobSoulType {
     /**
      * Whether this mob soul type has recipes and shows up in the creative menu
      *
-     * @return is this mob soul type enabled
+     * @return is this mob soul type enabled?
      */
     public boolean isEnabled() {
         return this.enabled;

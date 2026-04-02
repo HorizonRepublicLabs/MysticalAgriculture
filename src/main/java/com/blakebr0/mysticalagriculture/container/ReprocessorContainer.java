@@ -1,8 +1,8 @@
 package com.blakebr0.mysticalagriculture.container;
 
 import com.blakebr0.cucumber.container.BaseContainerMenu;
-import com.blakebr0.cucumber.inventory.BaseItemStackHandler;
-import com.blakebr0.cucumber.inventory.slot.BaseItemStackHandlerSlot;
+import com.blakebr0.cucumber.inventory.CItemStacksHandler;
+import com.blakebr0.cucumber.inventory.slot.CItemStacksHandlerSlot;
 import com.blakebr0.mysticalagriculture.api.machine.MachineUpgradeItemStackHandler;
 import com.blakebr0.mysticalagriculture.init.ModMenuTypes;
 import com.blakebr0.mysticalagriculture.init.ModRecipeTypes;
@@ -23,14 +23,14 @@ public class ReprocessorContainer extends BaseContainerMenu {
         this(type, id, playerInventory, ReprocessorTileEntity.createInventoryHandler(), new MachineUpgradeItemStackHandler(), pos);
     }
 
-    private ReprocessorContainer(MenuType<?> type, int id, Inventory playerInventory, BaseItemStackHandler inventory, MachineUpgradeItemStackHandler upgradeInventory, BlockPos pos) {
+    private ReprocessorContainer(MenuType<?> type, int id, Inventory playerInventory, CItemStacksHandler inventory, MachineUpgradeItemStackHandler upgradeInventory, BlockPos pos) {
         super(type, id, pos);
 
         this.addSlot(new SlotItemHandler(upgradeInventory, 0, 152, 9));
 
-        this.addSlot(new BaseItemStackHandlerSlot(inventory, 0, 74, 52));
-        this.addSlot(new BaseItemStackHandlerSlot(inventory, 1, 30, 56));
-        this.addSlot(new BaseItemStackHandlerSlot(inventory, 2, 134, 52));
+        this.addSlot(new CItemStacksHandlerSlot(inventory, 0, 74, 52));
+        this.addSlot(new CItemStacksHandlerSlot(inventory, 1, 30, 56));
+        this.addSlot(new CItemStacksHandlerSlot(inventory, 2, 134, 52));
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++) {
@@ -96,7 +96,7 @@ public class ReprocessorContainer extends BaseContainerMenu {
         return new ReprocessorContainer(ModMenuTypes.REPROCESSOR.get(), windowId, playerInventory, buffer.readBlockPos());
     }
 
-    public static ReprocessorContainer create(int windowId, Inventory playerInventory, BaseItemStackHandler inventory, MachineUpgradeItemStackHandler upgradeInventory, BlockPos pos) {
+    public static ReprocessorContainer create(int windowId, Inventory playerInventory, CItemStacksHandler inventory, MachineUpgradeItemStackHandler upgradeInventory, BlockPos pos) {
         return new ReprocessorContainer(ModMenuTypes.REPROCESSOR.get(), windowId, playerInventory, inventory, upgradeInventory, pos);
     }
 }

@@ -15,7 +15,7 @@ import mcjty.theoneprobe.api.ITheOneProbe;
 import mcjty.theoneprobe.api.ProbeMode;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -29,7 +29,7 @@ public class TOPCompat implements Function<ITheOneProbe, Void> {
     public Void apply(ITheOneProbe probe) {
         probe.registerProvider(new IProbeInfoProvider() {
             @Override
-            public ResourceLocation getID() {
+            public Identifier getID() {
                 return MysticalAgriculture.resource("crops");
             }
 

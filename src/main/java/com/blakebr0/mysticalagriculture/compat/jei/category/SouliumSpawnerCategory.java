@@ -20,7 +20,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.item.component.CustomData;
@@ -30,7 +30,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class SouliumSpawnerCategory implements IRecipeCategory<ISouliumSpawnerRecipe> {
-    private static final ResourceLocation TEXTURE = MysticalAgriculture.resource("textures/jei/soulium_spawner.png");
+    private static final Identifier TEXTURE = MysticalAgriculture.resource("textures/jei/soulium_spawner.png");
     public static final RecipeType<ISouliumSpawnerRecipe> RECIPE_TYPE = RecipeType.create(MysticalAgriculture.MOD_ID, "soulium_spawner", ISouliumSpawnerRecipe.class);
 
     private final IDrawable background;

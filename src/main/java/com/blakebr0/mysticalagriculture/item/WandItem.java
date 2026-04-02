@@ -2,12 +2,13 @@ package com.blakebr0.mysticalagriculture.item;
 
 import com.blakebr0.cucumber.item.BaseItem;
 import com.blakebr0.mysticalagriculture.util.IActivatable;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.context.UseOnContext;
 
 public class WandItem extends BaseItem {
-    public WandItem() {
-        super(p -> p.stacksTo(1));
+    public WandItem(Identifier id) {
+        super(id, p -> p.stacksTo(1));
     }
 
     @Override

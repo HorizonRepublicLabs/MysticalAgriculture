@@ -16,7 +16,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -135,23 +135,23 @@ public class SoulExtractionRecipe implements ISoulExtractionRecipe {
     public static class Result {
         public static final MapCodec<Result> CODEC = RecordCodecBuilder.mapCodec(builder ->
                builder.group(
-                       ResourceLocation.CODEC.fieldOf("type").forGetter(result -> result.type),
+                       Identifier.CODEC.fieldOf("type").forGetter(result -> result.type),
                        Codec.DOUBLE.fieldOf("souls").forGetter(result -> result.souls)
                ).apply(builder, Result::new)
         );
         public static final StreamCodec<RegistryFriendlyByteBuf, Result> STREAM_CODEC = StreamCodec.composite(
-                ResourceLocation.STREAM_CODEC,
+                Identifier.STREAM_CODEC,
                 result -> result.type,
                 ByteBufCodecs.DOUBLE,
                 result -> result.souls,
                 Result::new
         );
 
-        public final ResourceLocation type;
+        public final Identifier type;
         public final double souls;
         public final ItemStack stack;
 
-        public Result(ResourceLocation type, double souls) {
+        public Result(Identifier type, double souls) {
             this.type = type;
             this.souls = souls;
             this.stack = MobSoulUtils.getSoulJar(MobSoulTypeRegistry.getInstance().getMobSoulTypeById(type), souls, ModItems.SOUL_JAR.get());

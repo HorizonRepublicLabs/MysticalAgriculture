@@ -3,14 +3,14 @@ package com.blakebr0.mysticalagriculture.augment;
 import com.blakebr0.mysticalagriculture.api.lib.AbilityCache;
 import com.blakebr0.mysticalagriculture.api.tinkering.Augment;
 import com.blakebr0.mysticalagriculture.api.tinkering.AugmentType;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
 import java.util.EnumSet;
 
 public class FlightAugment extends Augment {
-    public FlightAugment(ResourceLocation id, int tier) {
+    public FlightAugment(Identifier id, int tier) {
         super(id, tier, EnumSet.of(AugmentType.CHESTPLATE), 0xCBD6D6, 0x556B6B);
     }
 

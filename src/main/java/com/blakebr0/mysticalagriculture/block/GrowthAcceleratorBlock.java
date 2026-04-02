@@ -1,29 +1,32 @@
 package com.blakebr0.mysticalagriculture.block;
 
 import com.blakebr0.cucumber.block.BaseBlock;
+import com.blakebr0.cucumber.iface.IHoverTextProvider;
 import com.blakebr0.mysticalagriculture.config.ModConfigs;
 import com.blakebr0.mysticalagriculture.lib.ModTooltips;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 
-import java.util.List;
+import java.util.function.Consumer;
 
-public class GrowthAcceleratorBlock extends BaseBlock {
+public class GrowthAcceleratorBlock extends BaseBlock implements IHoverTextProvider {
     private final int range;
     private final ChatFormatting textColor;
 
-    public GrowthAcceleratorBlock(int range, ChatFormatting textColor) {
-        super(SoundType.STONE, 5.0F, 8.0F, true);
+    public GrowthAcceleratorBlock(Identifier id, int range, ChatFormatting textColor) {
+        super(id, SoundType.STONE, 5.0F, 8.0F, true);
         this.range = range;
         this.textColor = textColor;
     }
@@ -44,12 +47,11 @@ public class GrowthAcceleratorBlock extends BaseBlock {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(ModTooltips.GROWTH_ACCELERATOR.build());
-
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> builder, TooltipFlag flag) {
         var rangeNumber = Component.literal(String.valueOf(this.range)).withStyle(this.textColor);
 
-        tooltip.add(ModTooltips.GROWTH_ACCELERATOR_RANGE.args(rangeNumber).build());
+        builder.accept(ModTooltips.GROWTH_ACCELERATOR.toComponent());
+        builder.accept(ModTooltips.GROWTH_ACCELERATOR_RANGE.args(rangeNumber).toComponent());
     }
 
     private static int getTickRate() {

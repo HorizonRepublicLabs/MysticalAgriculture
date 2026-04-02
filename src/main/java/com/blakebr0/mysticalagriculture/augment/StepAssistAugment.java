@@ -4,7 +4,7 @@ import com.blakebr0.mysticalagriculture.MysticalAgriculture;
 import com.blakebr0.mysticalagriculture.api.lib.AbilityCache;
 import com.blakebr0.mysticalagriculture.api.tinkering.Augment;
 import com.blakebr0.mysticalagriculture.api.tinkering.AugmentType;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
@@ -13,9 +13,9 @@ import net.minecraft.world.level.Level;
 import java.util.EnumSet;
 
 public class StepAssistAugment extends Augment {
-    private static final ResourceLocation ATTRIBUTE_ID = MysticalAgriculture.resource("step_assist_augment");
+    private static final Identifier ATTRIBUTE_ID = MysticalAgriculture.resource("step_assist_augment");
 
-    public StepAssistAugment(ResourceLocation id, int tier) {
+    public StepAssistAugment(Identifier id, int tier) {
         super(id, tier, EnumSet.of(AugmentType.LEGGINGS, AugmentType.BOOTS), 0xFC4F00, 0x602600);
     }
 

@@ -8,10 +8,10 @@ import net.minecraft.world.item.ItemStack;
  */
 public interface ISoulSiphoningItem {
     /**
-     * Get the amount of souls obtained from killing this entity with this item
+     * Get the number of souls obtained from killing this entity with this item
      * @param stack the item used to kill this entity
      * @param entity the entity killed
-     * @return the amount of souls siphoned
+     * @return the number of souls siphoned
      */
     double getSiphonAmount(ItemStack stack, LivingEntity entity);
 }

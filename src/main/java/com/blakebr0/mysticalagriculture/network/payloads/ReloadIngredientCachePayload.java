@@ -35,13 +35,13 @@ public record ReloadIngredientCachePayload(Map<RecipeType<?>, Map<Item, List<Ing
         var types = buffer.readVarInt();
 
         for (var i = 0; i < types; i++) {
-            var type = BuiltInRegistries.RECIPE_TYPE.get(buffer.readResourceLocation());
+            var type = BuiltInRegistries.RECIPE_TYPE.get(buffer.readIdentifier());
             var items = buffer.readVarInt();
 
             caches.put(type, new HashMap<>());
 
             for (var j = 0; j < items; j++) {
-                var item = BuiltInRegistries.ITEM.get(buffer.readResourceLocation());
+                var item = BuiltInRegistries.ITEM.get(buffer.readIdentifier());
                 var ingredients = buffer.readVarInt();
 
                 for (var k = 0; k < ingredients; k++) {
@@ -57,7 +57,7 @@ public record ReloadIngredientCachePayload(Map<RecipeType<?>, Map<Item, List<Ing
         var items = buffer.readVarInt();
 
         for (var i = 0; i < items; i++) {
-            var item = BuiltInRegistries.ITEM.get(buffer.readResourceLocation());
+            var item = BuiltInRegistries.ITEM.get(buffer.readIdentifier());
 
             validVesselItems.add(item);
         }
@@ -74,14 +74,14 @@ public record ReloadIngredientCachePayload(Map<RecipeType<?>, Map<Item, List<Ing
 
             assert type != null;
 
-            buffer.writeResourceLocation(type);
+            buffer.writeIdentifier(type);
             buffer.writeVarInt(caches.size());
 
             for (var cache : caches.entrySet()) {
                 var item = BuiltInRegistries.ITEM.getKey(cache.getKey());
                 var ingredients = cache.getValue();
 
-                buffer.writeResourceLocation(item);
+                buffer.writeIdentifier(item);
                 buffer.writeVarInt(ingredients.size());
 
                 for (var ingredient : ingredients) {
@@ -95,7 +95,7 @@ public record ReloadIngredientCachePayload(Map<RecipeType<?>, Map<Item, List<Ing
         for (var item : payload.validVesselItems) {
             var id = BuiltInRegistries.ITEM.getKey(item);
 
-            buffer.writeResourceLocation(id);
+            buffer.writeIdentifier(id);
         }
     }
 

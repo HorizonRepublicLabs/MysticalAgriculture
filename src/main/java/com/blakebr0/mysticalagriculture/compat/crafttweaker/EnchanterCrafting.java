@@ -14,7 +14,7 @@ import com.blamejared.crafttweaker.api.recipe.manager.base.IRecipeManager;
 import com.blamejared.crafttweaker.platform.services.IRegistryHelper;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -34,7 +34,7 @@ public final class EnchanterCrafting implements IRecipeManager<IEnchanterRecipe>
     public void addRecipe(String name, String enchantmentID, IItemStack[] inputs) {
         var id = CraftTweakerConstants.rl(this.fixRecipeName(name));
         var enchantment = this.registryOrThrow(Registries.ENCHANTMENT)
-                .getHolder(ResourceLocation.parse(enchantmentID))
+                .getHolder(Identifier.parse(enchantmentID))
                 .orElseThrow(() -> new RuntimeException("Could not find enchantment " + enchantmentID));
 
         var recipe = new EnchanterRecipe(toIngredientsList(inputs), enchantment);
@@ -46,7 +46,7 @@ public final class EnchanterCrafting implements IRecipeManager<IEnchanterRecipe>
     public void removeByEnchantment(String enchantmentID) {
         CraftTweakerAPI.apply(new ActionRemoveRecipe<>(this, recipe -> {
             var enchantment = recipe.value().getEnchantment().getKey();
-            return enchantment != null && Objects.equals(enchantment.location(), ResourceLocation.parse(enchantmentID));
+            return enchantment != null && Objects.equals(enchantment.location(), Identifier.parse(enchantmentID));
         }));
     }
 

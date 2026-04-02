@@ -1,7 +1,7 @@
 package com.blakebr0.mysticalagriculture.api.registry;
 
 import com.blakebr0.mysticalagriculture.api.tinkering.Augment;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.List;
 
@@ -23,5 +23,5 @@ public interface IAugmentRegistry {
      * @param id the resource location id of the crop
      * @return the crop for this id
      */
-    Augment getAugmentById(ResourceLocation id);
+    Augment getAugmentById(Identifier id);
 }

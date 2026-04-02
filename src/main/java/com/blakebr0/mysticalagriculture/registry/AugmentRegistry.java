@@ -4,7 +4,7 @@ import com.blakebr0.mysticalagriculture.MysticalAgriculture;
 import com.blakebr0.mysticalagriculture.api.registry.IAugmentRegistry;
 import com.blakebr0.mysticalagriculture.api.tinkering.Augment;
 import com.blakebr0.mysticalagriculture.item.AugmentItem;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.registries.RegisterEvent;
 
@@ -15,7 +15,7 @@ import java.util.Map;
 public final class AugmentRegistry implements IAugmentRegistry {
     private static final AugmentRegistry INSTANCE = new AugmentRegistry();
 
-    private final Map<ResourceLocation, Augment> augments = new LinkedHashMap<>();
+    private final Map<Identifier, Augment> augments = new LinkedHashMap<>();
 
     @Override
     public void register(Augment augment) {
@@ -32,7 +32,7 @@ public final class AugmentRegistry implements IAugmentRegistry {
     }
 
     @Override
-    public Augment getAugmentById(ResourceLocation id) {
+    public Augment getAugmentById(Identifier id) {
         return this.augments.get(id);
     }
 

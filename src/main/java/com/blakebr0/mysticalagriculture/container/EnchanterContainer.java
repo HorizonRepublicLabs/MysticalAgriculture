@@ -1,7 +1,7 @@
 package com.blakebr0.mysticalagriculture.container;
 
 import com.blakebr0.cucumber.container.ExtendedContainerMenu;
-import com.blakebr0.cucumber.inventory.BaseItemStackHandler;
+import com.blakebr0.cucumber.inventory.CItemStacksHandler;
 import com.blakebr0.cucumber.inventory.RecipeInventory;
 import com.blakebr0.mysticalagriculture.container.slot.EnchanterOutputSlot;
 import com.blakebr0.mysticalagriculture.container.slot.EnchanterSlot;
@@ -21,14 +21,14 @@ import net.minecraft.world.level.Level;
 
 public class EnchanterContainer extends ExtendedContainerMenu {
     private final Level level;
-    private final BaseItemStackHandler inventory;
+    private final CItemStacksHandler inventory;
     private final Container result;
 
     private EnchanterContainer(MenuType<?> type, int id, Inventory playerInventory, BlockPos pos) {
         this(type, id, playerInventory, EnchanterTileEntity.createInventoryHandler(), pos);
     }
 
-    private EnchanterContainer(MenuType<?> type, int id, Inventory playerInventory, BaseItemStackHandler inventory, BlockPos pos) {
+    private EnchanterContainer(MenuType<?> type, int id, Inventory playerInventory, CItemStacksHandler inventory, BlockPos pos) {
         super(type, id, pos);
         this.level = playerInventory.player.level();
         this.inventory = inventory;
@@ -110,7 +110,7 @@ public class EnchanterContainer extends ExtendedContainerMenu {
         return new EnchanterContainer(ModMenuTypes.ENCHANTER.get(), windowId, playerInventory, buffer.readBlockPos());
     }
 
-    public static EnchanterContainer create(int windowId, Inventory playerInventory, BaseItemStackHandler inventory, BlockPos pos) {
+    public static EnchanterContainer create(int windowId, Inventory playerInventory, CItemStacksHandler inventory, BlockPos pos) {
         return new EnchanterContainer(ModMenuTypes.ENCHANTER.get(), windowId, playerInventory, inventory, pos);
     }
 }

@@ -10,7 +10,7 @@ import com.blamejared.crafttweaker.api.action.recipe.ActionRemoveRecipe;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import com.blamejared.crafttweaker.api.ingredient.IIngredient;
 import com.blamejared.crafttweaker.api.recipe.manager.base.IRecipeManager;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import org.openzen.zencode.java.ZenCodeType;
@@ -28,7 +28,7 @@ public final class SoulExtractorCrafting implements IRecipeManager<ISoulExtracti
     @ZenCodeType.Method
     public void addRecipe(String name, IIngredient input, String type, double souls) {
         var id = CraftTweakerConstants.rl(this.fixRecipeName(name));
-        var result = new SoulExtractionRecipe.Result(ResourceLocation.parse(type), souls);
+        var result = new SoulExtractionRecipe.Result(Identifier.parse(type), souls);
         var recipe = new SoulExtractionRecipe(input.asVanillaIngredient(), result);
 
         CraftTweakerAPI.apply(new ActionAddRecipe<>(this, new RecipeHolder<>(id, recipe)));
@@ -38,7 +38,7 @@ public final class SoulExtractorCrafting implements IRecipeManager<ISoulExtracti
     public void removeByMobSoulType(String type) {
         CraftTweakerAPI.apply(new ActionRemoveRecipe<>(this, recipe -> {
             var mobSoulType = recipe.value().getMobSoulType();
-            return mobSoulType != null && Objects.equals(mobSoulType.getId(), ResourceLocation.parse(type));
+            return mobSoulType != null && Objects.equals(mobSoulType.getId(), Identifier.parse(type));
         }));
     }
 }

@@ -280,8 +280,6 @@
     "tooltip.mysticalagriculture.chance": "確率：%s",
     "tooltip.mysticalagriculture.secondary_chance": "複数ドロップする確率：%s",
     "tooltip.mysticalagriculture.inferium_output": "インフェリウムのドロップ：%s",
-    "tooltip.mysticalagriculture.cooking_speed": "製錬速度：%s",
-    "tooltip.mysticalagriculture.fuel_efficiency": "燃料効率：%s",
     "tooltip.mysticalagriculture.requires_effective_farmland": "%sに植える必要があります",
     "tooltip.mysticalagriculture.requires_crux": "下に%sが必要です",
     "tooltip.mysticalagriculture.invalid_biome": "無効なバイオームです",

@@ -1,6 +1,6 @@
 package com.blakebr0.mysticalagriculture.tileentity;
 
-import com.blakebr0.cucumber.inventory.BaseItemStackHandler;
+import com.blakebr0.cucumber.inventory.CItemStacksHandler;
 import com.blakebr0.cucumber.inventory.CachedRecipe;
 import com.blakebr0.cucumber.inventory.OnContentsChangedFunction;
 import com.blakebr0.cucumber.tileentity.BaseInventoryTileEntity;
@@ -27,8 +27,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class InfusionAltarTileEntity extends BaseInventoryTileEntity implements IActivatable {
-    private final BaseItemStackHandler inventory;
-    private final BaseItemStackHandler recipeInventory;
+    private final CItemStacksHandler inventory;
+    private final CItemStacksHandler recipeInventory;
     private final MultiblockPositions pedestalLocations = new MultiblockPositions.Builder()
             .pos(3, 0, 0).pos(0, 0, 3).pos(-3, 0, 0).pos(0, 0, -3)
             .pos(2, 0, 2).pos(2, 0, -2).pos(-2, 0, 2).pos(-2, 0, -2).build();
@@ -39,12 +39,12 @@ public class InfusionAltarTileEntity extends BaseInventoryTileEntity implements 
     public InfusionAltarTileEntity(BlockPos pos, BlockState state) {
         super(ModTileEntities.INFUSION_ALTAR.get(), pos, state);
         this.inventory = createInventoryHandler((slot) -> this.setChanged());
-        this.recipeInventory = BaseItemStackHandler.create(9);
+        this.recipeInventory = CItemStacksHandler.create(9);
         this.recipe = new CachedRecipe<>(ModRecipeTypes.INFUSION.get());
     }
 
     @Override
-    public BaseItemStackHandler getInventory() {
+    public CItemStacksHandler getInventory() {
         return this.inventory;
     }
 
@@ -129,8 +129,8 @@ public class InfusionAltarTileEntity extends BaseInventoryTileEntity implements 
         tile.dispatchIfChanged();
     }
 
-    public static BaseItemStackHandler createInventoryHandler(OnContentsChangedFunction onContentsChanged) {
-        return BaseItemStackHandler.create(2, onContentsChanged, builder -> {
+    public static CItemStacksHandler createInventoryHandler(OnContentsChangedFunction onContentsChanged) {
+        return CItemStacksHandler.create(2, onContentsChanged, builder -> {
             builder.setDefaultSlotLimit(1);
             builder.setCanInsert((slot, stack) -> builder.getStackInSlot(1).isEmpty());
             builder.setOutputSlots(1);

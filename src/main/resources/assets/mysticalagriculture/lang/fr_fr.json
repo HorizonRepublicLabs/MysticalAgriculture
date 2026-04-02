@@ -274,8 +274,6 @@
   "tooltip.mysticalagriculture.required_biomes": "Biome requis:",
   "tooltip.mysticalagriculture.secondary_chance": "Chance d'un materiau secondaire: %s",
   "tooltip.mysticalagriculture.inferium_output": "Sortie d'Inferium: %s",
-  "tooltip.mysticalagriculture.cooking_speed": "Vitesse de traitement: %s",
-  "tooltip.mysticalagriculture.fuel_efficiency": "Éficacité du carburant: %s",
   "tooltip.mysticalagriculture.requires_crux": "Requiers %s dessous",
   "tooltip.mysticalagriculture.invalid_biome": "Biome invalide",
   "tooltip.mysticalagriculture.growth_accelerator": "Fait pousser les plants au dessus plus vite.",

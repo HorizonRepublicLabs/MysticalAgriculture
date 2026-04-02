@@ -1,17 +1,17 @@
 package com.blakebr0.mysticalagriculture.api.crop;
 
 import com.blakebr0.mysticalagriculture.api.MysticalAgricultureAPI;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 
 import java.util.function.Supplier;
 
 public class CropType {
-    public static final CropType RESOURCE = new CropType(ResourceLocation.fromNamespaceAndPath(MysticalAgricultureAPI.MOD_ID, "resource"), ResourceLocation.fromNamespaceAndPath(MysticalAgricultureAPI.MOD_ID, "block/mystical_resource_crop"));
-    public static final CropType MOB = new CropType(ResourceLocation.fromNamespaceAndPath(MysticalAgricultureAPI.MOD_ID, "mob"), ResourceLocation.fromNamespaceAndPath(MysticalAgricultureAPI.MOD_ID, "block/mystical_mob_crop"));
+    public static final CropType RESOURCE = new CropType(MysticalAgricultureAPI.resource("resource"), MysticalAgricultureAPI.resource("block/mystical_resource_crop"));
+    public static final CropType MOB = new CropType(MysticalAgricultureAPI.resource("mob"), MysticalAgricultureAPI.resource("block/mystical_mob_crop"));
 
-    private final ResourceLocation id;
-    private final ResourceLocation stemModel;
+    private final Identifier id;
+    private final Identifier stemModel;
     private Supplier<? extends Item> craftingSeed;
 
     /**
@@ -19,7 +19,7 @@ public class CropType {
      * @param id the name of this type
      * @param stemModel the stem model for all crops of this type
      */
-    public CropType(ResourceLocation id, ResourceLocation stemModel) {
+    public CropType(Identifier id, Identifier stemModel) {
         this.id = id;
         this.stemModel = stemModel;
     }
@@ -27,7 +27,7 @@ public class CropType {
     /**
      * @return the id of this crop tier
      */
-    public ResourceLocation getId() {
+    public Identifier getId() {
         return this.id;
     }
 
@@ -49,7 +49,7 @@ public class CropType {
      * The base model location used for the stem models of this tier, excluding the _# for age
      * @return the resource location of the stem model for this type
      */
-    public ResourceLocation getStemModel() {
+    public Identifier getStemModel() {
         return this.stemModel;
     }
 

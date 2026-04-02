@@ -13,11 +13,11 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 
 public class CruxCategory implements IRecipeCategory<CruxRecipe> {
-    private static final ResourceLocation TEXTURE = MysticalAgriculture.resource("textures/jei/crux.png");
+    private static final Identifier TEXTURE = MysticalAgriculture.resource("textures/jei/crux.png");
     public static final RecipeType<CruxRecipe> RECIPE_TYPE = RecipeType.create(MysticalAgriculture.MOD_ID, "crux", CruxRecipe.class);
 
     private final IDrawable background;

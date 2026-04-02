@@ -5,7 +5,7 @@ import com.blakebr0.mysticalagriculture.api.tinkering.AOEAugment;
 import com.blakebr0.mysticalagriculture.api.tinkering.AugmentType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -16,7 +16,7 @@ import net.neoforged.neoforge.common.ItemAbilities;
 import java.util.EnumSet;
 
 public class TillingAOEAugment extends AOEAugment {
-    public TillingAOEAugment(ResourceLocation id, int tier, int range) {
+    public TillingAOEAugment(Identifier id, int tier, int range) {
         super(id, tier, EnumSet.of(AugmentType.HOE), getColor(0xB9855C, tier), getColor(0x593D29, tier), range);
     }
 

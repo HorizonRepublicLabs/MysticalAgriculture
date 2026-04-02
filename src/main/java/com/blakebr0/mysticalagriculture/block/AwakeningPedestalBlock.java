@@ -6,11 +6,12 @@ import com.blakebr0.cucumber.helper.StackHelper;
 import com.blakebr0.cucumber.util.VoxelShapeBuilder;
 import com.blakebr0.mysticalagriculture.tileentity.AwakeningPedestalTileEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -42,8 +43,8 @@ public class AwakeningPedestalBlock extends BaseTileEntityBlock {
             Shapes.box(0.3125, 0.6875, 0.8125, 0.6875, 0.875, 0.8125)
     ).build();
 
-    public AwakeningPedestalBlock() {
-        super(SoundType.STONE, 10.0F, 12.0F, true);
+    public AwakeningPedestalBlock(Identifier id) {
+        super(id, SoundType.STONE, 10.0F, 12.0F, true);
     }
 
     @Override
@@ -52,7 +53,12 @@ public class AwakeningPedestalBlock extends BaseTileEntityBlock {
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return PEDESTAL_SHAPE;
+    }
+
+    @Override
+    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         var tile = level.getBlockEntity(pos);
 
         if (tile instanceof AwakeningPedestalTileEntity pedestal) {
@@ -74,25 +80,7 @@ public class AwakeningPedestalBlock extends BaseTileEntityBlock {
             }
         }
 
-        return ItemInteractionResult.SUCCESS;
-    }
-
-    @Override
-    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (state.getBlock() != newState.getBlock()) {
-            var tile = level.getBlockEntity(pos);
-
-            if (tile instanceof AwakeningPedestalTileEntity pedestal) {
-                Containers.dropContents(level, pos, pedestal.getInventory().getStacks());
-            }
-        }
-
-        super.onRemove(state, level, pos, newState, isMoving);
-    }
-
-    @Override
-    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return PEDESTAL_SHAPE;
+        return InteractionResult.SUCCESS;
     }
 
     @Override
@@ -101,7 +89,7 @@ public class AwakeningPedestalBlock extends BaseTileEntityBlock {
     }
 
     @Override
-    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos, Direction direction) {
         return BlockHelper.getRedstoneSignalFromInventory(level.getBlockEntity(pos));
     }
 }

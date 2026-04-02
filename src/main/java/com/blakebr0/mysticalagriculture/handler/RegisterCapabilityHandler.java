@@ -12,21 +12,21 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 public final class RegisterCapabilityHandler {
     @SubscribeEvent
     public void onRegisterCapabilities(RegisterCapabilitiesEvent event) {
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModTileEntities.AWAKENING_ALTAR.get(), (block, direction) -> block.getInventory());
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModTileEntities.AWAKENING_PEDESTAL.get(), (block, direction) -> block.getInventory());
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModTileEntities.ESSENCE_VESSEL.get(), (block, direction) -> block.getInventory());
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModTileEntities.FURNACE.get(), EssenceFurnaceTileEntity::getSidedInventory);
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModTileEntities.HARVESTER.get(), (block, direction) -> block.getInventory());
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModTileEntities.INFUSION_ALTAR.get(), (block, direction) -> block.getInventory());
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModTileEntities.INFUSION_PEDESTAL.get(), (block, direction) -> block.getInventory());
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModTileEntities.REPROCESSOR.get(), ReprocessorTileEntity::getSidedInventory);
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModTileEntities.SOUL_EXTRACTOR.get(), SoulExtractorTileEntity::getSidedInventory);
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModTileEntities.SOULIUM_SPAWNER.get(), SouliumSpawnerTileEntity::getSidedInventory);
+        event.registerBlockEntity(Capabilities.Item.BLOCK, ModTileEntities.AWAKENING_ALTAR.get(), (block, direction) -> block.getInventory());
+        event.registerBlockEntity(Capabilities.Item.BLOCK, ModTileEntities.AWAKENING_PEDESTAL.get(), (block, direction) -> block.getInventory());
+        event.registerBlockEntity(Capabilities.Item.BLOCK, ModTileEntities.ESSENCE_VESSEL.get(), (block, direction) -> block.getInventory());
+        event.registerBlockEntity(Capabilities.Item.BLOCK, ModTileEntities.FURNACE.get(), EssenceFurnaceTileEntity::getSidedInventory);
+        event.registerBlockEntity(Capabilities.Item.BLOCK, ModTileEntities.HARVESTER.get(), (block, direction) -> block.getInventory());
+        event.registerBlockEntity(Capabilities.Item.BLOCK, ModTileEntities.INFUSION_ALTAR.get(), (block, direction) -> block.getInventory());
+        event.registerBlockEntity(Capabilities.Item.BLOCK, ModTileEntities.INFUSION_PEDESTAL.get(), (block, direction) -> block.getInventory());
+        event.registerBlockEntity(Capabilities.Item.BLOCK, ModTileEntities.REPROCESSOR.get(), ReprocessorTileEntity::getSidedInventory);
+        event.registerBlockEntity(Capabilities.Item.BLOCK, ModTileEntities.SOUL_EXTRACTOR.get(), SoulExtractorTileEntity::getSidedInventory);
+        event.registerBlockEntity(Capabilities.Item.BLOCK, ModTileEntities.SOULIUM_SPAWNER.get(), SouliumSpawnerTileEntity::getSidedInventory);
 
-        event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, ModTileEntities.FURNACE.get(), (block, direction) -> block.getEnergy());
-        event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, ModTileEntities.HARVESTER.get(), (block, direction) -> block.getEnergy());
-        event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, ModTileEntities.REPROCESSOR.get(), (block, direction) -> block.getEnergy());
-        event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, ModTileEntities.SOUL_EXTRACTOR.get(), (block, direction) -> block.getEnergy());
-        event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, ModTileEntities.SOULIUM_SPAWNER.get(), (block, direction) -> block.getEnergy());
+        event.registerBlockEntity(Capabilities.Energy.BLOCK, ModTileEntities.FURNACE.get(), (block, direction) -> block.getEnergy());
+        event.registerBlockEntity(Capabilities.Energy.BLOCK, ModTileEntities.HARVESTER.get(), (block, direction) -> block.getEnergy());
+        event.registerBlockEntity(Capabilities.Energy.BLOCK, ModTileEntities.REPROCESSOR.get(), (block, direction) -> block.getEnergy());
+        event.registerBlockEntity(Capabilities.Energy.BLOCK, ModTileEntities.SOUL_EXTRACTOR.get(), (block, direction) -> block.getEnergy());
+        event.registerBlockEntity(Capabilities.Energy.BLOCK, ModTileEntities.SOULIUM_SPAWNER.get(), (block, direction) -> block.getEnergy());
     }
 }

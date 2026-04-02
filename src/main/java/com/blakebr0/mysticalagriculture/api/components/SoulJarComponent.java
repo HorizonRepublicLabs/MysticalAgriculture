@@ -6,18 +6,18 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
-public record SoulJarComponent(ResourceLocation type, double souls) {
+public record SoulJarComponent(Identifier type, double souls) {
     public static final MapCodec<SoulJarComponent> MAP_CODEC = RecordCodecBuilder.mapCodec(builder ->
             builder.group(
-                    ResourceLocation.CODEC.fieldOf("type").forGetter(SoulJarComponent::type),
+                    Identifier.CODEC.fieldOf("type").forGetter(SoulJarComponent::type),
                     Codec.DOUBLE.fieldOf("souls").forGetter(SoulJarComponent::souls)
             ).apply(builder, SoulJarComponent::new)
     );
     public static final Codec<SoulJarComponent> CODEC = MAP_CODEC.codec();
     public static final StreamCodec<FriendlyByteBuf, SoulJarComponent> STREAM_CODEC = StreamCodec.composite(
-            ResourceLocation.STREAM_CODEC,
+            Identifier.STREAM_CODEC,
             SoulJarComponent::type,
             ByteBufCodecs.DOUBLE,
             SoulJarComponent::souls,

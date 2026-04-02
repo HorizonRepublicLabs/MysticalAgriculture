@@ -3,7 +3,7 @@ package com.blakebr0.mysticalagriculture.api;
 import com.blakebr0.mysticalagriculture.api.registry.IAugmentRegistry;
 import com.blakebr0.mysticalagriculture.api.registry.ICropRegistry;
 import com.blakebr0.mysticalagriculture.api.registry.IMobSoulTypeRegistry;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class MysticalAgricultureAPI {
     public static final String MOD_ID = "mysticalagriculture";
@@ -47,11 +47,11 @@ public class MysticalAgricultureAPI {
     }
 
     /**
-     * Creates a {@link ResourceLocation} in the `mysticalagriculture` namespace
+     * Creates a {@link Identifier} in the `mysticalagriculture` namespace
      * @param path the path
      * @return the resource location
      */
-    public static ResourceLocation resource(String path) {
-        return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
+    public static Identifier resource(String path) {
+        return Identifier.fromNamespaceAndPath(MOD_ID, path);
     }
 }

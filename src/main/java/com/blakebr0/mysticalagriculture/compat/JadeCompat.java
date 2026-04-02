@@ -11,7 +11,7 @@ import com.blakebr0.mysticalagriculture.lib.ModCrops;
 import com.blakebr0.mysticalagriculture.lib.ModTooltips;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import snownee.jade.api.BlockAccessor;
 import snownee.jade.api.IBlockComponentProvider;
@@ -23,9 +23,9 @@ import snownee.jade.api.config.IPluginConfig;
 
 @WailaPlugin
 public class JadeCompat implements IWailaPlugin {
-    private static final ResourceLocation CROP_PROVIDER = MysticalAgriculture.resource("crop");
-    private static final ResourceLocation INFERIUM_CROP_PROVIDER = MysticalAgriculture.resource("inferium_crop");
-    private static final ResourceLocation INFUSED_FARMLAND_PROVIDER = MysticalAgriculture.resource("infused_farmland");
+    private static final Identifier CROP_PROVIDER = MysticalAgriculture.resource("crop");
+    private static final Identifier INFERIUM_CROP_PROVIDER = MysticalAgriculture.resource("inferium_crop");
+    private static final Identifier INFUSED_FARMLAND_PROVIDER = MysticalAgriculture.resource("infused_farmland");
 
     @Override
     public void registerClient(IWailaClientRegistration registration) {
@@ -76,7 +76,7 @@ public class JadeCompat implements IWailaPlugin {
             }
 
             @Override
-            public ResourceLocation getUid() {
+            public Identifier getUid() {
                 return CROP_PROVIDER;
             }
         }, MysticalCropBlock.class);
@@ -101,7 +101,7 @@ public class JadeCompat implements IWailaPlugin {
             }
 
             @Override
-            public ResourceLocation getUid() {
+            public Identifier getUid() {
                 return INFERIUM_CROP_PROVIDER;
             }
         }, InferiumCropBlock.class);
@@ -116,7 +116,7 @@ public class JadeCompat implements IWailaPlugin {
             }
 
             @Override
-            public ResourceLocation getUid() {
+            public Identifier getUid() {
                 return INFUSED_FARMLAND_PROVIDER;
             }
         }, InfusedFarmlandBlock.class);

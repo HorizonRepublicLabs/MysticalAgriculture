@@ -6,41 +6,38 @@ import com.blakebr0.mysticalagriculture.lib.ModItemTier;
 import com.blakebr0.mysticalagriculture.lib.ModTooltips;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.ToolMaterial;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 
-import java.util.List;
 import java.util.function.BiFunction;
+import java.util.function.Consumer;
 
 public class SouliumDaggerItem extends BaseSwordItem implements ISoulSiphoningItem {
     private final DaggerType type;
 
-    public SouliumDaggerItem(Tier tier, DaggerType type) {
-        super(tier, type.getDamage(), -2.4F, p -> p.durability(type.getDurability()));
+    public SouliumDaggerItem(Identifier id, ToolMaterial material, DaggerType type) {
+        super(id, material);
         this.type = type;
     }
 
     @Override
-    public String getDescriptionId(ItemStack stack) {
-        return "item.mysticalagriculture.soulium_dagger";
-    }
-
-    @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
+    public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> builder, TooltipFlag flag) {
         switch (this.type) {
             case PASSIVE -> {
-                tooltip.add(ModTooltips.PASSIVE_ATTUNED.color(ChatFormatting.GREEN).build());
-                tooltip.add(ModTooltips.PASSIVE_SOULIUM_DAGGER.build());
+                builder.accept(ModTooltips.PASSIVE_ATTUNED.color(ChatFormatting.GREEN).toComponent());
+                builder.accept(ModTooltips.PASSIVE_SOULIUM_DAGGER.toComponent());
             }
             case HOSTILE -> {
-                tooltip.add(ModTooltips.HOSTILE_ATTUNED.color(ChatFormatting.RED).build());
-                tooltip.add(ModTooltips.HOSTILE_SOULIUM_DAGGER.build());
+                builder.accept(ModTooltips.HOSTILE_ATTUNED.color(ChatFormatting.RED).toComponent());
+                builder.accept(ModTooltips.HOSTILE_SOULIUM_DAGGER.toComponent());
             }
             case CREATIVE -> {
-                tooltip.add(ModTooltips.CREATIVE_ATTUNED.color(ChatFormatting.LIGHT_PURPLE).build());
-                tooltip.add(ModTooltips.CREATIVE_SOULIUM_DAGGER.build());
+                builder.accept(ModTooltips.CREATIVE_ATTUNED.color(ChatFormatting.LIGHT_PURPLE).toComponent());
+                builder.accept(ModTooltips.CREATIVE_SOULIUM_DAGGER.toComponent());
             }
         }
     }
@@ -51,10 +48,10 @@ public class SouliumDaggerItem extends BaseSwordItem implements ISoulSiphoningIt
     }
 
     public enum DaggerType {
-        BASIC(3, ModItemTier.SOULIUM.getUses(), (stack, entity) -> 1.0D),
-        PASSIVE(6, ModItemTier.SOULIUM.getUses() * 2, (stack, entity) -> isPassive(entity) ? 1.5D : 1.0D),
-        HOSTILE(6, ModItemTier.SOULIUM.getUses() * 2, (stack, entity) -> !isPassive(entity) ? 1.5D : 1.0D),
-        CREATIVE(65, -1, (stack, entity) -> Double.MAX_VALUE);
+        BASIC(3, ModItemTier.SOULIUM.getUses(), (_, _) -> 1.0D),
+        PASSIVE(6, ModItemTier.SOULIUM.getUses() * 2, (_, entity) -> isPassive(entity) ? 1.5D : 1.0D),
+        HOSTILE(6, ModItemTier.SOULIUM.getUses() * 2, (_, entity) -> !isPassive(entity) ? 1.5D : 1.0D),
+        CREATIVE(65, -1, (_, _) -> Double.MAX_VALUE);
 
         private final int damage;
         private final int durability;

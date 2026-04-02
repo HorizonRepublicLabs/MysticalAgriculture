@@ -8,29 +8,31 @@ import com.blakebr0.mysticalagriculture.api.tinkering.ITinkerable;
 import com.blakebr0.mysticalagriculture.init.ModDataComponentTypes;
 import com.blakebr0.mysticalagriculture.lib.ModTooltips;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
-import java.util.List;
+import java.util.function.Consumer;
 
 public class EssenceStaffItem extends BaseItem implements ITinkerable, IElementalItem {
     private static final EnumSet<AugmentType> TYPES = EnumSet.of(AugmentType.STAFF);
     private final int tinkerableTier;
     private final int slots;
 
-    public EssenceStaffItem(int tinkerableTier, int slots) {
-        super(p -> p.component(ModDataComponentTypes.EQUIPPED_AUGMENTS, new ArrayList<>(slots)));
+    public EssenceStaffItem(Identifier id, int tinkerableTier, int slots) {
+        super(id, p -> p.component(ModDataComponentTypes.EQUIPPED_AUGMENTS, new ArrayList<>(slots)));
         this.tinkerableTier = tinkerableTier;
         this.slots = slots;
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(Tooltips.NOT_YET_IMPLEMENTED.build());
-        tooltip.add(ModTooltips.getTooltipForTier(this.tinkerableTier));
-        ModTooltips.addAugmentListToTooltip(tooltip, stack, this.slots);
+    public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> builder, TooltipFlag flag) {
+        builder.accept(Tooltips.NOT_YET_IMPLEMENTED.toComponent());
+        builder.accept(ModTooltips.getTooltipForTier(this.tinkerableTier));
+        ModTooltips.addAugmentListToTooltip(builder, stack, this.slots);
     }
 
     @Override

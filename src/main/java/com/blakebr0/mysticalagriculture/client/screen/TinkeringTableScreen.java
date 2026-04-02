@@ -6,11 +6,11 @@ import com.blakebr0.mysticalagriculture.MysticalAgriculture;
 import com.blakebr0.mysticalagriculture.container.TinkeringTableContainer;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 
 public class TinkeringTableScreen extends BaseContainerScreen<TinkeringTableContainer> {
-    private static final ResourceLocation BACKGROUND = MysticalAgriculture.resource("textures/gui/tinkering_table.png");
+    private static final Identifier BACKGROUND = MysticalAgriculture.resource("textures/gui/tinkering_table.png");
 
     public TinkeringTableScreen(TinkeringTableContainer container, Inventory inv, Component title) {
         super(container, inv, title, BACKGROUND, 176, 197);

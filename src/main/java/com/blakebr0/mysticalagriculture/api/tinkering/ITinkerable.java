@@ -4,8 +4,8 @@ import java.util.EnumSet;
 
 public interface ITinkerable {
     /**
-     * Gets the total amount of augment slots for this tinkerable
-     * @return amount of augment slots
+     * Gets the total number of augment slots for this tinkerable
+     * @return number of augment slots
      */
     int getAugmentSlots();
 
@@ -24,7 +24,7 @@ public interface ITinkerable {
     /**
      * Checks if the augment can be applied to this tinkerable
      * @param augment the augment
-     * @return can this augment be applied
+     * @return can this augment be applied?
      */
     default boolean canApplyAugment(Augment augment) {
         return augment.getAugmentTypes().stream().anyMatch(t -> this.getAugmentTypes().contains(t)) && augment.getTier() <= this.getTinkerableTier();

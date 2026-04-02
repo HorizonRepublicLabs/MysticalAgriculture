@@ -8,11 +8,11 @@ import com.blakebr0.mysticalagriculture.container.HarvesterContainer;
 import com.blakebr0.mysticalagriculture.tileentity.HarvesterTileEntity;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 
 public class HarvesterScreen extends BaseContainerScreen<HarvesterContainer> {
-    private static final ResourceLocation BACKGROUND = MysticalAgriculture.resource("textures/gui/harvester.png");
+    private static final Identifier BACKGROUND = MysticalAgriculture.resource("textures/gui/harvester.png");
     private HarvesterTileEntity tile;
 
     public HarvesterScreen(HarvesterContainer container, Inventory inv, Component title) {

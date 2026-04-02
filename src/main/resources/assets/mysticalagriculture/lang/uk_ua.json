@@ -266,8 +266,6 @@
   "tooltip.mysticalagriculture.required_biomes": "Необхідні біоми:",
   "tooltip.mysticalagriculture.secondary_chance": "Вторинний шанс: %s",
   "tooltip.mysticalagriculture.inferium_output": "Вихід інферія: %s",
-  "tooltip.mysticalagriculture.cooking_speed": "Швидкість приготування: %s",
-  "tooltip.mysticalagriculture.fuel_efficiency": "Ефективність палива: %s",
   "tooltip.mysticalagriculture.requires_crux": "Потрібно %s знизу",
   "tooltip.mysticalagriculture.invalid_biome": "Невідомий біом",
   "tooltip.mysticalagriculture.growth_accelerator": "Прискорює зростання рослин над собою.",

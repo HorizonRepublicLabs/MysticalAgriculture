@@ -3,7 +3,7 @@ package com.blakebr0.mysticalagriculture.data.generator;
 import com.blakebr0.mysticalagriculture.MysticalAgriculture;
 import com.blakebr0.mysticalagriculture.registry.CropRegistry;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.CropBlock;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
@@ -19,14 +19,14 @@ public class BlockModelJsonGenerator extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-        var stemModels = new HashMap<ResourceLocation, ModelFile[]>();
+        var stemModels = new HashMap<Identifier, ModelFile[]>();
 
         for (var type : CropRegistry.getInstance().getTypes()) {
             var models = new ModelFile[8];
             var stemModel = type.getStemModel();
 
             for (int i = 0; i <= 7; i++) {
-                models[i] = new ModelFile.UncheckedModelFile(ResourceLocation.fromNamespaceAndPath(stemModel.getNamespace(), stemModel.getPath() + "_" + i));
+                models[i] = new ModelFile.UncheckedModelFile(Identifier.fromNamespaceAndPath(stemModel.getNamespace(), stemModel.getPath() + "_" + i));
             }
 
             stemModels.put(type.getId(), models);

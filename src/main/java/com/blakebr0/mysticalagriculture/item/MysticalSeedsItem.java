@@ -1,40 +1,30 @@
 package com.blakebr0.mysticalagriculture.item;
 
-import com.blakebr0.cucumber.util.Localizable;
+import com.blakebr0.cucumber.item.BaseBlockItem;
 import com.blakebr0.mysticalagriculture.MysticalAgriculture;
 import com.blakebr0.mysticalagriculture.api.crop.Crop;
 import com.blakebr0.mysticalagriculture.api.crop.ICropProvider;
 import com.blakebr0.mysticalagriculture.lib.ModTooltips;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ItemNameBlockItem;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 
-import java.util.List;
+import java.util.function.Consumer;
 
-public class MysticalSeedsItem extends ItemNameBlockItem implements ICropProvider {
+public class MysticalSeedsItem extends BaseBlockItem implements ICropProvider {
     private final Crop crop;
 
-    public MysticalSeedsItem(Crop crop) {
-        super(crop.getCropBlock(), new Properties());
+    public MysticalSeedsItem(Identifier id, Crop crop) {
+        super(id, crop.getCropBlock());
         this.crop = crop;
     }
 
     @Override
     public Component getName(ItemStack stack) {
-        return Localizable.of("item.mysticalagriculture.mystical_seeds").args(this.crop.getDisplayName()).build();
-    }
-
-    @Override
-    public Component getDescription() {
-        return this.getName(ItemStack.EMPTY);
-    }
-
-    @Override
-    public String getDescriptionId() {
-        return Localizable.of("item.mysticalagriculture.mystical_seeds").args(this.crop.getDisplayName()).buildString();
+        return Component.translatable("item.mysticalagriculture.mystical_seeds", this.crop.getDisplayName());
     }
 
     @Override
@@ -43,31 +33,29 @@ public class MysticalSeedsItem extends ItemNameBlockItem implements ICropProvide
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext level, List<Component> tooltip, TooltipFlag flag) {
+    public void appendHoverText(ItemStack stack, TooltipContext level, TooltipDisplay display, Consumer<Component> builder, TooltipFlag flag) {
         var tier = this.crop.getTier().getDisplayName();
 
-        tooltip.add(ModTooltips.TIER.args(tier).build());
+        builder.accept(ModTooltips.TIER.args(tier).toComponent());
 
         if (!this.crop.getModId().equals(MysticalAgriculture.MOD_ID)) {
-            tooltip.add(ModTooltips.getAddedByTooltip(this.crop.getModId()));
+            builder.accept(ModTooltips.getAddedByTooltip(this.crop.getModId()));
         }
 
         var biomes = this.crop.getRequiredBiomes();
 
         if (!biomes.isEmpty()) {
-            tooltip.add(ModTooltips.REQUIRED_BIOMES.build());
+            builder.accept(ModTooltips.REQUIRED_BIOMES.toComponent());
 
-            var ids = biomes.stream()
-                    .map(ResourceLocation::toString)
+            biomes.stream()
+                    .map(Identifier::toString)
                     .map(s -> " - " + s)
                     .map(Component::literal)
-                    .toList();
-
-            tooltip.addAll(ids);
+                    .forEach(builder);
         }
 
         if (flag.isAdvanced()) {
-            tooltip.add(ModTooltips.CROP_ID.args(this.crop.getId().toString()).color(ChatFormatting.DARK_GRAY).build());
+            builder.accept(ModTooltips.CROP_ID.args(this.crop.getId().toString()).color(ChatFormatting.DARK_GRAY).toComponent());
         }
     }
 

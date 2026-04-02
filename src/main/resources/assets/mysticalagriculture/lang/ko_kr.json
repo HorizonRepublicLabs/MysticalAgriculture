@@ -186,8 +186,6 @@
   "tooltip.mysticalagriculture.added_by": "추가: %s",
   "tooltip.mysticalagriculture.secondary_chance": "2차 기회: %s",
   "tooltip.mysticalagriculture.inferium_output": "인퍼륨 출력: %s",
-  "tooltip.mysticalagriculture.cooking_speed": "조리 속도: %s",
-  "tooltip.mysticalagriculture.fuel_efficiency": "연비: %s",
   "tooltip.mysticalagriculture.requires_crux": "아래에 %s이(가) 필요합니다.",
   "tooltip.mysticalagriculture.growth_accelerator": "그 위에 있는 식물을 더 빨리 자라게 합니다.",
   "tooltip.mysticalagriculture.growth_accelerator_range": "범위: %s블록",

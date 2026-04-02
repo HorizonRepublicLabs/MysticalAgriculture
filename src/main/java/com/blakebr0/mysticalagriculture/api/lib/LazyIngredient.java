@@ -2,25 +2,27 @@ package com.blakebr0.mysticalagriculture.api.lib;
 
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.neoforged.neoforge.common.crafting.DataComponentIngredient;
+import org.jspecify.annotations.Nullable;
 
 public class LazyIngredient {
     public static final LazyIngredient EMPTY = new LazyIngredient(null, null, null) {
         @Override
-        public Ingredient getIngredient() {
-            return Ingredient.EMPTY;
+        public @Nullable Ingredient getIngredient() {
+            return null;
         }
     };
 
     private final String id;
     private final DataComponentMap components;
     private final Type type;
-    private Ingredient ingredient;
+    private @Nullable Ingredient ingredient;
+
+    private boolean loadedIngredient = false;
 
     private LazyIngredient(String id, Type type, DataComponentMap components) {
         this.id = id;
@@ -52,26 +54,28 @@ public class LazyIngredient {
         return this.type == Type.TAG;
     }
 
-    public Ingredient getIngredient() {
-        if (this.ingredient == null) {
+    public @Nullable Ingredient getIngredient() {
+        if (!this.loadedIngredient) {
             if (this.isTag()) {
-                var tag = ItemTags.create(ResourceLocation.parse(this.id));
-                this.ingredient = Ingredient.of(tag);
+                var tag = ItemTags.create(Identifier.parse(this.id));
+                var items = BuiltInRegistries.ITEM.getOrThrow(tag);
+                this.ingredient = Ingredient.of(items);
             } else if (this.isItem()) {
-                var item = BuiltInRegistries.ITEM.get(ResourceLocation.parse(this.id));
-                if (item != Items.AIR) {
+                BuiltInRegistries.ITEM.get(Identifier.parse(this.id)).ifPresent(item -> {
                     if (this.components == null || this.components.isEmpty()) {
-                        this.ingredient = Ingredient.of(item);
+                        this.ingredient = Ingredient.of(item.value());
                     } else {
                         var stack = new ItemStack(item);
                         stack.applyComponents(this.components);
                         this.ingredient = DataComponentIngredient.of(false, stack);
                     }
-                }
+                });
             }
+
+            this.loadedIngredient = true;
         }
 
-        return this.ingredient == null ? Ingredient.EMPTY : this.ingredient;
+        return this.ingredient;
     }
 
     private enum Type {

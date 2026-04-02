@@ -3,23 +3,24 @@ package com.blakebr0.mysticalagriculture.api.crop;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 
+import java.util.Objects;
 import java.util.function.Supplier;
 
 import static com.blakebr0.mysticalagriculture.api.MysticalAgricultureAPI.MOD_ID;
 
 public class CropTier {
-    public static final CropTier ELEMENTAL = new CropTier(ResourceLocation.fromNamespaceAndPath(MOD_ID, "elemental"), 1, 0x748E00, ChatFormatting.YELLOW);
-    public static final CropTier ONE = new CropTier(ResourceLocation.fromNamespaceAndPath(MOD_ID, "1"), 1, 0x748E00, ChatFormatting.YELLOW);
-    public static final CropTier TWO = new CropTier(ResourceLocation.fromNamespaceAndPath(MOD_ID, "2"), 2, 0x008C23, ChatFormatting.GREEN);
-    public static final CropTier THREE = new CropTier(ResourceLocation.fromNamespaceAndPath(MOD_ID, "3"), 3, 0xB74900, ChatFormatting.GOLD);
-    public static final CropTier FOUR = new CropTier(ResourceLocation.fromNamespaceAndPath(MOD_ID, "4"), 4, 0x007FDB, ChatFormatting.AQUA);
-    public static final CropTier FIVE = new CropTier(ResourceLocation.fromNamespaceAndPath(MOD_ID, "5"), 5, 0xC40000, ChatFormatting.RED);
+    public static final CropTier ELEMENTAL = new CropTier(Identifier.fromNamespaceAndPath(MOD_ID, "elemental"), 1, 0x748E00, ChatFormatting.YELLOW);
+    public static final CropTier ONE = new CropTier(Identifier.fromNamespaceAndPath(MOD_ID, "1"), 1, 0x748E00, ChatFormatting.YELLOW);
+    public static final CropTier TWO = new CropTier(Identifier.fromNamespaceAndPath(MOD_ID, "2"), 2, 0x008C23, ChatFormatting.GREEN);
+    public static final CropTier THREE = new CropTier(Identifier.fromNamespaceAndPath(MOD_ID, "3"), 3, 0xB74900, ChatFormatting.GOLD);
+    public static final CropTier FOUR = new CropTier(Identifier.fromNamespaceAndPath(MOD_ID, "4"), 4, 0x007FDB, ChatFormatting.AQUA);
+    public static final CropTier FIVE = new CropTier(Identifier.fromNamespaceAndPath(MOD_ID, "5"), 5, 0xC40000, ChatFormatting.RED);
 
-    private final ResourceLocation id;
+    private final Identifier id;
     private final int value;
     private final int color;
     private final ChatFormatting textColor;
@@ -37,7 +38,7 @@ public class CropTier {
      * @param color the color of this tier
      * @param textColor the text color of this tier
      */
-    public CropTier(ResourceLocation id, int value, int color, ChatFormatting textColor) {
+    public CropTier(Identifier id, int value, int color, ChatFormatting textColor) {
         this.id = id;
         this.value = value;
         this.color = color;
@@ -50,7 +51,7 @@ public class CropTier {
     /**
      * @return the id of this crop tier
      */
-    public ResourceLocation getId() {
+    public Identifier getId() {
         return this.id;
     }
 
@@ -140,10 +141,8 @@ public class CropTier {
      * @return the localized name of this tier
      */
     public MutableComponent getDisplayName() {
-        if (this.displayName != null)
-            return this.displayName.withStyle(this.getTextColor());
-
-        return Component.translatable(String.format("cropTier.%s.%s", this.getModId(), this.getName())).withStyle(this.getTextColor());
+        return Objects.requireNonNullElseGet(this.displayName,
+                () -> Component.translatable(String.format("cropTier.%s.%s", this.getModId(), this.getName()))).withStyle(this.getTextColor());
     }
 
     /**

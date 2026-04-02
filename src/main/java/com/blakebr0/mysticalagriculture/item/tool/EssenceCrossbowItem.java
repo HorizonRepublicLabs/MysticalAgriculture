@@ -4,29 +4,31 @@ import com.blakebr0.cucumber.item.tool.BaseCrossbowItem;
 import com.blakebr0.mysticalagriculture.api.tinkering.AugmentType;
 import com.blakebr0.mysticalagriculture.api.tinkering.ITinkerable;
 import com.blakebr0.mysticalagriculture.api.util.AugmentUtils;
-import com.blakebr0.mysticalagriculture.config.ModConfigs;
 import com.blakebr0.mysticalagriculture.init.ModDataComponentTypes;
 import com.blakebr0.mysticalagriculture.lib.ModTooltips;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Unit;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.ToolMaterial;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.component.Unbreakable;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
-import java.util.List;
+import java.util.function.Consumer;
 
 public class EssenceCrossbowItem extends BaseCrossbowItem implements ITinkerable {
     private static final EnumSet<AugmentType> TYPES = EnumSet.of(AugmentType.WEAPON, AugmentType.CROSSBOW);
@@ -35,16 +37,14 @@ public class EssenceCrossbowItem extends BaseCrossbowItem implements ITinkerable
     private final float drawSpeedMulti;
     private final float bonusDamage;
 
-    public EssenceCrossbowItem(Tier tier, int tinkerableTier, int slots, float drawSpeedMulti, float bonusDamage) {
-        super(p -> {
+    public EssenceCrossbowItem(Identifier id, ToolMaterial material, int tinkerableTier, int slots, float drawSpeedMulti, float bonusDamage) {
+        super(id, p -> {
             p.component(ModDataComponentTypes.EQUIPPED_AUGMENTS, new ArrayList<>(slots));
 
-            var uses = tier.getUses();
+            var uses = material.durability();
             if (uses == 0) {
-                p.component(DataComponents.UNBREAKABLE, new Unbreakable(true));
+                p.component(DataComponents.UNBREAKABLE, Unit.INSTANCE);
             }
-
-            p.durability(uses);
 
             return p;
         });
@@ -71,7 +71,7 @@ public class EssenceCrossbowItem extends BaseCrossbowItem implements ITinkerable
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+    public InteractionResult use(Level level, Player player, InteractionHand hand) {
         var stack = player.getItemInHand(hand);
         var augments = AugmentUtils.getAugments(stack);
         var success = false;
@@ -82,7 +82,7 @@ public class EssenceCrossbowItem extends BaseCrossbowItem implements ITinkerable
         }
 
         if (success)
-            return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
+            return InteractionResult.SUCCESS;
 
         return super.use(level, player, hand);
     }
@@ -101,16 +101,12 @@ public class EssenceCrossbowItem extends BaseCrossbowItem implements ITinkerable
     }
 
     @Override
-    public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+    public void hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         var augments = AugmentUtils.getAugments(stack);
-        var success = super.hurtEnemy(stack, target, attacker);
 
         for (var augment : augments) {
-            if (augment.onHitEntity(stack, target, attacker))
-                success = true;
+            augment.onHitEntity(stack, target, attacker);
         }
-
-        return success;
     }
 
     @Override
@@ -127,23 +123,20 @@ public class EssenceCrossbowItem extends BaseCrossbowItem implements ITinkerable
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, Level level, Entity entity, int slot, boolean isSelected) {
-        for (var augment : AugmentUtils.getAugments(stack)) {
-            augment.onInventoryTick(stack, level, entity, slot, isSelected);
+    public void inventoryTick(ItemStack stack, ServerLevel level, Entity entity, EquipmentSlot slot) {
+        var augments = AugmentUtils.getAugments(stack);
+
+        for (var augment : augments) {
+            augment.onInventoryTick(stack, level, entity, slot);
         }
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-        super.appendHoverText(stack, context, tooltip, flag);
+    public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> builder, TooltipFlag flag) {
+        super.appendHoverText(stack, context, display, builder, flag);
 
-        tooltip.add(ModTooltips.getTooltipForTier(this.tinkerableTier));
-        ModTooltips.addAugmentListToTooltip(tooltip, stack, this.slots);
-    }
-
-    @Override
-    public boolean isEnchantable(ItemStack stack) {
-        return ModConfigs.ENCHANTABLE_SUPREMIUM_TOOLS.get() || super.isEnchantable(stack);
+        builder.accept(ModTooltips.getTooltipForTier(this.tinkerableTier));
+        ModTooltips.addAugmentListToTooltip(builder, stack, this.slots);
     }
 
     @Override

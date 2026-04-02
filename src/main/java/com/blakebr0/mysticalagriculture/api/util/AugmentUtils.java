@@ -6,6 +6,7 @@ import com.blakebr0.mysticalagriculture.api.components.AugmentComponent;
 import com.blakebr0.mysticalagriculture.api.tinkering.AOEAugment;
 import com.blakebr0.mysticalagriculture.api.tinkering.Augment;
 import com.blakebr0.mysticalagriculture.api.tinkering.ITinkerable;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
@@ -136,10 +137,11 @@ public class AugmentUtils {
      * @return the installed augments
      */
     public static List<Augment> getArmorAugments(Player player) {
-        var armor = player.getInventory().armor;
         List<Augment> augments = new ArrayList<>();
 
-        for (var stack : armor) {
+        for (var slot : Inventory.EQUIPMENT_SLOT_MAPPING.values()) {
+            var stack = player.getItemBySlot(slot);
+
             augments.addAll(getAugments(stack));
         }
 

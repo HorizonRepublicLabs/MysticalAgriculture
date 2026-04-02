@@ -6,9 +6,9 @@ import com.blakebr0.cucumber.util.VoxelShapeBuilder;
 import com.blakebr0.mysticalagriculture.tileentity.TinkeringTableTileEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.Containers;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -23,13 +23,13 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class TinkeringTableBlock extends BaseTileEntityBlock {
-    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+    public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
     public static final VoxelShape TABLE_SHAPE = VoxelShapeBuilder.builder()
             .cuboid(1, 0, 1, 15, 4, 15).cuboid(3.5, 5, 3.5, 12.5, 9, 12.5)
             .cuboid(0, 10, 0, 16, 13, 16).cuboid(1, 13, 1, 15, 14, 15)
@@ -40,43 +40,14 @@ public class TinkeringTableBlock extends BaseTileEntityBlock {
             .cuboid(1, 0, 15, 3, 3, 16).cuboid(13, 0, 15, 15, 3, 16)
             .build();
 
-    public TinkeringTableBlock() {
-        super(SoundType.STONE, 10.0F, 12.0F, true);
+    public TinkeringTableBlock(Identifier id) {
+        super(id, SoundType.STONE, 10.0F, 12.0F, true);
         this.registerDefaultState(this.getStateDefinition().any().setValue(FACING, Direction.NORTH));
     }
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new TinkeringTableTileEntity(pos, state);
-    }
-
-    @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if (!level.isClientSide()) {
-            var tile = level.getBlockEntity(pos);
-
-            if (tile instanceof TinkeringTableTileEntity table) {
-                player.openMenu(table, pos);
-            }
-        }
-
-        return ItemInteractionResult.SUCCESS;
-    }
-
-    @Override
-    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (state.getBlock() != newState.getBlock()) {
-            var tile = level.getBlockEntity(pos);
-
-            if (tile instanceof TinkeringTableTileEntity table) {
-                // only the ITinkerable is ever *actually* an item that can drop
-                var stack = table.getInventory().getStackInSlot(0);
-
-                Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), stack);
-            }
-        }
-
-        super.onRemove(state, level, pos, newState, isMoving);
     }
 
     @Override
@@ -100,12 +71,25 @@ public class TinkeringTableBlock extends BaseTileEntityBlock {
     }
 
     @Override
+    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        if (!level.isClientSide()) {
+            var tile = level.getBlockEntity(pos);
+
+            if (tile instanceof TinkeringTableTileEntity table) {
+                player.openMenu(table, pos);
+            }
+        }
+
+        return InteractionResult.SUCCESS;
+    }
+
+    @Override
     protected boolean hasAnalogOutputSignal(BlockState state) {
         return true;
     }
 
     @Override
-    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos, Direction direction) {
         return BlockHelper.getRedstoneSignalFromInventory(level.getBlockEntity(pos));
     }
 

@@ -14,14 +14,14 @@ import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AwakeningCategory implements IRecipeCategory<IAwakeningRecipe> {
-    private static final ResourceLocation TEXTURE = MysticalAgriculture.resource("textures/jei/infusion.png");
+    private static final Identifier TEXTURE = MysticalAgriculture.resource("textures/jei/infusion.png");
     public static final RecipeType<IAwakeningRecipe> RECIPE_TYPE = RecipeType.create(MysticalAgriculture.MOD_ID, "awakening", IAwakeningRecipe.class);
 
     private final IDrawable background;

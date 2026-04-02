@@ -12,10 +12,10 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.TextureAtlas;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class EssenceVesselRenderer implements BlockEntityRenderer<EssenceVesselTileEntity> {
-    private static final ResourceLocation VESSEL_CONTENT_TEXTURE = MysticalAgriculture.resource("block/essence_vessel_contents");
+    private static final Identifier VESSEL_CONTENT_TEXTURE = MysticalAgriculture.resource("block/essence_vessel_contents");
 
     public EssenceVesselRenderer(BlockEntityRendererProvider.Context context) { }
 

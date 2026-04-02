@@ -6,20 +6,20 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.List;
 
-public record AugmentComponent(ResourceLocation id, int slot) {
+public record AugmentComponent(Identifier id, int slot) {
     public static final MapCodec<AugmentComponent> MAP_CODEC = RecordCodecBuilder.mapCodec(builder ->
             builder.group(
-                    ResourceLocation.CODEC.fieldOf("id").forGetter(AugmentComponent::id),
+                    Identifier.CODEC.fieldOf("id").forGetter(AugmentComponent::id),
                     Codec.INT.fieldOf("slot").forGetter(AugmentComponent::slot)
             ).apply(builder, AugmentComponent::new)
     );
     public static final Codec<AugmentComponent> CODEC = MAP_CODEC.codec();
     public static final StreamCodec<FriendlyByteBuf, AugmentComponent> STREAM_CODEC = StreamCodec.composite(
-            ResourceLocation.STREAM_CODEC,
+            Identifier.STREAM_CODEC,
             AugmentComponent::id,
             ByteBufCodecs.INT,
             AugmentComponent::slot,

@@ -1,6 +1,6 @@
 package com.blakebr0.mysticalagriculture.tileentity;
 
-import com.blakebr0.cucumber.inventory.BaseItemStackHandler;
+import com.blakebr0.cucumber.inventory.CItemStacksHandler;
 import com.blakebr0.cucumber.inventory.CachedRecipe;
 import com.blakebr0.cucumber.tileentity.BaseInventoryTileEntity;
 import com.blakebr0.cucumber.util.MultiblockPositions;
@@ -31,25 +31,25 @@ public class AwakeningAltarTileEntity extends BaseInventoryTileEntity implements
     private static final MultiblockPositions PEDESTAL_LOCATIONS = MultiblockPositions.builder()
             .pos(-3, 0, 0).pos(2, 0, 2).pos(3, 0, 0).pos(-2, 0, -2)
             .pos(0, 0, -3).pos(2, 0, -2).pos(0, 0, 3).pos(-2, 0, 2).build();
-    private final BaseItemStackHandler inventory;
-    private final BaseItemStackHandler recipeInventory;
+    private final CItemStacksHandler inventory;
+    private final CItemStacksHandler recipeInventory;
     private final CachedRecipe<CraftingInput, IAwakeningRecipe> recipe;
     private int progress;
     private boolean active;
 
     public AwakeningAltarTileEntity(BlockPos pos, BlockState state) {
         super(ModTileEntities.AWAKENING_ALTAR.get(), pos, state);
-        this.inventory = BaseItemStackHandler.create(2, (slot) -> this.setChanged(), handler -> {
+        this.inventory = CItemStacksHandler.create(2, (slot) -> this.setChanged(), handler -> {
             handler.setDefaultSlotLimit(1);
             handler.setCanInsert((slot, stack) -> handler.getStackInSlot(1).isEmpty());
             handler.setOutputSlots(1);
         });
-        this.recipeInventory = BaseItemStackHandler.create(9);
+        this.recipeInventory = CItemStacksHandler.create(9);
         this.recipe = new CachedRecipe<>(ModRecipeTypes.AWAKENING.get());
     }
 
     @Override
-    public BaseItemStackHandler getInventory() {
+    public CItemStacksHandler getInventory() {
         return this.inventory;
     }
 

@@ -5,30 +5,32 @@ import com.blakebr0.mysticalagriculture.api.components.AOEAugmentOffsetComponent
 import com.blakebr0.mysticalagriculture.api.tinkering.AugmentType;
 import com.blakebr0.mysticalagriculture.api.tinkering.ITinkerable;
 import com.blakebr0.mysticalagriculture.api.util.AugmentUtils;
-import com.blakebr0.mysticalagriculture.config.ModConfigs;
 import com.blakebr0.mysticalagriculture.init.ModDataComponentTypes;
 import com.blakebr0.mysticalagriculture.lib.ModTooltips;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Unit;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.ToolMaterial;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.component.Unbreakable;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
-import java.util.List;
+import java.util.function.Consumer;
 
 public class EssenceSickleItem extends BaseSickleItem implements ITinkerable {
     private static final EnumSet<AugmentType> TYPES = EnumSet.of(AugmentType.TOOL, AugmentType.WEAPON, AugmentType.SICKLE);
@@ -37,17 +39,15 @@ public class EssenceSickleItem extends BaseSickleItem implements ITinkerable {
     private final int tinkerableTier;
     private final int slots;
 
-    public EssenceSickleItem(Tier tier, int range, ChatFormatting textColor, int tinkerableTier, int slots) {
-        super(tier, range, p -> {
+    public EssenceSickleItem(Identifier id, ToolMaterial material, int range, ChatFormatting textColor, int tinkerableTier, int slots) {
+        super(id, material, range, p -> {
             p.component(ModDataComponentTypes.EQUIPPED_AUGMENTS, new ArrayList<>(slots));
             p.component(ModDataComponentTypes.AOE_AUGMENT_OFFSET, new AOEAugmentOffsetComponent(0, 0));
 
-            var uses = tier.getUses();
+            var uses = material.durability();
             if (uses == 0) {
-                p.component(DataComponents.UNBREAKABLE, new Unbreakable(true));
+                p.component(DataComponents.UNBREAKABLE, Unit.INSTANCE);
             }
-
-            p.durability(uses);
 
             return p;
         });
@@ -74,7 +74,7 @@ public class EssenceSickleItem extends BaseSickleItem implements ITinkerable {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+    public InteractionResult use(Level level, Player player, InteractionHand hand) {
         var stack = player.getItemInHand(hand);
         var augments = AugmentUtils.getAugments(stack);
         var success = false;
@@ -85,9 +85,9 @@ public class EssenceSickleItem extends BaseSickleItem implements ITinkerable {
         }
 
         if (success)
-            return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
+            return InteractionResult.SUCCESS;
 
-        return new InteractionResultHolder<>(InteractionResult.PASS, stack);
+        return InteractionResult.PASS;
     }
 
     @Override
@@ -104,16 +104,12 @@ public class EssenceSickleItem extends BaseSickleItem implements ITinkerable {
     }
 
     @Override
-    public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+    public void hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         var augments = AugmentUtils.getAugments(stack);
-        var success = super.hurtEnemy(stack, target, attacker);
 
         for (var augment : augments) {
-            if (augment.onHitEntity(stack, target, attacker))
-                success = true;
+            augment.onHitEntity(stack, target, attacker);
         }
-
-        return success;
     }
 
     @Override
@@ -130,27 +126,24 @@ public class EssenceSickleItem extends BaseSickleItem implements ITinkerable {
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, Level level, Entity entity, int slot, boolean isSelected) {
-        for (var augment : AugmentUtils.getAugments(stack)) {
-            augment.onInventoryTick(stack, level, entity, slot, isSelected);
+    public void inventoryTick(ItemStack stack, ServerLevel level, Entity entity, EquipmentSlot slot) {
+        var augments = AugmentUtils.getAugments(stack);
+
+        for (var augment : augments) {
+            augment.onInventoryTick(stack, level, entity, slot);
         }
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(ModTooltips.getTooltipForTier(this.tinkerableTier));
+    public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> builder, TooltipFlag flag) {
+        builder.accept(ModTooltips.getTooltipForTier(this.tinkerableTier));
 
         var rangeString = String.valueOf(this.range * 2 + 1);
         var rangeNumber = Component.literal(rangeString + "x" + rangeString).withStyle(this.textColor);
 
-        tooltip.add(ModTooltips.TOOL_AREA.args(rangeNumber).build());
+        builder.accept(ModTooltips.TOOL_AREA.args(rangeNumber).toComponent());
 
-        ModTooltips.addAugmentListToTooltip(tooltip, stack, this.slots);
-    }
-
-    @Override
-    public boolean isEnchantable(ItemStack stack) {
-        return ModConfigs.ENCHANTABLE_SUPREMIUM_TOOLS.get() || super.isEnchantable(stack);
+        ModTooltips.addAugmentListToTooltip(builder, stack, this.slots);
     }
 
     @Override

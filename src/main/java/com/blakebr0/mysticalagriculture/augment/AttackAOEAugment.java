@@ -3,7 +3,7 @@ package com.blakebr0.mysticalagriculture.augment;
 import com.blakebr0.cucumber.helper.ColorHelper;
 import com.blakebr0.mysticalagriculture.api.tinkering.Augment;
 import com.blakebr0.mysticalagriculture.api.tinkering.AugmentType;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
@@ -15,7 +15,7 @@ import java.util.EnumSet;
 public class AttackAOEAugment extends Augment {
     private final int amplifier;
 
-    public AttackAOEAugment(ResourceLocation id, int tier, int amplifier) {
+    public AttackAOEAugment(Identifier id, int tier, int amplifier) {
         super(id, tier, EnumSet.of(AugmentType.SWORD), getColor(0xFF0000, tier), getColor(0x700000, tier));
         this.amplifier = amplifier;
     }
@@ -23,7 +23,7 @@ public class AttackAOEAugment extends Augment {
     @Override
     public boolean onHitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (attacker instanceof Player player) {
-            if (!player.getCooldowns().isOnCooldown(stack.getItem())) {
+            if (!player.getCooldowns().isOnCooldown(stack)) {
                 var level = player.level();
                 var entities = level.getEntitiesOfClass(LivingEntity.class, target.getBoundingBox().inflate(1.5D * this.amplifier, 0.25D * this.amplifier, 1.5D * this.amplifier));
 
@@ -34,8 +34,7 @@ public class AttackAOEAugment extends Augment {
                     }
                 }
 
-                player.getCommandSenderWorld().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.PLAYER_ATTACK_SWEEP, player.getSoundSource(), 1.0F, 1.0F);
-                player.sweepAttack();
+                player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.PLAYER_ATTACK_SWEEP, player.getSoundSource(), 1.0F, 1.0F);
             }
 
             return true;

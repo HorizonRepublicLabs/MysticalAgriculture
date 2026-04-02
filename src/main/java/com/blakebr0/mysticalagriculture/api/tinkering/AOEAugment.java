@@ -3,7 +3,7 @@ package com.blakebr0.mysticalagriculture.api.tinkering;
 import com.blakebr0.mysticalagriculture.api.MysticalAgricultureDataComponentTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -11,13 +11,10 @@ import net.minecraft.world.item.ItemStack;
 import java.util.EnumSet;
 import java.util.stream.Stream;
 
-/**
- * This class adds range variable to Augment object.
- */
 public abstract class AOEAugment extends Augment {
     protected final int range;
 
-    public AOEAugment(ResourceLocation id, int tier, EnumSet<AugmentType> types, int primaryColor, int secondaryColor, int range) {
+    public AOEAugment(Identifier id, int tier, EnumSet<AugmentType> types, int primaryColor, int secondaryColor, int range) {
         super(id, tier, types, primaryColor, secondaryColor);
         this.range = range;
     }

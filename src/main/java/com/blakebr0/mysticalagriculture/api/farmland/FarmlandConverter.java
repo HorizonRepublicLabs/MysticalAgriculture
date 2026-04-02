@@ -9,7 +9,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.FarmBlock;
+import net.minecraft.world.level.block.FarmlandBlock;
 
 public final class FarmlandConverter {
     /**
@@ -24,7 +24,7 @@ public final class FarmlandConverter {
         var block = state.getBlock();
 
         if (block == Blocks.FARMLAND) {
-            var newState = converter.getConvertedFarmland().defaultBlockState().setValue(FarmBlock.MOISTURE, state.getValue(FarmBlock.MOISTURE));
+            var newState = converter.getConvertedFarmland().defaultBlockState().setValue(FarmlandBlock.MOISTURE, state.getValue(FarmlandBlock.MOISTURE));
 
             level.setBlockAndUpdate(pos, newState);
             level.playSound(player, pos, SoundEvents.SAND_BREAK, SoundSource.BLOCKS, 1.0F, 1.0F);
@@ -39,7 +39,7 @@ public final class FarmlandConverter {
                 var tier = provider.getTier();
 
                 if (tier != farmland.getTier()) {
-                    var newState = converter.getConvertedFarmland().defaultBlockState().setValue(FarmBlock.MOISTURE, state.getValue(FarmBlock.MOISTURE));
+                    var newState = converter.getConvertedFarmland().defaultBlockState().setValue(FarmlandBlock.MOISTURE, state.getValue(FarmlandBlock.MOISTURE));
 
                     level.setBlockAndUpdate(pos, newState);
                     level.playSound(player, pos, SoundEvents.SAND_BREAK, SoundSource.BLOCKS, 1.0F, 1.0F);

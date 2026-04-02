@@ -6,12 +6,14 @@ import com.blakebr0.mysticalagriculture.lib.ModTooltips;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.item.ItemPropertyFunction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
-import java.util.List;
+import java.util.function.Consumer;
 
 public class SoulJarItem extends BaseItem {
     private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("0.00");
@@ -20,23 +22,22 @@ public class SoulJarItem extends BaseItem {
         DECIMAL_FORMAT.setRoundingMode(RoundingMode.DOWN);
     }
 
-    public SoulJarItem() {
-        super(p -> p.stacksTo(1));
+    public SoulJarItem(Identifier id) {
+        super(id, p -> p.stacksTo(1));
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
+    public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> builder, TooltipFlag flag) {
         var type = MobSoulUtils.getType(stack);
-
         if (type != null) {
             var entityName = type.getEntityDisplayName();
             var souls = DECIMAL_FORMAT.format(MobSoulUtils.getSouls(stack));
             var requirement = DECIMAL_FORMAT.format(type.getSoulRequirement());
 
-            tooltip.add(ModTooltips.SOUL_JAR.args(entityName, souls, requirement).build());
+            builder.accept(ModTooltips.SOUL_JAR.args(entityName, souls, requirement).toComponent());
 
             if (flag.isAdvanced()) {
-                tooltip.add(ModTooltips.MST_ID.args(type.getId().toString()).color(ChatFormatting.DARK_GRAY).build());
+                builder.accept(ModTooltips.MST_ID.args(type.getId().toString()).color(ChatFormatting.DARK_GRAY).toComponent());
             }
         }
     }

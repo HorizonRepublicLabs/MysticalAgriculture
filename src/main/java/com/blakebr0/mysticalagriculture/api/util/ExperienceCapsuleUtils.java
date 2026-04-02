@@ -7,14 +7,14 @@ import net.minecraft.world.item.ItemStack;
 
 public class ExperienceCapsuleUtils {
     /**
-     * The maximum amount of xp points an experience capsule can hold
+     * The maximum number of xp points an experience capsule can hold
      */
     public static final int MAX_XP_POINTS = 1200;
 
     /**
      * Creates a {@link DataComponentMap} with the necessary components for the experience capsule with this amount of xp
      *
-     * @param xp the amount of xp points
+     * @param xp the number of xp points
      * @return a tag compound for the specified amount of xp
      */
     public static DataComponentMap makeComponentMap(int xp) {
@@ -24,7 +24,7 @@ public class ExperienceCapsuleUtils {
     /**
      * Get a new experience capsule with the specified amount of xp
      *
-     * @param xp   the amount of xp points
+     * @param xp   the number of xp points
      * @param item the experience capsule item
      * @return the experience capsule
      */

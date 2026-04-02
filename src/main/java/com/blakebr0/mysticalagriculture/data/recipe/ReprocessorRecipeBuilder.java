@@ -4,7 +4,7 @@ import com.blakebr0.mysticalagriculture.api.crop.Crop;
 import com.blakebr0.mysticalagriculture.crafting.condition.CropEnabledCondition;
 import com.blakebr0.mysticalagriculture.crafting.recipe.ReprocessorRecipe;
 import net.minecraft.data.recipes.RecipeOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.neoforged.neoforge.common.conditions.ICondition;
@@ -27,7 +27,7 @@ public class ReprocessorRecipeBuilder {
         this.conditions.add(condition);
     }
 
-    public void build(RecipeOutput consumer, ResourceLocation id) {
+    public void build(RecipeOutput consumer, Identifier id) {
         consumer.accept(id, new ReprocessorRecipe(this.input, this.result), null, this.conditions.toArray(new ICondition[0]));
     }
 

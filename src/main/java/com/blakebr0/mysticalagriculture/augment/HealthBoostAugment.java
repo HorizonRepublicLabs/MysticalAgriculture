@@ -6,7 +6,7 @@ import com.blakebr0.mysticalagriculture.api.lib.AbilityCache;
 import com.blakebr0.mysticalagriculture.api.tinkering.Augment;
 import com.blakebr0.mysticalagriculture.api.tinkering.AugmentType;
 import com.blakebr0.mysticalagriculture.registry.AugmentRegistry;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
@@ -15,10 +15,10 @@ import net.minecraft.world.level.Level;
 import java.util.EnumSet;
 
 public class HealthBoostAugment extends Augment {
-    private static final ResourceLocation ATTRIBUTE_ID = MysticalAgriculture.resource("health_boost_augment");
+    private static final Identifier ATTRIBUTE_ID = MysticalAgriculture.resource("health_boost_augment");
     private final int amplifier;
 
-    public HealthBoostAugment(ResourceLocation id, int tier, int amplifier) {
+    public HealthBoostAugment(Identifier id, int tier, int amplifier) {
         super(id, tier, EnumSet.of(AugmentType.ARMOR), getColor(0xC6223B, tier), getColor(0x3B0402, tier));
         this.amplifier = amplifier;
     }
@@ -40,7 +40,7 @@ public class HealthBoostAugment extends Augment {
                 health.removeModifier(modifier);
 
                 cache.getCachedAbilities(player).forEach(c -> {
-                    var augment = AugmentRegistry.getInstance().getAugmentById(ResourceLocation.parse(c));
+                    var augment = AugmentRegistry.getInstance().getAugmentById(Identifier.parse(c));
 
                     if (augment instanceof HealthBoostAugment && cache.isCached(augment, player)) {
                         cache.removeQuietly(c, player);

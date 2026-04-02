@@ -10,37 +10,39 @@ import com.blakebr0.mysticalagriculture.init.ModDataComponentTypes;
 import com.blakebr0.mysticalagriculture.init.ModItems;
 import com.blakebr0.mysticalagriculture.lib.ModTooltips;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.Unit;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.component.Unbreakable;
+import net.minecraft.world.item.component.TooltipDisplay;
+import net.minecraft.world.item.equipment.ArmorMaterial;
+import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.level.Level;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
-import java.util.List;
+import java.util.function.Consumer;
 
 public class EssenceChestplateItem extends BaseArmorItem implements ITinkerable {
     private static final EnumSet<AugmentType> TYPES = EnumSet.of(AugmentType.ARMOR, AugmentType.CHESTPLATE);
     private final int tinkerableTier;
     private final int slots;
 
-    public EssenceChestplateItem(Holder<ArmorMaterial> material, int maxDamageFactor, int tinkerableTier, int slots) {
-        super(material, Type.CHESTPLATE, maxDamageFactor, p -> {
+    public EssenceChestplateItem(Identifier id, ArmorMaterial material, int tinkerableTier, int slots) {
+        super(id, material, ArmorType.CHESTPLATE, p -> {
             p.component(ModDataComponentTypes.EQUIPPED_AUGMENTS, new ArrayList<>(slots));
 
             // Supremium+ armor can be unbreakable if enabled
             if (tinkerableTier >= 5 && ModConfigs.UNBREAKABLE_SUPREMIUM_ARMOR.get()) {
-                p.component(DataComponents.UNBREAKABLE, new Unbreakable(true));
+                p.component(DataComponents.UNBREAKABLE, Unit.INSTANCE);
             }
 
             return p;
@@ -50,9 +52,11 @@ public class EssenceChestplateItem extends BaseArmorItem implements ITinkerable 
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, Level level, Entity entity, int slot, boolean isSelected) {
-        if (slot == 38 && entity instanceof Player player) {
-            for (var augment : AugmentUtils.getAugments(stack)) {
+    public void inventoryTick(ItemStack stack, ServerLevel level, Entity entity, EquipmentSlot slot) {
+        var augments = AugmentUtils.getAugments(stack);
+
+        if (slot == EquipmentSlot.CHEST && entity instanceof Player player) {
+            for (var augment : augments) {
                 augment.onArmorTick(stack, level, player);
             }
 
@@ -61,20 +65,20 @@ public class EssenceChestplateItem extends BaseArmorItem implements ITinkerable 
             }
         }
 
-        for (var augment : AugmentUtils.getAugments(stack)) {
-            augment.onInventoryTick(stack, level, entity, slot, isSelected);
+        for (var augment : augments) {
+            augment.onInventoryTick(stack, level, entity, slot);
         }
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(ModTooltips.getTooltipForTier(this.tinkerableTier));
+    public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> builder, TooltipFlag flag) {
+        builder.accept(ModTooltips.getTooltipForTier(this.tinkerableTier));
 
         if (ModConfigs.AWAKENED_SUPREMIUM_SET_BONUS.get() && stack.is(ModItems.AWAKENED_SUPREMIUM_CHESTPLATE.get())) {
-            tooltip.add(ModTooltips.SET_BONUS.args(ModTooltips.AWAKENED_SUPREMIUM_SET_BONUS.build()).build());
+            builder.accept(ModTooltips.SET_BONUS.args(ModTooltips.AWAKENED_SUPREMIUM_SET_BONUS.toComponent()).toComponent());
         }
 
-        ModTooltips.addAugmentListToTooltip(tooltip, stack, this.slots);
+        ModTooltips.addAugmentListToTooltip(builder, stack, this.slots);
     }
 
     @Override

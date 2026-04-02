@@ -25,9 +25,9 @@ public interface IUpgradeableMachine {
      */
     default ItemStack applyUpgrade(IMachineUpgrade item) {
         var inventory = getUpgradeInventory();
-        var current = inventory.getStackInSlot(0);
+        var current = inventory.getStack();
 
-        inventory.setStackInSlot(0, new ItemStack(item));
+        inventory.setStack(new ItemStack(item));
         
         return current;
     }

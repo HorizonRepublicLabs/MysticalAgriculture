@@ -5,7 +5,7 @@ import com.blakebr0.mysticalagriculture.registry.CropRegistry;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -18,17 +18,17 @@ import java.util.stream.Stream;
 public class CropComponentIngredient implements ICustomIngredient {
     public static final MapCodec<CropComponentIngredient> CODEC = RecordCodecBuilder.mapCodec(builder ->
             builder.group(
-                    ResourceLocation.CODEC.fieldOf("crop").forGetter(ingredient -> ingredient.crop),
+                    Identifier.CODEC.fieldOf("crop").forGetter(ingredient -> ingredient.crop),
                     ComponentType.CODEC.fieldOf("component").forGetter(ingredient -> ingredient.type)
             ).apply(builder, CropComponentIngredient::new)
     );
 
-    private final ResourceLocation crop;
+    private final Identifier crop;
     private final ComponentType type;
 
     private ItemStack[] stacks;
 
-    public CropComponentIngredient(ResourceLocation crop, ComponentType type) {
+    public CropComponentIngredient(Identifier crop, ComponentType type) {
         this.crop = crop;
         this.type = type;
     }
@@ -70,7 +70,7 @@ public class CropComponentIngredient implements ICustomIngredient {
         };
     }
 
-    public static Ingredient of(ResourceLocation crop, ComponentType type) {
+    public static Ingredient of(Identifier crop, ComponentType type) {
         return new CropComponentIngredient(crop, type).toVanilla();
     }
 

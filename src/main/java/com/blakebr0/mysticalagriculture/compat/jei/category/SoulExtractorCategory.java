@@ -17,11 +17,11 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 
 public class SoulExtractorCategory implements IRecipeCategory<ISoulExtractionRecipe> {
-    private static final ResourceLocation TEXTURE = MysticalAgriculture.resource("textures/jei/reprocessor.png");
+    private static final Identifier TEXTURE = MysticalAgriculture.resource("textures/jei/reprocessor.png");
     public static final RecipeType<ISoulExtractionRecipe> RECIPE_TYPE = RecipeType.create(MysticalAgriculture.MOD_ID, "soul_extractor", ISoulExtractionRecipe.class);
 
     private final IDrawable background;

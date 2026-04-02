@@ -1,7 +1,7 @@
 package com.blakebr0.mysticalagriculture.api.registry;
 
 import com.blakebr0.mysticalagriculture.api.soul.MobSoulType;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.LivingEntity;
 
 import java.util.List;
@@ -25,7 +25,7 @@ public interface IMobSoulTypeRegistry {
      * @param id the resource location id of the mob soul type
      * @return the mob soul type for this id
      */
-    MobSoulType getMobSoulTypeById(ResourceLocation id);
+    MobSoulType getMobSoulTypeById(Identifier id);
 
     /**
      * Get the mob soul type for the specified entity
@@ -38,7 +38,7 @@ public interface IMobSoulTypeRegistry {
      * Get an unmodifiable set of all of the entity ids currently used by a mob soul type
      * @return a set of the used entity ids
      */
-    Set<ResourceLocation> getUsedEntityIds();
+    Set<Identifier> getUsedEntityIds();
 
     /**
      * Adds a new entity id to the specified mob soul type, if it's currently unused
@@ -46,7 +46,7 @@ public interface IMobSoulTypeRegistry {
      * @param entity the id of the entity to add
      * @return was this entity added successfully
      */
-    boolean addEntityTo(MobSoulType type, ResourceLocation entity);
+    boolean addEntityTo(MobSoulType type, Identifier entity);
 
     /**
      * Removes an entity id from the specified mob soul type, if it's currently added
@@ -54,5 +54,5 @@ public interface IMobSoulTypeRegistry {
      * @param entity the id of the entity to remove
      * @return was this entity removed successfully
      */
-    boolean removeEntityFrom(MobSoulType type, ResourceLocation entity);
+    boolean removeEntityFrom(MobSoulType type, Identifier entity);
 }

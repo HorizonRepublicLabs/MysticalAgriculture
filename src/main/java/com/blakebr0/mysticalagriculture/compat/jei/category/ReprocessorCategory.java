@@ -17,11 +17,11 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 
 public class ReprocessorCategory implements IRecipeCategory<IReprocessorRecipe> {
-    private static final ResourceLocation TEXTURE = MysticalAgriculture.resource("textures/jei/reprocessor.png");
+    private static final Identifier TEXTURE = MysticalAgriculture.resource("textures/jei/reprocessor.png");
     public static final RecipeType<IReprocessorRecipe> RECIPE_TYPE = RecipeType.create(MysticalAgriculture.MOD_ID, "reprocessor", IReprocessorRecipe.class);
 
     private final IDrawable background;

@@ -7,10 +7,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.FastColor;
+import net.minecraft.resources.Identifier;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.ARGB;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
@@ -32,7 +34,7 @@ import java.util.List;
  * Extend this class for your augments
  */
 public class Augment {
-    private final ResourceLocation id;
+    private final Identifier id;
     private final DeferredHolder<Item, Item> item;
     private int tier;
     private EnumSet<AugmentType> types;
@@ -40,13 +42,13 @@ public class Augment {
     private int secondaryColor;
     private boolean enabled;
 
-    public Augment(ResourceLocation id, int tier, EnumSet<AugmentType> types, int primaryColor, int secondaryColor) {
+    public Augment(Identifier id, int tier, EnumSet<AugmentType> types, int primaryColor, int secondaryColor) {
         this.id = id;
-        this.item = DeferredHolder.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MysticalAgricultureAPI.MOD_ID, id.getPath() + "_augment"));
+        this.item = DeferredHolder.create(Registries.ITEM, Identifier.fromNamespaceAndPath(MysticalAgricultureAPI.MOD_ID, id.getPath() + "_augment"));
         this.tier = tier;
         this.types = types;
-        this.primaryColor = FastColor.ARGB32.color(255, primaryColor);
-        this.secondaryColor = FastColor.ARGB32.color(255, secondaryColor);
+        this.primaryColor = ARGB.color(255, primaryColor);
+        this.secondaryColor = ARGB.color(255, secondaryColor);
         this.enabled = true;
     }
 
@@ -55,7 +57,7 @@ public class Augment {
      * and the path is used for {@link Augment#getName()}
      * @return the id of this augment
      */
-    public ResourceLocation getId() {
+    public Identifier getId() {
         return this.id;
     }
 
@@ -189,7 +191,7 @@ public class Augment {
     /**
      * Called when the item is used while targeting a block, {@link Item#useOn(UseOnContext)}
      * @param context the item use context
-     * @return was the action successful
+     * @return was the action successful?
      */
     public boolean onItemUse(UseOnContext context) {
         return false;
@@ -201,7 +203,7 @@ public class Augment {
      * @param level the level
      * @param player the player
      * @param hand the hand
-     * @return was the action successful
+     * @return was the action successful?
      */
     public boolean onRightClick(ItemStack stack, Level level, Player player, InteractionHand hand) {
         return false;
@@ -213,7 +215,7 @@ public class Augment {
      * @param player the player
      * @param target the clicked entity
      * @param hand the hand
-     * @return was the action successful
+     * @return was the action successful?
      */
     public boolean onRightClickEntity(ItemStack stack, Player player, LivingEntity target, InteractionHand hand) {
         return false;
@@ -224,11 +226,8 @@ public class Augment {
      * @param stack the item
      * @param target the attacked entity
      * @param attacker the attacking entity
-     * @return was the action successful
      */
-    public boolean onHitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        return false;
-    }
+    public void onHitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) { }
 
     /**
      * Called when a block is destroyed using this item, {@link Item#mineBlock(ItemStack, Level, BlockState, BlockPos, LivingEntity)}
@@ -237,35 +236,34 @@ public class Augment {
      * @param state the block destroyed
      * @param pos the pos of the block destroyed
      * @param entity the entity that destroyed the block
-     * @return was the action successful
+     * @return was the action successful?
      */
     public boolean onBlockDestroyed(ItemStack stack, Level level, BlockState state, BlockPos pos, LivingEntity entity) {
         return false;
     }
 
     /**
-     * Called when the item is ticked in the player's inventory, {@link Item#inventoryTick(ItemStack, Level, Entity, int, boolean)}
+     * Called when the item is ticked in the player's inventory, {@link Item#inventoryTick(ItemStack, ServerLevel, Entity, EquipmentSlot)}
      * @param stack the item
      * @param level the level
      * @param entity the player
      * @param slot the slot
-     * @param isSelected is currently being held
      */
-    public void onInventoryTick(ItemStack stack, Level level, Entity entity, int slot, boolean isSelected) { }
+    public void onInventoryTick(ItemStack stack, ServerLevel level, Entity entity, EquipmentSlot slot) { }
 
     /**
-     * Called every tick for equipped armor, {@link Item#inventoryTick(ItemStack, Level, Entity, int, boolean)}
+     * Called every tick for equipped armor, {@link Item#inventoryTick(ItemStack, ServerLevel, Entity, EquipmentSlot)}
      * @param stack the item
      * @param level the level
      * @param player the player
      */
-    public void onArmorTick(ItemStack stack, Level level, Player player) { }
+    public void onArmorTick(ItemStack stack, ServerLevel level, Player player) { }
 
     /**
      * Called every tick for equipped armor, meant for player ability changes, {@link PlayerTickEvent.Pre}
      * @param level the level
      * @param player the player
-     * @param cache the ability cache
+     * @param cache the ability to cache
      */
     public void onPlayerTick(Level level, Player player, AbilityCache cache) { }
 
@@ -286,7 +284,7 @@ public class Augment {
     }
 
     /**
-     * Does this augment have a set bonus
+     * Does this augment have a set bonus?
      * @return has set bonus
      */
     public boolean hasSetBonus() {

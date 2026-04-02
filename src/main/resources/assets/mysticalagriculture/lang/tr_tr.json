@@ -279,8 +279,6 @@
   "tooltip.mysticalagriculture.required_biomes": "Gereken Biyomlar:",
   "tooltip.mysticalagriculture.secondary_chance": "İkincil İhtimali: %s",
   "tooltip.mysticalagriculture.inferium_output": "Inferium Çıktısı: %s",
-  "tooltip.mysticalagriculture.cooking_speed": "Pişirme Hızı: %s",
-  "tooltip.mysticalagriculture.fuel_efficiency": "Yakıt Verimliliği: %s",
   "tooltip.mysticalagriculture.requires_crux": "Altında %s Gerekiyor",
   "tooltip.mysticalagriculture.invalid_biome": "Geçersiz Biyom",
   "tooltip.mysticalagriculture.growth_accelerator": "Üzerindeki bitkiyi daha hızlı büyütür.",

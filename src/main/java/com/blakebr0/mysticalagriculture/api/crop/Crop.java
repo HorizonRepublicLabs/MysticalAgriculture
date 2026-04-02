@@ -3,10 +3,9 @@ package com.blakebr0.mysticalagriculture.api.crop;
 import com.blakebr0.mysticalagriculture.api.farmland.IEssenceFarmland;
 import com.blakebr0.mysticalagriculture.api.lib.LazyIngredient;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.FastColor;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.ARGB;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemNameBlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
@@ -22,7 +21,7 @@ import java.util.function.Supplier;
  * Use or extend this class for your crops
  */
 public class Crop {
-    private final ResourceLocation id;
+    private final Identifier id;
     private Component displayName;
     private CropTier tier;
     private CropType type;
@@ -32,7 +31,7 @@ public class Crop {
     private CropTextures textures;
     private Supplier<? extends CropBlock> crop;
     private Supplier<? extends Item> essence;
-    private Supplier<? extends ItemNameBlockItem> seeds;
+    private Supplier<? extends Item> seeds;
     private Supplier<? extends Block> crux;
     private LazyIngredient craftingMaterial;
     private double baseSecondaryChance;
@@ -43,7 +42,7 @@ public class Crop {
     private boolean registerSeedsItem;
     private boolean hasEffect;
     private CropRecipes recipeConfig;
-    private Set<ResourceLocation> requiredBiomes;
+    private Set<Identifier> requiredBiomes;
 
     /**
      * Represents a new crop for registration
@@ -52,7 +51,7 @@ public class Crop {
      * @param type the type of this crop, like resource or mob
      * @param craftingMaterial the crafting ingredient for this crop
      */
-    public Crop(ResourceLocation id, CropTier tier, CropType type, LazyIngredient craftingMaterial) {
+    public Crop(Identifier id, CropTier tier, CropType type, LazyIngredient craftingMaterial) {
         this(id, tier, type, new CropTextures(), craftingMaterial);
     }
 
@@ -63,7 +62,7 @@ public class Crop {
      * @param type the type of this crop, like resource or mob
      * @param craftingMaterial the crafting ingredient for this crop
      */
-    public Crop(ResourceLocation id, CropTier tier, CropType type, int color, LazyIngredient craftingMaterial) {
+    public Crop(Identifier id, CropTier tier, CropType type, int color, LazyIngredient craftingMaterial) {
         this(id, tier, type, new CropTextures(), color, craftingMaterial);
     }
 
@@ -75,7 +74,7 @@ public class Crop {
      * @param textures the textures of this crop
      * @param craftingMaterial the crafting ingredient for this crop
      */
-    public Crop(ResourceLocation id, CropTier tier, CropType type, CropTextures textures, LazyIngredient craftingMaterial) {
+    public Crop(Identifier id, CropTier tier, CropType type, CropTextures textures, LazyIngredient craftingMaterial) {
         this(id, tier, type, textures, 0, craftingMaterial);
     }
 
@@ -88,7 +87,7 @@ public class Crop {
      * @param color the color to color the textures with
      * @param craftingMaterial the crafting ingredient for this crop
      */
-    public Crop(ResourceLocation id, CropTier tier, CropType type, CropTextures textures, int color, LazyIngredient craftingMaterial) {
+    public Crop(Identifier id, CropTier tier, CropType type, CropTextures textures, int color, LazyIngredient craftingMaterial) {
         this.id = id;
         this.tier = tier;
         this.type = type;
@@ -111,7 +110,7 @@ public class Crop {
      * and the path is used for {@link Crop#getName()}
      * @return the id of this crop
      */
-    public ResourceLocation getId() {
+    public Identifier getId() {
         return this.id;
     }
 
@@ -229,13 +228,13 @@ public class Crop {
      * @return this crop
      */
     public Crop setFlowerColor(int color) {
-        this.flowerColor = FastColor.ARGB32.color(255, color);
+        this.flowerColor = ARGB.color(255, color);
         return this;
     }
 
     /**
      * Whether this crop's essence should be colored using the color defined by {@link Crop#getEssenceColor()}
-     * @return is the crop's essence colored
+     * @return is the crop's essence colored?
      */
     public boolean isEssenceColored() {
         return this.essenceColor != 0;
@@ -255,13 +254,13 @@ public class Crop {
      * @return this crop
      */
     public Crop setEssenceColor(int color) {
-        this.essenceColor = FastColor.ARGB32.color(255, color);
+        this.essenceColor = ARGB.color(255, color);
         return this;
     }
 
     /**
      * Whether this crop's seed should be colored using the color defined by {@link #getSeedColor()}
-     * @return is the crop's seed colored
+     * @return is the crop's seed colored?
      */
     public boolean isSeedColored() {
         return this.seedColor != 0;
@@ -281,7 +280,7 @@ public class Crop {
      * @return this crop
      */
     public Crop setSeedColor(int color) {
-        this.seedColor = FastColor.ARGB32.color(255, color);
+        this.seedColor = ARGB.color(255, color);
         return this;
     }
 
@@ -305,7 +304,7 @@ public class Crop {
     /**
      * Used to set the crop block instance for this crop, the supplier should return the same instance every time
      * @param crop the crop block
-     * @param register should this block be automatically registered
+     * @param register should this block be automatically registered?
      * @return this crop
      */
     public Crop setCropBlock(Supplier<? extends CropBlock> crop, boolean register) {
@@ -315,7 +314,7 @@ public class Crop {
     }
 
     /**
-     * Should this crop's crop block be registered
+     * Should this crop's crop block be registered?
      * @return should be registered
      */
     public boolean shouldRegisterCropBlock() {
@@ -342,7 +341,7 @@ public class Crop {
     /**
      * Used to set the essence item instance for this crop, the supplier should return the same instance every time
      * @param essence the essence item
-     * @param register should this item be registered
+     * @param register should this item be registered?
      * @return this crop
      */
     public Crop setEssenceItem(Supplier<? extends Item> essence, boolean register) {
@@ -352,7 +351,7 @@ public class Crop {
     }
 
     /**
-     * Should this crop's essence item be registered
+     * Should this crop's essence item be registered?
      * @return should be registered
      */
     public boolean shouldRegisterEssenceItem() {
@@ -363,7 +362,7 @@ public class Crop {
      * The seeds item for this crop type
      * @return the seed item
      */
-    public ItemNameBlockItem getSeedsItem() {
+    public Item getSeedsItem() {
         return this.seeds == null ? null : this.seeds.get();
     }
 
@@ -372,24 +371,24 @@ public class Crop {
      * @param seeds the seeds item
      * @return this crop
      */
-    public Crop setSeedsItem(Supplier<? extends ItemNameBlockItem> seeds) {
+    public Crop setSeedsItem(Supplier<? extends Item> seeds) {
         return this.setSeedsItem(seeds, false);
     }
 
     /**
      * Used to set the seeds item instance for this crop, the supplier should return the same instance every time
      * @param seeds the seeds item
-     * @param register should this item be registered
+     * @param register should this item be registered?
      * @return this crop
      */
-    public Crop setSeedsItem(Supplier<? extends ItemNameBlockItem> seeds, boolean register) {
+    public Crop setSeedsItem(Supplier<? extends Item> seeds, boolean register) {
         this.seeds = seeds;
         this.registerSeedsItem = register;
         return this;
     }
 
     /**
-     * Should this crop's seeds item be registered
+     * Should this crop's seeds item be registered?
      * @return should be registered
      */
     public boolean shouldRegisterSeedsItem() {
@@ -435,7 +434,7 @@ public class Crop {
 
     /**
      * Whether this crop respects the effective farmland of the {@link CropTier}
-     * @return does this crop respect effective farmland
+     * @return does this crop respect effective farmland?
      */
     public boolean respectsEffectiveFarmland() {
         return this.respectsEffectiveFarmland;
@@ -443,7 +442,7 @@ public class Crop {
 
     /**
      * Set whether this crop should respect the effective farmland of the {@link CropTier}
-     * @param respects should this crop respect effective farmland
+     * @param respects should this crop respect effective farmland?
      * @return this crop
      */
     public Crop setRespectsEffectiveFarmland(boolean respects) {
@@ -480,7 +479,7 @@ public class Crop {
 
     /**
      * Whether this crop has recipes and shows up in the creative menu
-     * @return is this crop enabled
+     * @return is this crop enabled?
      */
     public boolean isEnabled() {
         return this.enabled;
@@ -514,9 +513,9 @@ public class Crop {
     }
 
     /**
-     * Whether this crops items should have the enchantment glint effect
+     * Whether this crop's items should have the enchantment glint effect
      * @param stack the stack
-     * @return should the crop have the glint effect
+     * @return should the crop have the glint effect?
      */
     public boolean hasEffect(ItemStack stack) {
         return this.hasEffect;
@@ -544,7 +543,7 @@ public class Crop {
      * A set of biome ids that this crop can grow in
      * @return this crop's required biomes
      */
-    public Set<ResourceLocation> getRequiredBiomes() {
+    public Set<Identifier> getRequiredBiomes() {
         return this.requiredBiomes;
     }
 
@@ -553,7 +552,7 @@ public class Crop {
      * @param id the biome id
      * @return this crop
      */
-    public Crop addRequiredBiome(ResourceLocation id) {
+    public Crop addRequiredBiome(Identifier id) {
         this.requiredBiomes.add(id);
         return this;
     }

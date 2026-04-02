@@ -8,11 +8,11 @@ import com.blakebr0.mysticalagriculture.container.ReprocessorContainer;
 import com.blakebr0.mysticalagriculture.tileentity.ReprocessorTileEntity;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 
 public class ReprocessorScreen extends BaseContainerScreen<ReprocessorContainer> {
-    private static final ResourceLocation BACKGROUND = MysticalAgriculture.resource("textures/gui/reprocessor.png");
+    private static final Identifier BACKGROUND = MysticalAgriculture.resource("textures/gui/reprocessor.png");
     private ReprocessorTileEntity tile;
 
     public ReprocessorScreen(ReprocessorContainer container, Inventory inv, Component title) {

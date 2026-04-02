@@ -1,23 +1,23 @@
 package com.blakebr0.mysticalagriculture.tileentity;
 
-import com.blakebr0.cucumber.inventory.BaseItemStackHandler;
+import com.blakebr0.cucumber.inventory.CItemStacksHandler;
 import com.blakebr0.cucumber.tileentity.BaseInventoryTileEntity;
 import com.blakebr0.mysticalagriculture.init.ModTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class AwakeningPedestalTileEntity extends BaseInventoryTileEntity {
-    private final BaseItemStackHandler inventory;
+    private final CItemStacksHandler inventory;
 
     public AwakeningPedestalTileEntity(BlockPos pos, BlockState state) {
         super(ModTileEntities.AWAKENING_PEDESTAL.get(), pos, state);
-        this.inventory = BaseItemStackHandler.create(1, (slot) -> this.setChangedAndDispatch(), handler -> {
+        this.inventory = CItemStacksHandler.create(1, (slot) -> this.setChangedAndDispatch(), handler -> {
             handler.setDefaultSlotLimit(1);
         });
     }
 
     @Override
-    public BaseItemStackHandler getInventory() {
+    public CItemStacksHandler getInventory() {
         return this.inventory;
     }
 }

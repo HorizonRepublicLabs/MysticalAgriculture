@@ -24,7 +24,7 @@ public final class ExperienceCapsuleHandler {
             for (var stack : capsules) {
                 int remaining = ExperienceCapsuleUtils.addExperienceToCapsule(stack, orb.getValue());
 
-                orb.value = remaining;
+                orb.setValue(remaining);
 
                 if (remaining == 0) {
                     orb.discard();
@@ -45,7 +45,7 @@ public final class ExperienceCapsuleHandler {
         if (stack.getItem() instanceof ExperienceCapsuleItem)
             items.add(stack);
 
-        player.getInventory().items
+        player.getInventory().getNonEquipmentItems()
                 .stream()
                 .filter(s -> s.getItem() instanceof ExperienceCapsuleItem)
                 .forEach(items::add);
