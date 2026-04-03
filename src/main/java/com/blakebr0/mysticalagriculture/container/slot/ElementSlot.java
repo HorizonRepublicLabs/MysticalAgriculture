@@ -1,17 +1,17 @@
 package com.blakebr0.mysticalagriculture.container.slot;
 
 import com.blakebr0.cucumber.iface.IToggleableSlot;
+import com.blakebr0.cucumber.inventory.CItemStacksHandler;
+import com.blakebr0.cucumber.inventory.slot.CSlot;
 import com.blakebr0.mysticalagriculture.api.tinkering.IElementalItem;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.SlotItemHandler;
 
-public class ElementSlot extends SlotItemHandler implements IToggleableSlot {
+public class ElementSlot extends CSlot implements IToggleableSlot {
     private final AbstractContainerMenu container;
 
-    public ElementSlot(AbstractContainerMenu container, IItemHandler inventory, int index, int xPosition, int yPosition) {
+    public ElementSlot(AbstractContainerMenu container, CItemStacksHandler inventory, int index, int xPosition, int yPosition) {
         super(inventory, index, xPosition, yPosition);
         this.container = container;
     }

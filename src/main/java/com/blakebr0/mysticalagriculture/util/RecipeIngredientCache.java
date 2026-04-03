@@ -15,6 +15,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 import net.neoforged.neoforge.event.TagsUpdatedEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -92,8 +93,8 @@ public class RecipeIngredientCache {
         return isValidInput(stack.copyWithCount(Integer.MAX_VALUE), ModRecipeTypes.SOULIUM_SPAWNER.get());
     }
 
-    public boolean isValidVesselItem(ItemStack stack) {
-        return this.validVesselItems.contains(stack.getItem());
+    public boolean isValidVesselItem(ItemResource resource) {
+        return this.validVesselItems.contains(resource.getItem());
     }
 
     private static <C extends RecipeInput, T extends Recipe<C>> void cache(RecipeType<T> type) {

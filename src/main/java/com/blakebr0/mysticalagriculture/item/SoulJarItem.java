@@ -4,7 +4,6 @@ import com.blakebr0.cucumber.item.BaseItem;
 import com.blakebr0.mysticalagriculture.api.util.MobSoulUtils;
 import com.blakebr0.mysticalagriculture.lib.ModTooltips;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.renderer.item.ItemPropertyFunction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
@@ -40,21 +39,5 @@ public class SoulJarItem extends BaseItem {
                 builder.accept(ModTooltips.MST_ID.args(type.getId().toString()).color(ChatFormatting.DARK_GRAY).toComponent());
             }
         }
-    }
-
-    public static ItemPropertyFunction getFillPropertyGetter() {
-        return (stack, world, entity, _unused) -> {
-            var type = MobSoulUtils.getType(stack);
-
-            if (type != null) {
-                double souls = MobSoulUtils.getSouls(stack);
-
-                if (souls > 0) {
-                    return (int) ((souls / type.getSoulRequirement()) * 9);
-                }
-            }
-
-            return 0;
-        };
     }
 }

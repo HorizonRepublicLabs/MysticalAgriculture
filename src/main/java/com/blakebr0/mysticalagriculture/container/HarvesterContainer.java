@@ -11,18 +11,17 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.items.SlotItemHandler;
 
 public class HarvesterContainer extends BaseContainerMenu {
-    private HarvesterContainer(MenuType<?> type, int id, Inventory playerInventory, FriendlyByteBuf buffer) {
-        this(type, id, playerInventory, HarvesterTileEntity.createInventoryHandler(), new MachineUpgradeItemStackHandler(), buffer.readBlockPos());
+    public HarvesterContainer(int id, Inventory playerInventory, FriendlyByteBuf buffer) {
+        this(id, playerInventory, HarvesterTileEntity.createInventoryHandler(), new MachineUpgradeItemStackHandler(), buffer.readBlockPos());
     }
 
-    private HarvesterContainer(MenuType<?> type, int id, Inventory playerInventory, CItemStacksHandler inventory, MachineUpgradeItemStackHandler upgradeInventory, BlockPos pos) {
-        super(type, id, pos);
+    public HarvesterContainer(int id, Inventory playerInventory, CItemStacksHandler inventory, MachineUpgradeItemStackHandler upgradeInventory, BlockPos pos) {
+        super(ModMenuTypes.HARVESTER.get(), id, pos);
 
         this.addSlot(new SlotItemHandler(upgradeInventory, 0, 152, 9));
         this.addSlot(new CItemStacksHandlerSlot(inventory, 0, 30, 56));
@@ -92,13 +91,5 @@ public class HarvesterContainer extends BaseContainerMenu {
         }
 
         return itemstack;
-    }
-
-    public static HarvesterContainer create(int windowId, Inventory playerInventory, FriendlyByteBuf buffer) {
-        return new HarvesterContainer(ModMenuTypes.HARVESTER.get(), windowId, playerInventory, buffer);
-    }
-
-    public static HarvesterContainer create(int windowId, Inventory playerInventory, CItemStacksHandler inventory, MachineUpgradeItemStackHandler upgradeInventory, BlockPos pos) {
-        return new HarvesterContainer(ModMenuTypes.HARVESTER.get(), windowId, playerInventory, inventory, upgradeInventory, pos);
     }
 }

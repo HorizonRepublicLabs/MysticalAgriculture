@@ -39,6 +39,6 @@ public final class ModTileEntities {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SouliumSpawnerTileEntity>> SOULIUM_SPAWNER = register("soulium_spawner", SouliumSpawnerTileEntity::new, () -> new Block[] { ModBlocks.SOULIUM_SPAWNER.get() });
 
     private static <T extends BlockEntity> DeferredHolder<BlockEntityType<?>, BlockEntityType<T>> register(String name, BlockEntityType.BlockEntitySupplier<T> tile, Supplier<Block[]> blocks) {
-        return REGISTRY.register(name, () -> BlockEntityType.Builder.of(tile, blocks.get()).build(null));
+        return REGISTRY.register(name, () -> new BlockEntityType<>(tile, blocks.get()));
     }
 }

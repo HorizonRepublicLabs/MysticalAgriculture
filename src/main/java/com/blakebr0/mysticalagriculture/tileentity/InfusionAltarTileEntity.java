@@ -11,16 +11,16 @@ import com.blakebr0.mysticalagriculture.init.ModRecipeTypes;
 import com.blakebr0.mysticalagriculture.init.ModTileEntities;
 import com.blakebr0.mysticalagriculture.util.IActivatable;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,7 +38,7 @@ public class InfusionAltarTileEntity extends BaseInventoryTileEntity implements 
 
     public InfusionAltarTileEntity(BlockPos pos, BlockState state) {
         super(ModTileEntities.INFUSION_ALTAR.get(), pos, state);
-        this.inventory = createInventoryHandler((slot) -> this.setChanged());
+        this.inventory = createInventoryHandler((_, _) -> this.setChanged());
         this.recipeInventory = CItemStacksHandler.create(9);
         this.recipe = new CachedRecipe<>(ModRecipeTypes.INFUSION.get());
     }
@@ -49,19 +49,19 @@ public class InfusionAltarTileEntity extends BaseInventoryTileEntity implements 
     }
 
     @Override
-    public void loadAdditional(CompoundTag tag, HolderLookup.Provider lookup) {
-        super.loadAdditional(tag, lookup);
+    public void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
 
-        this.progress = tag.getInt("Progress");
-        this.active = tag.getBoolean("Active");
+        this.progress = input.getIntOr("Progress", 0);
+        this.active = input.getBooleanOr("Active", false);
     }
 
     @Override
-    public void saveAdditional(CompoundTag tag, HolderLookup.Provider lookup) {
-        super.saveAdditional(tag, lookup);
+    public void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
 
-        tag.putInt("Progress", this.progress);
-        tag.putBoolean("Active", this.active);
+        output.putInt("Progress", this.progress);
+        output.putBoolean("Active", this.active);
     }
 
     @Override

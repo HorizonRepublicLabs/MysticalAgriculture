@@ -18,7 +18,7 @@ public class EnchanterTileEntity extends BaseInventoryTileEntity implements Menu
 
     public EnchanterTileEntity(BlockPos pos, BlockState state) {
         super(ModTileEntities.ENCHANTER.get(), pos, state);
-        this.inventory = createInventoryHandler((slot) -> this.setChangedAndDispatch());
+        this.inventory = createInventoryHandler((_, _) -> this.setChangedAndDispatch());
     }
 
     @Override
@@ -33,7 +33,7 @@ public class EnchanterTileEntity extends BaseInventoryTileEntity implements Menu
 
     @Override
     public AbstractContainerMenu createMenu(int id, Inventory playerInventory, Player player) {
-        return EnchanterContainer.create(id, playerInventory, this.inventory, this.getBlockPos());
+        return new EnchanterContainer(id, playerInventory, this.inventory, this.getBlockPos());
     }
 
     public static CItemStacksHandler createInventoryHandler() {

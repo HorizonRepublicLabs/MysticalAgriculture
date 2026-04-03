@@ -5,7 +5,6 @@ import com.blakebr0.cucumber.util.Formatting;
 import com.blakebr0.mysticalagriculture.api.util.ExperienceCapsuleUtils;
 import com.blakebr0.mysticalagriculture.init.ModDataComponentTypes;
 import com.blakebr0.mysticalagriculture.lib.ModTooltips;
-import net.minecraft.client.renderer.item.ItemPropertyFunction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
@@ -62,19 +61,6 @@ public class ExperienceCapsuleItem extends BaseItem {
         var experience = ExperienceCapsuleUtils.getExperience(stack);
 
         builder.accept(ModTooltips.EXPERIENCE_CAPSULE.args(Formatting.number(experience), Formatting.number(ExperienceCapsuleUtils.MAX_XP_POINTS)).toComponent());
-    }
-
-    public static ItemPropertyFunction getFillPropertyGetter() {
-        return (stack, _level, _entity, _unused) -> {
-            int experience = ExperienceCapsuleUtils.getExperience(stack);
-
-            if (experience > 0) {
-                double level = (double) experience / ExperienceCapsuleUtils.MAX_XP_POINTS;
-                return (int) (level * 10);
-            }
-
-            return 0;
-        };
     }
 
     private static int getExperienceToGive(Player player) {

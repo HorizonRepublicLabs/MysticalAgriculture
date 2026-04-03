@@ -36,7 +36,7 @@ public class TinkeringTableTileEntity extends BaseInventoryTileEntity implements
 
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player player) {
-        return TinkeringTableContainer.create(windowId, playerInventory, this.inventory, this.getBlockPos());
+        return new TinkeringTableContainer(windowId, playerInventory, this.inventory, this.getBlockPos());
     }
 
     public static CItemStacksHandler createInventoryHandler() {

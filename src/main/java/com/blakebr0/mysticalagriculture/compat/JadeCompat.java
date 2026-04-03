@@ -35,7 +35,7 @@ public class JadeCompat implements IWailaPlugin {
                 var block = accessor.getBlock();
                 var crop = ((ICropProvider) block).getCrop();
 
-                tooltip.add(ModTooltips.TIER.args(crop.getTier().getDisplayName()).build());
+                tooltip.add(ModTooltips.TIER.args(crop.getTier().getDisplayName()).toComponent());
 
                 var pos = accessor.getPosition();
                 var downPos = pos.below();
@@ -45,7 +45,7 @@ public class JadeCompat implements IWailaPlugin {
                 if (ModConfigs.REQUIRES_EFFECTIVE_FARMLAND.get() && crop != ModCrops.INFERIUM) {
                     var farmland = crop.getTier().getFarmland();
                     if (farmland != null) {
-                        tooltip.add(ModTooltips.REQUIRES_EFFECTIVE_FARMLAND.args(farmland.getName().withStyle(crop.getTier().getTextColor())).build());
+                        tooltip.add(ModTooltips.REQUIRES_EFFECTIVE_FARMLAND.args(farmland.getName().withStyle(crop.getTier().getTextColor())).toComponent());
                     }
                 }
 
@@ -56,21 +56,21 @@ public class JadeCompat implements IWailaPlugin {
                                 .append("%")
                                 .withStyle(crop.getTier().getTextColor());
 
-                        tooltip.add(ModTooltips.SECONDARY_CHANCE.args(chanceText).build());
+                        tooltip.add(ModTooltips.SECONDARY_CHANCE.args(chanceText).toComponent());
                     }
                 }
 
                 var crux = crop.getCruxBlock();
                 if (crux != null) {
                     var stack = new ItemStack(crux);
-                    tooltip.add(ModTooltips.REQUIRES_CRUX.args(stack.getHoverName()).build());
+                    tooltip.add(ModTooltips.REQUIRES_CRUX.args(stack.getHoverName()).toComponent());
                 }
 
                 var biomes = crop.getRequiredBiomes();
                 if (!biomes.isEmpty()) {
                     var biome = level.getBiome(pos).getKey();
-                    if (biome != null && !biomes.contains(biome.location())) {
-                        tooltip.add(ModTooltips.INVALID_BIOME.color(ChatFormatting.RED).build());
+                    if (biome != null && !biomes.contains(biome.identifier())) {
+                        tooltip.add(ModTooltips.INVALID_BIOME.color(ChatFormatting.RED).toComponent());
                     }
                 }
             }
@@ -97,7 +97,7 @@ public class JadeCompat implements IWailaPlugin {
 
                 var inferiumOutputText = Component.literal(String.valueOf(output)).append("%").withStyle(crop.getTier().getTextColor());
 
-                tooltip.add(ModTooltips.INFERIUM_OUTPUT.args(inferiumOutputText).build());
+                tooltip.add(ModTooltips.INFERIUM_OUTPUT.args(inferiumOutputText).toComponent());
             }
 
             @Override
@@ -112,7 +112,7 @@ public class JadeCompat implements IWailaPlugin {
                 var block = accessor.getBlock();
                 var farmland = (IEssenceFarmland) block;
 
-                tooltip.add(ModTooltips.TIER.args(farmland.getTier().getDisplayName()).build());
+                tooltip.add(ModTooltips.TIER.args(farmland.getTier().getDisplayName()).toComponent());
             }
 
             @Override

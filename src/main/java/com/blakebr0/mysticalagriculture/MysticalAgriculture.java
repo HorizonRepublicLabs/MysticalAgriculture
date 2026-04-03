@@ -12,6 +12,7 @@ import com.blakebr0.mysticalagriculture.client.handler.AOEAugmentClientHandler;
 import com.blakebr0.mysticalagriculture.client.handler.AugmentTooltipHandler;
 import com.blakebr0.mysticalagriculture.client.handler.ColorHandler;
 import com.blakebr0.mysticalagriculture.client.handler.GuiOverlayHandler;
+import com.blakebr0.mysticalagriculture.client.handler.ItemModelPropertyHandler;
 import com.blakebr0.mysticalagriculture.compat.TOPCompat;
 import com.blakebr0.mysticalagriculture.config.ModConfigs;
 import com.blakebr0.mysticalagriculture.crafting.DynamicRecipeManager;
@@ -23,7 +24,6 @@ import com.blakebr0.mysticalagriculture.handler.MobDropHandler;
 import com.blakebr0.mysticalagriculture.handler.MobSoulHandler;
 import com.blakebr0.mysticalagriculture.handler.RegisterCapabilityHandler;
 import com.blakebr0.mysticalagriculture.handler.TinkerableHandler;
-import com.blakebr0.mysticalagriculture.init.ModArmorMaterials;
 import com.blakebr0.mysticalagriculture.init.ModBiomeModifiers;
 import com.blakebr0.mysticalagriculture.init.ModBlocks;
 import com.blakebr0.mysticalagriculture.init.ModConditionSerializers;
@@ -69,7 +69,6 @@ public final class MysticalAgriculture {
 		bus.register(new ModItems());
 		bus.register(new ModDataGenerators());
 
-		ModArmorMaterials.REGISTRY.register(bus);
 		ModCreativeModeTabs.REGISTRY.register(bus);
 		ModTileEntities.REGISTRY.register(bus);
 		ModDataComponentTypes.REGISTRY.register(bus);
@@ -87,6 +86,7 @@ public final class MysticalAgriculture {
 		if (FMLEnvironment.getDist() == Dist.CLIENT) {
 			bus.register(new ColorHandler());
 			bus.register(new ModelHandler());
+			bus.register(new ItemModelPropertyHandler());
 			bus.register(new ModTESRs());
 			bus.register(new ModRecipeBookCategories());
 			bus.register(new ModClientTooltipComponentFactories());
@@ -160,7 +160,6 @@ public final class MysticalAgriculture {
 				ModConfigs.FERTILIZED_ESSENCE_DROP_CHANCE,
 				ModConfigs.SECONDARY_SEED_DROPS,
                 ModConfigs.REQUIRES_EFFECTIVE_FARMLAND,
-				ModConfigs.ENCHANTABLE_SUPREMIUM_TOOLS,
 				ModConfigs.UNBREAKABLE_SUPREMIUM_ARMOR,
 				ModConfigs.FAKE_PLAYER_WATERING
 		));

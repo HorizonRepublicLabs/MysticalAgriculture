@@ -10,6 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CropBlock;
+import org.jspecify.annotations.Nullable;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -454,7 +455,7 @@ public class Crop {
      * Get the crafting ingredient for this crop from the underlying {@link LazyIngredient}
      * @return the crafting material of this crop
      */
-    public Ingredient getCraftingMaterial() {
+    public @Nullable Ingredient getCraftingMaterial() {
         return this.craftingMaterial.getIngredient();
     }
 

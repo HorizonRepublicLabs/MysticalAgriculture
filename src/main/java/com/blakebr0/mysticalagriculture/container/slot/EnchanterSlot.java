@@ -2,13 +2,13 @@ package com.blakebr0.mysticalagriculture.container.slot;
 
 import com.blakebr0.cucumber.inventory.CItemStacksHandler;
 import com.blakebr0.cucumber.inventory.RecipeInventory;
-import com.blakebr0.cucumber.inventory.slot.CItemStacksHandlerSlot;
+import com.blakebr0.cucumber.inventory.slot.CSlot;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 
-public class EnchanterSlot extends CItemStacksHandlerSlot {
+public class EnchanterSlot extends CSlot {
     private final AbstractContainerMenu container;
     private final Container inventory;
 

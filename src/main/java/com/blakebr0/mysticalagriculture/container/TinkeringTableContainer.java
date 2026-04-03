@@ -1,6 +1,7 @@
 package com.blakebr0.mysticalagriculture.container;
 
 import com.blakebr0.cucumber.container.BaseContainerMenu;
+import com.blakebr0.cucumber.inventory.CItemStacksHandler;
 import com.blakebr0.mysticalagriculture.api.tinkering.IAugmentProvider;
 import com.blakebr0.mysticalagriculture.api.util.AugmentUtils;
 import com.blakebr0.mysticalagriculture.container.slot.AugmentSlot;
@@ -13,20 +14,18 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.items.IItemHandlerModifiable;
 
 public class TinkeringTableContainer extends BaseContainerMenu {
-    private final IItemHandlerModifiable inventory;
+    private final CItemStacksHandler inventory;
 
-    private TinkeringTableContainer(MenuType<?> type, int id, Inventory playerInventory, FriendlyByteBuf buffer) {
-        this(type, id, playerInventory, TinkeringTableTileEntity.createInventoryHandler(), buffer.readBlockPos());
+    public TinkeringTableContainer(int id, Inventory playerInventory, FriendlyByteBuf buffer) {
+        this(id, playerInventory, TinkeringTableTileEntity.createInventoryHandler(), buffer.readBlockPos());
     }
 
-    private TinkeringTableContainer(MenuType<?> type, int id, Inventory playerInventory, IItemHandlerModifiable inventory, BlockPos pos) {
-        super(type, id, pos);
+    public TinkeringTableContainer(int id, Inventory playerInventory, CItemStacksHandler inventory, BlockPos pos) {
+        super(ModMenuTypes.TINKERING_TABLE.get(), id, pos);
         this.inventory = inventory;
 
         this.addSlot(new TinkerableSlot(this, inventory, 0, 80, 49));
@@ -109,13 +108,5 @@ public class TinkeringTableContainer extends BaseContainerMenu {
         }
 
         return itemstack;
-    }
-
-    public static TinkeringTableContainer create(int windowId, Inventory playerInventory, FriendlyByteBuf buffer) {
-        return new TinkeringTableContainer(ModMenuTypes.TINKERING_TABLE.get(), windowId, playerInventory, buffer);
-    }
-
-    public static TinkeringTableContainer create(int windowId, Inventory playerInventory, IItemHandlerModifiable inventory, BlockPos pos) {
-        return new TinkeringTableContainer(ModMenuTypes.TINKERING_TABLE.get(), windowId, playerInventory, inventory, pos);
     }
 }

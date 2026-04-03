@@ -4,6 +4,7 @@ import com.blakebr0.mysticalagriculture.api.crop.Crop;
 import com.blakebr0.mysticalagriculture.api.farmland.IEssenceFarmland;
 import com.blakebr0.mysticalagriculture.config.ModConfigs;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
@@ -13,8 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InferiumCropBlock extends MysticalCropBlock {
-    public InferiumCropBlock(Crop crop) {
-        super(crop);
+    public InferiumCropBlock(Identifier id, Crop crop) {
+        super(id, crop);
     }
 
     @Override

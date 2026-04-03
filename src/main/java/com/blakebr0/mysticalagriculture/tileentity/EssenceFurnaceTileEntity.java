@@ -1,13 +1,12 @@
 package com.blakebr0.mysticalagriculture.tileentity;
 
-import com.blakebr0.cucumber.energy.DynamicEnergyStorage;
+import com.blakebr0.cucumber.energy.CEnergyStorage;
 import com.blakebr0.cucumber.helper.StackHelper;
 import com.blakebr0.cucumber.inventory.CItemStacksHandler;
 import com.blakebr0.cucumber.inventory.CachedRecipe;
 import com.blakebr0.cucumber.inventory.OnContentsChangedFunction;
 import com.blakebr0.cucumber.inventory.SidedInventoryWrapper;
 import com.blakebr0.cucumber.tileentity.BaseInventoryTileEntity;
-import com.blakebr0.cucumber.util.Localizable;
 import com.blakebr0.mysticalagriculture.api.machine.IUpgradeableMachine;
 import com.blakebr0.mysticalagriculture.api.machine.MachineUpgradeItemStackHandler;
 import com.blakebr0.mysticalagriculture.api.machine.MachineUpgradeTier;
@@ -16,8 +15,6 @@ import com.blakebr0.mysticalagriculture.container.EssenceFurnaceContainer;
 import com.blakebr0.mysticalagriculture.init.ModTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
@@ -31,7 +28,9 @@ import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.FurnaceBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.items.IItemHandler;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -44,7 +43,7 @@ public class EssenceFurnaceTileEntity extends BaseInventoryTileEntity implements
 
     private final CItemStacksHandler inventory;
     private final MachineUpgradeItemStackHandler upgradeInventory;
-    private final DynamicEnergyStorage energy;
+    private final CEnergyStorage energy;
     private final SidedInventoryWrapper[] sidedInventoryWrappers;
     private final CachedRecipe<SingleRecipeInput, SmeltingRecipe> recipe;
     private MachineUpgradeTier tier;
@@ -55,9 +54,9 @@ public class EssenceFurnaceTileEntity extends BaseInventoryTileEntity implements
 
     public EssenceFurnaceTileEntity(BlockPos pos, BlockState state) {
         super(ModTileEntities.FURNACE.get(), pos, state);
-        this.inventory = createInventoryHandler((slot) -> this.setChanged());
+        this.inventory = createInventoryHandler((_, _) -> this.setChanged());
         this.upgradeInventory = new MachineUpgradeItemStackHandler();
-        this.energy = new DynamicEnergyStorage(FUEL_CAPACITY, this::setChangedFast);
+        this.energy = new CEnergyStorage(FUEL_CAPACITY, _ -> this.setChangedFast());
         this.sidedInventoryWrappers = SidedInventoryWrapper.create(this.inventory, List.of(Direction.UP, Direction.DOWN, Direction.NORTH), this::canInsertStackSided, null);
         this.recipe = new CachedRecipe<>(RecipeType.SMELTING);
     }
@@ -68,35 +67,35 @@ public class EssenceFurnaceTileEntity extends BaseInventoryTileEntity implements
     }
 
     @Override
-    public void loadAdditional(CompoundTag tag, HolderLookup.Provider lookup) {
-        super.loadAdditional(tag, lookup);
+    public void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
 
-        this.progress = tag.getInt("Progress");
-        this.fuelLeft = tag.getInt("FuelLeft");
-        this.fuelItemValue = tag.getInt("FuelItemValue");
-        this.energy.deserializeNBT(lookup, tag.get("Energy"));
-        this.upgradeInventory.deserializeNBT(lookup, tag.getCompound("UpgradeInventory"));
+        this.progress = input.getIntOr("Progress", 0);
+        this.fuelLeft = input.getIntOr("FuelLeft", 0);
+        this.fuelItemValue = input.getIntOr("FuelItemValue", 0);
+        this.energy.deserialize(input);
+        this.upgradeInventory.deserialize(input.childOrEmpty("UpgradeInventory"));
     }
 
     @Override
-    public void saveAdditional(CompoundTag tag, HolderLookup.Provider lookup) {
-        super.saveAdditional(tag, lookup);
+    public void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
 
-        tag.putInt("Progress", this.progress);
-        tag.putInt("FuelLeft", this.fuelLeft);
-        tag.putInt("FuelItemValue", this.fuelItemValue);
-        tag.put("Energy", this.energy.serializeNBT(lookup));
-        tag.put("UpgradeInventory", this.upgradeInventory.serializeNBT(lookup));
+        output.putInt("Progress", this.progress);
+        output.putInt("FuelLeft", this.fuelLeft);
+        output.putInt("FuelItemValue", this.fuelItemValue);
+        this.energy.serialize(output);
+        output.putChild("UpgradeInventory", this.upgradeInventory);
     }
 
     @Override
     public Component getDisplayName() {
-        return Localizable.of("container.mysticalagriculture.furnace").build();
+        return Component.translatable("container.mysticalagriculture.furnace");
     }
 
     @Override
     public AbstractContainerMenu createMenu(int id, Inventory playerInventory, Player player) {
-        return EssenceFurnaceContainer.create(id, playerInventory, this.inventory, this.upgradeInventory, this.getBlockPos());
+        return new EssenceFurnaceContainer(id, playerInventory, this.inventory, this.upgradeInventory, this.getBlockPos());
     }
 
     @Override
@@ -115,7 +114,7 @@ public class EssenceFurnaceTileEntity extends BaseInventoryTileEntity implements
         return this.upgradeInventory;
     }
 
-    public IItemHandler getSidedInventory(@Nullable Direction direction) {
+    public ItemStacksResourceHandler getSidedInventory(@Nullable Direction direction) {
         if (direction == null) direction = Direction.NORTH;
 
         return switch (direction) {
@@ -219,7 +218,7 @@ public class EssenceFurnaceTileEntity extends BaseInventoryTileEntity implements
         return this.recipe.checkAndGet(new SingleRecipeInput(this.inventory.getStackInSlot(0)), this.level);
     }
 
-    public DynamicEnergyStorage getEnergy() {
+    public CEnergyStorage getEnergy() {
         return this.energy;
     }
 

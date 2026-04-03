@@ -9,21 +9,19 @@ import com.blakebr0.mysticalagriculture.item.MachineUpgradeItem;
 import com.blakebr0.mysticalagriculture.tileentity.SouliumSpawnerTileEntity;
 import com.blakebr0.mysticalagriculture.util.RecipeIngredientCache;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.items.SlotItemHandler;
 
 public class SouliumSpawnerContainer extends ExtendedContainerMenu {
-    private SouliumSpawnerContainer(MenuType<?> type, int id, Inventory playerInventory, BlockPos pos) {
-        this(type, id, playerInventory, SouliumSpawnerTileEntity.createInventoryHandler(), new MachineUpgradeItemStackHandler(), pos);
+    public SouliumSpawnerContainer(int id, Inventory playerInventory, BlockPos pos) {
+        this(id, playerInventory, SouliumSpawnerTileEntity.createInventoryHandler(), new MachineUpgradeItemStackHandler(), pos);
     }
 
-    private SouliumSpawnerContainer(MenuType<?> type, int id, Inventory playerInventory, CItemStacksHandler inventory, MachineUpgradeItemStackHandler upgradeInventory, BlockPos pos) {
-        super(type, id, pos);
+    public SouliumSpawnerContainer(int id, Inventory playerInventory, CItemStacksHandler inventory, MachineUpgradeItemStackHandler upgradeInventory, BlockPos pos) {
+        super(ModMenuTypes.SOULIUM_SPAWNER.get(), id, pos);
 
         this.addSlot(new SlotItemHandler(upgradeInventory, 0, 152, 9));
 
@@ -88,13 +86,5 @@ public class SouliumSpawnerContainer extends ExtendedContainerMenu {
         }
 
         return itemstack;
-    }
-
-    public static SouliumSpawnerContainer create(int windowId, Inventory playerInventory, FriendlyByteBuf buffer) {
-        return new SouliumSpawnerContainer(ModMenuTypes.SOULIUM_SPAWNER.get(), windowId, playerInventory, buffer.readBlockPos());
-    }
-
-    public static SouliumSpawnerContainer create(int windowId, Inventory playerInventory, CItemStacksHandler inventory, MachineUpgradeItemStackHandler upgradeInventory, BlockPos pos) {
-        return new SouliumSpawnerContainer(ModMenuTypes.SOULIUM_SPAWNER.get(), windowId, playerInventory, inventory, upgradeInventory, pos);
     }
 }

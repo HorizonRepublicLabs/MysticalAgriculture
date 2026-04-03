@@ -1,12 +1,11 @@
 package com.blakebr0.mysticalagriculture.tileentity;
 
-import com.blakebr0.cucumber.energy.DynamicEnergyStorage;
+import com.blakebr0.cucumber.energy.CEnergyStorage;
 import com.blakebr0.cucumber.helper.CropHelper;
 import com.blakebr0.cucumber.helper.StackHelper;
 import com.blakebr0.cucumber.inventory.CItemStacksHandler;
 import com.blakebr0.cucumber.inventory.OnContentsChangedFunction;
 import com.blakebr0.cucumber.tileentity.BaseInventoryTileEntity;
-import com.blakebr0.cucumber.util.Localizable;
 import com.blakebr0.mysticalagriculture.api.machine.IUpgradeableMachine;
 import com.blakebr0.mysticalagriculture.api.machine.MachineUpgradeItemStackHandler;
 import com.blakebr0.mysticalagriculture.api.machine.MachineUpgradeTier;
@@ -15,8 +14,6 @@ import com.blakebr0.mysticalagriculture.container.HarvesterContainer;
 import com.blakebr0.mysticalagriculture.init.ModTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Containers;
@@ -30,6 +27,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.entity.FurnaceBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
 public class HarvesterTileEntity extends BaseInventoryTileEntity implements MenuProvider, IUpgradeableMachine {
     private static final int FUEL_TICK_MULTIPLIER = 20;
@@ -41,7 +40,7 @@ public class HarvesterTileEntity extends BaseInventoryTileEntity implements Menu
 
     private final CItemStacksHandler inventory;
     private final MachineUpgradeItemStackHandler upgradeInventory;
-    private final DynamicEnergyStorage energy;
+    private final CEnergyStorage energy;
     private MachineUpgradeTier tier;
     private Direction direction;
     private int progress;
@@ -52,9 +51,9 @@ public class HarvesterTileEntity extends BaseInventoryTileEntity implements Menu
 
     public HarvesterTileEntity(BlockPos pos, BlockState state) {
         super(ModTileEntities.HARVESTER.get(), pos, state);
-        this.inventory = createInventoryHandler((slot) -> this.setChanged());
+        this.inventory = createInventoryHandler((_, _) -> this.setChanged());
         this.upgradeInventory = new MachineUpgradeItemStackHandler();
-        this.energy = new DynamicEnergyStorage(FUEL_CAPACITY, this::setChangedFast);
+        this.energy = new CEnergyStorage(FUEL_CAPACITY, _ -> this.setChangedFast());
     }
 
     @Override
@@ -63,13 +62,37 @@ public class HarvesterTileEntity extends BaseInventoryTileEntity implements Menu
     }
 
     @Override
+    public void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+
+        this.progress = input.getIntOr("Progress", 0);
+        this.fuelLeft = input.getIntOr("FuelLeft", 0);
+        this.fuelItemValue = input.getIntOr("FuelItemValue", 0);
+        this.lastScanIndex = input.getIntOr("LastScanIndex", -1);
+        this.energy.deserialize(input);
+        this.upgradeInventory.deserialize(input.childOrEmpty("UpgradeInventory"));
+    }
+
+    @Override
+    public void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+
+        output.putInt("Progress", this.progress);
+        output.putInt("FuelLeft", this.fuelLeft);
+        output.putInt("FuelItemValue", this.fuelItemValue);
+        output.putInt("LastScanIndex", this.lastScanIndex);
+        this.energy.serialize(output);
+        output.putChild("UpgradeInventory", this.upgradeInventory);
+    }
+
+    @Override
     public Component getDisplayName() {
-        return Localizable.of("container.mysticalagriculture.harvester").build();
+        return Component.translatable("container.mysticalagriculture.harvester");
     }
 
     @Override
     public AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
-        return HarvesterContainer.create(i, inventory, this.inventory, this.upgradeInventory, this.getBlockPos());
+        return new HarvesterContainer(i, inventory, this.inventory, this.upgradeInventory, this.getBlockPos());
     }
 
     @Override
@@ -86,30 +109,6 @@ public class HarvesterTileEntity extends BaseInventoryTileEntity implements Menu
     @Override
     public MachineUpgradeItemStackHandler getUpgradeInventory() {
         return this.upgradeInventory;
-    }
-
-    @Override
-    public void loadAdditional(CompoundTag tag, HolderLookup.Provider lookup) {
-        super.loadAdditional(tag, lookup);
-
-        this.progress = tag.getInt("Progress");
-        this.fuelLeft = tag.getInt("FuelLeft");
-        this.fuelItemValue = tag.getInt("FuelItemValue");
-        this.lastScanIndex = tag.getInt("LastScanIndex");
-        this.energy.deserializeNBT(lookup, tag.get("Energy"));
-        this.upgradeInventory.deserializeNBT(lookup, tag.getCompound("UpgradeInventory"));
-    }
-
-    @Override
-    public void saveAdditional(CompoundTag tag, HolderLookup.Provider lookup) {
-        super.saveAdditional(tag, lookup);
-
-        tag.putInt("Progress", this.progress);
-        tag.putInt("FuelLeft", this.fuelLeft);
-        tag.putInt("FuelItemValue", this.fuelItemValue);
-        tag.putInt("LastScanIndex", this.lastScanIndex);
-        tag.putInt("Energy", this.energy.getEnergyStored());
-        tag.put("UpgradeInventory", this.upgradeInventory.serializeNBT(lookup));
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, HarvesterTileEntity tile) {
@@ -232,7 +231,7 @@ public class HarvesterTileEntity extends BaseInventoryTileEntity implements Menu
         });
     }
 
-    public DynamicEnergyStorage getEnergy() {
+    public CEnergyStorage getEnergy() {
         return this.energy;
     }
 

@@ -10,7 +10,6 @@ public final class MysticalAgricultureConfigValues {
     private final DoubleSupplier fertilizedEssenceDropChance;
     private final BooleanSupplier secondarySeedDrops;
     private final BooleanSupplier requiresEffectiveFarmland;
-    private final BooleanSupplier enchantableSupremiumTools;
     private final BooleanSupplier unbreakableSupremiumArmor;
     private final BooleanSupplier fakePlayerWatering;
 
@@ -20,7 +19,6 @@ public final class MysticalAgricultureConfigValues {
             DoubleSupplier fertilizedEssenceDropChance,
             BooleanSupplier secondarySeedDrops,
             BooleanSupplier requiresEffectiveFarmland,
-            BooleanSupplier enchantableSupremiumTools,
             BooleanSupplier unbreakableSupremiumArmor,
             BooleanSupplier fakePlayerWatering
     ) {
@@ -28,7 +26,6 @@ public final class MysticalAgricultureConfigValues {
         this.fertilizedEssenceDropChance = fertilizedEssenceDropChance;
         this.secondarySeedDrops = secondarySeedDrops;
         this.requiresEffectiveFarmland = requiresEffectiveFarmland;
-        this.enchantableSupremiumTools = enchantableSupremiumTools;
         this.unbreakableSupremiumArmor = unbreakableSupremiumArmor;
         this.fakePlayerWatering = fakePlayerWatering;
     }
@@ -47,10 +44,6 @@ public final class MysticalAgricultureConfigValues {
 
     public boolean isRequiresEffectiveFarmlandEnabled() {
         return this.requiresEffectiveFarmland.getAsBoolean();
-    }
-
-    public boolean isEnchantableSupremiumToolsEnabled() {
-        return this.enchantableSupremiumTools.getAsBoolean();
     }
 
     public boolean isUnbreakableSupremiumArmorEnabled() {

@@ -142,13 +142,13 @@ public final class CropRegistry implements ICropRegistry {
 
         crops.stream().filter(Crop::shouldRegisterEssenceItem).forEach(c -> {
             var essence = c.getEssenceItem();
+            var id = MysticalAgriculture.resource(c.getNameWithSuffix("essence"));
+
             if (essence == null) {
-                var defaultEssence = new MysticalEssenceItem(c);
+                var defaultEssence = new MysticalEssenceItem(id, c);
                 essence = defaultEssence;
                 c.setEssenceItem(() -> defaultEssence, true);
             }
-
-            var id = MysticalAgriculture.resource(c.getNameWithSuffix("essence"));
 
             registry.register(id, essence);
         });
@@ -163,11 +163,10 @@ public final class CropRegistry implements ICropRegistry {
                 c.setSeedsItem(() -> defaultSeeds, true);
             }
 
-
             registry.register(id, seeds);
         });
 
-        PluginRegistry.getInstance().forEach((plugin, config) -> plugin.onPostRegisterCrops(this));
+        PluginRegistry.getInstance().forEach((plugin, _) -> plugin.onPostRegisterCrops(this));
 
         this.currentPluginConfig = null;
     }
@@ -190,9 +189,11 @@ public final class CropRegistry implements ICropRegistry {
     private Map<Identifier, Crop> getSortedCropsMap(Collection<Crop> crops) {
         var sorted = new LinkedHashMap<Identifier, Crop>();
 
-        crops.stream().sorted(Comparator.comparingInt(c -> c.getTier().getValue())).forEach(c -> {
-            sorted.put(c.getId(), c);
-        });
+        crops.stream()
+                .sorted(Comparator.comparingInt(c -> c.getTier().getValue()))
+                .forEach(c -> {
+                    sorted.put(c.getId(), c);
+                });
 
         return sorted;
     }

@@ -53,7 +53,7 @@ public class DynamicRecipeManager {
             return null;
 
         var material = crop.getCraftingMaterial();
-        if (material == Ingredient.EMPTY)
+        if (material == null)
             return null;
 
         var essence = Ingredient.of(essenceItem);

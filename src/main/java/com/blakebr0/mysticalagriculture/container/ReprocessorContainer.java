@@ -10,21 +10,19 @@ import com.blakebr0.mysticalagriculture.item.MachineUpgradeItem;
 import com.blakebr0.mysticalagriculture.tileentity.ReprocessorTileEntity;
 import com.blakebr0.mysticalagriculture.util.RecipeIngredientCache;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.items.SlotItemHandler;
 
 public class ReprocessorContainer extends BaseContainerMenu {
-    private ReprocessorContainer(MenuType<?> type, int id, Inventory playerInventory, BlockPos pos) {
-        this(type, id, playerInventory, ReprocessorTileEntity.createInventoryHandler(), new MachineUpgradeItemStackHandler(), pos);
+    public ReprocessorContainer(int id, Inventory playerInventory, BlockPos pos) {
+        this(id, playerInventory, ReprocessorTileEntity.createInventoryHandler(), new MachineUpgradeItemStackHandler(), pos);
     }
 
-    private ReprocessorContainer(MenuType<?> type, int id, Inventory playerInventory, CItemStacksHandler inventory, MachineUpgradeItemStackHandler upgradeInventory, BlockPos pos) {
-        super(type, id, pos);
+    public ReprocessorContainer(int id, Inventory playerInventory, CItemStacksHandler inventory, MachineUpgradeItemStackHandler upgradeInventory, BlockPos pos) {
+        super(ModMenuTypes.REPROCESSOR.get(), id, pos);
 
         this.addSlot(new SlotItemHandler(upgradeInventory, 0, 152, 9));
 
@@ -90,13 +88,5 @@ public class ReprocessorContainer extends BaseContainerMenu {
         }
 
         return itemstack;
-    }
-
-    public static ReprocessorContainer create(int windowId, Inventory playerInventory, FriendlyByteBuf buffer) {
-        return new ReprocessorContainer(ModMenuTypes.REPROCESSOR.get(), windowId, playerInventory, buffer.readBlockPos());
-    }
-
-    public static ReprocessorContainer create(int windowId, Inventory playerInventory, CItemStacksHandler inventory, MachineUpgradeItemStackHandler upgradeInventory, BlockPos pos) {
-        return new ReprocessorContainer(ModMenuTypes.REPROCESSOR.get(), windowId, playerInventory, inventory, upgradeInventory, pos);
     }
 }

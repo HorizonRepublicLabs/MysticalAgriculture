@@ -105,7 +105,7 @@ public class EssenceBowItem extends BaseBowItem implements ITinkerable {
         var augments = AugmentUtils.getAugments(stack);
 
         for (var augment : augments) {
-            augment.onHitEntity(stack, target, attacker)
+            augment.onHitEntity(stack, target, attacker);
         }
     }
 

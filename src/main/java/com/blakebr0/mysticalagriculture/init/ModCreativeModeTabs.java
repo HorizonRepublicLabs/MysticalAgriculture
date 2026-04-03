@@ -20,7 +20,7 @@ public final class ModCreativeModeTabs {
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> CREATIVE_TAB = REGISTRY.register("creative_tab", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.mysticalagriculture"))
             .icon(() -> new ItemStack(ModItems.INFERIUM_ESSENCE.get()))
-            .displayItems(FeatureFlagDisplayItemGenerator.create((parameters, output) -> {
+            .displayItems(FeatureFlagDisplayItemGenerator.create((_, output) -> {
                 output.accept(ModBlocks.PROSPERITY_BLOCK);
                 output.accept(ModBlocks.INFERIUM_BLOCK);
                 output.accept(ModBlocks.PRUDENTIUM_BLOCK);

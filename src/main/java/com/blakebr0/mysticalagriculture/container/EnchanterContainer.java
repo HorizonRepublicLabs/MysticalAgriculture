@@ -9,11 +9,9 @@ import com.blakebr0.mysticalagriculture.init.ModMenuTypes;
 import com.blakebr0.mysticalagriculture.init.ModRecipeTypes;
 import com.blakebr0.mysticalagriculture.tileentity.EnchanterTileEntity;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.ResultContainer;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -24,12 +22,12 @@ public class EnchanterContainer extends ExtendedContainerMenu {
     private final CItemStacksHandler inventory;
     private final Container result;
 
-    private EnchanterContainer(MenuType<?> type, int id, Inventory playerInventory, BlockPos pos) {
-        this(type, id, playerInventory, EnchanterTileEntity.createInventoryHandler(), pos);
+    public EnchanterContainer(int id, Inventory playerInventory, BlockPos pos) {
+        this(id, playerInventory, EnchanterTileEntity.createInventoryHandler(), pos);
     }
 
-    private EnchanterContainer(MenuType<?> type, int id, Inventory playerInventory, CItemStacksHandler inventory, BlockPos pos) {
-        super(type, id, pos);
+    public EnchanterContainer(int id, Inventory playerInventory, CItemStacksHandler inventory, BlockPos pos) {
+        super(ModMenuTypes.ENCHANTER.get(), id, pos);
         this.level = playerInventory.player.level();
         this.inventory = inventory;
         this.result = new ResultContainer();
@@ -104,13 +102,5 @@ public class EnchanterContainer extends ExtendedContainerMenu {
         }
 
         return itemstack;
-    }
-
-    public static EnchanterContainer create(int windowId, Inventory playerInventory, FriendlyByteBuf buffer) {
-        return new EnchanterContainer(ModMenuTypes.ENCHANTER.get(), windowId, playerInventory, buffer.readBlockPos());
-    }
-
-    public static EnchanterContainer create(int windowId, Inventory playerInventory, CItemStacksHandler inventory, BlockPos pos) {
-        return new EnchanterContainer(ModMenuTypes.ENCHANTER.get(), windowId, playerInventory, inventory, pos);
     }
 }

@@ -11,7 +11,7 @@ public class AwakeningPedestalTileEntity extends BaseInventoryTileEntity {
 
     public AwakeningPedestalTileEntity(BlockPos pos, BlockState state) {
         super(ModTileEntities.AWAKENING_PEDESTAL.get(), pos, state);
-        this.inventory = CItemStacksHandler.create(1, (slot) -> this.setChangedAndDispatch(), handler -> {
+        this.inventory = CItemStacksHandler.create(1, (_, _) -> this.setChangedAndDispatch(), handler -> {
             handler.setDefaultSlotLimit(1);
         });
     }

@@ -5,8 +5,8 @@ import com.blakebr0.cucumber.tileentity.BaseInventoryTileEntity;
 import com.blakebr0.mysticalagriculture.init.ModTileEntities;
 import com.blakebr0.mysticalagriculture.util.RecipeIngredientCache;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 
 public class EssenceVesselTileEntity extends BaseInventoryTileEntity {
     private static final int MAX_STACK_SIZE = 40;
@@ -14,9 +14,9 @@ public class EssenceVesselTileEntity extends BaseInventoryTileEntity {
 
     public EssenceVesselTileEntity(BlockPos pos, BlockState state) {
         super(ModTileEntities.ESSENCE_VESSEL.get(), pos, state);
-        this.inventory = CItemStacksHandler.create(1, (slot) -> this.setChangedAndDispatch(), handler -> {
+        this.inventory = CItemStacksHandler.create(1, (_, _) -> this.setChangedAndDispatch(), handler -> {
             handler.setDefaultSlotLimit(MAX_STACK_SIZE);
-            handler.setCanInsert((slot, stack) -> canInsertStack(stack));
+            handler.setCanInsert((_, resource) -> canInsertStack(resource));
         });
     }
 
@@ -25,7 +25,7 @@ public class EssenceVesselTileEntity extends BaseInventoryTileEntity {
         return this.inventory;
     }
 
-    private static boolean canInsertStack(ItemStack stack) {
-        return RecipeIngredientCache.INSTANCE.isValidVesselItem(stack);
+    private static boolean canInsertStack(ItemResource resource) {
+        return RecipeIngredientCache.INSTANCE.isValidVesselItem(resource);
     }
 }

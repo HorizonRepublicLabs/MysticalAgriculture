@@ -45,14 +45,15 @@ public final class AugmentRegistry implements IAugmentRegistry {
     }
 
     public void onRegisterItems(RegisterEvent.RegisterHelper<Item> registry) {
-        PluginRegistry.getInstance().forEach((plugin, config) -> plugin.onRegisterAugments(this));
+        PluginRegistry.getInstance().forEach((plugin, _) -> plugin.onRegisterAugments(this));
 
-        this.augments.forEach((id, a) -> {
-            var item = new AugmentItem(a);
+        this.augments.forEach((_, a) -> {
+            var id = MysticalAgriculture.resource(a.getNameWithSuffix("augment"));
+            var item = new AugmentItem(id, a);
 
-            registry.register(MysticalAgriculture.resource(a.getNameWithSuffix("augment")), item);
+            registry.register(id, item);
         });
 
-        PluginRegistry.getInstance().forEach((plugin, config) -> plugin.onPostRegisterAugments(this));
+        PluginRegistry.getInstance().forEach((plugin, _) -> plugin.onPostRegisterAugments(this));
     }
 }

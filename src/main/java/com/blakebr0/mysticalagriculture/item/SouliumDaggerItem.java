@@ -2,7 +2,7 @@ package com.blakebr0.mysticalagriculture.item;
 
 import com.blakebr0.cucumber.item.tool.BaseSwordItem;
 import com.blakebr0.mysticalagriculture.api.soul.ISoulSiphoningItem;
-import com.blakebr0.mysticalagriculture.lib.ModItemTier;
+import com.blakebr0.mysticalagriculture.lib.ModToolMaterials;
 import com.blakebr0.mysticalagriculture.lib.ModTooltips;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -48,9 +48,9 @@ public class SouliumDaggerItem extends BaseSwordItem implements ISoulSiphoningIt
     }
 
     public enum DaggerType {
-        BASIC(3, ModItemTier.SOULIUM.getUses(), (_, _) -> 1.0D),
-        PASSIVE(6, ModItemTier.SOULIUM.getUses() * 2, (_, entity) -> isPassive(entity) ? 1.5D : 1.0D),
-        HOSTILE(6, ModItemTier.SOULIUM.getUses() * 2, (_, entity) -> !isPassive(entity) ? 1.5D : 1.0D),
+        BASIC(3, ModToolMaterials.SOULIUM.durability(), (_, _) -> 1.0D),
+        PASSIVE(6, ModToolMaterials.SOULIUM.durability() * 2, (_, entity) -> isPassive(entity) ? 1.5D : 1.0D),
+        HOSTILE(6, ModToolMaterials.SOULIUM.durability() * 2, (_, entity) -> !isPassive(entity) ? 1.5D : 1.0D),
         CREATIVE(65, -1, (_, _) -> Double.MAX_VALUE);
 
         private final int damage;

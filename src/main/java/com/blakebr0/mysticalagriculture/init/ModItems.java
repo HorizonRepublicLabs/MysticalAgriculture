@@ -35,11 +35,12 @@ import com.blakebr0.mysticalagriculture.item.tool.EssenceShovelItem;
 import com.blakebr0.mysticalagriculture.item.tool.EssenceSickleItem;
 import com.blakebr0.mysticalagriculture.item.tool.EssenceStaffItem;
 import com.blakebr0.mysticalagriculture.item.tool.EssenceSwordItem;
-import com.blakebr0.mysticalagriculture.lib.ModItemTier;
+import com.blakebr0.mysticalagriculture.lib.ModArmorMaterials;
+import com.blakebr0.mysticalagriculture.lib.ModToolMaterials;
 import com.blakebr0.mysticalagriculture.registry.AugmentRegistry;
 import com.blakebr0.mysticalagriculture.registry.CropRegistry;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Tiers;
@@ -47,23 +48,21 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.RegisterEvent;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.function.Supplier;
+import java.util.function.Function;
 
 public final class ModItems {
-    public static final List<Supplier<BlockItem>> BLOCK_ENTRIES = new ArrayList<>();
-    public static final Map<DeferredHolder<Item, Item>, Supplier<Item>> ENTRIES = new LinkedHashMap<>();
-    public static final Map<DeferredHolder<Item, Item>, Supplier<Item>> GEAR_ENTRIES = new LinkedHashMap<>();
+    public static final Map<Identifier, Function<Identifier, BlockItem>> BLOCK_ENTRIES = new LinkedHashMap<>();
+    public static final Map<DeferredHolder<Item, Item>, Function<Identifier, Item>> ENTRIES = new LinkedHashMap<>();
+    public static final Map<DeferredHolder<Item, Item>, Function<Identifier, Item>> GEAR_ENTRIES = new LinkedHashMap<>();
 
     public static final DeferredHolder<Item, Item> PROSPERITY_SHARD = register("prosperity_shard");
-    public static final DeferredHolder<Item, Item> INFERIUM_ESSENCE = register("inferium_essence", () -> new EssenceItem(CropTier.ONE));
-    public static final DeferredHolder<Item, Item> PRUDENTIUM_ESSENCE = register("prudentium_essence", () -> new EssenceItem(CropTier.TWO));
-    public static final DeferredHolder<Item, Item> TERTIUM_ESSENCE = register("tertium_essence", () -> new EssenceItem(CropTier.THREE));
-    public static final DeferredHolder<Item, Item> IMPERIUM_ESSENCE = register("imperium_essence", () -> new EssenceItem(CropTier.FOUR));
-    public static final DeferredHolder<Item, Item> SUPREMIUM_ESSENCE = register("supremium_essence", () -> new EssenceItem(CropTier.FIVE));
+    public static final DeferredHolder<Item, Item> INFERIUM_ESSENCE = register("inferium_essence", id -> new EssenceItem(id, CropTier.ONE));
+    public static final DeferredHolder<Item, Item> PRUDENTIUM_ESSENCE = register("prudentium_essence", id -> new EssenceItem(id, CropTier.TWO));
+    public static final DeferredHolder<Item, Item> TERTIUM_ESSENCE = register("tertium_essence", id -> new EssenceItem(id, CropTier.THREE));
+    public static final DeferredHolder<Item, Item> IMPERIUM_ESSENCE = register("imperium_essence", id -> new EssenceItem(id, CropTier.FOUR));
+    public static final DeferredHolder<Item, Item> SUPREMIUM_ESSENCE = register("supremium_essence", id -> new EssenceItem(id, CropTier.FIVE));
     public static final DeferredHolder<Item, Item> AWAKENED_SUPREMIUM_ESSENCE = register("awakened_supremium_essence");
     public static final DeferredHolder<Item, Item> PROSPERITY_INGOT = register("prosperity_ingot");
     public static final DeferredHolder<Item, Item> INFERIUM_INGOT = register("inferium_ingot");
@@ -94,10 +93,10 @@ public final class ModItems {
     public static final DeferredHolder<Item, Item> SOUL_DUST = register("soul_dust");
     public static final DeferredHolder<Item, Item> SOULIUM_DUST = register("soulium_dust");
     public static final DeferredHolder<Item, Item> COGNIZANT_DUST = register("cognizant_dust");
-    public static final DeferredHolder<Item, Item> SOULIUM_DAGGER = register("soulium_dagger", () -> new SouliumDaggerItem(ModItemTier.SOULIUM, SouliumDaggerItem.DaggerType.BASIC));
-    public static final DeferredHolder<Item, Item> PASSIVE_SOULIUM_DAGGER = register("passive_soulium_dagger", () -> new SouliumDaggerItem(ModItemTier.SOULIUM, SouliumDaggerItem.DaggerType.PASSIVE));
-    public static final DeferredHolder<Item, Item> HOSTILE_SOULIUM_DAGGER = register("hostile_soulium_dagger", () -> new SouliumDaggerItem(ModItemTier.SOULIUM, SouliumDaggerItem.DaggerType.HOSTILE));
-    public static final DeferredHolder<Item, Item> CREATIVE_SOULIUM_DAGGER = register("creative_soulium_dagger", () -> new SouliumDaggerItem(ModItemTier.SOULIUM, SouliumDaggerItem.DaggerType.CREATIVE));
+    public static final DeferredHolder<Item, Item> SOULIUM_DAGGER = register("soulium_dagger", id -> new SouliumDaggerItem(id, ModToolMaterials.SOULIUM, SouliumDaggerItem.DaggerType.BASIC));
+    public static final DeferredHolder<Item, Item> PASSIVE_SOULIUM_DAGGER = register("passive_soulium_dagger", id -> new SouliumDaggerItem(id, ModToolMaterials.SOULIUM, SouliumDaggerItem.DaggerType.PASSIVE));
+    public static final DeferredHolder<Item, Item> HOSTILE_SOULIUM_DAGGER = register("hostile_soulium_dagger", id -> new SouliumDaggerItem(id, ModToolMaterials.SOULIUM, SouliumDaggerItem.DaggerType.HOSTILE));
+    public static final DeferredHolder<Item, Item> CREATIVE_SOULIUM_DAGGER = register("creative_soulium_dagger", id -> new SouliumDaggerItem(id, ModToolMaterials.SOULIUM, SouliumDaggerItem.DaggerType.CREATIVE));
     public static final DeferredHolder<Item, Item> INFUSION_CRYSTAL = register("infusion_crystal", InfusionCrystalItem::new);
     public static final DeferredHolder<Item, Item> MASTER_INFUSION_CRYSTAL = register("master_infusion_crystal", MasterInfusionCrystalItem::new);
     public static final DeferredHolder<Item, Item> FERTILIZED_ESSENCE = register("fertilized_essence", FertilizedEssenceItem::new);
@@ -132,84 +131,84 @@ public final class ModItems {
     public static final DeferredHolder<Item, Item> SUPREMIUM_UPGRADE = register("supremium_upgrade", () -> new MachineUpgradeItem(MachineUpgradeTier.SUPREMIUM));
     public static final DeferredHolder<Item, Item> AWAKENED_SUPREMIUM_UPGRADE = register("awakened_supremium_upgrade", () -> new MachineUpgradeItem(MachineUpgradeTier.AWAKENED_SUPREMIUM));
 
-    public static final DeferredHolder<Item, Item> INFERIUM_SWORD = registerGear("inferium_sword", () -> new EssenceSwordItem(ModItemTier.INFERIUM, 1, 1));
-    public static final DeferredHolder<Item, Item> INFERIUM_PICKAXE = registerGear("inferium_pickaxe", () -> new EssencePickaxeItem(ModItemTier.INFERIUM, 1, 1));
-    public static final DeferredHolder<Item, Item> INFERIUM_SHOVEL = registerGear("inferium_shovel", () -> new EssenceShovelItem(ModItemTier.INFERIUM, 1, 1));
-    public static final DeferredHolder<Item, Item> INFERIUM_AXE = registerGear("inferium_axe", () -> new EssenceAxeItem(ModItemTier.INFERIUM, 1, 1));
-    public static final DeferredHolder<Item, Item> INFERIUM_HOE = registerGear("inferium_hoe", () -> new EssenceHoeItem(ModItemTier.INFERIUM, 1, 1));
+    public static final DeferredHolder<Item, Item> INFERIUM_SWORD = registerGear("inferium_sword", () -> new EssenceSwordItem(ModToolMaterials.INFERIUM, 1, 1));
+    public static final DeferredHolder<Item, Item> INFERIUM_PICKAXE = registerGear("inferium_pickaxe", () -> new EssencePickaxeItem(ModToolMaterials.INFERIUM, 1, 1));
+    public static final DeferredHolder<Item, Item> INFERIUM_SHOVEL = registerGear("inferium_shovel", () -> new EssenceShovelItem(ModToolMaterials.INFERIUM, 1, 1));
+    public static final DeferredHolder<Item, Item> INFERIUM_AXE = registerGear("inferium_axe", () -> new EssenceAxeItem(ModToolMaterials.INFERIUM, 1, 1));
+    public static final DeferredHolder<Item, Item> INFERIUM_HOE = registerGear("inferium_hoe", () -> new EssenceHoeItem(ModToolMaterials.INFERIUM, 1, 1));
     public static final DeferredHolder<Item, Item> INFERIUM_STAFF = registerGear("inferium_staff", () -> new EssenceStaffItem(1, 1));
     public static final DeferredHolder<Item, Item> INFERIUM_WATERING_CAN = registerGear("inferium_watering_can", () -> new EssenceWateringCanItem(3, 0.25, CropTier.ONE.getTextColor()));
-    public static final DeferredHolder<Item, Item> INFERIUM_BOW = registerGear("inferium_bow", () -> new EssenceBowItem(ModItemTier.INFERIUM, 1, 1, 1.1F, 1.0F));
-    public static final DeferredHolder<Item, Item> INFERIUM_CROSSBOW = registerGear("inferium_crossbow", () -> new EssenceCrossbowItem(ModItemTier.INFERIUM, 1, 1, 1.1F, 1.0F));
-    public static final DeferredHolder<Item, Item> INFERIUM_SHEARS = registerGear("inferium_shears", () -> new EssenceShearsItem(ModItemTier.INFERIUM, 1, 1));
-    public static final DeferredHolder<Item, Item> INFERIUM_FISHING_ROD = registerGear("inferium_fishing_rod", () -> new EssenceFishingRodItem(ModItemTier.INFERIUM, 1, 1));
-    public static final DeferredHolder<Item, Item> INFERIUM_SICKLE = registerGear("inferium_sickle", () -> new EssenceSickleItem(ModItemTier.INFERIUM, 3, CropTier.ONE.getTextColor(), 1, 1));
-    public static final DeferredHolder<Item, Item> INFERIUM_SCYTHE = registerGear("inferium_scythe", () -> new EssenceScytheItem(ModItemTier.INFERIUM, 3, CropTier.ONE.getTextColor(), 1, 1));
-    public static final DeferredHolder<Item, Item> PRUDENTIUM_SWORD = registerGear("prudentium_sword", () -> new EssenceSwordItem(ModItemTier.PRUDENTIUM, 2, 1));
-    public static final DeferredHolder<Item, Item> PRUDENTIUM_PICKAXE = registerGear("prudentium_pickaxe", () -> new EssencePickaxeItem(ModItemTier.PRUDENTIUM, 2, 1));
-    public static final DeferredHolder<Item, Item> PRUDENTIUM_SHOVEL = registerGear("prudentium_shovel", () -> new EssenceShovelItem(ModItemTier.PRUDENTIUM, 2, 1));
-    public static final DeferredHolder<Item, Item> PRUDENTIUM_AXE = registerGear("prudentium_axe", () -> new EssenceAxeItem(ModItemTier.PRUDENTIUM, 2, 1));
-    public static final DeferredHolder<Item, Item> PRUDENTIUM_HOE = registerGear("prudentium_hoe", () -> new EssenceHoeItem(ModItemTier.PRUDENTIUM, 2, 1));
+    public static final DeferredHolder<Item, Item> INFERIUM_BOW = registerGear("inferium_bow", () -> new EssenceBowItem(ModToolMaterials.INFERIUM, 1, 1, 1.1F, 1.0F));
+    public static final DeferredHolder<Item, Item> INFERIUM_CROSSBOW = registerGear("inferium_crossbow", () -> new EssenceCrossbowItem(ModToolMaterials.INFERIUM, 1, 1, 1.1F, 1.0F));
+    public static final DeferredHolder<Item, Item> INFERIUM_SHEARS = registerGear("inferium_shears", () -> new EssenceShearsItem(ModToolMaterials.INFERIUM, 1, 1));
+    public static final DeferredHolder<Item, Item> INFERIUM_FISHING_ROD = registerGear("inferium_fishing_rod", () -> new EssenceFishingRodItem(ModToolMaterials.INFERIUM, 1, 1));
+    public static final DeferredHolder<Item, Item> INFERIUM_SICKLE = registerGear("inferium_sickle", () -> new EssenceSickleItem(ModToolMaterials.INFERIUM, 3, CropTier.ONE.getTextColor(), 1, 1));
+    public static final DeferredHolder<Item, Item> INFERIUM_SCYTHE = registerGear("inferium_scythe", () -> new EssenceScytheItem(ModToolMaterials.INFERIUM, 3, CropTier.ONE.getTextColor(), 1, 1));
+    public static final DeferredHolder<Item, Item> PRUDENTIUM_SWORD = registerGear("prudentium_sword", () -> new EssenceSwordItem(ModToolMaterials.PRUDENTIUM, 2, 1));
+    public static final DeferredHolder<Item, Item> PRUDENTIUM_PICKAXE = registerGear("prudentium_pickaxe", () -> new EssencePickaxeItem(ModToolMaterials.PRUDENTIUM, 2, 1));
+    public static final DeferredHolder<Item, Item> PRUDENTIUM_SHOVEL = registerGear("prudentium_shovel", () -> new EssenceShovelItem(ModToolMaterials.PRUDENTIUM, 2, 1));
+    public static final DeferredHolder<Item, Item> PRUDENTIUM_AXE = registerGear("prudentium_axe", () -> new EssenceAxeItem(ModToolMaterials.PRUDENTIUM, 2, 1));
+    public static final DeferredHolder<Item, Item> PRUDENTIUM_HOE = registerGear("prudentium_hoe", () -> new EssenceHoeItem(ModToolMaterials.PRUDENTIUM, 2, 1));
     public static final DeferredHolder<Item, Item> PRUDENTIUM_STAFF = registerGear("prudentium_staff", () -> new EssenceStaffItem(2, 1));
     public static final DeferredHolder<Item, Item> PRUDENTIUM_WATERING_CAN = registerGear("prudentium_watering_can", () -> new EssenceWateringCanItem(5, 0.30, CropTier.TWO.getTextColor()));
-    public static final DeferredHolder<Item, Item> PRUDENTIUM_BOW = registerGear("prudentium_bow", () -> new EssenceBowItem(ModItemTier.PRUDENTIUM, 2, 1, 1.2F, 1.5F));
-    public static final DeferredHolder<Item, Item> PRUDENTIUM_CROSSBOW = registerGear("prudentium_crossbow", () -> new EssenceCrossbowItem(ModItemTier.PRUDENTIUM, 2, 1, 1.2F, 1.5F));
-    public static final DeferredHolder<Item, Item> PRUDENTIUM_SHEARS = registerGear("prudentium_shears", () -> new EssenceShearsItem(ModItemTier.PRUDENTIUM, 2, 1));
-    public static final DeferredHolder<Item, Item> PRUDENTIUM_FISHING_ROD = registerGear("prudentium_fishing_rod", () -> new EssenceFishingRodItem(ModItemTier.PRUDENTIUM, 2, 1));
-    public static final DeferredHolder<Item, Item> PRUDENTIUM_SICKLE = registerGear("prudentium_sickle", () -> new EssenceSickleItem(ModItemTier.PRUDENTIUM, 4, CropTier.TWO.getTextColor(), 2, 1));
-    public static final DeferredHolder<Item, Item> PRUDENTIUM_SCYTHE = registerGear("prudentium_scythe", () -> new EssenceScytheItem(ModItemTier.PRUDENTIUM, 4, CropTier.TWO.getTextColor(), 2, 1));
-    public static final DeferredHolder<Item, Item> TERTIUM_SWORD = registerGear("tertium_sword", () -> new EssenceSwordItem(ModItemTier.TERTIUM, 3, 1));
-    public static final DeferredHolder<Item, Item> TERTIUM_PICKAXE = registerGear("tertium_pickaxe", () -> new EssencePickaxeItem(ModItemTier.TERTIUM, 3, 1));
-    public static final DeferredHolder<Item, Item> TERTIUM_SHOVEL = registerGear("tertium_shovel", () -> new EssenceShovelItem(ModItemTier.TERTIUM, 3, 1));
-    public static final DeferredHolder<Item, Item> TERTIUM_AXE = registerGear("tertium_axe", () -> new EssenceAxeItem(ModItemTier.TERTIUM, 3, 1));
-    public static final DeferredHolder<Item, Item> TERTIUM_HOE = registerGear("tertium_hoe", () -> new EssenceHoeItem(ModItemTier.TERTIUM, 3, 1));
+    public static final DeferredHolder<Item, Item> PRUDENTIUM_BOW = registerGear("prudentium_bow", () -> new EssenceBowItem(ModToolMaterials.PRUDENTIUM, 2, 1, 1.2F, 1.5F));
+    public static final DeferredHolder<Item, Item> PRUDENTIUM_CROSSBOW = registerGear("prudentium_crossbow", () -> new EssenceCrossbowItem(ModToolMaterials.PRUDENTIUM, 2, 1, 1.2F, 1.5F));
+    public static final DeferredHolder<Item, Item> PRUDENTIUM_SHEARS = registerGear("prudentium_shears", () -> new EssenceShearsItem(ModToolMaterials.PRUDENTIUM, 2, 1));
+    public static final DeferredHolder<Item, Item> PRUDENTIUM_FISHING_ROD = registerGear("prudentium_fishing_rod", () -> new EssenceFishingRodItem(ModToolMaterials.PRUDENTIUM, 2, 1));
+    public static final DeferredHolder<Item, Item> PRUDENTIUM_SICKLE = registerGear("prudentium_sickle", () -> new EssenceSickleItem(ModToolMaterials.PRUDENTIUM, 4, CropTier.TWO.getTextColor(), 2, 1));
+    public static final DeferredHolder<Item, Item> PRUDENTIUM_SCYTHE = registerGear("prudentium_scythe", () -> new EssenceScytheItem(ModToolMaterials.PRUDENTIUM, 4, CropTier.TWO.getTextColor(), 2, 1));
+    public static final DeferredHolder<Item, Item> TERTIUM_SWORD = registerGear("tertium_sword", () -> new EssenceSwordItem(ModToolMaterials.TERTIUM, 3, 1));
+    public static final DeferredHolder<Item, Item> TERTIUM_PICKAXE = registerGear("tertium_pickaxe", () -> new EssencePickaxeItem(ModToolMaterials.TERTIUM, 3, 1));
+    public static final DeferredHolder<Item, Item> TERTIUM_SHOVEL = registerGear("tertium_shovel", () -> new EssenceShovelItem(ModToolMaterials.TERTIUM, 3, 1));
+    public static final DeferredHolder<Item, Item> TERTIUM_AXE = registerGear("tertium_axe", () -> new EssenceAxeItem(ModToolMaterials.TERTIUM, 3, 1));
+    public static final DeferredHolder<Item, Item> TERTIUM_HOE = registerGear("tertium_hoe", () -> new EssenceHoeItem(ModToolMaterials.TERTIUM, 3, 1));
     public static final DeferredHolder<Item, Item> TERTIUM_STAFF = registerGear("tertium_staff", () -> new EssenceStaffItem(3, 1));
     public static final DeferredHolder<Item, Item> TERTIUM_WATERING_CAN = registerGear("tertium_watering_can", () -> new EssenceWateringCanItem(7, 0.35, CropTier.THREE.getTextColor()));
-    public static final DeferredHolder<Item, Item> TERTIUM_BOW = registerGear("tertium_bow", () -> new EssenceBowItem(ModItemTier.TERTIUM, 3, 1, 1.35F, 2.0F));
-    public static final DeferredHolder<Item, Item> TERTIUM_CROSSBOW = registerGear("tertium_crossbow", () -> new EssenceCrossbowItem(ModItemTier.TERTIUM, 3, 1, 1.35F, 2.0F));
-    public static final DeferredHolder<Item, Item> TERTIUM_SHEARS = registerGear("tertium_shears", () -> new EssenceShearsItem(ModItemTier.TERTIUM, 3, 1));
-    public static final DeferredHolder<Item, Item> TERTIUM_FISHING_ROD = registerGear("tertium_fishing_rod", () -> new EssenceFishingRodItem(ModItemTier.TERTIUM, 3, 1));
-    public static final DeferredHolder<Item, Item> TERTIUM_SICKLE = registerGear("tertium_sickle", () -> new EssenceSickleItem(ModItemTier.TERTIUM, 5, CropTier.THREE.getTextColor(), 3, 1));
-    public static final DeferredHolder<Item, Item> TERTIUM_SCYTHE = registerGear("tertium_scythe", () -> new EssenceScytheItem(ModItemTier.TERTIUM, 5, CropTier.THREE.getTextColor(), 3, 1));
-    public static final DeferredHolder<Item, Item> IMPERIUM_SWORD = registerGear("imperium_sword", () -> new EssenceSwordItem(ModItemTier.IMPERIUM, 4, 1));
-    public static final DeferredHolder<Item, Item> IMPERIUM_PICKAXE = registerGear("imperium_pickaxe", () -> new EssencePickaxeItem(ModItemTier.IMPERIUM, 4, 1));
-    public static final DeferredHolder<Item, Item> IMPERIUM_SHOVEL = registerGear("imperium_shovel", () -> new EssenceShovelItem(ModItemTier.IMPERIUM, 4, 1));
-    public static final DeferredHolder<Item, Item> IMPERIUM_AXE = registerGear("imperium_axe", () -> new EssenceAxeItem(ModItemTier.IMPERIUM, 4, 1));
-    public static final DeferredHolder<Item, Item> IMPERIUM_HOE = registerGear("imperium_hoe", () -> new EssenceHoeItem(ModItemTier.IMPERIUM, 4, 1));
+    public static final DeferredHolder<Item, Item> TERTIUM_BOW = registerGear("tertium_bow", () -> new EssenceBowItem(ModToolMaterials.TERTIUM, 3, 1, 1.35F, 2.0F));
+    public static final DeferredHolder<Item, Item> TERTIUM_CROSSBOW = registerGear("tertium_crossbow", () -> new EssenceCrossbowItem(ModToolMaterials.TERTIUM, 3, 1, 1.35F, 2.0F));
+    public static final DeferredHolder<Item, Item> TERTIUM_SHEARS = registerGear("tertium_shears", () -> new EssenceShearsItem(ModToolMaterials.TERTIUM, 3, 1));
+    public static final DeferredHolder<Item, Item> TERTIUM_FISHING_ROD = registerGear("tertium_fishing_rod", () -> new EssenceFishingRodItem(ModToolMaterials.TERTIUM, 3, 1));
+    public static final DeferredHolder<Item, Item> TERTIUM_SICKLE = registerGear("tertium_sickle", () -> new EssenceSickleItem(ModToolMaterials.TERTIUM, 5, CropTier.THREE.getTextColor(), 3, 1));
+    public static final DeferredHolder<Item, Item> TERTIUM_SCYTHE = registerGear("tertium_scythe", () -> new EssenceScytheItem(ModToolMaterials.TERTIUM, 5, CropTier.THREE.getTextColor(), 3, 1));
+    public static final DeferredHolder<Item, Item> IMPERIUM_SWORD = registerGear("imperium_sword", () -> new EssenceSwordItem(ModToolMaterials.IMPERIUM, 4, 1));
+    public static final DeferredHolder<Item, Item> IMPERIUM_PICKAXE = registerGear("imperium_pickaxe", () -> new EssencePickaxeItem(ModToolMaterials.IMPERIUM, 4, 1));
+    public static final DeferredHolder<Item, Item> IMPERIUM_SHOVEL = registerGear("imperium_shovel", () -> new EssenceShovelItem(ModToolMaterials.IMPERIUM, 4, 1));
+    public static final DeferredHolder<Item, Item> IMPERIUM_AXE = registerGear("imperium_axe", () -> new EssenceAxeItem(ModToolMaterials.IMPERIUM, 4, 1));
+    public static final DeferredHolder<Item, Item> IMPERIUM_HOE = registerGear("imperium_hoe", () -> new EssenceHoeItem(ModToolMaterials.IMPERIUM, 4, 1));
     public static final DeferredHolder<Item, Item> IMPERIUM_STAFF = registerGear("imperium_staff", () -> new EssenceStaffItem(4, 1));
     public static final DeferredHolder<Item, Item> IMPERIUM_WATERING_CAN = registerGear("imperium_watering_can", () -> new EssenceWateringCanItem(9, 0.40, CropTier.FOUR.getTextColor()));
-    public static final DeferredHolder<Item, Item> IMPERIUM_BOW = registerGear("imperium_bow", () -> new EssenceBowItem(ModItemTier.IMPERIUM, 4, 1, 1.55F, 2.5F));
-    public static final DeferredHolder<Item, Item> IMPERIUM_CROSSBOW = registerGear("imperium_crossbow", () -> new EssenceCrossbowItem(ModItemTier.IMPERIUM, 4, 1, 1.55F, 2.5F));
-    public static final DeferredHolder<Item, Item> IMPERIUM_SHEARS = registerGear("imperium_shears", () -> new EssenceShearsItem(ModItemTier.IMPERIUM, 4, 1));
-    public static final DeferredHolder<Item, Item> IMPERIUM_FISHING_ROD = registerGear("imperium_fishing_rod", () -> new EssenceFishingRodItem(ModItemTier.IMPERIUM, 4, 1));
-    public static final DeferredHolder<Item, Item> IMPERIUM_SICKLE = registerGear("imperium_sickle", () -> new EssenceSickleItem(ModItemTier.IMPERIUM, 6, CropTier.FOUR.getTextColor(), 4, 1));
-    public static final DeferredHolder<Item, Item> IMPERIUM_SCYTHE = registerGear("imperium_scythe", () -> new EssenceScytheItem(ModItemTier.IMPERIUM, 6, CropTier.FOUR.getTextColor(), 4, 1));
-    public static final DeferredHolder<Item, Item> SUPREMIUM_SWORD = registerGear("supremium_sword", () -> new EssenceSwordItem(ModItemTier.SUPREMIUM, 5, 1));
-    public static final DeferredHolder<Item, Item> SUPREMIUM_PICKAXE = registerGear("supremium_pickaxe", () -> new EssencePickaxeItem(ModItemTier.SUPREMIUM, 5, 1));
-    public static final DeferredHolder<Item, Item> SUPREMIUM_SHOVEL = registerGear("supremium_shovel", () -> new EssenceShovelItem(ModItemTier.SUPREMIUM, 5, 1));
-    public static final DeferredHolder<Item, Item> SUPREMIUM_AXE = registerGear("supremium_axe", () -> new EssenceAxeItem(ModItemTier.SUPREMIUM, 5, 1));
-    public static final DeferredHolder<Item, Item> SUPREMIUM_HOE = registerGear("supremium_hoe", () -> new EssenceHoeItem(ModItemTier.SUPREMIUM, 5, 1));
+    public static final DeferredHolder<Item, Item> IMPERIUM_BOW = registerGear("imperium_bow", () -> new EssenceBowItem(ModToolMaterials.IMPERIUM, 4, 1, 1.55F, 2.5F));
+    public static final DeferredHolder<Item, Item> IMPERIUM_CROSSBOW = registerGear("imperium_crossbow", () -> new EssenceCrossbowItem(ModToolMaterials.IMPERIUM, 4, 1, 1.55F, 2.5F));
+    public static final DeferredHolder<Item, Item> IMPERIUM_SHEARS = registerGear("imperium_shears", () -> new EssenceShearsItem(ModToolMaterials.IMPERIUM, 4, 1));
+    public static final DeferredHolder<Item, Item> IMPERIUM_FISHING_ROD = registerGear("imperium_fishing_rod", () -> new EssenceFishingRodItem(ModToolMaterials.IMPERIUM, 4, 1));
+    public static final DeferredHolder<Item, Item> IMPERIUM_SICKLE = registerGear("imperium_sickle", () -> new EssenceSickleItem(ModToolMaterials.IMPERIUM, 6, CropTier.FOUR.getTextColor(), 4, 1));
+    public static final DeferredHolder<Item, Item> IMPERIUM_SCYTHE = registerGear("imperium_scythe", () -> new EssenceScytheItem(ModToolMaterials.IMPERIUM, 6, CropTier.FOUR.getTextColor(), 4, 1));
+    public static final DeferredHolder<Item, Item> SUPREMIUM_SWORD = registerGear("supremium_sword", () -> new EssenceSwordItem(ModToolMaterials.SUPREMIUM, 5, 1));
+    public static final DeferredHolder<Item, Item> SUPREMIUM_PICKAXE = registerGear("supremium_pickaxe", () -> new EssencePickaxeItem(ModToolMaterials.SUPREMIUM, 5, 1));
+    public static final DeferredHolder<Item, Item> SUPREMIUM_SHOVEL = registerGear("supremium_shovel", () -> new EssenceShovelItem(ModToolMaterials.SUPREMIUM, 5, 1));
+    public static final DeferredHolder<Item, Item> SUPREMIUM_AXE = registerGear("supremium_axe", () -> new EssenceAxeItem(ModToolMaterials.SUPREMIUM, 5, 1));
+    public static final DeferredHolder<Item, Item> SUPREMIUM_HOE = registerGear("supremium_hoe", () -> new EssenceHoeItem(ModToolMaterials.SUPREMIUM, 5, 1));
     public static final DeferredHolder<Item, Item> SUPREMIUM_STAFF = registerGear("supremium_staff", () -> new EssenceStaffItem(5, 1));
     public static final DeferredHolder<Item, Item> SUPREMIUM_WATERING_CAN = registerGear("supremium_watering_can", () -> new EssenceWateringCanItem(11, 0.45, CropTier.FIVE.getTextColor()));
-    public static final DeferredHolder<Item, Item> SUPREMIUM_BOW = registerGear("supremium_bow", () -> new EssenceBowItem(ModItemTier.SUPREMIUM, 5, 1, 1.80F, 3.0F));
-    public static final DeferredHolder<Item, Item> SUPREMIUM_CROSSBOW = registerGear("supremium_crossbow", () -> new EssenceCrossbowItem(ModItemTier.SUPREMIUM, 5, 1, 1.80F, 3.0F));
-    public static final DeferredHolder<Item, Item> SUPREMIUM_SHEARS = registerGear("supremium_shears", () -> new EssenceShearsItem(ModItemTier.SUPREMIUM, 5, 1));
-    public static final DeferredHolder<Item, Item> SUPREMIUM_FISHING_ROD = registerGear("supremium_fishing_rod", () -> new EssenceFishingRodItem(ModItemTier.SUPREMIUM, 5, 1));
-    public static final DeferredHolder<Item, Item> SUPREMIUM_SICKLE = registerGear("supremium_sickle", () -> new EssenceSickleItem(ModItemTier.SUPREMIUM, 7, CropTier.FIVE.getTextColor(), 5, 1));
-    public static final DeferredHolder<Item, Item> SUPREMIUM_SCYTHE = registerGear("supremium_scythe", () -> new EssenceScytheItem(ModItemTier.SUPREMIUM, 7, CropTier.FIVE.getTextColor(), 5, 1));
-    public static final DeferredHolder<Item, Item> AWAKENED_SUPREMIUM_SWORD = registerGear("awakened_supremium_sword", () -> new EssenceSwordItem(ModItemTier.AWAKENED_SUPREMIUM, 5, 2));
-    public static final DeferredHolder<Item, Item> AWAKENED_SUPREMIUM_PICKAXE = registerGear("awakened_supremium_pickaxe", () -> new EssencePickaxeItem(ModItemTier.AWAKENED_SUPREMIUM, 5, 2));
-    public static final DeferredHolder<Item, Item> AWAKENED_SUPREMIUM_SHOVEL = registerGear("awakened_supremium_shovel", () -> new EssenceShovelItem(ModItemTier.AWAKENED_SUPREMIUM, 5, 2));
-    public static final DeferredHolder<Item, Item> AWAKENED_SUPREMIUM_AXE = registerGear("awakened_supremium_axe", () -> new EssenceAxeItem(ModItemTier.AWAKENED_SUPREMIUM, 5, 2));
-    public static final DeferredHolder<Item, Item> AWAKENED_SUPREMIUM_HOE = registerGear("awakened_supremium_hoe", () -> new EssenceHoeItem(ModItemTier.AWAKENED_SUPREMIUM, 5, 2));
+    public static final DeferredHolder<Item, Item> SUPREMIUM_BOW = registerGear("supremium_bow", () -> new EssenceBowItem(ModToolMaterials.SUPREMIUM, 5, 1, 1.80F, 3.0F));
+    public static final DeferredHolder<Item, Item> SUPREMIUM_CROSSBOW = registerGear("supremium_crossbow", () -> new EssenceCrossbowItem(ModToolMaterials.SUPREMIUM, 5, 1, 1.80F, 3.0F));
+    public static final DeferredHolder<Item, Item> SUPREMIUM_SHEARS = registerGear("supremium_shears", () -> new EssenceShearsItem(ModToolMaterials.SUPREMIUM, 5, 1));
+    public static final DeferredHolder<Item, Item> SUPREMIUM_FISHING_ROD = registerGear("supremium_fishing_rod", () -> new EssenceFishingRodItem(ModToolMaterials.SUPREMIUM, 5, 1));
+    public static final DeferredHolder<Item, Item> SUPREMIUM_SICKLE = registerGear("supremium_sickle", () -> new EssenceSickleItem(ModToolMaterials.SUPREMIUM, 7, CropTier.FIVE.getTextColor(), 5, 1));
+    public static final DeferredHolder<Item, Item> SUPREMIUM_SCYTHE = registerGear("supremium_scythe", () -> new EssenceScytheItem(ModToolMaterials.SUPREMIUM, 7, CropTier.FIVE.getTextColor(), 5, 1));
+    public static final DeferredHolder<Item, Item> AWAKENED_SUPREMIUM_SWORD = registerGear("awakened_supremium_sword", () -> new EssenceSwordItem(ModToolMaterials.AWAKENED_SUPREMIUM, 5, 2));
+    public static final DeferredHolder<Item, Item> AWAKENED_SUPREMIUM_PICKAXE = registerGear("awakened_supremium_pickaxe", () -> new EssencePickaxeItem(ModToolMaterials.AWAKENED_SUPREMIUM, 5, 2));
+    public static final DeferredHolder<Item, Item> AWAKENED_SUPREMIUM_SHOVEL = registerGear("awakened_supremium_shovel", () -> new EssenceShovelItem(ModToolMaterials.AWAKENED_SUPREMIUM, 5, 2));
+    public static final DeferredHolder<Item, Item> AWAKENED_SUPREMIUM_AXE = registerGear("awakened_supremium_axe", () -> new EssenceAxeItem(ModToolMaterials.AWAKENED_SUPREMIUM, 5, 2));
+    public static final DeferredHolder<Item, Item> AWAKENED_SUPREMIUM_HOE = registerGear("awakened_supremium_hoe", () -> new EssenceHoeItem(ModToolMaterials.AWAKENED_SUPREMIUM, 5, 2));
     public static final DeferredHolder<Item, Item> AWAKENED_SUPREMIUM_STAFF = registerGear("awakened_supremium_staff", () -> new EssenceStaffItem(5, 1));
     public static final DeferredHolder<Item, Item> AWAKENED_SUPREMIUM_WATERING_CAN = registerGear("awakened_supremium_watering_can", () -> new EssenceWateringCanItem(13, 0.50, CropTier.FIVE.getTextColor()));
-    public static final DeferredHolder<Item, Item> AWAKENED_SUPREMIUM_BOW = registerGear("awakened_supremium_bow", () -> new EssenceBowItem(ModItemTier.AWAKENED_SUPREMIUM, 5, 2, 2.10F, 4.0F));
-    public static final DeferredHolder<Item, Item> AWAKENED_SUPREMIUM_CROSSBOW = registerGear("awakened_supremium_crossbow", () -> new EssenceCrossbowItem(ModItemTier.AWAKENED_SUPREMIUM, 5, 2, 2.10F, 4.0F));
-    public static final DeferredHolder<Item, Item> AWAKENED_SUPREMIUM_SHEARS = registerGear("awakened_supremium_shears", () -> new EssenceShearsItem(ModItemTier.AWAKENED_SUPREMIUM, 5, 2));
-    public static final DeferredHolder<Item, Item> AWAKENED_SUPREMIUM_FISHING_ROD = registerGear("awakened_supremium_fishing_rod", () -> new EssenceFishingRodItem(ModItemTier.AWAKENED_SUPREMIUM, 5, 2));
-    public static final DeferredHolder<Item, Item> AWAKENED_SUPREMIUM_SICKLE = registerGear("awakened_supremium_sickle", () -> new EssenceSickleItem(ModItemTier.AWAKENED_SUPREMIUM, 8, CropTier.FIVE.getTextColor(), 5, 2));
-    public static final DeferredHolder<Item, Item> AWAKENED_SUPREMIUM_SCYTHE = registerGear("awakened_supremium_scythe", () -> new EssenceScytheItem(ModItemTier.AWAKENED_SUPREMIUM, 8, CropTier.FIVE.getTextColor(), 5, 2));
+    public static final DeferredHolder<Item, Item> AWAKENED_SUPREMIUM_BOW = registerGear("awakened_supremium_bow", () -> new EssenceBowItem(ModToolMaterials.AWAKENED_SUPREMIUM, 5, 2, 2.10F, 4.0F));
+    public static final DeferredHolder<Item, Item> AWAKENED_SUPREMIUM_CROSSBOW = registerGear("awakened_supremium_crossbow", () -> new EssenceCrossbowItem(ModToolMaterials.AWAKENED_SUPREMIUM, 5, 2, 2.10F, 4.0F));
+    public static final DeferredHolder<Item, Item> AWAKENED_SUPREMIUM_SHEARS = registerGear("awakened_supremium_shears", () -> new EssenceShearsItem(ModToolMaterials.AWAKENED_SUPREMIUM, 5, 2));
+    public static final DeferredHolder<Item, Item> AWAKENED_SUPREMIUM_FISHING_ROD = registerGear("awakened_supremium_fishing_rod", () -> new EssenceFishingRodItem(ModToolMaterials.AWAKENED_SUPREMIUM, 5, 2));
+    public static final DeferredHolder<Item, Item> AWAKENED_SUPREMIUM_SICKLE = registerGear("awakened_supremium_sickle", () -> new EssenceSickleItem(ModToolMaterials.AWAKENED_SUPREMIUM, 8, CropTier.FIVE.getTextColor(), 5, 2));
+    public static final DeferredHolder<Item, Item> AWAKENED_SUPREMIUM_SCYTHE = registerGear("awakened_supremium_scythe", () -> new EssenceScytheItem(ModToolMaterials.AWAKENED_SUPREMIUM, 8, CropTier.FIVE.getTextColor(), 5, 2));
     public static final DeferredHolder<Item, Item> INFERIUM_HELMET = registerGear("inferium_helmet", () -> new EssenceHelmetItem(ModArmorMaterials.INFERIUM, 40, 1, 1));
     public static final DeferredHolder<Item, Item> INFERIUM_CHESTPLATE = registerGear("inferium_chestplate", () -> new EssenceChestplateItem(ModArmorMaterials.INFERIUM, 40, 1, 1));
     public static final DeferredHolder<Item, Item> INFERIUM_LEGGINGS = registerGear("inferium_leggings", () -> new EssenceLeggingsItem(ModArmorMaterials.INFERIUM, 40, 1, 1));
@@ -238,20 +237,19 @@ public final class ModItems {
     @SubscribeEvent
     public void onRegisterItems(RegisterEvent event) {
         event.register(Registries.ITEM, registry -> {
-            BLOCK_ENTRIES.stream().map(Supplier::get).forEach(item -> {
-                var id = BuiltInRegistries.BLOCK.getKey(item.getBlock());
-                registry.register(id, item);
-            });
+            for (var entry : BLOCK_ENTRIES.entrySet()) {
+                registry.register(entry.getKey(), entry.getValue().apply(entry.getKey()));
+            }
 
-            ENTRIES.forEach((reg, item) -> {
-                registry.register(reg.getId(), item.get());
-            });
+            for (var entry : ENTRIES.entrySet()) {
+                registry.register(entry.getKey().getId(), entry.getValue().apply(entry.getKey().getId()));
+            }
 
             CropRegistry.getInstance().onRegisterItems(registry);
 
-            GEAR_ENTRIES.forEach((reg, item) -> {
-                registry.register(reg.getId(), item.get());
-            });
+            for (var entry : GEAR_ENTRIES.entrySet()) {
+                registry.register(entry.getKey().getId(), entry.getValue().apply(entry.getKey().getId()));
+            }
 
             AugmentRegistry.getInstance().onRegisterItems(registry);
         });
@@ -261,17 +259,17 @@ public final class ModItems {
         return register(name, BaseItem::new);
     }
 
-    private static DeferredHolder<Item, Item> register(String name, Supplier<Item> item) {
+    private static DeferredHolder<Item, Item> register(String name, Function<Identifier, Item> item) {
         var id = MysticalAgriculture.resource(name);
         var holder = DeferredHolder.create(Registries.ITEM, id);
         ENTRIES.put(holder, item);
         return holder;
     }
 
-    private static DeferredHolder<Item, Item> registerGear(String name, Supplier<? extends Item> item) {
+    private static DeferredHolder<Item, Item> registerGear(String name, Function<Identifier, Item> item) {
         var id = MysticalAgriculture.resource(name);
         var holder = DeferredHolder.create(Registries.ITEM, id);
-        GEAR_ENTRIES.put(holder, item::get);
+        GEAR_ENTRIES.put(holder, item);
         return holder;
     }
 }

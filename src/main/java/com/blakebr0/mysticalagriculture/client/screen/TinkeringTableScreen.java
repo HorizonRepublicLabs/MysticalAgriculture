@@ -4,7 +4,8 @@ import com.blakebr0.cucumber.client.screen.BaseContainerScreen;
 import com.blakebr0.cucumber.iface.IToggleableSlot;
 import com.blakebr0.mysticalagriculture.MysticalAgriculture;
 import com.blakebr0.mysticalagriculture.container.TinkeringTableContainer;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
@@ -17,23 +18,21 @@ public class TinkeringTableScreen extends BaseContainerScreen<TinkeringTableCont
     }
 
     @Override
-    protected void renderLabels(GuiGraphics gfx, int mouseX, int mouseY) {
-        var title = this.getTitle().getString();
-
-        gfx.drawString(this.font, title, (this.imageWidth / 2 - this.font.width(title) / 2), 6, 4210752, false);
-        gfx.drawString(this.font, this.playerInventoryTitle, 8, (this.imageHeight - 96 + 2), 4210752, false);
+    protected void extractLabels(GuiGraphicsExtractor gfx, int mouseX, int mouseY) {
+        gfx.text(this.font, this.title, (this.imageWidth / 2 - this.font.width(this.title) / 2), 6, 4210752, false);
+        gfx.text(this.font, this.playerInventoryTitle, 8, (this.imageHeight - 96 + 2), 4210752, false);
     }
 
     @Override
-    protected void renderBg(GuiGraphics gfx, float partialTicks, int mouseX, int mouseY) {
-        super.renderBg(gfx, partialTicks, mouseX, mouseY);
+    public void extractBackground(GuiGraphicsExtractor gfx, int mouseX, int mouseY, float a) {
+        super.extractBackground(gfx, mouseX, mouseY, a);
 
         int x = this.getGuiLeft();
         int y = this.getGuiTop();
 
         for (var slot : this.menu.slots) {
             if (slot.isActive() && slot instanceof IToggleableSlot) {
-                gfx.blit(BACKGROUND, x + slot.x, y + slot.y, 8, 115, 16, 16);
+                gfx.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, x + slot.x, y + slot.y, 8, 115, 16, 16, 256, 256);
             }
         }
     }

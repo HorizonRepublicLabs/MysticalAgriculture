@@ -9,22 +9,20 @@ import com.blakebr0.mysticalagriculture.item.MachineUpgradeItem;
 import com.blakebr0.mysticalagriculture.tileentity.EssenceFurnaceTileEntity;
 import com.blakebr0.mysticalagriculture.util.RecipeIngredientCache;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.neoforged.neoforge.items.SlotItemHandler;
 
 public class EssenceFurnaceContainer extends BaseContainerMenu {
-    private EssenceFurnaceContainer(MenuType<?> type, int id, Inventory playerInventory, BlockPos pos) {
-        this(type, id, playerInventory, EssenceFurnaceTileEntity.createInventoryHandler(), new MachineUpgradeItemStackHandler(), pos);
+    public EssenceFurnaceContainer(int id, Inventory playerInventory, BlockPos pos) {
+        this(id, playerInventory, EssenceFurnaceTileEntity.createInventoryHandler(), new MachineUpgradeItemStackHandler(), pos);
     }
 
-    private EssenceFurnaceContainer(MenuType<?> type, int id, Inventory playerInventory, CItemStacksHandler inventory, MachineUpgradeItemStackHandler upgradeInventory, BlockPos pos) {
-        super(type, id, pos);
+    public EssenceFurnaceContainer(int id, Inventory playerInventory, CItemStacksHandler inventory, MachineUpgradeItemStackHandler upgradeInventory, BlockPos pos) {
+        super(ModMenuTypes.FURNACE.get(), id, pos);
 
         this.addSlot(new SlotItemHandler(upgradeInventory, 0, 152, 9));
 
@@ -90,13 +88,5 @@ public class EssenceFurnaceContainer extends BaseContainerMenu {
         }
 
         return itemstack;
-    }
-
-    public static EssenceFurnaceContainer create(int windowId, Inventory playerInventory, FriendlyByteBuf buffer) {
-        return new EssenceFurnaceContainer(ModMenuTypes.FURNACE.get(), windowId, playerInventory, buffer.readBlockPos());
-    }
-
-    public static EssenceFurnaceContainer create(int windowId, Inventory playerInventory, CItemStacksHandler inventory, MachineUpgradeItemStackHandler upgradeInventory, BlockPos pos) {
-        return new EssenceFurnaceContainer(ModMenuTypes.FURNACE.get(), windowId, playerInventory, inventory, upgradeInventory, pos);
     }
 }
