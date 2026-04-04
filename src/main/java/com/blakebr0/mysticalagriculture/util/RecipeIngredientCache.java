@@ -50,9 +50,8 @@ public class RecipeIngredientCache {
         }
     }
 
-    // update caches when tags are loaded to prevent issues like #600
     @SubscribeEvent
-    public void onTagsUpdated(TagsUpdatedEvent event) {
+    public void onRecipeManagerLoaded(TagsUpdatedEvent event) {
         if (event.getUpdateCause() == TagsUpdatedEvent.UpdateCause.SERVER_DATA_LOAD) {
             var stopwatch = Stopwatch.createStarted();
 
@@ -101,14 +100,14 @@ public class RecipeIngredientCache {
         INSTANCE.caches.put(type, new HashMap<>());
 
         for (var recipe : RecipeHelper.byType(type)) {
-            for (var ingredient : recipe.value().getIngredients()) {
+            for (var ingredient : recipe.value().placementInfo().ingredients()) {
                 var items = new HashSet<>();
-                for (var stack : ingredient.getItems()) {
-                    var item = stack.getItem();
+                for (var stack : ingredient.getValues()) {
+                    var item = stack.value();
                     if (items.contains(item))
                         continue;
 
-                    var cache = INSTANCE.caches.get(type).computeIfAbsent(item, i -> new ArrayList<>());
+                    var cache = INSTANCE.caches.get(type).computeIfAbsent(item, _ -> new ArrayList<>());
 
                     items.add(item);
                     cache.add(ingredient);

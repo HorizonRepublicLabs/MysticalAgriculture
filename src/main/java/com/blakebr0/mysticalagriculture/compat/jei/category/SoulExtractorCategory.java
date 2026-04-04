@@ -14,15 +14,19 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import mezz.jei.api.recipe.types.IRecipeHolderType;
+import mezz.jei.api.recipe.types.IRecipeType;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
-public class SoulExtractorCategory implements IRecipeCategory<ISoulExtractionRecipe> {
+public class SoulExtractorCategory implements IRecipeCategory<RecipeHolder<ISoulExtractionRecipe>> {
     private static final Identifier TEXTURE = MysticalAgriculture.resource("textures/jei/reprocessor.png");
-    public static final RecipeType<ISoulExtractionRecipe> RECIPE_TYPE = RecipeType.create(MysticalAgriculture.MOD_ID, "soul_extractor", ISoulExtractionRecipe.class);
+    public static final IRecipeHolderType<ISoulExtractionRecipe> RECIPE_TYPE = IRecipeHolderType.create(MysticalAgriculture.resource("soul_extractor"));
 
     private final IDrawable background;
     private final IDrawable icon;
@@ -38,18 +42,23 @@ public class SoulExtractorCategory implements IRecipeCategory<ISoulExtractionRec
     }
 
     @Override
-    public RecipeType<ISoulExtractionRecipe> getRecipeType() {
+    public IRecipeType<RecipeHolder<ISoulExtractionRecipe>> getRecipeType() {
         return RECIPE_TYPE;
     }
 
     @Override
     public Component getTitle() {
-        return Localizable.of("jei.category.mysticalagriculture.soul_extractor").build();
+        return Component.translatable("jei.category.mysticalagriculture.soul_extractor");
     }
 
     @Override
-    public IDrawable getBackground() {
-        return this.background;
+    public int getWidth() {
+        return this.background.getWidth();
+    }
+
+    @Override
+    public int getHeight() {
+        return this.background.getHeight();
     }
 
     @Override
@@ -58,12 +67,12 @@ public class SoulExtractorCategory implements IRecipeCategory<ISoulExtractionRec
     }
 
     @Override
-    public void draw(ISoulExtractionRecipe recipe, IRecipeSlotsView slots, GuiGraphics gfx, double mouseX, double mouseY) {
+    public void draw(ISoulExtractionRecipe recipe, IRecipeSlotsView slots, GuiGraphicsExtractor gfx, double mouseX, double mouseY) {
         this.arrow.draw(gfx, 24, 4);
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, ISoulExtractionRecipe recipe, IFocusGroup focuses) {
+    public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<ISoulExtractionRecipe> recipe, IFocusGroup focuses) {
         var inputs = recipe.getIngredients();
         var output = recipe.getResultItem(RegistryAccess.EMPTY);
 

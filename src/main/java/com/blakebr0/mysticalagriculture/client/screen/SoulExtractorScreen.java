@@ -30,26 +30,14 @@ public class SoulExtractorScreen extends BaseContainerScreen<SoulExtractorContai
         this.tile = this.getTileEntity();
 
         if (this.tile != null) {
-            this.addRenderableWidget(new EnergyBarWidget(x + 7, y + 17, this.tile.getEnergy()));
+            this.addRenderableWidget(new EnergyBarWidget(x + 7, y + 17, this.menu::getEnergyStored, this.menu::getEnergyCapacity));
         }
     }
 
     @Override
     protected void extractLabels(GuiGraphicsExtractor gfx, int mouseX, int mouseY) {
-        gfx.drawString(this.font, this.title, (this.imageWidth / 2 - this.font.width(this.title) / 2), 6, 4210752, false);
-        gfx.drawString(this.font, this.playerInventoryTitle, 8, (this.imageHeight - 96 + 2), 4210752, false);
-
-        // TODO: "temporary" workaround for dynamic energy storage
-        if (this.tile != null) {
-            var tier = this.tile.getMachineTier();
-            var energy = this.tile.getEnergy();
-
-            energy.resetMaxEnergyStorage();
-
-            if (tier != null) {
-                energy.setMaxEnergyStorage(this.tile.getEnergy().getMaxEnergyStored() * tier.getFuelCapacityMultiplier());
-            }
-        }
+        gfx.text(this.font, this.title, (this.imageWidth / 2 - this.font.width(this.title) / 2), 6, 4210752, false);
+        gfx.text(this.font, this.playerInventoryTitle, 8, (this.imageHeight - 96 + 2), 4210752, false);
     }
 
     @Override

@@ -2,7 +2,7 @@ package com.blakebr0.mysticalagriculture.compat.jei.category;
 
 import com.blakebr0.cucumber.util.Localizable;
 import com.blakebr0.mysticalagriculture.MysticalAgriculture;
-import com.blakebr0.mysticalagriculture.compat.jei.CruxRecipe;
+import com.blakebr0.mysticalagriculture.compat.jei.recipe.CruxRecipe;
 import com.blakebr0.mysticalagriculture.init.ModItems;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
@@ -12,13 +12,16 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import mezz.jei.api.recipe.types.IRecipeHolderType;
+import mezz.jei.api.recipe.types.IRecipeType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
 public class CruxCategory implements IRecipeCategory<CruxRecipe> {
     private static final Identifier TEXTURE = MysticalAgriculture.resource("textures/jei/crux.png");
-    public static final RecipeType<CruxRecipe> RECIPE_TYPE = RecipeType.create(MysticalAgriculture.MOD_ID, "crux", CruxRecipe.class);
+    public static final IRecipeType<CruxRecipe> RECIPE_TYPE = IRecipeType.create(MysticalAgriculture.resource("crux"), CruxRecipe.class);
 
     private final IDrawable background;
     private final IDrawable icon;
@@ -29,18 +32,23 @@ public class CruxCategory implements IRecipeCategory<CruxRecipe> {
     }
 
     @Override
-    public RecipeType<CruxRecipe> getRecipeType() {
+    public IRecipeType<CruxRecipe> getRecipeType() {
         return RECIPE_TYPE;
     }
 
     @Override
     public Component getTitle() {
-        return Localizable.of("jei.category.mysticalagriculture.crux").build();
+        return Component.translatable("jei.category.mysticalagriculture.crux");
     }
 
     @Override
-    public IDrawable getBackground() {
-        return this.background;
+    public int getWidth() {
+        return this.background.getWidth();
+    }
+
+    @Override
+    public int getHeight() {
+        return this.background.getHeight();
     }
 
     @Override

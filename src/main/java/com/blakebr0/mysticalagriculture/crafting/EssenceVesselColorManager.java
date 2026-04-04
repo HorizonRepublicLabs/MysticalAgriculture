@@ -8,11 +8,10 @@ import com.google.gson.JsonParser;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.packs.resources.PreparableReloadListener;
 import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModLoader;
-import net.neoforged.neoforge.event.AddReloadListenerEvent;
+import net.neoforged.neoforge.event.AddServerReloadListenersEvent;
 import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 
@@ -29,8 +28,8 @@ public class EssenceVesselColorManager implements PreparableReloadListener {
     private final Map<String, Integer> colors = new HashMap<>();
 
     @SubscribeEvent
-    public void onAddReloadListeners(AddReloadListenerEvent event) {
-        event.addListener(this);
+    public void onAddReloadListeners(AddServerReloadListenersEvent event) {
+        event.addListener(MysticalAgriculture.resource("essence_vessel_color_manager"), this);
     }
 
     @SubscribeEvent
@@ -47,20 +46,16 @@ public class EssenceVesselColorManager implements PreparableReloadListener {
     }
 
     @Override
-    public CompletableFuture<Void> reload(PreparationBarrier barrier, ResourceManager manager, ProfilerFiller preparationsProfiler, ProfilerFiller reloadProfiler, Executor backgroundExecutor, Executor gameExecutor) {
+    public CompletableFuture<Void> reload(SharedState currentReload, Executor taskExecutor, PreparationBarrier barrier, Executor reloadExecutor) {
         return CompletableFuture.runAsync(() -> {
             if (!ModLoader.hasErrors()) {
-                this.load(manager);
+                this.load(currentReload.resourceManager());
             }
-        }, backgroundExecutor).thenCompose(barrier::wait);
+        }, reloadExecutor).thenCompose(barrier::wait);
     }
 
     public int getColor(ItemStack stack) {
         var id = BuiltInRegistries.ITEM.getKey(stack.getItem());
-        var color = com.blakebr0.mysticalagriculture.client.EssenceVesselColorManager.INSTANCE.getColor(stack);
-        if (color != 0xFFFFFF)
-            return color;
-
         return this.colors.getOrDefault(id.toString(), 0xFFFFFF);
     }
 

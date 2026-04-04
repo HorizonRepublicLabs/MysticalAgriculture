@@ -10,7 +10,7 @@ import com.blakebr0.mysticalagriculture.container.slot.TinkerableSlot;
 import com.blakebr0.mysticalagriculture.init.ModMenuTypes;
 import com.blakebr0.mysticalagriculture.tileentity.TinkeringTableTileEntity;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -20,7 +20,7 @@ import net.minecraft.world.item.ItemStack;
 public class TinkeringTableContainer extends BaseContainerMenu {
     private final CItemStacksHandler inventory;
 
-    public TinkeringTableContainer(int id, Inventory playerInventory, FriendlyByteBuf buffer) {
+    public TinkeringTableContainer(int id, Inventory playerInventory, RegistryFriendlyByteBuf buffer) {
         this(id, playerInventory, TinkeringTableTileEntity.createInventoryHandler(), buffer.readBlockPos());
     }
 
@@ -50,11 +50,11 @@ public class TinkeringTableContainer extends BaseContainerMenu {
 
     @Override
     public void slotsChanged(Container inventory) {
-        var tinkerable = this.inventory.getStackInSlot(0);
+        var tinkerable = this.inventory.getResource(0);
 
         if (!tinkerable.isEmpty()) {
             for (int i = 0; i < 2; i++) {
-                var stack = this.inventory.getStackInSlot(i + 1);
+                var stack = this.inventory.getResource(i + 1);
                 var item = stack.getItem();
                 var augmentInSlot = AugmentUtils.getAugment(tinkerable, i);
 

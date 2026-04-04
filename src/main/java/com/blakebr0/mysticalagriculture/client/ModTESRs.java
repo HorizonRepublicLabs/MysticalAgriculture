@@ -1,13 +1,13 @@
 package com.blakebr0.mysticalagriculture.client;
 
-import com.blakebr0.mysticalagriculture.client.tesr.AwakeningAltarRenderer;
-import com.blakebr0.mysticalagriculture.client.tesr.AwakeningPedestalRenderer;
-import com.blakebr0.mysticalagriculture.client.tesr.EnchanterRenderer;
-import com.blakebr0.mysticalagriculture.client.tesr.EssenceVesselRenderer;
-import com.blakebr0.mysticalagriculture.client.tesr.InfusionAltarRenderer;
-import com.blakebr0.mysticalagriculture.client.tesr.InfusionPedestalRenderer;
-import com.blakebr0.mysticalagriculture.client.tesr.SouliumSpawnerRenderer;
-import com.blakebr0.mysticalagriculture.client.tesr.TinkeringTableRenderer;
+import com.blakebr0.mysticalagriculture.client.tesr.renderer.AwakeningAltarRenderer;
+import com.blakebr0.mysticalagriculture.client.tesr.renderer.AwakeningPedestalRenderer;
+import com.blakebr0.mysticalagriculture.client.tesr.renderer.EnchanterRenderer;
+import com.blakebr0.mysticalagriculture.client.tesr.renderer.EssenceVesselRenderer;
+import com.blakebr0.mysticalagriculture.client.tesr.renderer.InfusionAltarRenderer;
+import com.blakebr0.mysticalagriculture.client.tesr.renderer.InfusionPedestalRenderer;
+import com.blakebr0.mysticalagriculture.client.tesr.renderer.SouliumSpawnerRenderer;
+import com.blakebr0.mysticalagriculture.client.tesr.renderer.TinkeringTableRenderer;
 import com.blakebr0.mysticalagriculture.init.ModTileEntities;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;

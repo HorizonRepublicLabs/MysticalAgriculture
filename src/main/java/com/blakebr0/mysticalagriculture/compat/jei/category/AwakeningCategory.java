@@ -1,6 +1,5 @@
 package com.blakebr0.mysticalagriculture.compat.jei.category;
 
-import com.blakebr0.cucumber.util.Localizable;
 import com.blakebr0.mysticalagriculture.MysticalAgriculture;
 import com.blakebr0.mysticalagriculture.api.crafting.IAwakeningRecipe;
 import com.blakebr0.mysticalagriculture.init.ModBlocks;
@@ -10,19 +9,21 @@ import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
-import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import mezz.jei.api.recipe.types.IRecipeHolderType;
+import mezz.jei.api.recipe.types.IRecipeType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AwakeningCategory implements IRecipeCategory<IAwakeningRecipe> {
+public class AwakeningCategory implements IRecipeCategory<RecipeHolder<IAwakeningRecipe>> {
     private static final Identifier TEXTURE = MysticalAgriculture.resource("textures/jei/infusion.png");
-    public static final RecipeType<IAwakeningRecipe> RECIPE_TYPE = RecipeType.create(MysticalAgriculture.MOD_ID, "awakening", IAwakeningRecipe.class);
+    public static final IRecipeHolderType<IAwakeningRecipe> RECIPE_TYPE = IRecipeHolderType.create(MysticalAgriculture.resource("awakening"));
 
     private final IDrawable background;
     private final IDrawable icon;
@@ -33,18 +34,13 @@ public class AwakeningCategory implements IRecipeCategory<IAwakeningRecipe> {
     }
 
     @Override
-    public RecipeType<IAwakeningRecipe> getRecipeType() {
+    public IRecipeType<RecipeHolder<IAwakeningRecipe>> getRecipeType() {
         return RECIPE_TYPE;
     }
 
     @Override
     public Component getTitle() {
-        return Localizable.of("jei.category.mysticalagriculture.awakening").build();
-    }
-
-    @Override
-    public IDrawable getBackground() {
-        return this.background;
+        return Component.translatable("jei.category.mysticalagriculture.awakening");
     }
 
     @Override
@@ -53,7 +49,17 @@ public class AwakeningCategory implements IRecipeCategory<IAwakeningRecipe> {
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, IAwakeningRecipe recipe, IFocusGroup focuses) {
+    public int getWidth() {
+        return this.background.getWidth();
+    }
+
+    @Override
+    public int getHeight() {
+        return this.background.getHeight();
+    }
+
+    @Override
+    public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<IAwakeningRecipe> recipe, IFocusGroup focuses) {
         var level = Minecraft.getInstance().level;
 
         assert level != null;
@@ -79,7 +85,7 @@ public class AwakeningCategory implements IRecipeCategory<IAwakeningRecipe> {
 
         var input = recipe.getAltarIngredient();
         var ingredients = recipe.getIngredients();
-        var essences = recipe.getEssences();
+        var essences = recipe.getEssenceIngredients();
 
         result.add(List.of(input.getItems()));
 

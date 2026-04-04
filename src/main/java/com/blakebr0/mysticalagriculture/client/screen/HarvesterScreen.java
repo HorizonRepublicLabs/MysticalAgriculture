@@ -14,7 +14,6 @@ import net.minecraft.world.entity.player.Inventory;
 
 public class HarvesterScreen extends BaseContainerScreen<HarvesterContainer> {
     private static final Identifier BACKGROUND = MysticalAgriculture.resource("textures/gui/harvester.png");
-    private HarvesterTileEntity tile;
 
     public HarvesterScreen(HarvesterContainer container, Inventory inv, Component title) {
         super(container, inv, title, BACKGROUND, 176, 194);
@@ -27,29 +26,13 @@ public class HarvesterScreen extends BaseContainerScreen<HarvesterContainer> {
         int x = this.getGuiLeft();
         int y = this.getGuiTop();
 
-        this.tile = this.getTileEntity();
-
-        if (this.tile != null) {
-            this.addRenderableWidget(new EnergyBarWidget(x + 7, y + 17, this.tile.getEnergy()));
-        }
+        this.addRenderableWidget(new EnergyBarWidget(x + 7, y + 17, this.menu::getEnergyStored, this.menu::getEnergyCapacity));
     }
 
     @Override
     protected void extractLabels(GuiGraphicsExtractor gfx, int mouseX, int mouseY) {
         gfx.text(this.font, this.title, (this.imageWidth / 2 - this.font.width(this.title) / 2), 6, 4210752, false);
         gfx.text(this.font, this.playerInventoryTitle, 8, (this.imageHeight - 96 + 2), 4210752, false);
-
-        // TODO: "temporary" workaround for dynamic energy storage
-        if (this.tile != null) {
-            var tier = this.tile.getMachineTier();
-            var energy = this.tile.getEnergy();
-
-            energy.resetMaxEnergyStorage();
-
-            if (tier != null) {
-                energy.setMaxEnergyStorage(this.tile.getEnergy().getMaxEnergyStored() * tier.getFuelCapacityMultiplier());
-            }
-        }
     }
 
     @Override
@@ -60,7 +43,7 @@ public class HarvesterScreen extends BaseContainerScreen<HarvesterContainer> {
         super.extractTooltip(gfx, mouseX, mouseY);
 
         if (mouseX > x + 30 && mouseX < x + 45 && mouseY > y + 39 && mouseY < y + 53) {
-            gfx.setTooltipForNextFrame(this.font, Formatting.energy(this.getFuelLeft()), mouseX, mouseY);
+            gfx.setTooltipForNextFrame(this.font, Formatting.energy(this.menu.getFuelLeft()), mouseX, mouseY);
         }
     }
 
@@ -71,43 +54,15 @@ public class HarvesterScreen extends BaseContainerScreen<HarvesterContainer> {
         int x = this.getGuiLeft();
         int y = this.getGuiTop();
 
-        if (this.getFuelItemValue() > 0) {
+        if (this.menu.getFuelItemValue() > 0) {
             int i = this.getBurnLeftScaled(13);
             gfx.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, x + 31, y + 52 - i, 176, 12 - i, 14, i + 1, 256, 256);
         }
     }
 
-    private HarvesterTileEntity getTileEntity() {
-        var level = this.getMinecraft().level;
-
-        if (level != null) {
-            var tile = level.getBlockEntity(this.getMenu().getBlockPos());
-
-            if (tile instanceof HarvesterTileEntity extractor) {
-                return extractor;
-            }
-        }
-
-        return null;
-    }
-
-    public int getFuelLeft() {
-        if (this.tile == null)
-            return 0;
-
-        return this.tile.getFuelLeft();
-    }
-
-    public int getFuelItemValue() {
-        if (this.tile == null)
-            return 0;
-
-        return this.tile.getFuelItemValue();
-    }
-
     public int getBurnLeftScaled(int pixels) {
-        int i = this.getFuelLeft();
-        int j = this.getFuelItemValue();
+        int i = this.menu.getFuelLeft();
+        int j = this.menu.getFuelItemValue();
         return (int) (j != 0 && i != 0 ? (long) i * pixels / j : 0);
     }
 }

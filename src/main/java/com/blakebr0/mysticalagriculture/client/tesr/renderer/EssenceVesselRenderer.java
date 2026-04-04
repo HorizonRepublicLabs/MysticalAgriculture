@@ -1,6 +1,7 @@
-package com.blakebr0.mysticalagriculture.client.tesr;
+package com.blakebr0.mysticalagriculture.client.tesr.renderer;
 
 import com.blakebr0.mysticalagriculture.MysticalAgriculture;
+import com.blakebr0.mysticalagriculture.client.tesr.state.EssenceVesselRenderState;
 import com.blakebr0.mysticalagriculture.crafting.EssenceVesselColorManager;
 import com.blakebr0.mysticalagriculture.tileentity.EssenceVesselTileEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -9,18 +10,25 @@ import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.resources.Identifier;
 
-public class EssenceVesselRenderer implements BlockEntityRenderer<EssenceVesselTileEntity> {
+public class EssenceVesselRenderer implements BlockEntityRenderer<EssenceVesselTileEntity, EssenceVesselRenderState> {
     private static final Identifier VESSEL_CONTENT_TEXTURE = MysticalAgriculture.resource("block/essence_vessel_contents");
 
     public EssenceVesselRenderer(BlockEntityRendererProvider.Context context) { }
 
     @Override
-    public void render(EssenceVesselTileEntity tile, float v, PoseStack matrix, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
+    public EssenceVesselRenderState createRenderState() {
+        return new EssenceVesselRenderState();
+    }
+
+    @Override
+    public void submit(EssenceVesselRenderState state, PoseStack matrix, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
         var inventory = tile.getInventory();
         var stack = inventory.getStackInSlot(0);
 

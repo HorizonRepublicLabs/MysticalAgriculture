@@ -12,21 +12,24 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import mezz.jei.api.recipe.types.IRecipeHolderType;
+import mezz.jei.api.recipe.types.IRecipeType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class EnchanterCategory implements IRecipeCategory<IEnchanterRecipe> {
+public class EnchanterCategory implements IRecipeCategory<RecipeHolder<IEnchanterRecipe>> {
     private static final Identifier TEXTURE = MysticalAgriculture.resource("textures/jei/enchanter.png");
-    public static final RecipeType<IEnchanterRecipe> RECIPE_TYPE = RecipeType.create(MysticalAgriculture.MOD_ID, "enchanter", IEnchanterRecipe.class);
+    public static final IRecipeHolderType<IEnchanterRecipe> RECIPE_TYPE = IRecipeHolderType.create(MysticalAgriculture.resource("enchanter"));
 
     private final IDrawable background;
     private final IDrawable icon;
@@ -37,18 +40,23 @@ public class EnchanterCategory implements IRecipeCategory<IEnchanterRecipe> {
     }
 
     @Override
-    public RecipeType<IEnchanterRecipe> getRecipeType() {
+    public IRecipeType<RecipeHolder<IEnchanterRecipe>> getRecipeType() {
         return RECIPE_TYPE;
     }
 
     @Override
     public Component getTitle() {
-        return Localizable.of("jei.category.mysticalagriculture.enchanter").build();
+        return Component.translatable("jei.category.mysticalagriculture.enchanter");
     }
 
     @Override
-    public IDrawable getBackground() {
-        return this.background;
+    public int getWidth() {
+        return this.background.getWidth();
+    }
+
+    @Override
+    public int getHeight() {
+        return this.background.getHeight();
     }
 
     @Override
@@ -57,7 +65,7 @@ public class EnchanterCategory implements IRecipeCategory<IEnchanterRecipe> {
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, IEnchanterRecipe recipe, IFocusGroup focuses) {
+    public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<IEnchanterRecipe> recipe, IFocusGroup focuses) {
         var level = Minecraft.getInstance().level;
 
         assert level != null;

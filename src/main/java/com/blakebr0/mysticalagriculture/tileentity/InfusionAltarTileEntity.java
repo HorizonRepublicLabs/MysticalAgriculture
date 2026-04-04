@@ -6,7 +6,6 @@ import com.blakebr0.cucumber.inventory.OnContentsChangedFunction;
 import com.blakebr0.cucumber.tileentity.BaseInventoryTileEntity;
 import com.blakebr0.cucumber.util.MultiblockPositions;
 import com.blakebr0.mysticalagriculture.api.crafting.IInfusionRecipe;
-import com.blakebr0.mysticalagriculture.crafting.recipe.InfusionRecipe;
 import com.blakebr0.mysticalagriculture.init.ModRecipeTypes;
 import com.blakebr0.mysticalagriculture.init.ModTileEntities;
 import com.blakebr0.mysticalagriculture.util.IActivatable;
@@ -21,6 +20,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -79,7 +79,7 @@ public class InfusionAltarTileEntity extends BaseInventoryTileEntity implements 
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, InfusionAltarTileEntity tile) {
-        var input = tile.inventory.getStackInSlot(0);
+        var input = tile.inventory.getResource(0);
 
         if (input.isEmpty()) {
             tile.reset();
@@ -101,11 +101,14 @@ public class InfusionAltarTileEntity extends BaseInventoryTileEntity implements 
 
                     for (var i = 1; i < remaining.size(); i++) {
                         var pedestal = pedestals.get(i - 1);
-                        pedestal.getInventory().setStackInSlot(0, remaining.get(i));
+                        var remainder = remaining.get(i);
+
+                        pedestal.getInventory().set(0, ItemResource.of(remainder), remainder.count());
+
                         tile.spawnParticles(ParticleTypes.SMOKE, pedestal.getBlockPos(), 1.2D, 20);
                     }
 
-                    var result = recipe.assemble(inventory, level.registryAccess());
+                    var result = recipe.assemble(inventory);
 
                     tile.setOutput(result, remaining.getFirst());
                     tile.reset();
@@ -114,7 +117,7 @@ public class InfusionAltarTileEntity extends BaseInventoryTileEntity implements 
                 } else {
                     for (var pedestal : pedestals) {
                         var pedestalPos = pedestal.getBlockPos();
-                        var stack = pedestal.getInventory().getStackInSlot(0);
+                        var stack = pedestal.getInventory().getResource(0);
 
                         tile.spawnItemParticles(pedestalPos, stack);
                     }
@@ -132,7 +135,7 @@ public class InfusionAltarTileEntity extends BaseInventoryTileEntity implements 
     public static CItemStacksHandler createInventoryHandler(OnContentsChangedFunction onContentsChanged) {
         return CItemStacksHandler.create(2, onContentsChanged, builder -> {
             builder.setDefaultSlotLimit(1);
-            builder.setCanInsert((slot, stack) -> builder.getStackInSlot(1).isEmpty());
+            builder.setCanInsert((_, _) -> builder.getResource(1).isEmpty());
             builder.setOutputSlots(1);
         });
     }
@@ -147,7 +150,7 @@ public class InfusionAltarTileEntity extends BaseInventoryTileEntity implements 
 
         this.updateRecipeInventory(this.getPedestals());
 
-        return this.recipe.checkAndGet(this.toCraftingInput(), this.level);
+        return this.recipe.checkAndGet(this.toCraftingInput(), (ServerLevel) this.level);
     }
 
     private CraftingInput toCraftingInput() {
@@ -160,13 +163,14 @@ public class InfusionAltarTileEntity extends BaseInventoryTileEntity implements 
     }
 
     private void updateRecipeInventory(List<InfusionPedestalTileEntity> pedestals) {
-        this.recipeInventory.setSize(InfusionRecipe.RECIPE_SIZE);
-        this.recipeInventory.setStackInSlot(0, this.inventory.getStackInSlot(0));
+        this.recipeInventory.set(0, this.inventory.getResource(0), this.inventory.getAmountAsInt(0));
 
         for (int i = 0; i < pedestals.size(); i++) {
-            var stack = pedestals.get(i).getInventory().getStackInSlot(0);
+            var inventory = pedestals.get(i).getInventory();
+            var resource = inventory.getResource(0);
+            var amount = inventory.getAmountAsInt(0);
 
-            this.recipeInventory.setStackInSlot(i + 1, stack);
+            this.recipeInventory.set(i + 1, resource, amount);
         }
     }
 
@@ -199,8 +203,8 @@ public class InfusionAltarTileEntity extends BaseInventoryTileEntity implements 
         level.sendParticles(particle, x, y, z, count, 0, 0, 0, 0.1D);
     }
 
-    private void spawnItemParticles(BlockPos pedestalPos, ItemStack stack) {
-        if (this.level == null || this.level.isClientSide() || stack.isEmpty())
+    private void spawnItemParticles(BlockPos pedestalPos, ItemResource resource) {
+        if (this.level == null || this.level.isClientSide() || resource.isEmpty())
             return;
 
         var level = (ServerLevel) this.level;
@@ -214,7 +218,7 @@ public class InfusionAltarTileEntity extends BaseInventoryTileEntity implements 
         double velY = 0.25D;
         double velZ = pos.getZ() - pedestalPos.getZ();
 
-        level.sendParticles(new ItemParticleOption(ParticleTypes.ITEM, stack), x, y, z, 0, velX, velY, velZ, 0.18D);
+        level.sendParticles(new ItemParticleOption(ParticleTypes.ITEM, resource.getItem()), x, y, z, 0, velX, velY, velZ, 0.18D);
     }
 
     private void setOutput(ItemStack stack, ItemStack remaining) {

@@ -7,7 +7,6 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
@@ -19,19 +18,52 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.util.RecipeMatcher;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.function.BiFunction;
 
 public class InfusionRecipe implements IInfusionRecipe {
+    public static final MapCodec<InfusionRecipe> MAP_CODEC = RecordCodecBuilder.mapCodec(builder ->
+            builder.group(
+                    Ingredient.CODEC.fieldOf("input").forGetter(recipe -> recipe.input),
+                    Ingredient.CODEC
+                            .listOf()
+                            .fieldOf("ingredients")
+                            .flatXmap(
+                                    field -> {
+                                        var max = 8;
+                                        var ingredients = field.toArray(Ingredient[]::new);
+                                        if (ingredients.length == 0) {
+                                            return DataResult.error(() -> "No ingredients for infusion recipe");
+                                        } else {
+                                            return ingredients.length > max
+                                                    ? DataResult.error(() -> "Too many ingredients for infusion recipe. The maximum is: %s".formatted(max))
+                                                    : DataResult.success(Arrays.stream(ingredients).toList());
+                                        }
+                                    },
+                                    DataResult::success
+                            )
+                            .forGetter(recipe -> recipe.inputs),
+                    ItemStack.CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
+                    Codec.BOOL.optionalFieldOf("transfer_components", false).forGetter(recipe -> recipe.transferComponents)
+            ).apply(builder, InfusionRecipe::new)
+    );
+    public static final StreamCodec<RegistryFriendlyByteBuf, InfusionRecipe> STREAM_CODEC = StreamCodec.of(
+            InfusionRecipe.Serializer::toNetwork, InfusionRecipe.Serializer::fromNetwork
+    );
+    public static final RecipeSerializer<InfusionRecipe> SERIALIZER = new RecipeSerializer<>(MAP_CODEC, STREAM_CODEC);
+
     public static final int RECIPE_SIZE = 9;
+
     private final Ingredient input;
-    private final NonNullList<Ingredient> inputs;
+    private final List<Ingredient> inputs;
     private final ItemStack result;
     private final boolean transferComponents;
     // for CraftTweaker recipes
     private BiFunction<Integer, ItemStack, ItemStack> transformer;
 
     // the input is specified separately in JSON but is part of the ingredient list in practice
-    public InfusionRecipe(Ingredient input, NonNullList<Ingredient> inputs, ItemStack result, boolean transferComponents) {
+    public InfusionRecipe(Ingredient input, List<Ingredient> inputs, ItemStack result, boolean transferComponents) {
         this.input = input;
         this.inputs = inputs;
         this.result = result;
@@ -61,7 +93,7 @@ public class InfusionRecipe implements IInfusionRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingInput inventory, HolderLookup.Provider lookup) {
+    public ItemStack assemble(CraftingInput inventory) {
         var stack = inventory.getItem(0);
         var result = this.result.copy();
 
@@ -73,27 +105,12 @@ public class InfusionRecipe implements IInfusionRecipe {
     }
 
     @Override
-    public boolean canCraftInDimensions(int width, int height) {
-        return true;
+    public RecipeSerializer<InfusionRecipe> getSerializer() {
+        return SERIALIZER;
     }
 
     @Override
-    public ItemStack getResultItem(HolderLookup.Provider lookup) {
-        return this.result;
-    }
-
-    @Override
-    public NonNullList<Ingredient> getIngredients() {
-        return this.inputs;
-    }
-
-    @Override
-    public RecipeSerializer<?> getSerializer() {
-        return ModRecipeSerializers.INFUSION.get();
-    }
-
-    @Override
-    public RecipeType<? extends IInfusionRecipe> getType() {
+    public RecipeType<IInfusionRecipe> getType() {
         return ModRecipeTypes.INFUSION.get();
     }
 
@@ -103,8 +120,9 @@ public class InfusionRecipe implements IInfusionRecipe {
 
         for (int i = 0; i < remaining.size(); ++i) {
             var item = inventory.getItem(i);
-            if (item.hasCraftingRemainingItem()) {
-                remaining.set(i, item.getCraftingRemainingItem());
+            var remainder = item.getCraftingRemainder();
+            if (remainder != null) {
+                remaining.set(i, remainder.create());
             }
         }
 
@@ -135,80 +153,34 @@ public class InfusionRecipe implements IInfusionRecipe {
         return remaining;
     }
 
-    @Override
-    public Ingredient getAltarIngredient() {
-        return this.input;
-    }
-
     public void setTransformer(BiFunction<Integer, ItemStack, ItemStack> transformer) {
         this.transformer = transformer;
     }
 
-    public static class Serializer implements RecipeSerializer<InfusionRecipe> {
-        public static final MapCodec<InfusionRecipe> CODEC = RecordCodecBuilder.mapCodec(builder ->
-                builder.group(
-                        Ingredient.CODEC_NONEMPTY.fieldOf("input").forGetter(recipe -> recipe.input),
-                        Ingredient.CODEC_NONEMPTY
-                                .listOf()
-                                .fieldOf("ingredients")
-                                .flatXmap(
-                                        field -> {
-                                            var max = 8;
-                                            var ingredients = field.toArray(Ingredient[]::new);
-                                            if (ingredients.length == 0) {
-                                                return DataResult.error(() -> "No ingredients for infusion recipe");
-                                            } else {
-                                                return ingredients.length > max
-                                                        ? DataResult.error(() -> "Too many ingredients for infusion recipe. The maximum is: %s".formatted(max))
-                                                        : DataResult.success(NonNullList.of(Ingredient.EMPTY, ingredients));
-                                            }
-                                        },
-                                        DataResult::success
-                                )
-                                .forGetter(recipe -> recipe.inputs),
-                        ItemStack.STRICT_CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
-                        Codec.BOOL.optionalFieldOf("transfer_components", false).forGetter(recipe -> recipe.transferComponents)
-                ).apply(builder, InfusionRecipe::new)
-        );
-        public static final StreamCodec<RegistryFriendlyByteBuf, InfusionRecipe> STREAM_CODEC = StreamCodec.of(
-                InfusionRecipe.Serializer::toNetwork, InfusionRecipe.Serializer::fromNetwork
-        );
+    private static InfusionRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
+        var input = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
+        int size = buffer.readVarInt();
+        var inputs = NonNullList.withSize(size, Ingredient.EMPTY);
 
-        @Override
-        public MapCodec<InfusionRecipe> codec() {
-            return CODEC;
+        for (int i = 0; i < size; i++) {
+            inputs.set(i, Ingredient.CONTENTS_STREAM_CODEC.decode(buffer));
         }
 
-        @Override
-        public StreamCodec<RegistryFriendlyByteBuf, InfusionRecipe> streamCodec() {
-            return STREAM_CODEC;
+        var result = ItemStack.STREAM_CODEC.decode(buffer);
+        var transferComponents = buffer.readBoolean();
+
+        return new InfusionRecipe(input, inputs, result, transferComponents);
+    }
+
+    private static void toNetwork(RegistryFriendlyByteBuf buffer, InfusionRecipe recipe) {
+        Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.input);
+        buffer.writeVarInt(recipe.inputs.size());
+
+        for (var ingredient : recipe.inputs) {
+            Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, ingredient);
         }
 
-        private static InfusionRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
-            var input = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
-            int size = buffer.readVarInt();
-            var inputs = NonNullList.withSize(size, Ingredient.EMPTY);
-
-            for (int i = 0; i < size; i++) {
-                inputs.set(i, Ingredient.CONTENTS_STREAM_CODEC.decode(buffer));
-            }
-
-            var result = ItemStack.STREAM_CODEC.decode(buffer);
-            var transferComponents = buffer.readBoolean();
-
-            return new InfusionRecipe(input, inputs, result, transferComponents);
-        }
-
-        private static void toNetwork(RegistryFriendlyByteBuf buffer, InfusionRecipe recipe) {
-            Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.input);
-            buffer.writeVarInt(recipe.inputs.size());
-
-            for (var ingredient : recipe.inputs) {
-                Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, ingredient);
-            }
-
-            ItemStack.STREAM_CODEC.encode(buffer, recipe.result);
-            buffer.writeBoolean(recipe.transferComponents);
-        }
+        ItemStack.STREAM_CODEC.encode(buffer, recipe.result);
+        buffer.writeBoolean(recipe.transferComponents);
     }
 }

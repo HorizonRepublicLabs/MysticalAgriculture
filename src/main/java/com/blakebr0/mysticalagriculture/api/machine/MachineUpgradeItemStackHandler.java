@@ -12,6 +12,16 @@ public class MachineUpgradeItemStackHandler extends ItemStackResourceHandler {
     private ItemStack stack = ItemStack.EMPTY;
 
     /**
+     * Set the resource in this handler
+     * @param index unused
+     * @param resource the resource
+     * @param amount the amount of the resource
+     */
+    public void set(int index, ItemResource resource, int amount) {
+        this.stack = resource.toStack(amount);
+    }
+
+    /**
      * Gets the {@link MachineUpgradeTier} for the upgrade in this inventory, or null if empty
      * @return the machine upgrade tier
      */

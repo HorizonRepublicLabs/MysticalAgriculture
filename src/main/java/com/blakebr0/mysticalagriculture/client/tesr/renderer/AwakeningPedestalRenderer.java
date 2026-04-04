@@ -1,20 +1,28 @@
-package com.blakebr0.mysticalagriculture.client.tesr;
+package com.blakebr0.mysticalagriculture.client.tesr.renderer;
 
+import com.blakebr0.mysticalagriculture.client.tesr.state.AwakeningPedestalRenderState;
 import com.blakebr0.mysticalagriculture.tileentity.AwakeningPedestalTileEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemDisplayContext;
 
-public class AwakeningPedestalRenderer implements BlockEntityRenderer<AwakeningPedestalTileEntity> {
+public class AwakeningPedestalRenderer implements BlockEntityRenderer<AwakeningPedestalTileEntity, AwakeningPedestalRenderState> {
     public AwakeningPedestalRenderer(BlockEntityRendererProvider.Context context) { }
 
     @Override
-    public void render(AwakeningPedestalTileEntity tile, float v, PoseStack matrix, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
+    public AwakeningPedestalRenderState createRenderState() {
+        return new AwakeningPedestalRenderState();
+    }
+
+    @Override
+    public void submit(AwakeningPedestalRenderState state, PoseStack matrix, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
         var minecraft = Minecraft.getInstance();
         var stack = tile.getInventory().getStackInSlot(0);
 

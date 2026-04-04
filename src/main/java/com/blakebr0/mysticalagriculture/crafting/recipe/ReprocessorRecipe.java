@@ -1,109 +1,79 @@
 package com.blakebr0.mysticalagriculture.crafting.recipe;
 
 import com.blakebr0.mysticalagriculture.api.crafting.IReprocessorRecipe;
-import com.blakebr0.mysticalagriculture.init.ModRecipeSerializers;
 import com.blakebr0.mysticalagriculture.init.ModRecipeTypes;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.PlacementInfo;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.common.util.RecipeMatcher;
 
 public class ReprocessorRecipe implements IReprocessorRecipe {
-    private final NonNullList<Ingredient> inputs;
+    public static final MapCodec<ReprocessorRecipe> MAP_CODEC = RecordCodecBuilder.mapCodec(builder ->
+            builder.group(
+                    Ingredient.CODEC.fieldOf("input").forGetter(recipe -> recipe.input),
+                    ItemStack.CODEC.fieldOf("result").forGetter(recipe -> recipe.result)
+            ).apply(builder, ReprocessorRecipe::new)
+    );
+    public static final StreamCodec<RegistryFriendlyByteBuf, ReprocessorRecipe> STREAM_CODEC = StreamCodec.of(
+            ReprocessorRecipe::toNetwork, ReprocessorRecipe::fromNetwork
+    );
+    public static final RecipeSerializer<ReprocessorRecipe> SERIALIZER = new RecipeSerializer<>(MAP_CODEC, STREAM_CODEC);
+
+    private final Ingredient input;
     private final ItemStack result;
 
+    private PlacementInfo placementInfo;
+
     public ReprocessorRecipe(Ingredient input, ItemStack result) {
-        this.inputs = NonNullList.of(Ingredient.EMPTY, input);
+        this.input = input;
         this.result = result;
     }
 
     @Override
     public boolean matches(CraftingInput inventory, Level level) {
-        if (this.inputs.size() != inventory.ingredientCount())
-            return false;
-
-        var inputs = NonNullList.<ItemStack>create();
-
-        for (var i = 0; i < inventory.size(); i++) {
-            var item = inventory.getItem(i);
-            if (!item.isEmpty()) {
-                inputs.add(item);
-            }
-        }
-
-        return RecipeMatcher.findMatches(inputs, this.inputs) != null;
+        return this.input.test(inventory.getItem(0));
     }
 
     @Override
-    public ItemStack assemble(CraftingInput inventory, HolderLookup.Provider provider) {
+    public ItemStack assemble(CraftingInput inventory) {
         return this.result.copy();
     }
 
     @Override
-    public boolean canCraftInDimensions(int width, int height) {
-        return true;
+    public RecipeSerializer<ReprocessorRecipe> getSerializer() {
+        return SERIALIZER;
     }
 
     @Override
-    public ItemStack getResultItem(HolderLookup.Provider provider) {
-        return this.result;
-    }
-
-    @Override
-    public NonNullList<Ingredient> getIngredients() {
-        return this.inputs;
-    }
-
-    @Override
-    public RecipeSerializer<?> getSerializer() {
-        return ModRecipeSerializers.REPROCESSOR.get();
-    }
-
-    @Override
-    public RecipeType<? extends IReprocessorRecipe> getType() {
+    public RecipeType<IReprocessorRecipe> getType() {
         return ModRecipeTypes.REPROCESSOR.get();
     }
 
-    public static class Serializer implements RecipeSerializer<ReprocessorRecipe> {
-        public static final MapCodec<ReprocessorRecipe> CODEC = RecordCodecBuilder.mapCodec(builder ->
-               builder.group(
-                       Ingredient.CODEC_NONEMPTY.fieldOf("input").forGetter(recipe -> recipe.inputs.getFirst()),
-                       ItemStack.STRICT_CODEC.fieldOf("result").forGetter(recipe -> recipe.result)
-               ).apply(builder, ReprocessorRecipe::new)
-        );
-        public static final StreamCodec<RegistryFriendlyByteBuf, ReprocessorRecipe> STREAM_CODEC = StreamCodec.of(
-                ReprocessorRecipe.Serializer::toNetwork, ReprocessorRecipe.Serializer::fromNetwork
-        );
-
-        @Override
-        public MapCodec<ReprocessorRecipe> codec() {
-            return CODEC;
+    @Override
+    public PlacementInfo placementInfo() {
+        if (this.placementInfo == null) {
+            this.placementInfo = PlacementInfo.create(this.input);
         }
 
-        @Override
-        public StreamCodec<RegistryFriendlyByteBuf, ReprocessorRecipe> streamCodec() {
-            return STREAM_CODEC;
-        }
+        return this.placementInfo;
+    }
 
-        private static ReprocessorRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
-            var input = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
-            var result = ItemStack.STREAM_CODEC.decode(buffer);
+    private static ReprocessorRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
+        var input = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
+        var result = ItemStack.STREAM_CODEC.decode(buffer);
 
-            return new ReprocessorRecipe(input, result);
-        }
+        return new ReprocessorRecipe(input, result);
+    }
 
-        private static void toNetwork(RegistryFriendlyByteBuf buffer, ReprocessorRecipe recipe) {
-            Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.inputs.getFirst());
-            ItemStack.STREAM_CODEC.encode(buffer, recipe.result);
-        }
+    private static void toNetwork(RegistryFriendlyByteBuf buffer, ReprocessorRecipe recipe) {
+        Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.input);
+        ItemStack.STREAM_CODEC.encode(buffer, recipe.result);
     }
 }

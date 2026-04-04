@@ -1,21 +1,29 @@
-package com.blakebr0.mysticalagriculture.client.tesr;
+package com.blakebr0.mysticalagriculture.client.tesr.renderer;
 
 import com.blakebr0.mysticalagriculture.block.EnchanterBlock;
+import com.blakebr0.mysticalagriculture.client.tesr.state.EnchanterRenderState;
 import com.blakebr0.mysticalagriculture.tileentity.EnchanterTileEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemDisplayContext;
 
-public class EnchanterRenderer implements BlockEntityRenderer<EnchanterTileEntity> {
+public class EnchanterRenderer implements BlockEntityRenderer<EnchanterTileEntity, EnchanterRenderState> {
     public EnchanterRenderer(BlockEntityRendererProvider.Context context) { }
 
     @Override
-    public void render(EnchanterTileEntity tile, float v, PoseStack matrix, MultiBufferSource buffer, int i, int i1) {
+    public EnchanterRenderState createRenderState() {
+        return new EnchanterRenderState();
+    }
+
+    @Override
+    public void submit(EnchanterRenderState state, PoseStack matrix, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
         var level = tile.getLevel();
         if (level == null)
             return;

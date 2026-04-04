@@ -5,7 +5,6 @@ import com.blakebr0.cucumber.inventory.CachedRecipe;
 import com.blakebr0.cucumber.tileentity.BaseInventoryTileEntity;
 import com.blakebr0.cucumber.util.MultiblockPositions;
 import com.blakebr0.mysticalagriculture.api.crafting.IAwakeningRecipe;
-import com.blakebr0.mysticalagriculture.crafting.recipe.AwakeningRecipe;
 import com.blakebr0.mysticalagriculture.init.ModRecipeTypes;
 import com.blakebr0.mysticalagriculture.init.ModTileEntities;
 import com.blakebr0.mysticalagriculture.util.IActivatable;
@@ -21,6 +20,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,7 +84,7 @@ public class AwakeningAltarTileEntity extends BaseInventoryTileEntity implements
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, AwakeningAltarTileEntity tile) {
-        var input = tile.inventory.getStackInSlot(0);
+        var input = tile.inventory.getResource(0);
 
         if (input.isEmpty()) {
             tile.reset();
@@ -106,8 +106,9 @@ public class AwakeningAltarTileEntity extends BaseInventoryTileEntity implements
                     for (var i = 0; i < collections.pedestals.size(); i++) {
                         var pedestal = collections.pedestals.get(i);
                         var inventory = pedestal.getInventory();
+                        var remainder = remaining.get(i + 1);
 
-                        inventory.setStackInSlot(0, remaining.get(i + 1));
+                        inventory.set(0, ItemResource.of(remainder), remainder.count());
 
                         tile.spawnParticles(ParticleTypes.SMOKE, pedestal.getBlockPos(), 1.2D, 20);
                     }
@@ -115,13 +116,14 @@ public class AwakeningAltarTileEntity extends BaseInventoryTileEntity implements
                     for (var i = 0; i < collections.vessels.size(); i++) {
                         var vessel = collections.vessels.get(i);
                         var inventory = vessel.getInventory();
+                        var remainder = remaining.get(i + 5);
 
-                        inventory.setStackInSlot(0, remaining.get(i + 5));
+                        inventory.set(0, ItemResource.of(remainder), remainder.count());
 
                         tile.spawnParticles(ParticleTypes.SMOKE, vessel.getBlockPos(), 1.2D, 20);
                     }
 
-                    var result = recipe.assemble(tile.toCraftingInput(), level.registryAccess());
+                    var result = recipe.assemble(tile.toCraftingInput());
 
                     tile.setOutput(result, remaining.getFirst());
                     tile.reset();
@@ -130,9 +132,9 @@ public class AwakeningAltarTileEntity extends BaseInventoryTileEntity implements
                 } else {
                     for (var pedestal : collections.all()) {
                         var pedestalPos = pedestal.getBlockPos();
-                        var stack = pedestal.getInventory().getStackInSlot(0);
+                        var resource = pedestal.getInventory().getResource(0);
 
-                        tile.spawnItemParticles(pedestalPos, stack);
+                        tile.spawnItemParticles(pedestalPos, resource);
                     }
                 }
             } else {
@@ -160,14 +162,14 @@ public class AwakeningAltarTileEntity extends BaseInventoryTileEntity implements
 
         this.updateRecipeInventory(this.getPedestalCollections());
 
-        return this.recipe.checkAndGet(this.toCraftingInput(), this.level);
+        return this.recipe.checkAndGet(this.toCraftingInput(), (ServerLevel) this.level);
     }
 
     public NonNullList<ItemStack> getEssenceItems() {
         return this.getPedestalCollections()
                 .vessels
                 .stream()
-                .map(v -> v.getInventory().getStackInSlot(0))
+                .map(v -> v.getInventory().getResource(0).toStack(v.getInventory().getAmountAsInt(0)))
                 .collect(Collectors.toCollection(NonNullList::create));
     }
 
@@ -176,19 +178,22 @@ public class AwakeningAltarTileEntity extends BaseInventoryTileEntity implements
     }
 
     private void updateRecipeInventory(PedestalTileEntityCollections collections) {
-        this.recipeInventory.setSize(AwakeningRecipe.RECIPE_SIZE);
-        this.recipeInventory.setStackInSlot(0, this.inventory.getStackInSlot(0));
+        this.recipeInventory.set(0, this.inventory.getResource(0), this.inventory.getAmountAsInt(0));
 
         for (int i = 0; i < collections.pedestals.size(); i++) {
-            var stack = collections.pedestals.get(i).getInventory().getStackInSlot(0);
+            var inventory = collections.pedestals.get(i).getInventory();
+            var stack = inventory.getResource(0);
+            var amount = inventory.getAmountAsInt(0);
 
-            this.recipeInventory.setStackInSlot(i + 1, stack);
+            this.recipeInventory.set(i + 1, stack, amount);
         }
 
         for (int i = 0; i < collections.vessels.size(); i++) {
-            var stack = collections.vessels.get(i).getInventory().getStackInSlot(0);
+            var inventory = collections.vessels.get(i).getInventory();
+            var stack = inventory.getResource(0);
+            var amount = inventory.getAmountAsInt(0);
 
-            this.recipeInventory.setStackInSlot(i + 5, stack);
+            this.recipeInventory.set(i + 5, stack, amount);
         }
     }
 
@@ -227,8 +232,8 @@ public class AwakeningAltarTileEntity extends BaseInventoryTileEntity implements
         level.sendParticles(particle, x, y, z, count, 0, 0, 0, 0.1D);
     }
 
-    private void spawnItemParticles(BlockPos pedestalPos, ItemStack stack) {
-        if (this.level == null || this.level.isClientSide() || stack.isEmpty())
+    private void spawnItemParticles(BlockPos pedestalPos, ItemResource resource) {
+        if (this.level == null || this.level.isClientSide() || resource.isEmpty())
             return;
 
         var level = (ServerLevel) this.level;
@@ -242,7 +247,7 @@ public class AwakeningAltarTileEntity extends BaseInventoryTileEntity implements
         double velY = 0.25D;
         double velZ = pos.getZ() - pedestalPos.getZ();
 
-        level.sendParticles(new ItemParticleOption(ParticleTypes.ITEM, stack), x, y, z, 0, velX, velY, velZ, 0.18D);
+        level.sendParticles(new ItemParticleOption(ParticleTypes.ITEM, resource.getItem()), x, y, z, 0, velX, velY, velZ, 0.18D);
     }
 
     private void setOutput(ItemStack stack, ItemStack remaining) {

@@ -5,8 +5,11 @@ import com.blakebr0.mysticalagriculture.registry.CropRegistry;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.neoforged.neoforge.common.crafting.ICustomIngredient;
@@ -26,7 +29,7 @@ public class CropComponentIngredient implements ICustomIngredient {
     private final Identifier crop;
     private final ComponentType type;
 
-    private ItemStack[] stacks;
+    private HolderSet<Item> values;
 
     public CropComponentIngredient(Identifier crop, ComponentType type) {
         this.crop = crop;
@@ -38,16 +41,16 @@ public class CropComponentIngredient implements ICustomIngredient {
         if (input == null)
             return false;
 
-        return this.getItems().anyMatch(s -> ItemStack.isSameItemSameComponents(s, input));
+        return this.items().anyMatch(s -> input.is(s) && s.components().equals(input.getComponents()));
     }
 
     @Override
-    public Stream<ItemStack> getItems() {
-        if (stacks == null) {
+    public Stream<Holder<Item>> items() {
+        if (values == null) {
             this.initMatchingStacks();
         }
 
-        return Stream.of(this.stacks);
+        return this.values.stream();
     }
 
     @Override
@@ -62,11 +65,13 @@ public class CropComponentIngredient implements ICustomIngredient {
 
     private void initMatchingStacks() {
         var crop = CropRegistry.getInstance().getCropById(this.crop);
-
-        this.stacks = switch (this.type) {
-            case ESSENCE -> new ItemStack[] { new ItemStack(crop.getTier().getEssence()) };
-            case SEED -> new ItemStack[] { new ItemStack(crop.getType().getCraftingSeed()) };
-            case MATERIAL -> crop.getCraftingMaterial().getItems();
+        this.values = switch (this.type) {
+            case ESSENCE -> HolderSet.direct(crop.getTier().getEssence().builtInRegistryHolder());
+            case SEED -> HolderSet.direct(crop.getType().getCraftingSeed().builtInRegistryHolder());
+            case MATERIAL -> {
+                var material = crop.getCraftingMaterial();
+                yield material != null ? material.getValues() : HolderSet.empty();
+            }
         };
     }
 

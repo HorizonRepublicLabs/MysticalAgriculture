@@ -5,7 +5,6 @@ import com.blakebr0.mysticalagriculture.api.MysticalAgricultureConfigValues;
 import com.blakebr0.mysticalagriculture.client.ModClientExtensions;
 import com.blakebr0.mysticalagriculture.client.ModClientTooltipComponentFactories;
 import com.blakebr0.mysticalagriculture.client.ModMenuScreens;
-import com.blakebr0.mysticalagriculture.client.ModRecipeBookCategories;
 import com.blakebr0.mysticalagriculture.client.ModTESRs;
 import com.blakebr0.mysticalagriculture.client.ModelHandler;
 import com.blakebr0.mysticalagriculture.client.handler.AOEAugmentClientHandler;
@@ -88,11 +87,9 @@ public final class MysticalAgriculture {
 			bus.register(new ModelHandler());
 			bus.register(new ItemModelPropertyHandler());
 			bus.register(new ModTESRs());
-			bus.register(new ModRecipeBookCategories());
 			bus.register(new ModClientTooltipComponentFactories());
 			bus.register(new ModMenuScreens());
 			bus.register(new ModClientExtensions());
-			bus.register(com.blakebr0.mysticalagriculture.client.EssenceVesselColorManager.INSTANCE);
 		}
 
 		mod.registerConfig(ModConfig.Type.STARTUP, ModConfigs.COMMON, "mysticalagriculture-common.toml");

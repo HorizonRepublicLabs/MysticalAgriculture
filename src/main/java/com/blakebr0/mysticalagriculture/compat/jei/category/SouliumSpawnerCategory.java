@@ -16,7 +16,10 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import mezz.jei.api.recipe.types.IRecipeHolderType;
+import mezz.jei.api.recipe.types.IRecipeType;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -24,14 +27,15 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.item.component.CustomData;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class SouliumSpawnerCategory implements IRecipeCategory<ISouliumSpawnerRecipe> {
+public class SouliumSpawnerCategory implements IRecipeCategory<RecipeHolder<ISouliumSpawnerRecipe>> {
     private static final Identifier TEXTURE = MysticalAgriculture.resource("textures/jei/soulium_spawner.png");
-    public static final RecipeType<ISouliumSpawnerRecipe> RECIPE_TYPE = RecipeType.create(MysticalAgriculture.MOD_ID, "soulium_spawner", ISouliumSpawnerRecipe.class);
+    public static final IRecipeHolderType<ISouliumSpawnerRecipe> RECIPE_TYPE = IRecipeHolderType.create(MysticalAgriculture.resource("soulium_spawner"));
 
     private final IDrawable background;
     private final IDrawable icon;
@@ -47,18 +51,23 @@ public class SouliumSpawnerCategory implements IRecipeCategory<ISouliumSpawnerRe
     }
 
     @Override
-    public RecipeType<ISouliumSpawnerRecipe> getRecipeType() {
+    public IRecipeType<RecipeHolder<ISouliumSpawnerRecipe>> getRecipeType() {
         return RECIPE_TYPE;
     }
 
     @Override
     public Component getTitle() {
-        return Localizable.of("jei.category.mysticalagriculture.soulium_spawner").build();
+        return Component.translatable("jei.category.mysticalagriculture.soulium_spawner");
     }
 
     @Override
-    public IDrawable getBackground() {
-        return this.background;
+    public int getWidth() {
+        return this.background.getWidth();
+    }
+
+    @Override
+    public int getHeight() {
+        return this.background.getHeight();
     }
 
     @Override
@@ -67,12 +76,12 @@ public class SouliumSpawnerCategory implements IRecipeCategory<ISouliumSpawnerRe
     }
 
     @Override
-    public void draw(ISouliumSpawnerRecipe recipe, IRecipeSlotsView slots, GuiGraphics gfx, double mouseX, double mouseY) {
+    public void draw(ISouliumSpawnerRecipe recipe, IRecipeSlotsView slots, GuiGraphicsExtractor gfx, double mouseX, double mouseY) {
         this.arrow.draw(gfx, 24, 4);
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, ISouliumSpawnerRecipe recipe, IFocusGroup focuses) {
+    public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<ISouliumSpawnerRecipe> recipe, IFocusGroup focuses) {
         var inputs = createInputsList(recipe);
         var outputs = createOutputsList(recipe);
 

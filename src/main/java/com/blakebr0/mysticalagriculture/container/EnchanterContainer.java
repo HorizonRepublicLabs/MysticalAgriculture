@@ -9,6 +9,8 @@ import com.blakebr0.mysticalagriculture.init.ModMenuTypes;
 import com.blakebr0.mysticalagriculture.init.ModRecipeTypes;
 import com.blakebr0.mysticalagriculture.tileentity.EnchanterTileEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -22,8 +24,8 @@ public class EnchanterContainer extends ExtendedContainerMenu {
     private final CItemStacksHandler inventory;
     private final Container result;
 
-    public EnchanterContainer(int id, Inventory playerInventory, BlockPos pos) {
-        this(id, playerInventory, EnchanterTileEntity.createInventoryHandler(), pos);
+    public EnchanterContainer(int id, Inventory playerInventory, RegistryFriendlyByteBuf buffer) {
+        this(id, playerInventory, EnchanterTileEntity.createInventoryHandler(), buffer.readBlockPos());
     }
 
     public EnchanterContainer(int id, Inventory playerInventory, CItemStacksHandler inventory, BlockPos pos) {
@@ -53,13 +55,15 @@ public class EnchanterContainer extends ExtendedContainerMenu {
 
     @Override
     public void slotsChanged(Container matrix) {
-        var inventory = this.inventory.toShapelessCraftingInput(0, 3);
-        var recipe = this.level.getRecipeManager().getRecipeFor(ModRecipeTypes.ENCHANTER.get(), inventory, this.level);
+        if (this.level instanceof ServerLevel serverLevel) {
+            var inventory = this.inventory.toShapelessCraftingInput(0, 3);
+            var recipe = serverLevel.recipeAccess().getRecipeFor(ModRecipeTypes.ENCHANTER.get(), inventory, this.level);
 
-        if (recipe.isPresent()) {
-            this.result.setItem(0, recipe.get().value().assemble(inventory, this.level.registryAccess()));
-        } else {
-            this.result.setItem(0, ItemStack.EMPTY);
+            if (recipe.isPresent()) {
+                this.result.setItem(0, recipe.get().value().assemble(inventory));
+            } else {
+                this.result.setItem(0, ItemStack.EMPTY);
+            }
         }
 
         super.slotsChanged(matrix);

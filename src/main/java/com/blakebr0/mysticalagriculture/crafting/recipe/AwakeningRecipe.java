@@ -2,60 +2,113 @@ package com.blakebr0.mysticalagriculture.crafting.recipe;
 
 import com.blakebr0.cucumber.helper.StackHelper;
 import com.blakebr0.mysticalagriculture.api.crafting.IAwakeningRecipe;
-import com.blakebr0.mysticalagriculture.init.ModRecipeSerializers;
 import com.blakebr0.mysticalagriculture.init.ModRecipeTypes;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.PlacementInfo;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
+import net.neoforged.neoforge.common.crafting.SizedIngredient;
 import net.neoforged.neoforge.common.util.RecipeMatcher;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
 
 public class AwakeningRecipe implements IAwakeningRecipe {
+    public static final MapCodec<AwakeningRecipe> MAP_CODEC = RecordCodecBuilder.mapCodec(builder ->
+            builder.group(
+                    Ingredient.CODEC.fieldOf("input").forGetter(recipe -> recipe.input),
+                    Ingredient.CODEC
+                            .listOf()
+                            .fieldOf("ingredients")
+                            .flatXmap(
+                                    field -> {
+                                        var max = 4;
+                                        var ingredients = field.toArray(Ingredient[]::new);
+                                        if (ingredients.length == 0) {
+                                            return DataResult.error(() -> "No ingredients for awakening recipe");
+                                        } else {
+                                            if (ingredients.length > max) {
+                                                return DataResult.error(() -> "Too many ingredients for awakening recipe. The maximum is: %s".formatted(max));
+                                            }
+
+                                            return DataResult.success(Arrays.stream(ingredients).toList());
+                                        }
+                                    },
+                                    DataResult::success
+                            )
+                            .forGetter(recipe -> recipe.inputs),
+                    SizedIngredient.NESTED_CODEC
+                            .listOf()
+                            .fieldOf("essences")
+                            .flatXmap(
+                                    field -> {
+                                        var max = 4;
+                                        var ingredients = field.toArray(SizedIngredient[]::new);
+                                        if (ingredients.length == 0) {
+                                            return DataResult.error(() -> "No essences for awakening recipe");
+                                        } else {
+                                            if (ingredients.length > max) {
+                                                return DataResult.error(() -> "Too many essences for awakening recipe. The maximum is: %s".formatted(max));
+                                            }
+
+                                            return DataResult.success(Arrays.stream(ingredients).toList());
+                                        }
+                                    },
+                                    DataResult::success
+                            )
+                            .forGetter(recipe -> recipe.essences),
+                    ItemStack.CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
+                    Codec.BOOL.optionalFieldOf("transfer_components", false).forGetter(recipe -> recipe.transferComponents)
+            ).apply(builder, AwakeningRecipe::new)
+    );
+    public static final StreamCodec<RegistryFriendlyByteBuf, AwakeningRecipe> STREAM_CODEC = StreamCodec.of(
+            AwakeningRecipe::toNetwork, AwakeningRecipe::fromNetwork
+    );
+    public static final RecipeSerializer<AwakeningRecipe> SERIALIZER = new RecipeSerializer<>(MAP_CODEC, STREAM_CODEC);
+
     public static final int RECIPE_SIZE = 9;
 
     private final Ingredient input;
-    private final NonNullList<Ingredient> inputs;
-    private final NonNullList<ItemStack> essences;
+    private final List<Ingredient> inputs;
+    private final List<SizedIngredient> essences;
     private final ItemStack result;
     private final boolean transferComponents;
+    private PlacementInfo placementInfo;
     // for CraftTweaker recipes
     private BiFunction<Integer, ItemStack, ItemStack> transformer;
 
     // the input is specified separately in JSON but is part of the ingredient list in practice
-    public AwakeningRecipe(Ingredient input, NonNullList<Ingredient> inputs, NonNullList<ItemStack> essences, ItemStack result, boolean transferComponents) {
+    public AwakeningRecipe(Ingredient input, List<Ingredient> inputs, List<SizedIngredient> essences, ItemStack result, boolean transferComponents) {
         this.input = input;
         this.essences = essences;
         this.result = result;
         this.transferComponents = transferComponents;
 
-        var allInputs = NonNullList.withSize(8, Ingredient.EMPTY);
-
-        allInputs.set(0, Ingredient.of(essences.get(0)));
-        allInputs.set(1, inputs.get(0));
-        allInputs.set(2, Ingredient.of(essences.get(1)));
-        allInputs.set(3, inputs.get(1));
-        allInputs.set(4, Ingredient.of(essences.get(2)));
-        allInputs.set(5, inputs.get(2));
-        allInputs.set(6, Ingredient.of(essences.get(3)));
-        allInputs.set(7, inputs.get(3));
-
-        this.inputs = allInputs;
+        this.inputs = List.of(
+                essences.get(0).ingredient(),
+                inputs.get(0),
+                essences.get(1).ingredient(),
+                inputs.get(1),
+                essences.get(2).ingredient(),
+                inputs.get(2),
+                essences.get(3).ingredient(),
+                inputs.get(3)
+        );
     }
 
     @Override
@@ -81,7 +134,7 @@ public class AwakeningRecipe implements IAwakeningRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingInput inventory, HolderLookup.Provider provider) {
+    public ItemStack assemble(CraftingInput inventory) {
         var stack = inventory.getItem(0);
         var result = this.result.copy();
 
@@ -93,27 +146,24 @@ public class AwakeningRecipe implements IAwakeningRecipe {
     }
 
     @Override
-    public boolean canCraftInDimensions(int width, int height) {
-        return true;
+    public PlacementInfo placementInfo() {
+        if (this.placementInfo == null) {
+            var ingredients = new ArrayList<Ingredient>();
+            ingredients.add(this.input);
+            ingredients.addAll(this.inputs);
+            this.placementInfo = PlacementInfo.create(ingredients);
+        }
+
+        return this.placementInfo;
     }
 
     @Override
-    public ItemStack getResultItem(HolderLookup.Provider provider) {
-        return this.result;
+    public RecipeSerializer<AwakeningRecipe> getSerializer() {
+        return SERIALIZER;
     }
 
     @Override
-    public NonNullList<Ingredient> getIngredients() {
-        return this.inputs;
-    }
-
-    @Override
-    public RecipeSerializer<?> getSerializer() {
-        return ModRecipeSerializers.AWAKENING.get();
-    }
-
-    @Override
-    public RecipeType<? extends IAwakeningRecipe> getType() {
+    public RecipeType<IAwakeningRecipe> getType() {
         return ModRecipeTypes.AWAKENING.get();
     }
 
@@ -139,14 +189,15 @@ public class AwakeningRecipe implements IAwakeningRecipe {
                 // the ingredient will have the same ItemStack instance as the essence
                 // this *should* be the quickest way to find the exact essence in the recipe
                 for (var essence : this.essences) {
-                    if (input.getItems()[0] == essence) {
-                        remaining.set(i, StackHelper.shrink(stack, essence.getCount(), false));
+                    if (input.getValues() == essence) {
+                        remaining.set(i, StackHelper.shrink(stack, essence.count(), false));
                         break;
                     }
                 }
             } else {
-                if (stack.hasCraftingRemainingItem()) {
-                    remaining.set(i, stack.getCraftingRemainingItem());
+                var remainder = stack.getCraftingRemainder();
+                if (remainder != null) {
+                    remaining.set(i, remainder.create());
                 }
 
                 if (this.transformer != null) {
@@ -177,25 +228,15 @@ public class AwakeningRecipe implements IAwakeningRecipe {
     }
 
     @Override
-    public Ingredient getAltarIngredient() {
-        return this.input;
-    }
-
-    @Override
-    public NonNullList<ItemStack> getEssences() {
-        return this.essences;
-    }
-
-    @Override
-    public Map<ItemStack, Integer> getMissingEssences(List<ItemStack> items) {
+    public Map<SizedIngredient, Integer> getMissingEssences(List<ItemStack> items) {
         var remaining = new ArrayList<>(this.essences);
-        var missing = new LinkedHashMap<ItemStack, Integer>();
+        var missing = new LinkedHashMap<SizedIngredient, Integer>();
 
         for (var item : items) {
             for (var essence : remaining) {
-                if (ItemStack.isSameItemSameComponents(item, essence)) {
+                if (essence.ingredient().test(item)) {
                     var current = item.getCount();
-                    var required = essence.getCount();
+                    var required = essence.count();
 
                     if (current < required) {
                         missing.put(essence, required - current);
@@ -209,7 +250,7 @@ public class AwakeningRecipe implements IAwakeningRecipe {
         }
 
         for (var essence : remaining) {
-            missing.put(essence, essence.getCount());
+            missing.put(essence, essence.count());
         }
 
         return missing;
@@ -219,120 +260,26 @@ public class AwakeningRecipe implements IAwakeningRecipe {
         this.transformer = transformer;
     }
 
-    public static class Serializer implements RecipeSerializer<AwakeningRecipe> {
-        public static final MapCodec<AwakeningRecipe> CODEC = RecordCodecBuilder.mapCodec(builder ->
-                builder.group(
-                        Ingredient.CODEC_NONEMPTY.fieldOf("input").forGetter(recipe -> recipe.input),
-                        Ingredient.CODEC_NONEMPTY
-                                .listOf()
-                                .fieldOf("ingredients")
-                                .flatXmap(
-                                        field -> {
-                                            var max = 4;
-                                            var ingredients = field.toArray(Ingredient[]::new);
-                                            if (ingredients.length == 0) {
-                                                return DataResult.error(() -> "No ingredients for awakening recipe");
-                                            } else {
-                                                if (ingredients.length > max) {
-                                                    return DataResult.error(() -> "Too many ingredients for awakening recipe. The maximum is: %s".formatted(max));
-                                                }
+    private static AwakeningRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
+        var input = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
+        var inputs = Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()).decode(buffer);
+        var essences = SizedIngredient.STREAM_CODEC.apply(ByteBufCodecs.list()).decode(buffer);
+        var result = ItemStack.STREAM_CODEC.decode(buffer);
+        var transferComponents = buffer.readBoolean();
 
-                                                var result = NonNullList.withSize(max, Ingredient.EMPTY);
+        return new AwakeningRecipe(input, inputs, essences, result, transferComponents);
+    }
 
-                                                for (int i = 0; i < ingredients.length; i++) {
-                                                    result.set(i, ingredients[i]);
-                                                }
+    private static void toNetwork(RegistryFriendlyByteBuf buffer, AwakeningRecipe recipe) {
+        Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.input);
 
-                                                return DataResult.success(result);
-                                            }
-                                        },
-                                        DataResult::success
-                                )
-                                .forGetter(recipe -> recipe.inputs),
-                        ItemStack.STRICT_CODEC
-                                .listOf()
-                                .fieldOf("essences")
-                                .flatXmap(
-                                        field -> {
-                                            var max = 4;
-                                            var stacks = field.toArray(ItemStack[]::new);
-                                            if (stacks.length == 0) {
-                                                return DataResult.error(() -> "No essences for awakening recipe");
-                                            } else {
-                                                if (stacks.length > max) {
-                                                    return DataResult.error(() -> "Too many essences for awakening recipe. The maximum is: %s".formatted(max));
-                                                }
-
-                                                var result = NonNullList.withSize(max, ItemStack.EMPTY);
-
-                                                for (int i = 0; i < stacks.length; i++) {
-                                                    result.set(i, stacks[i]);
-                                                }
-
-                                                return DataResult.success(result);
-                                            }
-                                        },
-                                        DataResult::success
-                                )
-                                .forGetter(recipe -> recipe.essences),
-                        ItemStack.STRICT_CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
-                        Codec.BOOL.optionalFieldOf("transfer_components", false).forGetter(recipe -> recipe.transferComponents)
-                ).apply(builder, AwakeningRecipe::new)
-        );
-        public static final StreamCodec<RegistryFriendlyByteBuf, AwakeningRecipe> STREAM_CODEC = StreamCodec.of(
-                AwakeningRecipe.Serializer::toNetwork, AwakeningRecipe.Serializer::fromNetwork
-        );
-
-        @Override
-        public MapCodec<AwakeningRecipe> codec() {
-            return CODEC;
+        // only send the non-vessel ingredients
+        for (int i = 1; i <= 7; i += 2) {
+            Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.inputs.get(i));
         }
 
-        @Override
-        public StreamCodec<RegistryFriendlyByteBuf, AwakeningRecipe> streamCodec() {
-            return STREAM_CODEC;
-        }
-
-        private static AwakeningRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
-            var input = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
-            int size = buffer.readVarInt();
-            var inputs = NonNullList.withSize(size, Ingredient.EMPTY);
-
-            for (int i = 0; i < size; i++) {
-                inputs.set(i, Ingredient.CONTENTS_STREAM_CODEC.decode(buffer));
-            }
-
-            size = buffer.readVarInt();
-            var essences = NonNullList.withSize(size, ItemStack.EMPTY);
-
-            for (int i = 0; i < size; i++) {
-                essences.set(i, ItemStack.OPTIONAL_STREAM_CODEC.decode(buffer));
-            }
-
-            var result = ItemStack.STREAM_CODEC.decode(buffer);
-            var transferComponents = buffer.readBoolean();
-
-            return new AwakeningRecipe(input, inputs, essences, result, transferComponents);
-        }
-
-        private static void toNetwork(RegistryFriendlyByteBuf buffer, AwakeningRecipe recipe) {
-            Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.input);
-
-            buffer.writeVarInt(4);
-
-            // only send the non-vessel ingredients
-            for (int i = 1; i <= 7; i += 2) {
-                Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.inputs.get(i));
-            }
-
-            buffer.writeVarInt(4);
-
-            for (int i = 0; i < 4; i++) {
-                ItemStack.OPTIONAL_STREAM_CODEC.encode(buffer, recipe.essences.get(i));
-            }
-
-            ItemStack.STREAM_CODEC.encode(buffer, recipe.result);
-            buffer.writeBoolean(recipe.transferComponents);
-        }
+        SizedIngredient.STREAM_CODEC.apply(ByteBufCodecs.list()).encode(buffer, recipe.essences);
+        ItemStack.STREAM_CODEC.encode(buffer, recipe.result);
+        buffer.writeBoolean(recipe.transferComponents);
     }
 }

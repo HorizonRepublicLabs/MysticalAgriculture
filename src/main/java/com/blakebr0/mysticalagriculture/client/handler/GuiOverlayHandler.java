@@ -7,7 +7,9 @@ import com.blakebr0.mysticalagriculture.tileentity.EssenceVesselTileEntity;
 import com.blakebr0.mysticalagriculture.tileentity.InfusionAltarTileEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.client.event.RenderGuiEvent;
@@ -31,14 +33,14 @@ public final class GuiOverlayHandler {
             if (tile instanceof InfusionAltarTileEntity altar) {
                 var recipe = altar.getActiveRecipe();
                 if (recipe != null) {
-                    stack = recipe.getResultItem(level.registryAccess());
+                    stack = recipe.assemble(CraftingInput.EMPTY);
                 }
             }
 
             if (tile instanceof AwakeningAltarTileEntity altar) {
                 var recipe = altar.getActiveRecipe();
                 if (recipe != null) {
-                    stack = recipe.getResultItem(level.registryAccess());
+                    stack = recipe.assemble(CraftingInput.EMPTY);
 
                     drawEssenceRequirements(gfx, recipe, altar);
                 }
@@ -48,9 +50,9 @@ public final class GuiOverlayHandler {
                 int x = mc.getWindow().getGuiScaledWidth() / 2 - 11;
                 int y = mc.getWindow().getGuiScaledHeight() / 2 - 8;
 
-                gfx.renderItem(stack, x + 26, y);
-                gfx.renderItemDecorations(mc.font, stack, x + 26, y);
-                gfx.drawString(mc.font, stack.getHoverName(), x + 48, y + 5, 16383998);
+                gfx.item(stack, x + 26, y);
+                gfx.itemDecorations(mc.font, stack, x + 26, y);
+                gfx.text(mc.font, stack.getHoverName(), x + 48, y + 5, 16383998);
             }
         }
 
@@ -59,21 +61,21 @@ public final class GuiOverlayHandler {
             var tile = mc.level.getBlockEntity(pos);
 
             if (tile instanceof EssenceVesselTileEntity vessel) {
-                var stack = vessel.getInventory().getStackInSlot(0);
-
-                if (!stack.isEmpty()) {
+                var resource = vessel.getInventory().getResource(0);
+                if (!resource.isEmpty()) {
                     int x = mc.getWindow().getGuiScaledWidth() / 2 - 11;
                     int y = mc.getWindow().getGuiScaledHeight() / 2 - 8;
+                    var stack = resource.toStack();
 
-                    gfx.renderItem(stack, x + 26, y);
-                    gfx.renderItemDecorations(mc.font, stack, x + 26, y);
-                    gfx.drawString(mc.font, stack.getHoverName(), x + 48, y + 5, 16383998);
+                    gfx.item(stack, x + 26, y);
+                    gfx.itemDecorations(mc.font, stack, x + 26, y);
+                    gfx.text(mc.font, resource.getHoverName(), x + 48, y + 5, 16383998);
                 }
             }
         }
     }
 
-    private static void drawEssenceRequirements(GuiGraphics gfx, IAwakeningRecipe recipe, AwakeningAltarTileEntity altar) {
+    private static void drawEssenceRequirements(GuiGraphicsExtractor gfx, IAwakeningRecipe recipe, AwakeningAltarTileEntity altar) {
         var mc = Minecraft.getInstance();
 
         int x = mc.getWindow().getGuiScaledWidth() / 2 - 11;
@@ -86,14 +88,15 @@ public final class GuiOverlayHandler {
         var missingEssences = recipe.getMissingEssences(altar.getEssenceItems());
 
         for (var essence : missingEssences.entrySet()) {
-            gfx.renderItem(essence.getKey(), x + 26 + xOffset, y + 2 * lineHeight);
-            gfx.drawString(mc.font, getEssenceDisplayName(essence.getKey(), essence.getValue()), x + 48 + xOffset, y + 5 + 2 * lineHeight, 16383998);
+            gfx.item(essence.getKey(), x + 26 + xOffset, y + 2 * lineHeight);
+            gfx.text(mc.font, getEssenceDisplayName(essence.getKey(), essence.getValue()), x + 48 + xOffset, y + 5 + 2 * lineHeight, 16383998);
+
             xOffset += 56;
             hasMissingEssences = true;
         }
 
         if (hasMissingEssences) {
-            gfx.drawString(mc.font, ModTooltips.MISSING_ESSENCES.build(), x + 28, y + 5 + lineHeight, 16383998);
+            gfx.text(mc.font, ModTooltips.MISSING_ESSENCES.toComponent(), x + 28, y + 5 + lineHeight, 16383998);
         }
     }
 

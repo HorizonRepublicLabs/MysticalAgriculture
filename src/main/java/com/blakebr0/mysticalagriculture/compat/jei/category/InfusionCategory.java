@@ -12,15 +12,18 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import mezz.jei.api.recipe.types.IRecipeHolderType;
+import mezz.jei.api.recipe.types.IRecipeType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
-public class InfusionCategory implements IRecipeCategory<IInfusionRecipe> {
+public class InfusionCategory implements IRecipeCategory<RecipeHolder<IInfusionRecipe>> {
     private static final Identifier TEXTURE = MysticalAgriculture.resource("textures/jei/infusion.png");
-    public static final RecipeType<IInfusionRecipe> RECIPE_TYPE = RecipeType.create(MysticalAgriculture.MOD_ID, "infusion", IInfusionRecipe.class);
+    public static final IRecipeHolderType<IInfusionRecipe> RECIPE_TYPE = IRecipeHolderType.create(MysticalAgriculture.resource("infusion"));
 
     private final IDrawable background;
     private final IDrawable icon;
@@ -31,18 +34,23 @@ public class InfusionCategory implements IRecipeCategory<IInfusionRecipe> {
     }
 
     @Override
-    public RecipeType<IInfusionRecipe> getRecipeType() {
+    public IRecipeType<RecipeHolder<IInfusionRecipe>> getRecipeType() {
         return RECIPE_TYPE;
     }
 
     @Override
     public Component getTitle() {
-        return Localizable.of("jei.category.mysticalagriculture.infusion").build();
+        return Component.translatable("jei.category.mysticalagriculture.infusion");
     }
 
     @Override
-    public IDrawable getBackground() {
-        return this.background;
+    public int getWidth() {
+        return this.background.getWidth();
+    }
+
+    @Override
+    public int getHeight() {
+        return this.background.getHeight();
     }
 
     @Override
@@ -51,7 +59,7 @@ public class InfusionCategory implements IRecipeCategory<IInfusionRecipe> {
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, IInfusionRecipe recipe, IFocusGroup focuses) {
+    public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<IInfusionRecipe> recipe, IFocusGroup focuses) {
         var level = Minecraft.getInstance().level;
 
         assert level != null;

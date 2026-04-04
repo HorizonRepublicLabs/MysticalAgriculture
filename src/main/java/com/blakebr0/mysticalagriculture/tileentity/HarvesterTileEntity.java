@@ -6,6 +6,7 @@ import com.blakebr0.cucumber.helper.StackHelper;
 import com.blakebr0.cucumber.inventory.CItemStacksHandler;
 import com.blakebr0.cucumber.inventory.OnContentsChangedFunction;
 import com.blakebr0.cucumber.tileentity.BaseInventoryTileEntity;
+import com.blakebr0.cucumber.util.ContainerDataBuilder;
 import com.blakebr0.mysticalagriculture.api.machine.IUpgradeableMachine;
 import com.blakebr0.mysticalagriculture.api.machine.MachineUpgradeItemStackHandler;
 import com.blakebr0.mysticalagriculture.api.machine.MachineUpgradeTier;
@@ -21,6 +22,7 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -29,6 +31,7 @@ import net.minecraft.world.level.block.entity.FurnaceBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
 
 public class HarvesterTileEntity extends BaseInventoryTileEntity implements MenuProvider, IUpgradeableMachine {
     private static final int FUEL_TICK_MULTIPLIER = 20;
@@ -49,11 +52,20 @@ public class HarvesterTileEntity extends BaseInventoryTileEntity implements Menu
     private int lastScanIndex = -1;
     private boolean isRunning;
 
+    private final ContainerData dataAccess;
+
     public HarvesterTileEntity(BlockPos pos, BlockState state) {
         super(ModTileEntities.HARVESTER.get(), pos, state);
         this.inventory = createInventoryHandler((_, _) -> this.setChanged());
         this.upgradeInventory = new MachineUpgradeItemStackHandler();
         this.energy = new CEnergyStorage(FUEL_CAPACITY, _ -> this.setChangedFast());
+
+        this.dataAccess = ContainerDataBuilder.builder()
+                .sync(this.energy::getAmountAsInt, this.energy::set)
+                .sync(this.energy::getCapacityAsInt, this.energy::setMaxCapacity)
+                .sync(() -> this.fuelLeft, value -> this.fuelLeft = value)
+                .sync(() -> this.fuelItemValue, value -> this.fuelItemValue = value)
+                .build();
     }
 
     @Override
@@ -92,7 +104,7 @@ public class HarvesterTileEntity extends BaseInventoryTileEntity implements Menu
 
     @Override
     public AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
-        return new HarvesterContainer(i, inventory, this.inventory, this.upgradeInventory, this.getBlockPos());
+        return new HarvesterContainer(i, inventory, this.inventory, this.upgradeInventory, this.dataAccess, this.getBlockPos());
     }
 
     @Override
@@ -112,29 +124,33 @@ public class HarvesterTileEntity extends BaseInventoryTileEntity implements Menu
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, HarvesterTileEntity tile) {
-        if (tile.energy.getEnergyStored() < tile.energy.getMaxEnergyStored()) {
-            var fuel = tile.inventory.getStackInSlot(0);
+        if (tile.energy.getAmountAsInt() < tile.energy.getCapacityAsInt()) {
+            var fuel = tile.inventory.getResource(0);
 
-            if (tile.fuelLeft <= 0 && !fuel.isEmpty()) {
-                tile.fuelItemValue = fuel.getBurnTime(null);
+            try (var tx = Transaction.openRoot()) {
+                if (tile.fuelLeft <= 0 && !fuel.isEmpty()) {
+                    tile.fuelItemValue = fuel.toStack().getBurnTime(null, level.fuelValues());
 
-                if (tile.fuelItemValue > 0) {
-                    tile.fuelLeft = tile.fuelItemValue *= FUEL_TICK_MULTIPLIER;
-                    tile.inventory.setStackInSlot(0, StackHelper.shrink(fuel, 1, true));
+                    if (tile.fuelItemValue > 0) {
+                        tile.fuelLeft = tile.fuelItemValue *= FUEL_TICK_MULTIPLIER;
+                        tile.inventory.extract(0, fuel, 1, tx, true);
+
+                        tile.setChangedFast();
+                    }
+                }
+
+                if (tile.fuelLeft > 0) {
+                    var fuelPerTick = Math.min(Math.min(tile.fuelLeft, tile.getFuelUsage() * 2), tile.energy.getCapacityAsInt() - tile.energy.getAmountAsInt());
+
+                    tile.fuelLeft -= tile.energy.insert(fuelPerTick, tx);
+
+                    if (tile.fuelLeft <= 0)
+                        tile.fuelItemValue = 0;
 
                     tile.setChangedFast();
                 }
-            }
 
-            if (tile.fuelLeft > 0) {
-                var fuelPerTick = Math.min(Math.min(tile.fuelLeft, tile.getFuelUsage() * 2), tile.energy.getMaxEnergyStored() - tile.energy.getEnergyStored());
-
-                tile.fuelLeft -= tile.energy.receiveEnergy(fuelPerTick, false);
-
-                if (tile.fuelLeft <= 0)
-                    tile.fuelItemValue = 0;
-
-                tile.setChangedFast();
+                tx.commit();
             }
         }
 
@@ -146,9 +162,9 @@ public class HarvesterTileEntity extends BaseInventoryTileEntity implements Menu
             tile.direction = direction;
 
             if (tier == null) {
-                tile.energy.resetMaxEnergyStorage();
+                tile.energy.resetMaxCapacity();
             } else {
-                tile.energy.setMaxEnergyStorage((int) (FUEL_CAPACITY * tier.getFuelCapacityMultiplier()));
+                tile.energy.setMaxCapacity(FUEL_CAPACITY * tier.getFuelCapacityMultiplier());
             }
 
             tile.setChangedFast();
@@ -164,29 +180,32 @@ public class HarvesterTileEntity extends BaseInventoryTileEntity implements Menu
 
             if (block instanceof CropBlock crop) {
                 var seed = CropHelper.getSeedsItem(block);
-                if (seed != null && crop.isMaxAge(cropState)) {
-                    var drops = Block.getDrops(cropState, (ServerLevel) level, nextPos, tile);
 
-                    for (var drop : drops) {
-                        var item = drop.getItem();
+                try (var tx = Transaction.openRoot()) {
+                    if (seed != null && crop.isMaxAge(cropState)) {
+                        var drops = Block.getDrops(cropState, (ServerLevel) level, nextPos, tile);
 
-                        if (!drop.isEmpty() && item == seed) {
-                            drop.shrink(1);
-                            break;
+                        for (var drop : drops) {
+                            var item = drop.getItem();
+
+                            if (!drop.isEmpty() && item == seed) {
+                                drop.shrink(1);
+                                break;
+                            }
                         }
-                    }
 
-                    for (var drop : drops) {
-                        if (!drop.isEmpty()) {
-                            tile.addItemToInventory(drop, level, nextPos);
+                        for (var drop : drops) {
+                            if (!drop.isEmpty()) {
+                                tile.addItemToInventory(drop, level, nextPos);
+                            }
                         }
+
+                        level.setBlockAndUpdate(nextPos, crop.getStateForAge(0));
+
+                        tile.energy.extract(tile.getFuelUsage(), tx);
+                    } else {
+                        tile.energy.extract(SCAN_FUEL_USAGE, tx);
                     }
-
-                    level.setBlockAndUpdate(nextPos, crop.getStateForAge(0));
-
-                    tile.energy.extractEnergy(tile.getFuelUsage(), false);
-                } else {
-                    tile.energy.extractEnergy(SCAN_FUEL_USAGE, false);
                 }
             }
 
@@ -197,7 +216,7 @@ public class HarvesterTileEntity extends BaseInventoryTileEntity implements Menu
 
         var wasRunning = tile.isRunning;
 
-        if (!isDisabled && tile.energy.getEnergyStored() >= tile.getFuelUsage()) {
+        if (!isDisabled && tile.energy.getAmountAsInt() >= tile.getFuelUsage()) {
             tile.progress++;
             tile.isRunning = true;
             tile.setChangedFast();
@@ -212,23 +231,6 @@ public class HarvesterTileEntity extends BaseInventoryTileEntity implements Menu
         }
 
         tile.dispatchIfChanged();
-    }
-
-    public static CItemStacksHandler createInventoryHandler() {
-        return createInventoryHandler(null);
-    }
-
-    public static CItemStacksHandler createInventoryHandler(OnContentsChangedFunction onContentsChanged) {
-        return CItemStacksHandler.create(16, onContentsChanged, builder -> {
-            builder.setCanInsert((slot, stack) -> switch (slot) {
-                case 0 -> FurnaceBlockEntity.isFuel(stack);
-                default -> false;
-            });
-            builder.setCanExtract(slot -> switch (slot) {
-                case 0 -> !FurnaceBlockEntity.isFuel(builder.getStackInSlot(slot));
-                default -> true;
-            });
-        });
     }
 
     public CEnergyStorage getEnergy() {
@@ -288,7 +290,7 @@ public class HarvesterTileEntity extends BaseInventoryTileEntity implements Menu
 
     private void addItemToInventory(ItemStack stack, Level level, BlockPos pos) {
         var remaining = stack.getCount();
-        for (int i = 1; i < this.inventory.getSlots(); i++) {
+        for (int i = 1; i < this.inventory.size(); i++) {
             var stackInSlot = this.inventory.getStackInSlot(i);
 
             if (stackInSlot.isEmpty()) {
@@ -309,5 +311,22 @@ public class HarvesterTileEntity extends BaseInventoryTileEntity implements Menu
         }
 
         Block.popResource(level, pos, StackHelper.withSize(stack, remaining, false));
+    }
+
+    public static CItemStacksHandler createInventoryHandler() {
+        return createInventoryHandler(null);
+    }
+
+    public static CItemStacksHandler createInventoryHandler(OnContentsChangedFunction onContentsChanged) {
+        return CItemStacksHandler.create(16, onContentsChanged, builder -> {
+            builder.setCanInsert((slot, stack) -> switch (slot) {
+                case 0 -> FurnaceBlockEntity.isFuel(stack);
+                default -> false;
+            });
+            builder.setCanExtract(slot -> switch (slot) {
+                case 0 -> !FurnaceBlockEntity.isFuel(builder.getStackInSlot(slot));
+                default -> true;
+            });
+        });
     }
 }

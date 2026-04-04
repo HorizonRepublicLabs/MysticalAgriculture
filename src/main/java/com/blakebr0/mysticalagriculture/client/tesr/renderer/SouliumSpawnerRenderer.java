@@ -1,23 +1,31 @@
-package com.blakebr0.mysticalagriculture.client.tesr;
+package com.blakebr0.mysticalagriculture.client.tesr.renderer;
 
+import com.blakebr0.mysticalagriculture.client.tesr.state.SouliumSpawnerRenderState;
 import com.blakebr0.mysticalagriculture.tileentity.SouliumSpawnerTileEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.util.Mth;
 
-public class SouliumSpawnerRenderer implements BlockEntityRenderer<SouliumSpawnerTileEntity> {
+public class SouliumSpawnerRenderer implements BlockEntityRenderer<SouliumSpawnerTileEntity, SouliumSpawnerRenderState> {
     private final EntityRenderDispatcher entityRenderer;
 
     public SouliumSpawnerRenderer(BlockEntityRendererProvider.Context context) {
-        this.entityRenderer = context.getEntityRenderer();
+        this.entityRenderer = context.entityRenderer();
     }
 
     @Override
-    public void render(SouliumSpawnerTileEntity tile, float v, PoseStack matrix, MultiBufferSource buffer, int i, int i1) {
+    public SouliumSpawnerRenderState createRenderState() {
+        return new SouliumSpawnerRenderState();
+    }
+
+    @Override
+    public void submit(SouliumSpawnerRenderState state, PoseStack matrix, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
         matrix.pushPose();
         matrix.translate(0.5F, 0.0F, 0.5F);
 

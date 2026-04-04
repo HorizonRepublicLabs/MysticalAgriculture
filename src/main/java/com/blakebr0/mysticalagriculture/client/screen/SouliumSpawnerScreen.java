@@ -31,27 +31,13 @@ public class SouliumSpawnerScreen extends BaseContainerScreen<SouliumSpawnerCont
 
         this.tile = this.getTileEntity();
 
-        if (this.tile != null) {
-            this.addRenderableWidget(new EnergyBarWidget(x + 7, y + 17, this.tile.getEnergy()));
-        }
+        this.addRenderableWidget(new EnergyBarWidget(x + 7, y + 17, this.menu::getEnergyStored, this.menu::getEnergyCapacity));
     }
 
     @Override
     protected void extractLabels(GuiGraphicsExtractor gfx, int mouseX, int mouseY) {
         gfx.text(this.font, this.title, (this.imageWidth / 2 - this.font.width(this.title) / 2), 6, 4210752, false);
         gfx.text(this.font, this.playerInventoryTitle, 8, (this.imageHeight - 96 + 2), 4210752, false);
-
-        // TODO: "temporary" workaround for dynamic energy storage
-        if (this.tile != null) {
-            var tier = this.tile.getMachineTier();
-            var energy = this.tile.getEnergy();
-
-            energy.resetMaxEnergyStorage();
-
-            if (tier != null) {
-                energy.setMaxEnergyStorage((int) (this.tile.getEnergy().getMaxEnergyStored() * tier.getFuelCapacityMultiplier()));
-            }
-        }
     }
 
     @Override
@@ -61,8 +47,8 @@ public class SouliumSpawnerScreen extends BaseContainerScreen<SouliumSpawnerCont
 
         super.extractTooltip(gfx, mouseX, mouseY);
 
-        if (this.getFuelLeft() > 0 && mouseX > x + 30 && mouseX < x + 45 && mouseY > y + 39 && mouseY < y + 53) {
-            gfx.setTooltipForNextFrame(this.font, Formatting.energy(this.getFuelLeft()), mouseX, mouseY);
+        if (this.menu.getFuelLeft() > 0 && mouseX > x + 30 && mouseX < x + 45 && mouseY > y + 39 && mouseY < y + 53) {
+            gfx.setTooltipForNextFrame(this.font, Formatting.energy(this.menu.getFuelLeft()), mouseX, mouseY);
         }
 
         if (this.tile != null) {
@@ -86,12 +72,12 @@ public class SouliumSpawnerScreen extends BaseContainerScreen<SouliumSpawnerCont
         int x = this.getGuiLeft();
         int y = this.getGuiTop();
 
-        if (this.getFuelItemValue() > 0) {
+        if (this.menu.getFuelItemValue() > 0) {
             int i = this.getBurnLeftScaled(13);
             gfx.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, x + 31, y + 52 - i, 176, 12 - i, 14, i + 1, 256, 256);
         }
 
-        if (this.getProgress() > 0) {
+        if (this.menu.getProgress() > 0) {
             int i2 = this.getProgressScaled(24);
             gfx.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, x + 98, y + 51, 176, 14, i2 + 1, 16, 256, 256);
         }
@@ -117,48 +103,15 @@ public class SouliumSpawnerScreen extends BaseContainerScreen<SouliumSpawnerCont
         return null;
     }
 
-    public int getProgress() {
-        if (this.tile == null)
-            return 0;
-
-        return this.tile.getProgress();
-    }
-
-    public int getOperationTime() {
-        if (this.tile == null)
-            return 0;
-
-        var tier = this.tile.getMachineTier();
-        if (tier != null) {
-            return (int) (this.tile.getOperationTime() * tier.getOperationTimeMultiplier());
-        }
-
-        return this.tile.getOperationTime();
-    }
-
-    public int getFuelLeft() {
-        if (this.tile == null)
-            return 0;
-
-        return this.tile.getFuelLeft();
-    }
-
-    public int getFuelItemValue() {
-        if (this.tile == null)
-            return 0;
-
-        return this.tile.getFuelItemValue();
-    }
-
     public int getProgressScaled(int pixels) {
-        int i = this.getProgress();
-        int j = this.getOperationTime();
+        int i = this.menu.getProgress();
+        int j = this.menu.getOperationTime();
         return j != 0 && i != 0 ? i * pixels / j : 0;
     }
 
     public int getBurnLeftScaled(int pixels) {
-        int i = this.getFuelLeft();
-        int j = this.getFuelItemValue();
+        int i = this.menu.getFuelLeft();
+        int j = this.menu.getFuelItemValue();
         return (int) (j != 0 && i != 0 ? (long) i * pixels / j : 0);
     }
 

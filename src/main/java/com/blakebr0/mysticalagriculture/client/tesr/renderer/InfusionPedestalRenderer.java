@@ -1,20 +1,28 @@
-package com.blakebr0.mysticalagriculture.client.tesr;
+package com.blakebr0.mysticalagriculture.client.tesr.renderer;
 
+import com.blakebr0.mysticalagriculture.client.tesr.state.InfusionPedestalRenderState;
 import com.blakebr0.mysticalagriculture.tileentity.InfusionPedestalTileEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemDisplayContext;
 
-public class InfusionPedestalRenderer implements BlockEntityRenderer<InfusionPedestalTileEntity> {
+public class InfusionPedestalRenderer implements BlockEntityRenderer<InfusionPedestalTileEntity, InfusionPedestalRenderState> {
     public InfusionPedestalRenderer(BlockEntityRendererProvider.Context context) { }
 
     @Override
-    public void render(InfusionPedestalTileEntity tile, float v, PoseStack matrix, MultiBufferSource buffer, int i, int i1) {
+    public InfusionPedestalRenderState createRenderState() {
+        return new InfusionPedestalRenderState();
+    }
+
+    @Override
+    public void submit(InfusionPedestalRenderState state, PoseStack matrix, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
         var stack = tile.getInventory().getStackInSlot(0);
         var minecraft = Minecraft.getInstance();
 

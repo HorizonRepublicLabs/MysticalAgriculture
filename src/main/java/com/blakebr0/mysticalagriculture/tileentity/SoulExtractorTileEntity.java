@@ -7,6 +7,7 @@ import com.blakebr0.cucumber.inventory.CachedRecipe;
 import com.blakebr0.cucumber.inventory.OnContentsChangedFunction;
 import com.blakebr0.cucumber.inventory.SidedInventoryWrapper;
 import com.blakebr0.cucumber.tileentity.BaseInventoryTileEntity;
+import com.blakebr0.cucumber.util.ContainerDataBuilder;
 import com.blakebr0.cucumber.util.Localizable;
 import com.blakebr0.mysticalagriculture.api.crafting.ISoulExtractionRecipe;
 import com.blakebr0.mysticalagriculture.api.machine.IUpgradeableMachine;
@@ -22,11 +23,13 @@ import com.blakebr0.mysticalagriculture.util.RecipeIngredientCache;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.level.Level;
@@ -34,7 +37,9 @@ import net.minecraft.world.level.block.entity.FurnaceBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -56,6 +61,8 @@ public class SoulExtractorTileEntity extends BaseInventoryTileEntity implements 
     private int fuelItemValue;
     private boolean isRunning;
 
+    private final ContainerData dataAccess;
+
     public SoulExtractorTileEntity(BlockPos pos, BlockState state) {
         super(ModTileEntities.SOUL_EXTRACTOR.get(), pos, state);
         this.inventory = createInventoryHandler((_, _) -> this.setChanged());
@@ -63,6 +70,15 @@ public class SoulExtractorTileEntity extends BaseInventoryTileEntity implements 
         this.energy = new CEnergyStorage(FUEL_CAPACITY, _ -> this.setChangedFast());
         this.sidedInventoryWrappers = SidedInventoryWrapper.create(this.inventory, List.of(Direction.UP, Direction.DOWN, Direction.NORTH), this::canInsertStackSided, null);
         this.recipe = new CachedRecipe<>(ModRecipeTypes.SOUL_EXTRACTION.get());
+
+        this.dataAccess = ContainerDataBuilder.builder()
+                .sync(this.energy::getAmountAsInt, this.energy::set)
+                .sync(this.energy::getCapacityAsInt, this.energy::setMaxCapacity)
+                .sync(() -> this.progress, value -> this.progress = value)
+                .sync(this::getOperationTime)
+                .sync(() -> this.fuelLeft, value -> this.fuelLeft = value)
+                .sync(() -> this.fuelItemValue, value -> this.fuelItemValue = value)
+                .build();
     }
 
     @Override
@@ -94,12 +110,12 @@ public class SoulExtractorTileEntity extends BaseInventoryTileEntity implements 
 
     @Override
     public Component getDisplayName() {
-        return Localizable.of("container.mysticalagriculture.soul_extractor").build();
+        return Component.translatable("container.mysticalagriculture.soul_extractor");
     }
 
     @Override
     public AbstractContainerMenu createMenu(int id, Inventory playerInventory, Player player) {
-        return SoulExtractorContainer.create(id, playerInventory, this.inventory, this.upgradeInventory, this.getBlockPos());
+        return new SoulExtractorContainer(id, playerInventory, this.inventory, this.upgradeInventory, this.dataAccess, this.getBlockPos());
     }
 
     @Override
@@ -129,29 +145,33 @@ public class SoulExtractorTileEntity extends BaseInventoryTileEntity implements 
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, SoulExtractorTileEntity tile) {
-        if (tile.energy.getEnergyStored() < tile.energy.getMaxEnergyStored()) {
-            var fuel = tile.inventory.getStackInSlot(1);
+        if (tile.energy.getAmountAsInt() < tile.energy.getCapacityAsInt()) {
+            var fuel = tile.inventory.getResource(0);
 
-            if (tile.fuelLeft <= 0 && !fuel.isEmpty()) {
-                tile.fuelItemValue = fuel.getBurnTime(null);
+            try (var tx = Transaction.openRoot()) {
+                if (tile.fuelLeft <= 0 && !fuel.isEmpty()) {
+                    tile.fuelItemValue = fuel.toStack().getBurnTime(null, level.fuelValues());
 
-                if (tile.fuelItemValue > 0) {
-                    tile.fuelLeft = tile.fuelItemValue *= FUEL_TICK_MULTIPLIER;
-                    tile.inventory.setStackInSlot(1, StackHelper.shrink(fuel, 1, true));
+                    if (tile.fuelItemValue > 0) {
+                        tile.fuelLeft = tile.fuelItemValue *= FUEL_TICK_MULTIPLIER;
+                        tile.inventory.extract(0, fuel, 1, tx, true);
+
+                        tile.setChangedFast();
+                    }
+                }
+
+                if (tile.fuelLeft > 0) {
+                    var fuelPerTick = Math.min(Math.min(tile.fuelLeft, tile.getFuelUsage() * 2), tile.energy.getCapacityAsInt() - tile.energy.getAmountAsInt());
+
+                    tile.fuelLeft -= tile.energy.insert(fuelPerTick, tx);
+
+                    if (tile.fuelLeft <= 0)
+                        tile.fuelItemValue = 0;
 
                     tile.setChangedFast();
                 }
-            }
 
-            if (tile.fuelLeft > 0) {
-                var fuelPerTick = Math.min(Math.min(tile.fuelLeft, tile.getFuelUsage() * 2), tile.energy.getMaxEnergyStored() - tile.energy.getEnergyStored());
-
-                tile.fuelLeft -= tile.energy.receiveEnergy(fuelPerTick, false);
-
-                if (tile.fuelLeft <= 0)
-                    tile.fuelItemValue = 0;
-
-                tile.setChangedFast();
+                tx.commit();
             }
         }
 
@@ -161,9 +181,9 @@ public class SoulExtractorTileEntity extends BaseInventoryTileEntity implements 
             tile.tier = tier;
 
             if (tier == null) {
-                tile.energy.resetMaxEnergyStorage();
+                tile.energy.resetMaxCapacity();
             } else {
-                tile.energy.setMaxEnergyStorage((int) (FUEL_CAPACITY * tier.getFuelCapacityMultiplier()));
+                tile.energy.setMaxCapacity(FUEL_CAPACITY * tier.getFuelCapacityMultiplier());
             }
 
             tile.setChangedFast();
@@ -175,7 +195,7 @@ public class SoulExtractorTileEntity extends BaseInventoryTileEntity implements 
         tile.isRunning = false;
 
         if (recipe != null) {
-            if (tile.energy.getEnergyStored() >= tile.getFuelUsage()) {
+            if (tile.energy.getAmountAsInt() >= tile.getFuelUsage()) {
                 tile.isRunning = true;
                 tile.progress++;
                 tile.energy.extractEnergy(tile.getFuelUsage(), false);
@@ -232,7 +252,7 @@ public class SoulExtractorTileEntity extends BaseInventoryTileEntity implements 
         if (this.level == null)
             return null;
 
-        return this.recipe.checkAndGet(this.toCraftingInput(), this.level);
+        return this.recipe.checkAndGet(this.toCraftingInput(), (ServerLevel) this.level);
     }
 
     public CEnergyStorage getEnergy() {
@@ -269,13 +289,14 @@ public class SoulExtractorTileEntity extends BaseInventoryTileEntity implements 
         return this.inventory.toShapelessCraftingInput();
     }
 
-    private boolean canInsertStackSided(int slot, ItemStack stack, Direction direction) {
+    private boolean canInsertStackSided(int slot, ItemResource resource, Direction direction) {
+        var stack = resource.toStack();
         if (direction == null)
             return true;
         if (slot == 0 && direction == Direction.UP)
             return RecipeIngredientCache.INSTANCE.isValidInput(stack, ModRecipeTypes.SOUL_EXTRACTION.get());
         if (slot == 1 && direction == Direction.NORTH)
-            return FurnaceBlockEntity.isFuel(stack);
+            return this.level != null && this.level.fuelValues().isFuel(stack);
         if (slot == 2 && direction == Direction.NORTH)
             return stack.getItem() instanceof SoulJarItem;
 

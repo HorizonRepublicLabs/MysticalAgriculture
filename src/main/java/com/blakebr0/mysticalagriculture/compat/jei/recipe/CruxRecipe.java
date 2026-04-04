@@ -1,4 +1,4 @@
-package com.blakebr0.mysticalagriculture.compat.jei;
+package com.blakebr0.mysticalagriculture.compat.jei.recipe;
 
 import com.blakebr0.mysticalagriculture.registry.CropRegistry;
 import com.google.common.collect.Lists;

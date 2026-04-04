@@ -1,11 +1,12 @@
 package com.blakebr0.mysticalagriculture.api.crafting;
 
 import net.minecraft.core.Holder;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeBookCategories;
+import net.minecraft.world.item.crafting.RecipeBookCategory;
 import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.item.enchantment.Enchantment;
 
@@ -32,23 +33,39 @@ public interface IEnchanterRecipe extends Recipe<CraftingInput> {
     int getMaxResultEnchantmentLevel(RecipeInput input);
 
     /**
-     * Special case version of {@link Recipe#assemble(RecipeInput, HolderLookup.Provider)} that will only return the
+     * Special case version of {@link Recipe#assemble(RecipeInput)} that will only return the
      * newly enchanted item with the provided level or empty
      *
      * @param input the recipe input
-     * @param provider the lookup provider
      * @param level the required enchantment level
      * @return the enchanted item or empty
      */
-    ItemStack assemble(CraftingInput input, HolderLookup.Provider provider, int level);
+    ItemStack assemble(CraftingInput input, int level);
+
+    default NonNullList<ItemStack> getRemainingItems(CraftingInput input) {
+        return this.getRemainingItems(input, this.getMaxResultEnchantmentLevel(input));
+    }
 
     /**
-     * Special case version of {@link Recipe#getRemainingItems(RecipeInput)} that takes in the enchantment level instead
-     * of using the max value provided by {@link IEnchanterRecipe#getMaxResultEnchantmentLevel(RecipeInput)}
+     * Returns the remaining items after a successful crafting operation
      *
-     * @param input the recipe input
-     * @param level the required enchantment level
-     * @return the remaining items for a craft with the specified enchantment level
+     * @param input the crafting input
+     * @return the remaining items
      */
     NonNullList<ItemStack> getRemainingItems(CraftingInput input, int level);
+
+    @Override
+    default String group() {
+        return "mysticalagriculture:enchanter";
+    }
+
+    @Override
+    default boolean showNotification() {
+        return false;
+    }
+
+    @Override
+    default RecipeBookCategory recipeBookCategory() {
+        return RecipeBookCategories.CRAFTING_MISC;
+    }
 }

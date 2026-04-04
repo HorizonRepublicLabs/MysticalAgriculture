@@ -2,7 +2,7 @@ package com.blakebr0.mysticalagriculture.container;
 
 import com.blakebr0.cucumber.container.BaseContainerMenu;
 import com.blakebr0.cucumber.inventory.CItemStacksHandler;
-import com.blakebr0.cucumber.inventory.slot.CItemStacksHandlerSlot;
+import com.blakebr0.cucumber.inventory.slot.CSlot;
 import com.blakebr0.mysticalagriculture.api.machine.MachineUpgradeItemStackHandler;
 import com.blakebr0.mysticalagriculture.init.ModMenuTypes;
 import com.blakebr0.mysticalagriculture.init.ModRecipeTypes;
@@ -10,25 +10,31 @@ import com.blakebr0.mysticalagriculture.item.MachineUpgradeItem;
 import com.blakebr0.mysticalagriculture.tileentity.ReprocessorTileEntity;
 import com.blakebr0.mysticalagriculture.util.RecipeIngredientCache;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.items.SlotItemHandler;
+import net.neoforged.neoforge.transfer.item.ResourceHandlerSlot;
 
 public class ReprocessorContainer extends BaseContainerMenu {
-    public ReprocessorContainer(int id, Inventory playerInventory, BlockPos pos) {
-        this(id, playerInventory, ReprocessorTileEntity.createInventoryHandler(), new MachineUpgradeItemStackHandler(), pos);
+    private final ContainerData data;
+
+    public ReprocessorContainer(int id, Inventory playerInventory, RegistryFriendlyByteBuf buffer) {
+        this(id, playerInventory, ReprocessorTileEntity.createInventoryHandler(), new MachineUpgradeItemStackHandler(), new SimpleContainerData(6), buffer.readBlockPos());
     }
 
-    public ReprocessorContainer(int id, Inventory playerInventory, CItemStacksHandler inventory, MachineUpgradeItemStackHandler upgradeInventory, BlockPos pos) {
+    public ReprocessorContainer(int id, Inventory playerInventory, CItemStacksHandler inventory, MachineUpgradeItemStackHandler upgradeInventory, ContainerData data, BlockPos pos) {
         super(ModMenuTypes.REPROCESSOR.get(), id, pos);
+        this.data = data;
 
-        this.addSlot(new SlotItemHandler(upgradeInventory, 0, 152, 9));
+        this.addSlot(new ResourceHandlerSlot(upgradeInventory, upgradeInventory::set, 0, 152, 9));
 
-        this.addSlot(new CItemStacksHandlerSlot(inventory, 0, 74, 52));
-        this.addSlot(new CItemStacksHandlerSlot(inventory, 1, 30, 56));
-        this.addSlot(new CItemStacksHandlerSlot(inventory, 2, 134, 52));
+        this.addSlot(new CSlot(inventory, 0, 74, 52));
+        this.addSlot(new CSlot(inventory, 1, 30, 56));
+        this.addSlot(new CSlot(inventory, 2, 134, 52));
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++) {
@@ -59,7 +65,7 @@ public class ReprocessorContainer extends BaseContainerMenu {
                     if (!this.moveItemStackTo(itemstack1, 1, 2, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (itemstack1.getBurnTime(null) > 0) {
+                } else if (itemstack1.getBurnTime(null, player.level().fuelValues()) > 0) {
                     if (!this.moveItemStackTo(itemstack1, 2, 3, false)) {
                         return ItemStack.EMPTY;
                     }
@@ -88,5 +94,29 @@ public class ReprocessorContainer extends BaseContainerMenu {
         }
 
         return itemstack;
+    }
+
+    public int getEnergyStored() {
+        return this.data.get(0);
+    }
+
+    public int getEnergyCapacity() {
+        return this.data.get(1);
+    }
+
+    public int getProgress() {
+        return this.data.get(2);
+    }
+
+    public int getOperationTime() {
+        return this.data.get(3);
+    }
+
+    public int getFuelLeft() {
+        return this.data.get(4);
+    }
+
+    public int getFuelItemValue() {
+        return this.data.get(5);
     }
 }

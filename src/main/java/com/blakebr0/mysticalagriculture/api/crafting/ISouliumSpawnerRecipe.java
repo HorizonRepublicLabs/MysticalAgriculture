@@ -16,9 +16,6 @@ public interface ISouliumSpawnerRecipe extends Recipe<CraftingInput> {
 
     /**
      * Get the count for the ingredient at the requested index
-     *
-     * @param index the ingredient index
-     * @return either the count or -1 if invalid
      */
-    int getCount(int index);
+    int getCount();
 }
