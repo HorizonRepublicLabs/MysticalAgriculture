@@ -123,9 +123,7 @@ public class ReprocessorTileEntity extends BaseInventoryTileEntity implements Me
         super.preRemoveSideEffects(pos, state);
 
         if (this.level != null) {
-            var upgrade = this.upgradeInventory.getResource(0).toStack(this.upgradeInventory.getAmountAsInt(0));
-
-            Containers.dropItemStack(this.level, pos.getX(), pos.getY(), pos.getZ(), upgrade);
+            Containers.dropItemStack(this.level, pos.getX(), pos.getY(), pos.getZ(), this.upgradeInventory.getStackCopy());
         }
     }
 
