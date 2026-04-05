@@ -105,7 +105,7 @@ public class SouliumSpawnerTileEntity extends BaseInventoryTileEntity implements
         this.progress = input.getIntOr("Progress", 0);
         this.fuelLeft = input.getIntOr("FuelLeft", 0);
         this.fuelItemValue = input.getIntOr("FuelItemValue", 0);
-        this.energy.deserialize(input);
+        this.energy.deserialize(input.childOrEmpty( "Energy" ));
         this.upgradeInventory.deserialize(input.childOrEmpty("UpgradeInventory"));
     }
 
@@ -116,7 +116,7 @@ public class SouliumSpawnerTileEntity extends BaseInventoryTileEntity implements
         output.putInt("Progress", this.progress);
         output.putInt("FuelLeft", this.fuelLeft);
         output.putInt("FuelItemValue", this.fuelItemValue);
-        this.energy.serialize(output);
+        output.putChild("Energy", this.energy);
         output.putChild("UpgradeInventory", this.upgradeInventory);
     }
 

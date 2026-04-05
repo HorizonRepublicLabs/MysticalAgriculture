@@ -89,7 +89,7 @@ public class HarvesterTileEntity extends BaseInventoryTileEntity implements Menu
         this.fuelLeft = input.getIntOr("FuelLeft", 0);
         this.fuelItemValue = input.getIntOr("FuelItemValue", 0);
         this.lastScanIndex = input.getIntOr("LastScanIndex", -1);
-        this.energy.deserialize(input);
+        this.energy.deserialize(input.childOrEmpty("Energy"));
         this.upgradeInventory.deserialize(input.childOrEmpty("UpgradeInventory"));
     }
 
@@ -101,7 +101,7 @@ public class HarvesterTileEntity extends BaseInventoryTileEntity implements Menu
         output.putInt("FuelLeft", this.fuelLeft);
         output.putInt("FuelItemValue", this.fuelItemValue);
         output.putInt("LastScanIndex", this.lastScanIndex);
-        this.energy.serialize(output);
+        output.putChild("Energy", this.energy);
         output.putChild("UpgradeInventory", this.upgradeInventory);
     }
 
