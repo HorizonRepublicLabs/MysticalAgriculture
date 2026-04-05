@@ -4,17 +4,25 @@ import com.blakebr0.mysticalagriculture.client.tesr.state.AwakeningPedestalRende
 import com.blakebr0.mysticalagriculture.tileentity.AwakeningPedestalTileEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.MultiBufferSource;
+import it.unimi.dsi.fastutil.HashCommon;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
+import net.minecraft.client.renderer.item.ItemModelResolver;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.phys.Vec3;
+import org.jspecify.annotations.Nullable;
 
 public class AwakeningPedestalRenderer implements BlockEntityRenderer<AwakeningPedestalTileEntity, AwakeningPedestalRenderState> {
-    public AwakeningPedestalRenderer(BlockEntityRendererProvider.Context context) { }
+    private final ItemModelResolver itemModelResolver;
+
+    public AwakeningPedestalRenderer(BlockEntityRendererProvider.Context context) {
+        this.itemModelResolver = context.itemModelResolver();
+    }
 
     @Override
     public AwakeningPedestalRenderState createRenderState() {
@@ -22,19 +30,27 @@ public class AwakeningPedestalRenderer implements BlockEntityRenderer<AwakeningP
     }
 
     @Override
-    public void submit(AwakeningPedestalRenderState state, PoseStack matrix, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
-        var minecraft = Minecraft.getInstance();
-        var stack = tile.getInventory().getStackInSlot(0);
+    public void extractRenderState(AwakeningPedestalTileEntity tile, AwakeningPedestalRenderState state, float partialTicks, Vec3 cameraPosition, ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+        BlockEntityRenderer.super.extractRenderState(tile, state, partialTicks, cameraPosition, breakProgress);
 
-        if (!stack.isEmpty()) {
+        state.itemResource = tile.getInventory().getResource(0);
+
+        int seed = HashCommon.long2int(state.blockPos.asLong());
+
+        this.itemModelResolver.updateForTopItem(state.itemRenderState,  state.itemResource.toStack(), ItemDisplayContext.FIXED, tile.getLevel(), null, seed);
+    }
+
+    @Override
+    public void submit(AwakeningPedestalRenderState state, PoseStack matrix, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
+        if (!state.itemResource.isEmpty()) {
             matrix.pushPose();
             matrix.translate(0.5D, 1.2D, 0.5D);
-            float scale = stack.getItem() instanceof BlockItem ? 0.95F : 0.75F;
+            float scale = state.itemResource.getItem() instanceof BlockItem ? 0.95F : 0.75F;
             matrix.scale(scale, scale, scale);
             double tick = System.currentTimeMillis() / 800.0D;
             matrix.translate(0.0D, Math.sin(tick % (2 * Math.PI)) * 0.065D, 0.0D);
             matrix.mulPose(Axis.YP.rotationDegrees((float) ((tick * 40.0D) % 360)));
-            minecraft.getItemRenderer().renderStatic(stack, ItemDisplayContext.GROUND, combinedLight, combinedOverlay, matrix, buffer, minecraft.level, 0);
+            state.itemRenderState.submit(matrix, submitNodeCollector, state.lightCoords, OverlayTexture.NO_OVERLAY, 0);
             matrix.popPose();
         }
     }

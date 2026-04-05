@@ -61,9 +61,9 @@ public class TinkeringTableContainer extends BaseContainerMenu {
                 if (!stack.isEmpty() && item instanceof IAugmentProvider) {
                     var augment = ((IAugmentProvider) item).getAugment();
                     if (augment != augmentInSlot)
-                        AugmentUtils.addAugment(tinkerable, augment, i);
+                       this.inventory.set(0, AugmentUtils.addAugment(tinkerable, augment, i), 1);
                 } else if (augmentInSlot != null) {
-                    AugmentUtils.removeAugment(tinkerable, i);
+                    this.inventory.set(0, AugmentUtils.removeAugment(tinkerable, i), 1);
                 }
             }
         }

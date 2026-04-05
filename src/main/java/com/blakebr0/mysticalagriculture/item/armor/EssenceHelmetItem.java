@@ -31,7 +31,7 @@ public class EssenceHelmetItem extends BaseArmorItem implements ITinkerable {
     private final int tinkerableTier;
     private final int slots;
 
-    public EssenceHelmetItem(Identifier id, ArmorMaterial material, int maxDamageFactor, int tinkerableTier, int slots) {
+    public EssenceHelmetItem(Identifier id, ArmorMaterial material, int tinkerableTier, int slots) {
         super(id, material, ArmorType.HELMET, p -> {
             p.component(ModDataComponentTypes.EQUIPPED_AUGMENTS, new ArrayList<>(slots));
 

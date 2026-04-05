@@ -10,7 +10,6 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 import java.nio.file.Path;
 import java.util.concurrent.CompletableFuture;
@@ -18,18 +17,18 @@ import java.util.concurrent.CompletableFuture;
 public class ItemTagsJsonGenerator extends TagsProvider<Item> {
     private final PackOutput output;
 
-    public ItemTagsJsonGenerator(PackOutput output, CompletableFuture<HolderLookup.Provider> lookup, String modId, ExistingFileHelper existingFileHelper) {
-        super(output, Registries.ITEM, lookup, modId, existingFileHelper);
+    public ItemTagsJsonGenerator(PackOutput output, CompletableFuture<HolderLookup.Provider> lookup, String modId) {
+        super(output, Registries.ITEM, lookup, modId);
         this.output = output;
     }
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         for (var crop : CropRegistry.getInstance().getCrops()) {
-            var essenceId = BuiltInRegistries.ITEM.getResourceKey(crop.getEssenceItem());
-            this.tag(MysticalAgricultureTags.Items.ESSENCES).add(essenceId.get());
-            var seedsId = BuiltInRegistries.ITEM.getResourceKey(crop.getSeedsItem());
-            this.tag(MysticalAgricultureTags.Items.SEEDS).add(seedsId.get());
+//            var essenceId = BuiltInRegistries.ITEM.getResourceKey(crop.getEssenceItem());
+//            this.tag(MysticalAgricultureTags.Items.ESSENCES).add(essenceId.get());
+//            var seedsId = BuiltInRegistries.ITEM.getResourceKey(crop.getSeedsItem());
+//            this.tag(MysticalAgricultureTags.Items.SEEDS).add(seedsId.get());
         }
     }
 

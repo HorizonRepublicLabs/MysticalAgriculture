@@ -18,13 +18,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InfusionRecipeBuilder {
-    private final NonNullList<Ingredient> inputs;
+    private final List<Ingredient> inputs;
     private final ItemStack result;
     private final List<ICondition> conditions;
-    private Ingredient input = Ingredient.EMPTY;
+    private Ingredient input;
 
     public InfusionRecipeBuilder(ItemStack result) {
-        this.inputs = NonNullList.withSize(8, Ingredient.EMPTY);
+        this.inputs = new ArrayList<>(8);
         this.result = result;
         this.conditions = new ArrayList<>();
     }
@@ -38,7 +38,7 @@ public class InfusionRecipeBuilder {
     }
 
     public void build(RecipeOutput consumer, Identifier id) {
-        consumer.accept(id, new InfusionRecipe(this.input, this.inputs, this.result, false), null, this.conditions.toArray(new ICondition[0]));
+//        consumer.accept(id, new InfusionRecipe(this.input, this.inputs, this.result, false), null, this.conditions.toArray(new ICondition[0]));
     }
 
     public static InfusionRecipeBuilder newSeedRecipe(Crop crop) {
@@ -65,7 +65,7 @@ public class InfusionRecipeBuilder {
         var ingredient = crop.getLazyIngredient();
 
         if (ingredient.isTag()) {
-            builder.addCondition(new NotCondition(new TagEmptyCondition(ingredient.getId())));
+//            builder.addCondition(new NotCondition(new TagEmptyCondition(ingredient.getId())));
         }
 
         return builder;

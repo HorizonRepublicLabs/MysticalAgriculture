@@ -1,6 +1,5 @@
 package com.blakebr0.mysticalagriculture.compat.jei.category;
 
-import com.blakebr0.cucumber.util.Localizable;
 import com.blakebr0.mysticalagriculture.MysticalAgriculture;
 import com.blakebr0.mysticalagriculture.compat.jei.recipe.CruxRecipe;
 import com.blakebr0.mysticalagriculture.init.ModItems;
@@ -10,14 +9,11 @@ import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
-import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
-import mezz.jei.api.recipe.types.IRecipeHolderType;
 import mezz.jei.api.recipe.types.IRecipeType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeHolder;
 
 public class CruxCategory implements IRecipeCategory<CruxRecipe> {
     private static final Identifier TEXTURE = MysticalAgriculture.resource("textures/jei/crux.png");
@@ -61,10 +57,10 @@ public class CruxCategory implements IRecipeCategory<CruxRecipe> {
         var inputs = recipe.getIngredients();
         var output = recipe.essence;
 
-        builder.addSlot(RecipeIngredientRole.INPUT, 1, 1).addIngredients(inputs.get(0));
-        builder.addSlot(RecipeIngredientRole.INPUT, 1, 19).addIngredients(inputs.get(1));
-        builder.addSlot(RecipeIngredientRole.INPUT, 1, 37).addIngredients(inputs.get(2));
+        builder.addSlot(RecipeIngredientRole.INPUT, 1, 1).add(inputs.get(0));
+        builder.addSlot(RecipeIngredientRole.INPUT, 1, 19).add(inputs.get(1));
+        builder.addSlot(RecipeIngredientRole.INPUT, 1, 37).add(inputs.get(2));
 
-        builder.addSlot(RecipeIngredientRole.INPUT, 59, 20).addItemStack(output);
+        builder.addSlot(RecipeIngredientRole.INPUT, 59, 20).add(output);
     }
 }

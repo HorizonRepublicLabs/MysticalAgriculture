@@ -1,7 +1,7 @@
 package com.blakebr0.mysticalagriculture.crafting.recipe;
 
 import com.blakebr0.mysticalagriculture.api.crafting.IInfusionRecipe;
-import com.blakebr0.mysticalagriculture.init.ModRecipeSerializers;
+import com.blakebr0.mysticalagriculture.init.ModBlocks;
 import com.blakebr0.mysticalagriculture.init.ModRecipeTypes;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
@@ -9,15 +9,22 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.PlacementInfo;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.display.RecipeDisplay;
+import net.minecraft.world.item.crafting.display.ShapelessCraftingRecipeDisplay;
+import net.minecraft.world.item.crafting.display.SlotDisplay;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.util.RecipeMatcher;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.BiFunction;
@@ -44,26 +51,25 @@ public class InfusionRecipe implements IInfusionRecipe {
                                     DataResult::success
                             )
                             .forGetter(recipe -> recipe.inputs),
-                    ItemStack.CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
+                    ItemStackTemplate.CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
                     Codec.BOOL.optionalFieldOf("transfer_components", false).forGetter(recipe -> recipe.transferComponents)
             ).apply(builder, InfusionRecipe::new)
     );
     public static final StreamCodec<RegistryFriendlyByteBuf, InfusionRecipe> STREAM_CODEC = StreamCodec.of(
-            InfusionRecipe.Serializer::toNetwork, InfusionRecipe.Serializer::fromNetwork
+            InfusionRecipe::toNetwork, InfusionRecipe::fromNetwork
     );
     public static final RecipeSerializer<InfusionRecipe> SERIALIZER = new RecipeSerializer<>(MAP_CODEC, STREAM_CODEC);
 
-    public static final int RECIPE_SIZE = 9;
-
     private final Ingredient input;
     private final List<Ingredient> inputs;
-    private final ItemStack result;
+    private final ItemStackTemplate result;
     private final boolean transferComponents;
+    private PlacementInfo placementInfo;
     // for CraftTweaker recipes
     private BiFunction<Integer, ItemStack, ItemStack> transformer;
 
     // the input is specified separately in JSON but is part of the ingredient list in practice
-    public InfusionRecipe(Ingredient input, List<Ingredient> inputs, ItemStack result, boolean transferComponents) {
+    public InfusionRecipe(Ingredient input, List<Ingredient> inputs, ItemStackTemplate result, boolean transferComponents) {
         this.input = input;
         this.inputs = inputs;
         this.result = result;
@@ -95,13 +101,34 @@ public class InfusionRecipe implements IInfusionRecipe {
     @Override
     public ItemStack assemble(CraftingInput inventory) {
         var stack = inventory.getItem(0);
-        var result = this.result.copy();
+        var result = this.result.create();
 
         if (this.transferComponents) {
             result.applyComponents(stack.getComponentsPatch());
         }
 
         return result;
+    }
+
+    @Override
+    public PlacementInfo placementInfo() {
+        if (this.placementInfo == null) {
+            var ingredients = new ArrayList<Ingredient>();
+            ingredients.add(this.input);
+            ingredients.addAll(this.inputs);
+            this.placementInfo = PlacementInfo.create(ingredients);
+        }
+
+        return this.placementInfo;
+    }
+
+    @Override
+    public List<RecipeDisplay> display() {
+        return List.of(new ShapelessCraftingRecipeDisplay(
+                this.placementInfo.ingredients().stream().map(Ingredient::display).toList(),
+                new SlotDisplay.ItemStackSlotDisplay(this.result),
+                new SlotDisplay.ItemSlotDisplay(ModBlocks.INFUSION_ALTAR.get().asItem())
+        ));
     }
 
     @Override
@@ -159,14 +186,8 @@ public class InfusionRecipe implements IInfusionRecipe {
 
     private static InfusionRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
         var input = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
-        int size = buffer.readVarInt();
-        var inputs = NonNullList.withSize(size, Ingredient.EMPTY);
-
-        for (int i = 0; i < size; i++) {
-            inputs.set(i, Ingredient.CONTENTS_STREAM_CODEC.decode(buffer));
-        }
-
-        var result = ItemStack.STREAM_CODEC.decode(buffer);
+        var inputs = Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()).decode(buffer);
+        var result = ItemStackTemplate.STREAM_CODEC.decode(buffer);
         var transferComponents = buffer.readBoolean();
 
         return new InfusionRecipe(input, inputs, result, transferComponents);
@@ -174,13 +195,8 @@ public class InfusionRecipe implements IInfusionRecipe {
 
     private static void toNetwork(RegistryFriendlyByteBuf buffer, InfusionRecipe recipe) {
         Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.input);
-        buffer.writeVarInt(recipe.inputs.size());
-
-        for (var ingredient : recipe.inputs) {
-            Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, ingredient);
-        }
-
-        ItemStack.STREAM_CODEC.encode(buffer, recipe.result);
+        Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()).decode(buffer);
+        ItemStackTemplate.STREAM_CODEC.encode(buffer, recipe.result);
         buffer.writeBoolean(recipe.transferComponents);
     }
 }

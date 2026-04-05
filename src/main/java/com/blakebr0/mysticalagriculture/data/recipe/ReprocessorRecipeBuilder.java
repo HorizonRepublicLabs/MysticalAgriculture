@@ -28,7 +28,7 @@ public class ReprocessorRecipeBuilder {
     }
 
     public void build(RecipeOutput consumer, Identifier id) {
-        consumer.accept(id, new ReprocessorRecipe(this.input, this.result), null, this.conditions.toArray(new ICondition[0]));
+//        consumer.accept(id, new ReprocessorRecipe(this.input, this.result), null, this.conditions.toArray(new ICondition[0]));
     }
 
     public static ReprocessorRecipeBuilder newSeedReprocessingRecipe(Crop crop) {

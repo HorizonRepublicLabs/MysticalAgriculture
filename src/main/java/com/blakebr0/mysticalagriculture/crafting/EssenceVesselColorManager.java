@@ -14,6 +14,7 @@ import net.neoforged.fml.ModLoader;
 import net.neoforged.neoforge.event.AddServerReloadListenersEvent;
 import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -57,6 +58,10 @@ public class EssenceVesselColorManager implements PreparableReloadListener {
     public int getColor(ItemStack stack) {
         var id = BuiltInRegistries.ITEM.getKey(stack.getItem());
         return this.colors.getOrDefault(id.toString(), 0xFFFFFF);
+    }
+
+    public int getColor(ItemResource resource) {
+        return getColor(resource.toStack());
     }
 
     public void addColor(ItemStack stack, int color) {

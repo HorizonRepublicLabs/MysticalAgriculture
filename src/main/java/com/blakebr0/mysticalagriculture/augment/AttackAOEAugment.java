@@ -21,7 +21,7 @@ public class AttackAOEAugment extends Augment {
     }
 
     @Override
-    public boolean onHitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+    public void onHitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (attacker instanceof Player player) {
             if (!player.getCooldowns().isOnCooldown(stack)) {
                 var level = player.level();
@@ -36,11 +36,7 @@ public class AttackAOEAugment extends Augment {
 
                 player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.PLAYER_ATTACK_SWEEP, player.getSoundSource(), 1.0F, 1.0F);
             }
-
-            return true;
         }
-
-        return false;
     }
 
     private static int getColor(int color, int tier) {

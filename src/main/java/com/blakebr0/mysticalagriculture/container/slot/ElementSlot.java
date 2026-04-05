@@ -23,14 +23,14 @@ public class ElementSlot extends CSlot implements IToggleableSlot {
     }
 
     @Override
-    public void set(ItemStack stack) {
-        super.set(stack);
+    protected void setStackCopy(ItemStack stack) {
+        super.setStackCopy(stack);
         this.container.slotsChanged(null);
     }
 
     @Override
     public boolean isActive() {
-        var stack = this.getItemHandler().getStackInSlot(0);
+        var stack = this.getResourceHandler().getResource(0);
         var item = stack.getItem();
 
         return item instanceof IElementalItem;

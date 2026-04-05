@@ -1,7 +1,6 @@
 package com.blakebr0.mysticalagriculture.world.modifiers;
 
 import com.blakebr0.mysticalagriculture.config.ModConfigs;
-import com.blakebr0.mysticalagriculture.init.ModBiomeModifiers;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Holder;

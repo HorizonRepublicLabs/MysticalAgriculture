@@ -6,7 +6,6 @@ import com.blakebr0.mysticalagriculture.tileentity.AwakeningAltarTileEntity;
 import com.blakebr0.mysticalagriculture.tileentity.EssenceVesselTileEntity;
 import com.blakebr0.mysticalagriculture.tileentity.InfusionAltarTileEntity;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingInput;
@@ -88,8 +87,9 @@ public final class GuiOverlayHandler {
         var missingEssences = recipe.getMissingEssences(altar.getEssenceItems());
 
         for (var essence : missingEssences.entrySet()) {
-            gfx.item(essence.getKey(), x + 26 + xOffset, y + 2 * lineHeight);
-            gfx.text(mc.font, getEssenceDisplayName(essence.getKey(), essence.getValue()), x + 48 + xOffset, y + 5 + 2 * lineHeight, 16383998);
+//            TODO awakening altar requirements renderer
+//            gfx.item(essence.getKey(), x + 26 + xOffset, y + 2 * lineHeight);
+//            gfx.text(mc.font, getEssenceDisplayName(essence.getKey(), essence.getValue()), x + 48 + xOffset, y + 5 + 2 * lineHeight, 16383998);
 
             xOffset += 56;
             hasMissingEssences = true;

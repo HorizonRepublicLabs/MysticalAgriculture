@@ -6,6 +6,8 @@ import com.blakebr0.mysticalagriculture.api.util.AugmentUtils;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
 
 public class TinkerableSlot extends CSlot {
     private final AbstractContainerMenu container;
@@ -17,26 +19,33 @@ public class TinkerableSlot extends CSlot {
 
     @Override
     public void onTake(Player player, ItemStack stack) {
-        for (int i = 0; i < 2; i++) {
-            this.getItemHandler().extractItem(i + 1, 1, false);
+        var inventory = this.getResourceHandler();
+        try (var tx = Transaction.openRoot()) {
+            for (int i = 0; i < 2; i++) {
+                var resource = inventory.getResource(i + 1);
+                this.getResourceHandler().extract(i + 1, resource, 1, tx);
+            }
         }
     }
 
     @Override
-    public void set(ItemStack stack) {
-        for (int i = 0; i < 2; i++) {
-            var augmentStack = this.getItemHandler().getStackInSlot(i + 1);
-            if (!augmentStack.isEmpty()) {
-                this.getItemHandler().extractItem(i + 1, augmentStack.getMaxStackSize(), false);
-            }
+    protected void setStackCopy(ItemStack stack) {
+        var inventory = this.getResourceHandler();
+        try (var tx = Transaction.openRoot()) {
+            for (int i = 0; i < 2; i++) {
+                var augmentStack = inventory.getResource(i + 1);
+                if (!augmentStack.isEmpty()) {
+                    inventory.extract(i + 1, augmentStack, augmentStack.getMaxStackSize(), tx);
+                }
 
-            var augment = AugmentUtils.getAugment(stack, i);
-            if (augment != null) {
-                this.getItemHandler().insertItem(i + 1, new ItemStack(augment.getItem()), false);
+                var augment = AugmentUtils.getAugment(stack, i);
+                if (augment != null) {
+                    inventory.insert(i + 1, ItemResource.of(augment.getItem()), stack.count(), tx);
+                }
             }
         }
 
-        super.set(stack);
+        super.setStackCopy(stack);
         this.container.slotsChanged(null);
     }
 }

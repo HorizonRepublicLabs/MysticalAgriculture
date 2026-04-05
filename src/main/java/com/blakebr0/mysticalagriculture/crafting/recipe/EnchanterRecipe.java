@@ -1,8 +1,7 @@
 package com.blakebr0.mysticalagriculture.crafting.recipe;
 
-import com.blakebr0.cucumber.crafting.ingredient.IngredientWithCount;
 import com.blakebr0.mysticalagriculture.api.crafting.IEnchanterRecipe;
-import com.blakebr0.mysticalagriculture.init.ModRecipeSerializers;
+import com.blakebr0.mysticalagriculture.init.ModBlocks;
 import com.blakebr0.mysticalagriculture.init.ModRecipeTypes;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.MapCodec;
@@ -12,17 +11,19 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CraftingInput;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.PlacementInfo;
 import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.display.RecipeDisplay;
+import net.minecraft.world.item.crafting.display.ShapelessCraftingRecipeDisplay;
+import net.minecraft.world.item.crafting.display.SlotDisplay;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
@@ -96,17 +97,16 @@ public class EnchanterRecipe implements IEnchanterRecipe {
 
         if (this.enchantment.value().canEnchant(stack)) {
             var enchantments = new ItemEnchantments.Mutable(EnchantmentHelper.getEnchantmentsForCrafting(stack));
-            var newLevel = level;
 
             for (var enchantment : enchantments.keySet()) {
-                if (enchantment == this.enchantment && enchantments.getLevel(enchantment) >= newLevel)
+                if (enchantment == this.enchantment && enchantments.getLevel(enchantment) >= level)
                     return ItemStack.EMPTY;
 
                 if (enchantment != this.enchantment && Enchantment.areCompatible(enchantment, this.enchantment))
                     return ItemStack.EMPTY;
             }
 
-            enchantments.set(enchantment, newLevel);
+            enchantments.set(enchantment, level);
 
             var result = stack.copyWithCount(1);
 
@@ -115,11 +115,21 @@ public class EnchanterRecipe implements IEnchanterRecipe {
             return result;
         }
 
-        if (stack.is(Items.BOOK)) {
-            return EnchantedBookItem.createForEnchantment(new EnchantmentInstance(this.enchantment, level));
-        }
-
         return ItemStack.EMPTY;
+    }
+
+    @Override
+    public PlacementInfo placementInfo() {
+        return PlacementInfo.create(this.inputs.stream().map(SizedIngredient::ingredient).toList());
+    }
+
+    @Override
+    public List<RecipeDisplay> display() {
+        return List.of(new ShapelessCraftingRecipeDisplay(
+                this.inputs.stream().map(SizedIngredient::ingredient).map(Ingredient::display).toList(),
+                new SlotDisplay.ItemSlotDisplay(Items.AIR),
+                new SlotDisplay.ItemSlotDisplay(ModBlocks.ENCHANTER.get().asItem())
+        ));
     }
 
     @Override
@@ -130,11 +140,6 @@ public class EnchanterRecipe implements IEnchanterRecipe {
     @Override
     public RecipeType<IEnchanterRecipe> getType() {
         return ModRecipeTypes.ENCHANTER.get();
-    }
-
-    @Override
-    public PlacementInfo placementInfo() {
-        return PlacementInfo.create(this.inputs.stream().map(SizedIngredient::ingredient).toList());
     }
 
     @Override

@@ -99,28 +99,30 @@ public class RecipeIngredientCache {
     private static <C extends RecipeInput, T extends Recipe<C>> void cache(RecipeType<T> type) {
         INSTANCE.caches.put(type, new HashMap<>());
 
-        for (var recipe : RecipeHelper.byType(type)) {
-            for (var ingredient : recipe.value().placementInfo().ingredients()) {
-                var items = new HashSet<>();
-                for (var stack : ingredient.getValues()) {
-                    var item = stack.value();
-                    if (items.contains(item))
-                        continue;
-
-                    var cache = INSTANCE.caches.get(type).computeIfAbsent(item, _ -> new ArrayList<>());
-
-                    items.add(item);
-                    cache.add(ingredient);
-                }
-            }
-        }
+//        TODO recipe syncing stuff
+//        for (var recipe : RecipeHelper.byType(type)) {
+//            for (var ingredient : recipe.value().placementInfo().ingredients()) {
+//                var items = new HashSet<>();
+//                for (var stack : ingredient.getValues()) {
+//                    var item = stack.value();
+//                    if (items.contains(item))
+//                        continue;
+//
+//                    var cache = INSTANCE.caches.get(type).computeIfAbsent(item, _ -> new ArrayList<>());
+//
+//                    items.add(item);
+//                    cache.add(ingredient);
+//                }
+//            }
+//        }
     }
 
     private static void cacheVesselItems() {
-        for (var recipe : RecipeHelper.byType(ModRecipeTypes.AWAKENING.get())) {
-            for (var essence : recipe.value().getEssences()) {
-                INSTANCE.validVesselItems.add(essence.getItem());
-            }
-        }
+//        TODO recipe syncing stuff
+//        for (var recipe : RecipeHelper.byType(ModRecipeTypes.AWAKENING.get())) {
+//            for (var essence : recipe.value().getEssences()) {
+//                INSTANCE.validVesselItems.add(essence.getItem());
+//            }
+//        }
     }
 }

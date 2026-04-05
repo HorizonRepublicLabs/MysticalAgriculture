@@ -8,8 +8,12 @@ import com.blakebr0.mysticalagriculture.crafting.recipe.InfusionRecipe;
 import com.blakebr0.mysticalagriculture.crafting.recipe.ReprocessorRecipe;
 import com.blakebr0.mysticalagriculture.registry.CropRegistry;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
+import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
@@ -17,6 +21,8 @@ import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.item.crafting.ShapedRecipePattern;
 import net.neoforged.bus.api.SubscribeEvent;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class DynamicRecipeManager {
@@ -58,14 +64,17 @@ public class DynamicRecipeManager {
 
         var essence = Ingredient.of(essenceItem);
         var craftingSeed = Ingredient.of(craftingSeedItem);
-        var inputs = NonNullList.of(Ingredient.EMPTY,
+        var inputs = List.of(
                 material, essence, material, essence, material, essence, material, essence
         );
 
         var id = MysticalAgriculture.resource(crop.getNameWithSuffix("seeds_infusion"));
-        var result = new ItemStack(crop.getSeedsItem());
+        var result = new ItemStackTemplate(crop.getSeedsItem());
 
-        return new RecipeHolder<>(id, new InfusionRecipe(craftingSeed, inputs, result, false));
+        return new RecipeHolder<>(
+                ResourceKey.create(Registries.RECIPE, id),
+                new InfusionRecipe(craftingSeed, inputs, result, false)
+        );
     }
 
     private static RecipeHolder<Recipe<?>> makeRegularSeedRecipe(Crop crop) {
@@ -89,17 +98,25 @@ public class DynamicRecipeManager {
 
         var essence = Ingredient.of(essenceItem);
         var craftingSeed = Ingredient.of(craftingSeedItem);
-        var inputs = NonNullList.of(Ingredient.EMPTY,
-                material, essence, material,
-                essence, craftingSeed, essence,
-                material, essence, material
+        var keys = Map.of(
+                'M', material,
+                'E', essence,
+                'C', craftingSeed
+        );
+        var shape = List.of(
+                "MEM",
+                "ECE",
+                "MEM"
         );
 
         var id = MysticalAgriculture.resource(crop.getNameWithSuffix("seeds_vanilla"));
-        var pattern = new ShapedRecipePattern(3, 3, inputs, Optional.empty());
-        var result = new ItemStack(crop.getSeedsItem());
+        var pattern = ShapedRecipePattern.of(keys, shape);
+        var result = new ItemStackTemplate(crop.getSeedsItem());
 
-        return new RecipeHolder<>(id, new ShapedRecipe("", CraftingBookCategory.MISC, pattern, result));
+        return new RecipeHolder<>(
+                ResourceKey.create(Registries.RECIPE, id),
+                new ShapedRecipe(new Recipe.CommonInfo(false), new CraftingRecipe.CraftingBookInfo(CraftingBookCategory.MISC, "mysticalagriculture:seeds"), pattern, result)
+        );
     }
 
     private static RecipeHolder<Recipe<?>> makeReprocessorRecipe(Crop crop) {
@@ -108,8 +125,11 @@ public class DynamicRecipeManager {
 
         var input = Ingredient.of(crop.getSeedsItem());
         var id = MysticalAgriculture.resource(crop.getNameWithSuffix("seeds_reprocessor"));
-        var result = new ItemStack(crop.getEssenceItem(), 2);
+        var result = new ItemStackTemplate(crop.getEssenceItem(), 2);
 
-        return new RecipeHolder<>(id, new ReprocessorRecipe(input, result));
+        return new RecipeHolder<>(
+                ResourceKey.create(Registries.RECIPE, id),
+                new ReprocessorRecipe(input, result)
+        );
     }
 }

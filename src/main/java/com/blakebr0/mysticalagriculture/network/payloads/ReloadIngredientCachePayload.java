@@ -35,17 +35,17 @@ public record ReloadIngredientCachePayload(Map<RecipeType<?>, Map<Item, List<Ing
         var types = buffer.readVarInt();
 
         for (var i = 0; i < types; i++) {
-            var type = BuiltInRegistries.RECIPE_TYPE.get(buffer.readIdentifier());
+            var type = BuiltInRegistries.RECIPE_TYPE.getValue(buffer.readIdentifier());
             var items = buffer.readVarInt();
 
             caches.put(type, new HashMap<>());
 
             for (var j = 0; j < items; j++) {
-                var item = BuiltInRegistries.ITEM.get(buffer.readIdentifier());
+                var item = BuiltInRegistries.ITEM.getValue(buffer.readIdentifier());
                 var ingredients = buffer.readVarInt();
 
                 for (var k = 0; k < ingredients; k++) {
-                    var cache = caches.get(type).computeIfAbsent(item, l -> new ArrayList<>());
+                    var cache = caches.get(type).computeIfAbsent(item, _ -> new ArrayList<>());
                     var ingredient = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
 
                     cache.add(ingredient);
@@ -57,7 +57,7 @@ public record ReloadIngredientCachePayload(Map<RecipeType<?>, Map<Item, List<Ing
         var items = buffer.readVarInt();
 
         for (var i = 0; i < items; i++) {
-            var item = BuiltInRegistries.ITEM.get(buffer.readIdentifier());
+            var item = BuiltInRegistries.ITEM.getValue(buffer.readIdentifier());
 
             validVesselItems.add(item);
         }

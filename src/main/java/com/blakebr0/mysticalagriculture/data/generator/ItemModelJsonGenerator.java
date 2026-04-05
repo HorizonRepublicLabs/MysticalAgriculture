@@ -1,42 +1,40 @@
 package com.blakebr0.mysticalagriculture.data.generator;
 
 import com.blakebr0.mysticalagriculture.MysticalAgriculture;
-import com.blakebr0.mysticalagriculture.registry.AugmentRegistry;
-import com.blakebr0.mysticalagriculture.registry.CropRegistry;
+import net.minecraft.client.data.models.BlockModelGenerators;
+import net.minecraft.client.data.models.ItemModelGenerators;
+import net.minecraft.client.data.models.ModelProvider;
 import net.minecraft.data.PackOutput;
-import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
-import net.neoforged.neoforge.client.model.generators.ModelFile;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
-public class ItemModelJsonGenerator extends ItemModelProvider {
-    public ItemModelJsonGenerator(PackOutput output, String modid, ExistingFileHelper existingFileHelper) {
-        super(output, modid, existingFileHelper);
+public class ItemModelJsonGenerator extends ModelProvider {
+    public ItemModelJsonGenerator(PackOutput output, String modid) {
+        super(output, modid);
     }
 
     @Override
-    protected void registerModels() {
-        var generatedModel = new ModelFile.UncheckedModelFile("item/generated");
-
-        for (var crop : CropRegistry.getInstance().getCrops()) {
-            if (crop.shouldRegisterEssenceItem()) {
-                this.getBuilder(crop.getNameWithSuffix("essence"))
-                        .parent(generatedModel)
-                        .texture("layer0", crop.getTextures().getEssenceTexture());
-            }
-
-            if (crop.shouldRegisterSeedsItem()) {
-                this.getBuilder(crop.getNameWithSuffix("seeds"))
-                        .parent(generatedModel)
-                        .texture("layer0", crop.getTextures().getSeedTexture());
-            }
-        }
-
-        var augmentModel = new ModelFile.UncheckedModelFile(MysticalAgriculture.resource("item/augment"));
-
-        for (var augment : AugmentRegistry.getInstance().getAugments()) {
-            this.getBuilder(augment.getNameWithSuffix("augment"))
-                    .parent(augmentModel);
-        }
+    protected void registerModels(BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
+//        var generatedModel = new ModelFile.UncheckedModelFile("item/generated");
+//
+//        for (var crop : CropRegistry.getInstance().getCrops()) {
+//            if (crop.shouldRegisterEssenceItem()) {
+//                this.getBuilder(crop.getNameWithSuffix("essence"))
+//                        .parent(generatedModel)
+//                        .texture("layer0", crop.getTextures().getEssenceTexture());
+//            }
+//
+//            if (crop.shouldRegisterSeedsItem()) {
+//                this.getBuilder(crop.getNameWithSuffix("seeds"))
+//                        .parent(generatedModel)
+//                        .texture("layer0", crop.getTextures().getSeedTexture());
+//            }
+//        }
+//
+//        var augmentModel = new ModelFile.UncheckedModelFile(MysticalAgriculture.resource("item/augment"));
+//
+//        for (var augment : AugmentRegistry.getInstance().getAugments()) {
+//            this.getBuilder(augment.getNameWithSuffix("augment"))
+//                    .parent(augmentModel);
+//        }
     }
 
     @Override

@@ -25,8 +25,8 @@ public class EnchanterSlot extends CSlot {
     }
 
     @Override
-    public void set(ItemStack stack) {
-        super.set(stack);
+    protected void setStackCopy(ItemStack stack) {
+        super.setStackCopy(stack);
         this.container.slotsChanged(this.inventory);
     }
 }

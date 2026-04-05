@@ -7,6 +7,6 @@ import net.neoforged.neoforge.transfer.item.ItemResource;
 
 public class TinkeringTableRenderState extends BlockEntityRenderState {
     public Direction facing;
-    public ItemResource item;
+    public ItemResource itemResource;
     public ItemStackRenderState itemRenderState = new ItemStackRenderState();
 }

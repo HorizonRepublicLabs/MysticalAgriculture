@@ -26,8 +26,8 @@ public class AugmentSlot extends CSlot implements IToggleableSlot {
     }
 
     @Override
-    public void set(ItemStack stack) {
-        super.set(stack);
+    protected void setStackCopy(ItemStack stack) {
+        super.setStackCopy(stack);
         this.container.slotsChanged(null);
     }
 
@@ -41,7 +41,7 @@ public class AugmentSlot extends CSlot implements IToggleableSlot {
         if (!super.mayPlace(stack) || !this.isActive())
             return false;
 
-        var stackInSlot = this.getItemHandler().getStackInSlot(0);
+        var stackInSlot = this.getResourceHandler().getResource(0);
         var tinkerableItem = stackInSlot.getItem();
         var augmentItem = stack.getItem();
 
@@ -56,7 +56,7 @@ public class AugmentSlot extends CSlot implements IToggleableSlot {
 
     @Override
     public boolean isActive() {
-        var stack = this.getItemHandler().getStackInSlot(0);
+        var stack = this.getResourceHandler().getResource(0);
         var item = stack.getItem();
 
         if (item instanceof ITinkerable tinkerable) {

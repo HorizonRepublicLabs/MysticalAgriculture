@@ -14,6 +14,9 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class EnchanterTileEntity extends BaseInventoryTileEntity implements MenuProvider {
+    private static final int INPUT_SLOT = 0;
+    private static final int OUTPUT_SLOT = 1;
+
     private final CItemStacksHandler inventory;
 
     public EnchanterTileEntity(BlockPos pos, BlockState state) {
@@ -42,8 +45,8 @@ public class EnchanterTileEntity extends BaseInventoryTileEntity implements Menu
 
     public static CItemStacksHandler createInventoryHandler(OnContentsChangedFunction onContentsChanged) {
         return CItemStacksHandler.create(3, onContentsChanged, handler -> {
-            handler.addSlotLimit(0, 512);
-            handler.addSlotLimit(1, 512);
+            handler.addSlotLimit(INPUT_SLOT, 512);
+            handler.addSlotLimit(OUTPUT_SLOT, 512);
         });
     }
 }

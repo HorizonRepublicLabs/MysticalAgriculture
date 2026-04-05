@@ -1,6 +1,5 @@
 package com.blakebr0.mysticalagriculture.compat.jei.category;
 
-import com.blakebr0.cucumber.util.Localizable;
 import com.blakebr0.mysticalagriculture.MysticalAgriculture;
 import com.blakebr0.mysticalagriculture.api.crafting.ISoulExtractionRecipe;
 import com.blakebr0.mysticalagriculture.init.ModBlocks;
@@ -12,17 +11,15 @@ import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
-import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.api.recipe.types.IRecipeHolderType;
 import mezz.jei.api.recipe.types.IRecipeType;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.display.ShapelessCraftingRecipeDisplay;
 
 public class SoulExtractorCategory implements IRecipeCategory<RecipeHolder<ISoulExtractionRecipe>> {
     private static final Identifier TEXTURE = MysticalAgriculture.resource("textures/jei/reprocessor.png");
@@ -67,17 +64,20 @@ public class SoulExtractorCategory implements IRecipeCategory<RecipeHolder<ISoul
     }
 
     @Override
-    public void draw(ISoulExtractionRecipe recipe, IRecipeSlotsView slots, GuiGraphicsExtractor gfx, double mouseX, double mouseY) {
+    public void draw(RecipeHolder<ISoulExtractionRecipe> recipe, IRecipeSlotsView slots, GuiGraphicsExtractor gfx, double mouseX, double mouseY) {
         this.arrow.draw(gfx, 24, 4);
     }
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<ISoulExtractionRecipe> recipe, IFocusGroup focuses) {
-        var inputs = recipe.getIngredients();
-        var output = recipe.getResultItem(RegistryAccess.EMPTY);
+        var displays = recipe.value().display();
+        if (!displays.isEmpty() && displays.getFirst() instanceof ShapelessCraftingRecipeDisplay display) {
+            var inputs = display.ingredients();
+            var result = display.result();
 
-        builder.addSlot(RecipeIngredientRole.INPUT, 1, 5).addIngredients(inputs.getFirst());
+            builder.addSlot(RecipeIngredientRole.INPUT, 1, 5).add(inputs.getFirst());
 
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 61, 5).addItemStack(output);
+            builder.addSlot(RecipeIngredientRole.OUTPUT, 61, 5).add(result);
+        }
     }
 }

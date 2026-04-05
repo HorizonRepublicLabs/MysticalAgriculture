@@ -7,7 +7,7 @@ import com.blakebr0.mysticalagriculture.item.AugmentItem;
 import com.mojang.datafixers.util.Either;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.ItemStack;
@@ -99,26 +99,26 @@ public final class AugmentTooltipHandler {
 
     public record AugmentToolTypesComponent(int width, int height, List<ItemStack> stacks) implements ClientTooltipComponent, TooltipComponent {
         @Override
-        public void renderImage(Font font,  int tooltipX, int tooltipY, GuiGraphics gfx) {
+        public void extractImage(Font font, int x, int y, int w, int h, GuiGraphicsExtractor gfx) {
             var matrix = gfx.pose();
 
-            matrix.pushPose();
-            matrix.translate(tooltipX, tooltipY, 0);
-            matrix.scale(0.5f, 0.5f, 1.0f);
+            matrix.pushMatrix();
+            matrix.translate(x, y);
+            matrix.scale(0.5f, 0.5f);
 
             int drawn = 0;
 
             for (var stack : stacks) {
-                gfx.renderItem(stack, (drawn % 10) * 18, 0);
+                gfx.item(stack, (drawn % 10) * 18, 0);
 
                 drawn++;
             }
 
-            matrix.popPose();
+            matrix.popMatrix();
         }
 
         @Override
-        public int getHeight() {
+        public int getHeight(Font font) {
             return this.height;
         }
 

@@ -8,7 +8,6 @@ import com.blakebr0.mysticalagriculture.MysticalAgriculture;
 public final class ModFeatureFlags {
     public static final FeatureFlag DRAGON_DROPS_COGNIZANT = FeatureFlag.create(MysticalAgriculture.resource("dragon_crops_cognizant"), ModConfigs.DRAGON_DROPS_COGNIZANT);
     public static final FeatureFlag DRAGON_DROPS_ESSENCE = FeatureFlag.create(MysticalAgriculture.resource("dragon_drops_essence"), ModConfigs.DRAGON_DROPS_ESSENCE);
-    public static final FeatureFlag ENCHANTABLE_SUPREMIUM_TOOLS = FeatureFlag.create(MysticalAgriculture.resource("enchantable_supremium_tools"), ModConfigs.ENCHANTABLE_SUPREMIUM_TOOLS);
     public static final FeatureFlag ESSENCE_FARMLAND_CONVERSION = FeatureFlag.create(MysticalAgriculture.resource("essence_farmland_conversion"), ModConfigs.ESSENCE_FARMLAND_CONVERSION);
     public static final FeatureFlag FAKE_PLAYER_WATERING = FeatureFlag.create(MysticalAgriculture.resource("fake_player_watering"), ModConfigs.FAKE_PLAYER_WATERING);
     public static final FeatureFlag GENERATE_INFERIUM = FeatureFlag.create(MysticalAgriculture.resource("generate_inferium"), ModConfigs.GENERATE_INFERIUM);

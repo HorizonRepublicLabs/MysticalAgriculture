@@ -8,14 +8,16 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.phys.Vec3;
+import org.jspecify.annotations.Nullable;
 
 public class EssenceVesselRenderer implements BlockEntityRenderer<EssenceVesselTileEntity, EssenceVesselRenderState> {
     private static final Identifier VESSEL_CONTENT_TEXTURE = MysticalAgriculture.resource("block/essence_vessel_contents");
@@ -28,40 +30,46 @@ public class EssenceVesselRenderer implements BlockEntityRenderer<EssenceVesselT
     }
 
     @Override
-    public void submit(EssenceVesselRenderState state, PoseStack matrix, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
+    public void extractRenderState(EssenceVesselTileEntity tile, EssenceVesselRenderState state, float partialTicks, Vec3 cameraPosition, ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+        BlockEntityRenderer.super.extractRenderState(tile, state, partialTicks, cameraPosition, breakProgress);
+
         var inventory = tile.getInventory();
-        var stack = inventory.getStackInSlot(0);
 
-        if (!stack.isEmpty()) {
-            var builder = buffer.getBuffer(RenderType.solid());
+        state.itemResource = inventory.getResource(0);
+        state.fillPercentage = (float) inventory.getAmountAsInt(0) / (float) inventory.getSlotLimit(0);
+    }
+
+    @Override
+    public void submit(EssenceVesselRenderState state, PoseStack matrix, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
+        if (!state.itemResource.isEmpty()) {
+            var builder = Minecraft.getInstance().renderBuffers().bufferSource().getBuffer(RenderTypes.entitySolid(VESSEL_CONTENT_TEXTURE));
             var sprite = Minecraft.getInstance()
-                    .getTextureAtlas(TextureAtlas.LOCATION_BLOCKS)
-                    .apply(VESSEL_CONTENT_TEXTURE);
+                    .getAtlasManager()
+                    .getAtlasOrThrow(TextureAtlas.LOCATION_BLOCKS)
+                    .getSprite(VESSEL_CONTENT_TEXTURE);
 
-            float fillPercentage = (float) stack.getCount() / (float) inventory.getSlotLimit(0);
-
-            float filledAmount = 0.4f * fillPercentage;
-            float textureOffset = ((16.0f - (11.0f * fillPercentage)) / 16.0F);
+            float filledAmount = 0.4f * state.fillPercentage;
+            float textureOffset = ((16.0f - (11.0f * state.fillPercentage)) / 16.0F);
 
             matrix.pushPose();
 
-            var color = EssenceVesselColorManager.INSTANCE.getColor(stack);
+            var color = EssenceVesselColorManager.INSTANCE.getColor(state.itemResource);
 
             // top
-            addVertex(builder, matrix, 0.2f, 0.75f + filledAmount, 0.8f, sprite.getU0(), sprite.getV1(), color, combinedLight);
-            addVertex(builder, matrix, 0.8f, 0.75f + filledAmount, 0.8f, sprite.getU1(), sprite.getV1(), color, combinedLight);
-            addVertex(builder, matrix, 0.8f, 0.75f + filledAmount, 0.2f, sprite.getU1(), sprite.getV0(), color, combinedLight);
-            addVertex(builder, matrix, 0.2f, 0.75f + filledAmount, 0.2f, sprite.getU0(), sprite.getV0(), color, combinedLight);
+            addVertex(builder, matrix, 0.2f, 0.75f + filledAmount, 0.8f, sprite.getU0(), sprite.getV1(), color, state.lightCoords);
+            addVertex(builder, matrix, 0.8f, 0.75f + filledAmount, 0.8f, sprite.getU1(), sprite.getV1(), color, state.lightCoords);
+            addVertex(builder, matrix, 0.8f, 0.75f + filledAmount, 0.2f, sprite.getU1(), sprite.getV0(), color, state.lightCoords);
+            addVertex(builder, matrix, 0.2f, 0.75f + filledAmount, 0.2f, sprite.getU0(), sprite.getV0(), color, state.lightCoords);
 
             matrix.pushPose();
             matrix.translate(0, 1, 1);
             matrix.mulPose(Axis.XP.rotationDegrees(180));
 
             // bottom
-            addVertex(builder, matrix, 0.2f, 0.25f, 0.8f, sprite.getU0(), sprite.getV1(), color, combinedLight);
-            addVertex(builder, matrix, 0.8f, 0.25f, 0.8f, sprite.getU1(), sprite.getV1(), color, combinedLight);
-            addVertex(builder, matrix, 0.8f, 0.25f, 0.2f, sprite.getU1(), sprite.getV0(), color, combinedLight);
-            addVertex(builder, matrix, 0.2f, 0.25f, 0.2f, sprite.getU0(), sprite.getV0(), color, combinedLight);
+            addVertex(builder, matrix, 0.2f, 0.25f, 0.8f, sprite.getU0(), sprite.getV1(), color, state.lightCoords);
+            addVertex(builder, matrix, 0.8f, 0.25f, 0.8f, sprite.getU1(), sprite.getV1(), color, state.lightCoords);
+            addVertex(builder, matrix, 0.8f, 0.25f, 0.2f, sprite.getU1(), sprite.getV0(), color, state.lightCoords);
+            addVertex(builder, matrix, 0.2f, 0.25f, 0.2f, sprite.getU0(), sprite.getV0(), color, state.lightCoords);
 
             matrix.popPose();
 
@@ -71,10 +79,10 @@ public class EssenceVesselRenderer implements BlockEntityRenderer<EssenceVesselT
             matrix.mulPose(Axis.ZP.rotationDegrees(90));
 
             // west
-            addVertex(builder, matrix, 0.2f, 1, 0.8f, sprite.getU(textureOffset), sprite.getV1(), color, combinedLight);
-            addVertex(builder, matrix, 0.2f + filledAmount, 1, 0.8f, sprite.getU1(), sprite.getV1(), color, combinedLight);
-            addVertex(builder, matrix, 0.2f + filledAmount, 1, 0.2f, sprite.getU1(), sprite.getV0(), color, combinedLight);
-            addVertex(builder, matrix, 0.2f, 1, 0.2f, sprite.getU(textureOffset), sprite.getV0(), color, combinedLight);
+            addVertex(builder, matrix, 0.2f, 1, 0.8f, sprite.getU(textureOffset), sprite.getV1(), color, state.lightCoords);
+            addVertex(builder, matrix, 0.2f + filledAmount, 1, 0.8f, sprite.getU1(), sprite.getV1(), color, state.lightCoords);
+            addVertex(builder, matrix, 0.2f + filledAmount, 1, 0.2f, sprite.getU1(), sprite.getV0(), color, state.lightCoords);
+            addVertex(builder, matrix, 0.2f, 1, 0.2f, sprite.getU(textureOffset), sprite.getV0(), color, state.lightCoords);
 
             matrix.popPose();
             matrix.pushPose();
@@ -84,10 +92,10 @@ public class EssenceVesselRenderer implements BlockEntityRenderer<EssenceVesselT
             matrix.mulPose(Axis.YP.rotationDegrees(180));
 
             // east
-            addVertex(builder, matrix, 0.2f, 1, 0.8f, sprite.getU(textureOffset), sprite.getV1(), color, combinedLight);
-            addVertex(builder, matrix, 0.2f + filledAmount, 1, 0.8f, sprite.getU1(), sprite.getV1(), color, combinedLight);
-            addVertex(builder, matrix, 0.2f + filledAmount, 1, 0.2f, sprite.getU1(), sprite.getV0(), color, combinedLight);
-            addVertex(builder, matrix, 0.2f, 1, 0.2f, sprite.getU(textureOffset), sprite.getV0(), color, combinedLight);
+            addVertex(builder, matrix, 0.2f, 1, 0.8f, sprite.getU(textureOffset), sprite.getV1(), color, state.lightCoords);
+            addVertex(builder, matrix, 0.2f + filledAmount, 1, 0.8f, sprite.getU1(), sprite.getV1(), color, state.lightCoords);
+            addVertex(builder, matrix, 0.2f + filledAmount, 1, 0.2f, sprite.getU1(), sprite.getV0(), color, state.lightCoords);
+            addVertex(builder, matrix, 0.2f, 1, 0.2f, sprite.getU(textureOffset), sprite.getV0(), color, state.lightCoords);
 
             matrix.popPose();
             matrix.pushPose();
@@ -97,10 +105,10 @@ public class EssenceVesselRenderer implements BlockEntityRenderer<EssenceVesselT
             matrix.mulPose(Axis.YP.rotationDegrees(180));
 
             // south
-            addVertex(builder, matrix, 0.2f, 1, 0.2f + filledAmount, sprite.getU0(), sprite.getV1(), color, combinedLight);
-            addVertex(builder, matrix, 0.8f, 1, 0.2f + filledAmount, sprite.getU1(), sprite.getV1(), color, combinedLight);
-            addVertex(builder, matrix, 0.8f, 1, 0.2f, sprite.getU1(), sprite.getV(textureOffset), color, combinedLight);
-            addVertex(builder, matrix, 0.2f, 1, 0.2f, sprite.getU0(), sprite.getV(textureOffset), color, combinedLight);
+            addVertex(builder, matrix, 0.2f, 1, 0.2f + filledAmount, sprite.getU0(), sprite.getV1(), color, state.lightCoords);
+            addVertex(builder, matrix, 0.8f, 1, 0.2f + filledAmount, sprite.getU1(), sprite.getV1(), color, state.lightCoords);
+            addVertex(builder, matrix, 0.8f, 1, 0.2f, sprite.getU1(), sprite.getV(textureOffset), color, state.lightCoords);
+            addVertex(builder, matrix, 0.2f, 1, 0.2f, sprite.getU0(), sprite.getV(textureOffset), color, state.lightCoords);
 
             matrix.popPose();
             matrix.pushPose();
@@ -109,10 +117,10 @@ public class EssenceVesselRenderer implements BlockEntityRenderer<EssenceVesselT
             matrix.mulPose(Axis.XP.rotationDegrees(270));
 
             // north
-            addVertex(builder, matrix, 0.2f, 1, 0.2f + filledAmount, sprite.getU0(), sprite.getV1(), color, combinedLight);
-            addVertex(builder, matrix, 0.8f, 1, 0.2f + filledAmount, sprite.getU1(), sprite.getV1(), color, combinedLight);
-            addVertex(builder, matrix, 0.8f, 1, 0.2f, sprite.getU1(), sprite.getV(textureOffset), color, combinedLight);
-            addVertex(builder, matrix, 0.2f, 1, 0.2f, sprite.getU0(), sprite.getV(textureOffset), color, combinedLight);
+            addVertex(builder, matrix, 0.2f, 1, 0.2f + filledAmount, sprite.getU0(), sprite.getV1(), color, state.lightCoords);
+            addVertex(builder, matrix, 0.8f, 1, 0.2f + filledAmount, sprite.getU1(), sprite.getV1(), color, state.lightCoords);
+            addVertex(builder, matrix, 0.8f, 1, 0.2f, sprite.getU1(), sprite.getV(textureOffset), color, state.lightCoords);
+            addVertex(builder, matrix, 0.2f, 1, 0.2f, sprite.getU0(), sprite.getV(textureOffset), color, state.lightCoords);
 
             matrix.popPose();
 
@@ -120,11 +128,11 @@ public class EssenceVesselRenderer implements BlockEntityRenderer<EssenceVesselT
         }
     }
 
-    private static void addVertex(VertexConsumer renderer, PoseStack stack, float x, float y, float z, float u, float v, int color, int combinedLight) {
+    private static void addVertex(VertexConsumer renderer, PoseStack stack, float x, float y, float z, float u, float v, int color, int lightCoords) {
         renderer.addVertex(stack.last().pose(), x, y, z)
                 .setColor(color)
                 .setUv(u, v)
-                .setLight(combinedLight)
+                .setLight(lightCoords)
                 .setNormal(1, 0, 0);
     }
 }

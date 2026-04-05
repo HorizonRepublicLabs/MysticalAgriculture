@@ -85,7 +85,8 @@ public class SouliumSpawnerScreen extends BaseContainerScreen<SouliumSpawnerCont
         this.renderEntityPreview(gfx);
 
         if (isHoveringSlot(x + 134, y + 52, mouseX, mouseY)) {
-            renderSlotHighlight(gfx, x + 134, y + 52, 0);
+//            TODO render slot highlight
+//            renderSlotHighlight(gfx, x + 134, y + 52, 0);
         }
     }
 
@@ -135,15 +136,15 @@ public class SouliumSpawnerScreen extends BaseContainerScreen<SouliumSpawnerCont
         var matrix = gfx.pose();
 
         matrix.pushMatrix();
-
-        matrix.translate(this.leftPos + 142, this.topPos + 68, 32.0F);
-        matrix.mul(Axis.YP.rotationDegrees(135.0F));
-        matrix.mul(Axis.XP.rotationDegrees(180.0F));
-        matrix.scale(scale, scale, scale);
-
-        var buffer = gfx.bufferSource();
-
-        Minecraft.getInstance().getEntityRenderDispatcher().render(entity, 0.0D, 0.0D, 0.0D, 0.0F, 1, matrix, buffer, 255);
+// TODO rendering entity in soulium spawner screen
+//        matrix.translate(this.leftPos + 142, this.topPos + 68, 32.0F);
+//        matrix.mul(Axis.YP.rotationDegrees(135.0F));
+//        matrix.mul(Axis.XP.rotationDegrees(180.0F));
+//        matrix.scale(scale, scale, scale);
+//
+//        var buffer = gfx.bufferSource();
+//
+//        Minecraft.getInstance().getEntityRenderDispatcher().render(entity, 0.0D, 0.0D, 0.0D, 0.0F, 1, matrix, buffer, 255);
 
         matrix.popMatrix();
     }

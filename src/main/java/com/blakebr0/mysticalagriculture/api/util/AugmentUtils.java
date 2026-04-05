@@ -9,13 +9,14 @@ import com.blakebr0.mysticalagriculture.api.tinkering.ITinkerable;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AugmentUtils {
     /**
-     * Add an augment to the specified tinkerable in the specified slot
+     * Add an augment to the specified tinkerable in the specified augment slot
      *
      * @param stack   the {@link ITinkerable} item
      * @param augment the augment
@@ -42,7 +43,21 @@ public class AugmentUtils {
     }
 
     /**
-     * Remove an augment from the specified tinkerable from the specified slot
+     * Add an augment to the specified tinkerable in the specified augment slot
+     *
+     * @param resource the {@link ITinkerable} item
+     * @param augment  the augment
+     * @param slot     the augment slot
+     * @return the new {@link ItemResource} with the added augment
+     */
+    public static ItemResource addAugment(ItemResource resource, Augment augment, int slot) {
+        var stack = resource.toStack();
+        addAugment(stack, augment, slot);
+        return ItemResource.of(stack);
+    }
+
+    /**
+     * Remove an augment from the specified tinkerable from the specified augment slot
      *
      * @param stack the {@link ITinkerable} item
      * @param slot  the augment slot
@@ -69,6 +84,19 @@ public class AugmentUtils {
                 stack.remove(MysticalAgricultureDataComponentTypes.AOE_AUGMENT_OFFSET);
             }
         }
+    }
+
+    /**
+     * Remove an augment from the specified tinkerable from the specified slot
+     *
+     * @param resource the {@link ITinkerable} item
+     * @param slot     the augment slot
+     * @return the {@link ItemResource} without the removed augment
+     */
+    public static ItemResource removeAugment(ItemResource resource, int slot) {
+        var stack = resource.toStack();
+        removeAugment(stack, slot);
+        return ItemResource.of(stack);
     }
 
     /**
@@ -103,6 +131,17 @@ public class AugmentUtils {
     }
 
     /**
+     * Get the augment in the specified augment slot
+     *
+     * @param resource the {@link ITinkerable} item
+     * @param slot     the augment slot
+     * @return the augment
+     */
+    public static Augment getAugment(ItemResource resource, int slot) {
+        return getAugment(resource.toStack(), slot);
+    }
+
+    /**
      * Gets the augments currently installed on this tinkerable
      *
      * @param stack the {@link ITinkerable}
@@ -131,6 +170,16 @@ public class AugmentUtils {
     }
 
     /**
+     * Gets the augments currently installed on this tinkerable
+     *
+     * @param resource the {@link ITinkerable}
+     * @return the installed augments
+     */
+    public static List<Augment> getAugments(ItemResource resource) {
+        return getAugments(resource.toStack());
+    }
+
+    /**
      * Helper method to get the augments from the player's armor
      *
      * @param player the player
@@ -150,6 +199,7 @@ public class AugmentUtils {
 
     /**
      * Gets that largest AOE augment size
+     *
      * @param stack the {@link ITinkerable}
      * @return the range
      */

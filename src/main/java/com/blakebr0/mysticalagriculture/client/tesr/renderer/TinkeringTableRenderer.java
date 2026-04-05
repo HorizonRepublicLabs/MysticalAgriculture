@@ -6,8 +6,6 @@ import com.blakebr0.mysticalagriculture.tileentity.TinkeringTableTileEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import it.unimi.dsi.fastutil.HashCommon;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -36,16 +34,16 @@ public class TinkeringTableRenderer implements BlockEntityRenderer<TinkeringTabl
         BlockEntityRenderer.super.extractRenderState(tile, state, partialTicks, cameraPosition, breakProgress);
 
         state.facing = tile.getBlockState().getValue(TinkeringTableBlock.FACING);
-        state.item = tile.getInventory().getResource(0);
+        state.itemResource = tile.getInventory().getResource(0);
 
         int seed = HashCommon.long2int(state.blockPos.asLong());
 
-        this.itemModelResolver.updateForTopItem(state.itemRenderState,  state.item.toStack(), ItemDisplayContext.FIXED, tile.getLevel(), null, seed);
+        this.itemModelResolver.updateForTopItem(state.itemRenderState,  state.itemResource.toStack(), ItemDisplayContext.FIXED, tile.getLevel(), null, seed);
     }
 
     @Override
     public void submit(TinkeringTableRenderState state, PoseStack matrix, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
-        if (!state.item.isEmpty() && state.facing != null) {
+        if (!state.itemResource.isEmpty() && state.facing != null) {
             matrix.pushPose();
             matrix.translate(0.5D, 0.9D, 0.5D);
             float scale = 0.7F;

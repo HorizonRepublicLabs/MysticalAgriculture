@@ -27,14 +27,21 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CropBlock;
-import net.minecraft.world.level.block.entity.FurnaceBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
+import org.jspecify.annotations.Nullable;
+
+import java.util.function.Supplier;
+import java.util.stream.IntStream;
 
 public class HarvesterTileEntity extends BaseInventoryTileEntity implements MenuProvider, IUpgradeableMachine {
-    private static final int FUEL_TICK_MULTIPLIER = 20;
+    private static final int FUEL_SLOT = 0;
+    private static final int[] OUTPUT_SLOTS = IntStream.rangeClosed(1, 15).toArray();
+
+    public static final int FUEL_TICK_MULTIPLIER = 20;
     public static final int OPERATION_TIME = 100;
     public static final int FUEL_USAGE = 40;
     public static final int SCAN_FUEL_USAGE = 10;
@@ -44,6 +51,9 @@ public class HarvesterTileEntity extends BaseInventoryTileEntity implements Menu
     private final CItemStacksHandler inventory;
     private final MachineUpgradeItemStackHandler upgradeInventory;
     private final CEnergyStorage energy;
+
+    private final ContainerData dataAccess;
+
     private MachineUpgradeTier tier;
     private Direction direction;
     private int progress;
@@ -52,11 +62,9 @@ public class HarvesterTileEntity extends BaseInventoryTileEntity implements Menu
     private int lastScanIndex = -1;
     private boolean isRunning;
 
-    private final ContainerData dataAccess;
-
     public HarvesterTileEntity(BlockPos pos, BlockState state) {
         super(ModTileEntities.HARVESTER.get(), pos, state);
-        this.inventory = createInventoryHandler((_, _) -> this.setChanged());
+        this.inventory = createInventoryHandler((_, _) -> this.setChanged(), this::getLevel);
         this.upgradeInventory = new MachineUpgradeItemStackHandler();
         this.energy = new CEnergyStorage(FUEL_CAPACITY, _ -> this.setChangedFast());
 
@@ -125,7 +133,7 @@ public class HarvesterTileEntity extends BaseInventoryTileEntity implements Menu
 
     public static void tick(Level level, BlockPos pos, BlockState state, HarvesterTileEntity tile) {
         if (tile.energy.getAmountAsInt() < tile.energy.getCapacityAsInt()) {
-            var fuel = tile.inventory.getResource(0);
+            var fuel = tile.inventory.getResource(FUEL_SLOT);
 
             try (var tx = Transaction.openRoot()) {
                 if (tile.fuelLeft <= 0 && !fuel.isEmpty()) {
@@ -133,7 +141,7 @@ public class HarvesterTileEntity extends BaseInventoryTileEntity implements Menu
 
                     if (tile.fuelItemValue > 0) {
                         tile.fuelLeft = tile.fuelItemValue *= FUEL_TICK_MULTIPLIER;
-                        tile.inventory.extract(0, fuel, 1, tx, true);
+                        tile.inventory.extract(FUEL_SLOT, fuel, 1, tx, true);
 
                         tile.setChangedFast();
                     }
@@ -206,6 +214,8 @@ public class HarvesterTileEntity extends BaseInventoryTileEntity implements Menu
                     } else {
                         tile.energy.extract(SCAN_FUEL_USAGE, tx);
                     }
+
+                    tx.commit();
                 }
             }
 
@@ -291,17 +301,18 @@ public class HarvesterTileEntity extends BaseInventoryTileEntity implements Menu
     private void addItemToInventory(ItemStack stack, Level level, BlockPos pos) {
         var remaining = stack.getCount();
         for (int i = 1; i < this.inventory.size(); i++) {
-            var stackInSlot = this.inventory.getStackInSlot(i);
+            var stackInSlot = this.inventory.getResource(i);
 
             if (stackInSlot.isEmpty()) {
-                this.inventory.setStackInSlot(i, stack.copy());
+                this.inventory.set(i, ItemResource.of(stack), stack.count());
                 return;
             }
 
-            if (StackHelper.areStacksEqual(stackInSlot, stack)) {
-                var insertSize = Math.min(remaining, stackInSlot.getMaxStackSize() - stackInSlot.getCount());
+            if (stackInSlot.matches(stack)) {
+                var stackInSlotAmount = this.inventory.getAmountAsInt(i);
+                var insertSize = Math.min(remaining, stackInSlot.getMaxStackSize() - stackInSlotAmount);
 
-                this.inventory.setStackInSlot(i, StackHelper.grow(stackInSlot, insertSize));
+                this.inventory.set(i, stackInSlot, stackInSlotAmount + insertSize);
 
                 remaining -= insertSize;
             }
@@ -314,17 +325,17 @@ public class HarvesterTileEntity extends BaseInventoryTileEntity implements Menu
     }
 
     public static CItemStacksHandler createInventoryHandler() {
-        return createInventoryHandler(null);
+        return createInventoryHandler(null, () -> null);
     }
 
-    public static CItemStacksHandler createInventoryHandler(OnContentsChangedFunction onContentsChanged) {
+    public static CItemStacksHandler createInventoryHandler(@Nullable OnContentsChangedFunction onContentsChanged, Supplier<Level> level) {
         return CItemStacksHandler.create(16, onContentsChanged, builder -> {
-            builder.setCanInsert((slot, stack) -> switch (slot) {
-                case 0 -> FurnaceBlockEntity.isFuel(stack);
+            builder.setCanInsert((slot, resource) -> switch (slot) {
+                case FUEL_SLOT -> level.get() != null && level.get().fuelValues().isFuel(resource.toStack());
                 default -> false;
             });
             builder.setCanExtract(slot -> switch (slot) {
-                case 0 -> !FurnaceBlockEntity.isFuel(builder.getStackInSlot(slot));
+                case FUEL_SLOT -> level.get() == null || !level.get().fuelValues().isFuel(builder.getResource(slot).toStack());
                 default -> true;
             });
         });

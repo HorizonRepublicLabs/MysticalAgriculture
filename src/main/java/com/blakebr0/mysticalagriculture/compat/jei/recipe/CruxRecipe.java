@@ -23,9 +23,9 @@ public class CruxRecipe {
 
     public List<Ingredient> getIngredients() {
         return Lists.newArrayList(
-                Ingredient.of(this.seed),
+                Ingredient.of(this.seed.getItem()),
                 Ingredient.of(farmlands.toArray(new Block[0])),
-                Ingredient.of(this.crux)
+                Ingredient.of(this.crux.getItem())
         );
     }
 

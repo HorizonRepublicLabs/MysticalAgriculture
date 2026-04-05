@@ -1,24 +1,34 @@
 package com.blakebr0.mysticalagriculture.client.tesr.renderer;
 
-import com.blakebr0.cucumber.client.ModRenderTypes;
 import com.blakebr0.mysticalagriculture.client.tesr.state.AwakeningAltarRenderState;
 import com.blakebr0.mysticalagriculture.init.ModBlocks;
 import com.blakebr0.mysticalagriculture.tileentity.AwakeningAltarTileEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.MultiBufferSource;
+import it.unimi.dsi.fastutil.HashCommon;
 import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.block.BlockModelResolver;
+import net.minecraft.client.renderer.block.model.BlockDisplayContext;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
+import net.minecraft.client.renderer.item.ItemModelResolver;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.phys.AABB;
-import net.neoforged.neoforge.client.model.data.ModelData;
+import net.minecraft.world.phys.Vec3;
+import org.jspecify.annotations.Nullable;
 
 public class AwakeningAltarRenderer implements BlockEntityRenderer<AwakeningAltarTileEntity, AwakeningAltarRenderState> {
-    public AwakeningAltarRenderer(BlockEntityRendererProvider.Context context) { }
+    private final BlockModelResolver blockModelResolver;
+    private final ItemModelResolver itemModelResolver;
+
+    public AwakeningAltarRenderer(BlockEntityRendererProvider.Context context) {
+        this.blockModelResolver = context.blockModelResolver();
+        this.itemModelResolver = context.itemModelResolver();
+    }
 
     @Override
     public AwakeningAltarRenderState createRenderState() {
@@ -26,46 +36,59 @@ public class AwakeningAltarRenderer implements BlockEntityRenderer<AwakeningAlta
     }
 
     @Override
-    public void submit(AwakeningAltarRenderState state, PoseStack matrix, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
-        var minecraft = Minecraft.getInstance();
-        var inventory = tile.getInventory();
-        var stack = inventory.getStackInSlot(1).isEmpty() ? inventory.getStackInSlot(0) : inventory.getStackInSlot(1);
+    public void extractRenderState(AwakeningAltarTileEntity tile, AwakeningAltarRenderState state, float partialTicks, Vec3 cameraPosition, ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+        BlockEntityRenderer.super.extractRenderState(tile, state, partialTicks, cameraPosition, breakProgress);
 
-        if (!stack.isEmpty()) {
+        var inventory = tile.getInventory();
+
+        state.itemResource = inventory.getResource(1).isEmpty() ? inventory.getResource(0) : inventory.getResource(1);
+        state.pedestalPositions = tile.getPedestalPositions();
+
+        int seed = HashCommon.long2int(state.blockPos.asLong());
+
+        this.itemModelResolver.updateForTopItem(state.itemRenderState,  state.itemResource.toStack(), ItemDisplayContext.FIXED, tile.getLevel(), null, seed);
+
+        var level = tile.getLevel();
+
+        for (int i = 0; i < state.pedestalPositions.size(); i++) {
+            var aoePos = state.pedestalPositions.get(i);
+            if (level != null && level.isEmptyBlock(aoePos)) {
+                var block = i % 2 == 0
+                        ? ModBlocks.AWAKENING_PEDESTAL.get().defaultBlockState()
+                        : ModBlocks.ESSENCE_VESSEL.get().defaultBlockState();
+
+                this.blockModelResolver.update(state.blockModelRenderStates[i], block, BlockDisplayContext.create());
+            }
+        }
+    }
+
+    @Override
+    public void submit(AwakeningAltarRenderState state, PoseStack matrix, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
+        if (!state.itemResource.isEmpty()) {
             matrix.pushPose();
             matrix.translate(0.5D, 1.1D, 0.5D);
-            float scale = stack.getItem() instanceof BlockItem ? 0.95F : 0.75F;
+            float scale = state.itemResource.getItem() instanceof BlockItem ? 0.95F : 0.75F;
             matrix.scale(scale, scale, scale);
             double tick = System.currentTimeMillis() / 800.0D;
             matrix.translate(0.0D, Math.sin(tick % (2 * Math.PI)) * 0.065D, 0.0D);
             matrix.mulPose(Axis.YP.rotationDegrees((float) ((tick * 40.0D) % 360)));
-            minecraft.getItemRenderer().renderStatic(stack, ItemDisplayContext.GROUND, combinedLight, combinedOverlay, matrix, buffer, minecraft.level, 0);
+            state.itemRenderState.submit(matrix, submitNodeCollector, state.lightCoords, OverlayTexture.NO_OVERLAY, 0);
             matrix.popPose();
         }
 
-        var pos = tile.getBlockPos();
-        var level = tile.getLevel();
-        var builder = buffer.getBuffer(ModRenderTypes.GHOST);
-
         matrix.pushPose();
-        matrix.translate(-pos.getX(), -pos.getY(), -pos.getZ());
+        matrix.translate(-state.blockPos.getX(), -state.blockPos.getY(), -state.blockPos.getZ());
 
-        var positions = tile.getPedestalPositions();
-        for (int i = 0; i < positions.size(); i++) {
-            var aoePos = positions.get(i);
+        for (int i = 0; i < state.blockModelRenderStates.length; i++) {
+            var blockModelRenderState = state.blockModelRenderStates[i];
+            var aoePos = state.pedestalPositions.get(i);
 
-            if (level != null && level.isEmptyBlock(aoePos)) {
-                matrix.pushPose();
-                matrix.translate(aoePos.getX(), aoePos.getY(), aoePos.getZ());
+            matrix.pushPose();
+            matrix.translate(aoePos.getX(), aoePos.getY(), aoePos.getZ());
 
-                var state = i % 2 == 0
-                        ? ModBlocks.AWAKENING_PEDESTAL.get().defaultBlockState()
-                        : ModBlocks.ESSENCE_VESSEL.get().defaultBlockState();
+            blockModelRenderState.submit(matrix, submitNodeCollector, state.lightCoords, OverlayTexture.NO_OVERLAY, 0);
 
-                minecraft.getBlockRenderer().renderBatched(state, aoePos, level, matrix, builder, false, level.getRandom(), ModelData.EMPTY, null);
-
-                matrix.popPose();
-            }
+            matrix.popPose();
         }
 
         matrix.popPose();

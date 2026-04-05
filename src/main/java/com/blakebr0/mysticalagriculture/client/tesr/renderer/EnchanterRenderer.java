@@ -5,17 +5,24 @@ import com.blakebr0.mysticalagriculture.client.tesr.state.EnchanterRenderState;
 import com.blakebr0.mysticalagriculture.tileentity.EnchanterTileEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
+import net.minecraft.client.renderer.item.ItemModelResolver;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.phys.Vec3;
+import org.jspecify.annotations.Nullable;
 
 public class EnchanterRenderer implements BlockEntityRenderer<EnchanterTileEntity, EnchanterRenderState> {
-    public EnchanterRenderer(BlockEntityRendererProvider.Context context) { }
+    private final ItemModelResolver itemModelResolver;
+
+    public EnchanterRenderer(BlockEntityRendererProvider.Context context) {
+        this.itemModelResolver = context.itemModelResolver();
+    }
 
     @Override
     public EnchanterRenderState createRenderState() {
@@ -23,16 +30,18 @@ public class EnchanterRenderer implements BlockEntityRenderer<EnchanterTileEntit
     }
 
     @Override
+    public void extractRenderState(EnchanterTileEntity tile, EnchanterRenderState state, float partialTicks, Vec3 cameraPosition, ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+        BlockEntityRenderer.super.extractRenderState(tile, state, partialTicks, cameraPosition, breakProgress);
+
+        state.facing = tile.getBlockState().getValue(EnchanterBlock.FACING);
+        state.itemResource = tile.getInventory().getResource(2);
+
+        this.itemModelResolver.updateForTopItem(state.itemRenderState, state.itemResource.toStack(), ItemDisplayContext.FIXED, tile.getLevel(), null, 0);
+    }
+
+    @Override
     public void submit(EnchanterRenderState state, PoseStack matrix, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
-        var level = tile.getLevel();
-        if (level == null)
-            return;
-
-        var pos = tile.getBlockPos();
-        var state = level.getBlockState(pos);
-        var stack = tile.getInventory().getStackInSlot(2);
-
-        if (!stack.isEmpty() && state.hasProperty(EnchanterBlock.FACING)) {
+        if (!state.itemResource.isEmpty() && state.facing != null) {
             matrix.pushPose();
             matrix.translate(0.5D, 0.89D, 0.5D);
 
@@ -40,9 +49,8 @@ public class EnchanterRenderer implements BlockEntityRenderer<EnchanterTileEntit
 
             matrix.scale(scale, scale, scale);
 
-            var facing = state.getValue(EnchanterBlock.FACING);
-            var axis = facing.getAxis();
-            var axisDirection = facing.getAxisDirection().getStep();
+            var axis = state.facing.getAxis();
+            var axisDirection = state.facing.getAxisDirection().getStep();
 
             if (axis == Direction.Axis.X) {
                 matrix.mulPose(Axis.ZP.rotationDegrees(158 * axisDirection));
@@ -50,14 +58,14 @@ public class EnchanterRenderer implements BlockEntityRenderer<EnchanterTileEntit
                 matrix.mulPose(Axis.XN.rotationDegrees(158 * axisDirection));
             }
 
-            int index = facing.get2DDataValue();
+            int index = state.facing.get2DDataValue();
 
             matrix.mulPose(Axis.YP.rotationDegrees(-90 * index));
             matrix.mulPose(Axis.XP.rotationDegrees(90));
 
             matrix.translate(0.0D, -0.08D, 0.0D);
 
-            Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemDisplayContext.FIXED, i, i1, matrix, buffer, level, 0);
+            state.itemRenderState.submit(matrix, submitNodeCollector, state.lightCoords, OverlayTexture.NO_OVERLAY, 0);
 
             matrix.popPose();
         }

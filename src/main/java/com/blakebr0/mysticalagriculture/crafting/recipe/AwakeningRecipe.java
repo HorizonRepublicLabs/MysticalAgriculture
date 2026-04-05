@@ -2,6 +2,7 @@ package com.blakebr0.mysticalagriculture.crafting.recipe;
 
 import com.blakebr0.cucumber.helper.StackHelper;
 import com.blakebr0.mysticalagriculture.api.crafting.IAwakeningRecipe;
+import com.blakebr0.mysticalagriculture.init.ModBlocks;
 import com.blakebr0.mysticalagriculture.init.ModRecipeTypes;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
@@ -12,11 +13,15 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.PlacementInfo;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.display.RecipeDisplay;
+import net.minecraft.world.item.crafting.display.ShapelessCraftingRecipeDisplay;
+import net.minecraft.world.item.crafting.display.SlotDisplay;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
 import net.neoforged.neoforge.common.util.RecipeMatcher;
@@ -72,7 +77,7 @@ public class AwakeningRecipe implements IAwakeningRecipe {
                                     DataResult::success
                             )
                             .forGetter(recipe -> recipe.essences),
-                    ItemStack.CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
+                    ItemStackTemplate.CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
                     Codec.BOOL.optionalFieldOf("transfer_components", false).forGetter(recipe -> recipe.transferComponents)
             ).apply(builder, AwakeningRecipe::new)
     );
@@ -81,19 +86,17 @@ public class AwakeningRecipe implements IAwakeningRecipe {
     );
     public static final RecipeSerializer<AwakeningRecipe> SERIALIZER = new RecipeSerializer<>(MAP_CODEC, STREAM_CODEC);
 
-    public static final int RECIPE_SIZE = 9;
-
     private final Ingredient input;
     private final List<Ingredient> inputs;
     private final List<SizedIngredient> essences;
-    private final ItemStack result;
+    private final ItemStackTemplate result;
     private final boolean transferComponents;
     private PlacementInfo placementInfo;
     // for CraftTweaker recipes
     private BiFunction<Integer, ItemStack, ItemStack> transformer;
 
     // the input is specified separately in JSON but is part of the ingredient list in practice
-    public AwakeningRecipe(Ingredient input, List<Ingredient> inputs, List<SizedIngredient> essences, ItemStack result, boolean transferComponents) {
+    public AwakeningRecipe(Ingredient input, List<Ingredient> ingredients, List<SizedIngredient> essences, ItemStackTemplate result, boolean transferComponents) {
         this.input = input;
         this.essences = essences;
         this.result = result;
@@ -101,13 +104,13 @@ public class AwakeningRecipe implements IAwakeningRecipe {
 
         this.inputs = List.of(
                 essences.get(0).ingredient(),
-                inputs.get(0),
+                ingredients.get(0),
                 essences.get(1).ingredient(),
-                inputs.get(1),
+                ingredients.get(1),
                 essences.get(2).ingredient(),
-                inputs.get(2),
+                ingredients.get(2),
                 essences.get(3).ingredient(),
-                inputs.get(3)
+                ingredients.get(3)
         );
     }
 
@@ -136,7 +139,7 @@ public class AwakeningRecipe implements IAwakeningRecipe {
     @Override
     public ItemStack assemble(CraftingInput inventory) {
         var stack = inventory.getItem(0);
-        var result = this.result.copy();
+        var result = this.result.create();
 
         if (this.transferComponents) {
             result.applyComponents(stack.getComponentsPatch());
@@ -155,6 +158,15 @@ public class AwakeningRecipe implements IAwakeningRecipe {
         }
 
         return this.placementInfo;
+    }
+
+    @Override
+    public List<RecipeDisplay> display() {
+        return List.of(new ShapelessCraftingRecipeDisplay(
+                this.placementInfo.ingredients().stream().map(Ingredient::display).toList(),
+                new SlotDisplay.ItemStackSlotDisplay(this.result),
+                new SlotDisplay.ItemSlotDisplay(ModBlocks.AWAKENING_ALTAR.get().asItem())
+        ));
     }
 
     @Override
@@ -188,12 +200,13 @@ public class AwakeningRecipe implements IAwakeningRecipe {
 
                 // the ingredient will have the same ItemStack instance as the essence
                 // this *should* be the quickest way to find the exact essence in the recipe
-                for (var essence : this.essences) {
-                    if (input.getValues() == essence) {
-                        remaining.set(i, StackHelper.shrink(stack, essence.count(), false));
-                        break;
-                    }
-                }
+//                TODO handle remaining items in awakening recipes
+//                for (var essence : this.essences) {
+//                    if (input.getValues() == essence) {
+//                        remaining.set(i, StackHelper.shrink(stack, essence.count(), false));
+//                        break;
+//                    }
+//                }
             } else {
                 var remainder = stack.getCraftingRemainder();
                 if (remainder != null) {
@@ -264,7 +277,7 @@ public class AwakeningRecipe implements IAwakeningRecipe {
         var input = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
         var inputs = Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()).decode(buffer);
         var essences = SizedIngredient.STREAM_CODEC.apply(ByteBufCodecs.list()).decode(buffer);
-        var result = ItemStack.STREAM_CODEC.decode(buffer);
+        var result = ItemStackTemplate.STREAM_CODEC.decode(buffer);
         var transferComponents = buffer.readBoolean();
 
         return new AwakeningRecipe(input, inputs, essences, result, transferComponents);
@@ -279,7 +292,7 @@ public class AwakeningRecipe implements IAwakeningRecipe {
         }
 
         SizedIngredient.STREAM_CODEC.apply(ByteBufCodecs.list()).encode(buffer, recipe.essences);
-        ItemStack.STREAM_CODEC.encode(buffer, recipe.result);
+        ItemStackTemplate.STREAM_CODEC.encode(buffer, recipe.result);
         buffer.writeBoolean(recipe.transferComponents);
     }
 }

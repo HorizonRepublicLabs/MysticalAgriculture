@@ -69,8 +69,7 @@ public class InfusedFarmlandBlock extends FarmlandBlock implements IColored, IEs
     public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
         List<ItemStack> drops = new ArrayList<>();
         var stack = builder.getOptionalParameter(LootContextParams.TOOL);
-        var registry = builder.getLevel().registryAccess().registryOrThrow(Registries.ENCHANTMENT);
-        var silkTouch = registry.getHolderOrThrow(Enchantments.SILK_TOUCH);
+        var silkTouch = builder.getLevel().registryAccess().getOrThrow(Enchantments.SILK_TOUCH);
 
         if (stack != null && EnchantmentHelper.getTagEnchantmentLevel(silkTouch, stack) > 0) {
             drops.add(new ItemStack(this));

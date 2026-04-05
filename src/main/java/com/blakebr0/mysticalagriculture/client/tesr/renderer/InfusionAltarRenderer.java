@@ -1,23 +1,34 @@
 package com.blakebr0.mysticalagriculture.client.tesr.renderer;
 
-import com.blakebr0.cucumber.client.ModRenderTypes;
 import com.blakebr0.mysticalagriculture.client.tesr.state.InfusionAltarRenderState;
 import com.blakebr0.mysticalagriculture.init.ModBlocks;
 import com.blakebr0.mysticalagriculture.tileentity.InfusionAltarTileEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import net.minecraft.client.Minecraft;
+import it.unimi.dsi.fastutil.HashCommon;
 import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.block.BlockModelResolver;
+import net.minecraft.client.renderer.block.model.BlockDisplayContext;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
+import net.minecraft.client.renderer.item.ItemModelResolver;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.phys.AABB;
-import net.neoforged.neoforge.client.model.data.ModelData;
+import net.minecraft.world.phys.Vec3;
+import org.jspecify.annotations.Nullable;
 
 public class InfusionAltarRenderer implements BlockEntityRenderer<InfusionAltarTileEntity, InfusionAltarRenderState> {
-    public InfusionAltarRenderer(BlockEntityRendererProvider.Context context) { }
+    private final BlockModelResolver blockModelResolver;
+    private final ItemModelResolver itemModelResolver;
+
+    public InfusionAltarRenderer(BlockEntityRendererProvider.Context context) {
+        this.blockModelResolver = context.blockModelResolver();
+        this.itemModelResolver = context.itemModelResolver();
+    }
 
     @Override
     public InfusionAltarRenderState createRenderState() {
@@ -25,41 +36,56 @@ public class InfusionAltarRenderer implements BlockEntityRenderer<InfusionAltarT
     }
 
     @Override
-    public void submit(InfusionAltarRenderState state, PoseStack matrix, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
-        var minecraft = Minecraft.getInstance();
-        var level = minecraft.level;
-        if (level == null)
-            return;
+    public void extractRenderState(InfusionAltarTileEntity tile, InfusionAltarRenderState state, float partialTicks, Vec3 cameraPosition, ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+        BlockEntityRenderer.super.extractRenderState(tile, state, partialTicks, cameraPosition, breakProgress);
 
         var inventory = tile.getInventory();
-        var stack = inventory.getStackInSlot(1).isEmpty() ? inventory.getStackInSlot(0) : inventory.getStackInSlot(1);
 
-        if (!stack.isEmpty()) {
+        state.itemResource = inventory.getResource(1).isEmpty() ? inventory.getResource(0) : inventory.getResource(1);
+        state.pedestalPositions = tile.getPedestalPositions();
+
+        int seed = HashCommon.long2int(state.blockPos.asLong());
+
+        this.itemModelResolver.updateForTopItem(state.itemRenderState,  state.itemResource.toStack(), ItemDisplayContext.FIXED, tile.getLevel(), null, seed);
+
+        var level = tile.getLevel();
+
+        for (int i = 0; i < state.pedestalPositions.size(); i++) {
+            var aoePos = state.pedestalPositions.get(i);
+            if (level != null && level.isEmptyBlock(aoePos)) {
+                this.blockModelResolver.update(state.blockModelRenderStates[i], ModBlocks.INFUSION_PEDESTAL.get().defaultBlockState(), BlockDisplayContext.create());
+            }
+        }
+    }
+
+    @Override
+    public void submit(InfusionAltarRenderState state, PoseStack matrix, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
+        if (!state.itemResource.isEmpty()) {
             matrix.pushPose();
             matrix.translate(0.5D, 1.1D, 0.5D);
-            float scale = stack.getItem() instanceof BlockItem ? 0.95F : 0.75F;
+            float scale = state.itemResource.getItem() instanceof BlockItem ? 0.95F : 0.75F;
             matrix.scale(scale, scale, scale);
             double tick = System.currentTimeMillis() / 800.0D;
             matrix.translate(0.0D, Math.sin(tick % (2 * Math.PI)) * 0.065D, 0.0D);
             matrix.mulPose(Axis.YP.rotationDegrees((float) ((tick * 40.0D) % 360)));
-            minecraft.getItemRenderer().renderStatic(stack, ItemDisplayContext.GROUND, i, i1, matrix, buffer, level, 0);
+            state.itemRenderState.submit(matrix, submitNodeCollector, state.lightCoords, OverlayTexture.NO_OVERLAY, 0);
             matrix.popPose();
         }
 
-        var pos = tile.getBlockPos();
-        var builder = buffer.getBuffer(ModRenderTypes.GHOST);
-
         matrix.pushPose();
-        matrix.translate(-pos.getX(), -pos.getY(), -pos.getZ());
+        matrix.translate(-state.blockPos.getX(), -state.blockPos.getY(), -state.blockPos.getZ());
 
-        tile.getPedestalPositions().forEach(aoePos -> {
-            if (level.isEmptyBlock(aoePos)) {
-                matrix.pushPose();
-                matrix.translate(aoePos.getX(), aoePos.getY(), aoePos.getZ());
-                minecraft.getBlockRenderer().renderBatched(ModBlocks.INFUSION_PEDESTAL.get().defaultBlockState(), aoePos, level, matrix, builder, false, level.getRandom(), ModelData.EMPTY, null);
-                matrix.popPose();
-            }
-        });
+        for (int i = 0; i < state.blockModelRenderStates.length; i++) {
+            var blockModelRenderState = state.blockModelRenderStates[i];
+            var aoePos = state.pedestalPositions.get(i);
+
+            matrix.pushPose();
+            matrix.translate(aoePos.getX(), aoePos.getY(), aoePos.getZ());
+
+            blockModelRenderState.submit(matrix, submitNodeCollector, state.lightCoords, OverlayTexture.NO_OVERLAY, 0);
+
+            matrix.popPose();
+        }
 
         matrix.popPose();
     }

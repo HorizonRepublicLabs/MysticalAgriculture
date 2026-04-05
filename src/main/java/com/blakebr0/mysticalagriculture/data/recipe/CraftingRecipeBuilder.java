@@ -36,7 +36,7 @@ public class CraftingRecipeBuilder {
     }
 
     public void build(RecipeOutput consumer, Identifier id) {
-        consumer.accept(id, new ShapedRecipe(this.group, this.category, this.pattern, this.result), null, this.conditions.toArray(new ICondition[0]));
+//        consumer.accept(id, new ShapedRecipe(this.group, this.category, this.pattern, this.result), null, this.conditions.toArray(new ICondition[0]));
     }
 
     public static CraftingRecipeBuilder newSeedRecipe(Crop crop) {
@@ -62,7 +62,7 @@ public class CraftingRecipeBuilder {
         var ingredient = crop.getLazyIngredient();
 
         if (ingredient.isTag()) {
-            builder.addCondition(new NotCondition(new TagEmptyCondition(ingredient.getId())));
+//            builder.addCondition(new NotCondition(new TagEmptyCondition(ingredient.getId())));
         }
 
         return builder;
