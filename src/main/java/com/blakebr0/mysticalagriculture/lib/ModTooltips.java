@@ -1,11 +1,11 @@
 package com.blakebr0.mysticalagriculture.lib;
 
+import com.blakebr0.cucumber.util.ClientPlayerUtil;
 import com.blakebr0.cucumber.util.Tooltip;
 import com.blakebr0.mysticalagriculture.api.components.AOEAugmentOffsetComponent;
 import com.blakebr0.mysticalagriculture.api.tinkering.AOEAugment;
 import com.blakebr0.mysticalagriculture.api.util.AugmentUtils;
 import com.blakebr0.mysticalagriculture.api.util.TinkerableUtils;
-import com.blakebr0.mysticalagriculture.client.ClientPlayerProxy;
 import com.blakebr0.mysticalagriculture.init.ModDataComponentTypes;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -72,7 +72,7 @@ public final class ModTooltips {
         tooltip.accept(ModTooltips.AUGMENTS.toComponent());
 
         var augments = AugmentUtils.getAugments(stack);
-        var player = ClientPlayerProxy.getPlayer();
+        var player = ClientPlayerUtil.getClientPlayer();
 
         for (int i = 0; i < slots; i++) {
             var augment = i < augments.size() ? augments.get(i) : null;
