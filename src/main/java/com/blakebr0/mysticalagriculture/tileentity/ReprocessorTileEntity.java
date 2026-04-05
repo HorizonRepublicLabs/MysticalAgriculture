@@ -1,6 +1,7 @@
 package com.blakebr0.mysticalagriculture.tileentity;
 
 import com.blakebr0.cucumber.energy.CEnergyStorage;
+import com.blakebr0.cucumber.helper.ItemResourceHelper;
 import com.blakebr0.cucumber.inventory.CItemStacksHandler;
 import com.blakebr0.cucumber.inventory.CachedRecipe;
 import com.blakebr0.cucumber.inventory.OnContentsChangedFunction;
@@ -190,19 +191,16 @@ public class ReprocessorTileEntity extends BaseInventoryTileEntity implements Me
         var wasRunning = tile.isRunning;
 
         if (tile.energy.getAmountAsInt() >= tile.getFuelUsage()) {
-            var input = tile.inventory.getResource(INPUT_SLOT);
-            var output = tile.inventory.getResource(OUTPUT_SLOT);
-
             tile.isRunning = false;
 
+            var input = tile.inventory.getResource(INPUT_SLOT);
             if (!input.isEmpty()) {
                 var recipe = tile.getActiveRecipe();
 
                 if (recipe != null) {
                     var result = recipe.assemble(tile.toCraftingInput());
-                    var canFit = result.getCount() + tile.inventory.getAmountAsInt(OUTPUT_SLOT) <= output.getMaxStackSize();
 
-                    if (canFit && output.matches(result)) {
+                    if (ItemResourceHelper.canCombine(tile.inventory, OUTPUT_SLOT, result)) {
                         tile.isRunning = true;
                         tile.progress++;
 
