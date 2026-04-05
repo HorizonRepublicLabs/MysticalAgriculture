@@ -16,6 +16,13 @@ import java.util.Map;
  */
 public interface IAwakeningRecipe extends Recipe<CraftingInput> {
     /**
+     * Gets the list of essence ingredients
+     *
+     * @return the list of essence ingredients
+     */
+    List<SizedIngredient> getEssences();
+
+    /**
      * Gets a map of missing essences and the amount of each that is missing
      *
      * @param items the list essence vessel items

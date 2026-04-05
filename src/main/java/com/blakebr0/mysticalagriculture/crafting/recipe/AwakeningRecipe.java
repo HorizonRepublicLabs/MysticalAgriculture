@@ -1,6 +1,5 @@
 package com.blakebr0.mysticalagriculture.crafting.recipe;
 
-import com.blakebr0.cucumber.helper.StackHelper;
 import com.blakebr0.mysticalagriculture.api.crafting.IAwakeningRecipe;
 import com.blakebr0.mysticalagriculture.init.ModBlocks;
 import com.blakebr0.mysticalagriculture.init.ModRecipeTypes;
@@ -238,6 +237,11 @@ public class AwakeningRecipe implements IAwakeningRecipe {
         }
 
         return remaining;
+    }
+
+    @Override
+    public List<SizedIngredient> getEssences() {
+        return this.essences;
     }
 
     @Override
