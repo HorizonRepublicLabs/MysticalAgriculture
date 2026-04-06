@@ -26,10 +26,6 @@ public class FilledSoulJarIngredient implements ICustomIngredient {
     @Override
     public boolean test(@Nullable ItemStack stack) {
         if (stack != null) {
-            if (this.values == null) {
-                this.initMatchingStacks();
-            }
-
             return stack.getItem() instanceof SoulJarItem && MobSoulUtils.getSouls(stack) > 0;
         }
 
@@ -38,6 +34,16 @@ public class FilledSoulJarIngredient implements ICustomIngredient {
 
     @Override
     public Stream<Holder<Item>> items() {
+        if (this.values == null) {
+            var values = new ArrayList<Holder<Item>>();
+
+            for (var type : MobSoulTypeRegistry.getInstance().getMobSoulTypes()) {
+                values.add(MobSoulUtils.getFilledSoulJar(type, ModItems.SOUL_JAR.get()).typeHolder());
+            }
+
+            this.values = HolderSet.direct(values);
+        }
+
         return this.values.stream();
     }
 
@@ -49,16 +55,6 @@ public class FilledSoulJarIngredient implements ICustomIngredient {
     @Override
     public IngredientType<?> getType() {
         return ModIngredientTypes.FILLED_SOUL_JAR.get();
-    }
-
-    private void initMatchingStacks() {
-        var values = new ArrayList<Holder<Item>>();
-
-        for (var type : MobSoulTypeRegistry.getInstance().getMobSoulTypes()) {
-            values.add(MobSoulUtils.getFilledSoulJar(type, ModItems.SOUL_JAR.get()).typeHolder());
-        }
-
-        this.values = HolderSet.direct(values);
     }
 
     public static Ingredient of() {

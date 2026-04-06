@@ -94,7 +94,7 @@ public class SoulExtractionRecipe implements ISoulExtractionRecipe {
     public List<RecipeDisplay> display() {
         return List.of(new ShapelessCraftingRecipeDisplay(
                 List.of(this.input.display()),
-                new SlotDisplay.ItemStackSlotDisplay(ItemStackTemplate.fromNonEmptyStack(this.result.stack)),
+                new SlotDisplay.ItemStackSlotDisplay(ItemStackTemplate.fromNonEmptyStack(this.result.stack())),
                 new SlotDisplay.ItemSlotDisplay(ModBlocks.SOUL_EXTRACTOR.get().asItem())
         ));
     }
@@ -148,12 +148,20 @@ public class SoulExtractionRecipe implements ISoulExtractionRecipe {
 
         public final Identifier type;
         public final double souls;
-        public final ItemStack stack;
+
+        private ItemStack stack;
 
         public Result(Identifier type, double souls) {
             this.type = type;
             this.souls = souls;
-            this.stack = MobSoulUtils.getSoulJar(MobSoulTypeRegistry.getInstance().getMobSoulTypeById(type), souls, ModItems.SOUL_JAR.get());
+        }
+
+        public ItemStack stack() {
+            if (stack == null) {
+                this.stack = MobSoulUtils.getSoulJar(MobSoulTypeRegistry.getInstance().getMobSoulTypeById(type), souls, ModItems.SOUL_JAR.get());
+            }
+
+            return this.stack;
         }
     }
 }

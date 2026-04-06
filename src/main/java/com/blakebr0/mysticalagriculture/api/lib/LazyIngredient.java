@@ -57,17 +57,15 @@ public class LazyIngredient {
     public @Nullable Ingredient getIngredient() {
         if (!this.loadedIngredient) {
             if (this.isTag()) {
-                var tag = ItemTags.create(Identifier.parse(this.id));
-                var items = BuiltInRegistries.ITEM.getOrThrow(tag);
-                this.ingredient = Ingredient.of(items);
+                BuiltInRegistries.ITEM.get(ItemTags.create(Identifier.parse(this.id))).ifPresent(item -> {
+                    this.ingredient = Ingredient.of(item);
+                });
             } else if (this.isItem()) {
                 BuiltInRegistries.ITEM.get(Identifier.parse(this.id)).ifPresent(item -> {
                     if (this.components == null || this.components.isEmpty()) {
                         this.ingredient = Ingredient.of(item.value());
                     } else {
-                        var stack = new ItemStack(item);
-                        stack.applyComponents(this.components);
-                        this.ingredient = DataComponentIngredient.of(false, stack);
+                        this.ingredient = DataComponentIngredient.of(false, this.components, item);
                     }
                 });
             }
