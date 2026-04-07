@@ -17,17 +17,17 @@
   "group": "mysticalagriculture:seeds",
   "key": {
     "E": {
-      "type": "mysticalagriculture:crop_component",
+      "neoforge:ingredient_type": "mysticalagriculture:crop_component",
       "component": "essence",
       "crop": "mysticalagriculture:netherite"
     },
     "M": {
-      "type": "mysticalagriculture:crop_component",
+      "neoforge:ingredient_type": "mysticalagriculture:crop_component",
       "component": "material",
       "crop": "mysticalagriculture:netherite"
     },
     "S": {
-      "type": "mysticalagriculture:crop_component",
+      "neoforge:ingredient_type": "mysticalagriculture:crop_component",
       "component": "seed",
       "crop": "mysticalagriculture:netherite"
     }
@@ -38,7 +38,7 @@
     "MEM"
   ],
   "result": {
-    "count": 1,
     "id": "mysticalagriculture:netherite_seeds"
-  }
+  },
+  "show_notification": false
 }

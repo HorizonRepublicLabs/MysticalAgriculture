@@ -6,9 +6,7 @@
     }
   ],
   "type": "mysticalagriculture:reprocessor",
-  "input": {
-    "item": "mysticalagriculture:blitz_seeds"
-  },
+  "input": "mysticalagriculture:blitz_seeds",
   "result": {
     "count": 2,
     "id": "mysticalagriculture:blitz_essence"

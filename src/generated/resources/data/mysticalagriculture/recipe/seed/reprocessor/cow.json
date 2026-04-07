@@ -6,9 +6,7 @@
     }
   ],
   "type": "mysticalagriculture:reprocessor",
-  "input": {
-    "item": "mysticalagriculture:cow_seeds"
-  },
+  "input": "mysticalagriculture:cow_seeds",
   "result": {
     "count": 2,
     "id": "mysticalagriculture:cow_essence"

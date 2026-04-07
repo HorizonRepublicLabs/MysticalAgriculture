@@ -12,53 +12,52 @@
   "type": "mysticalagriculture:infusion",
   "ingredients": [
     {
-      "type": "mysticalagriculture:crop_component",
+      "neoforge:ingredient_type": "mysticalagriculture:crop_component",
       "component": "material",
       "crop": "mysticalagriculture:fiery_ingot"
     },
     {
-      "type": "mysticalagriculture:crop_component",
+      "neoforge:ingredient_type": "mysticalagriculture:crop_component",
       "component": "essence",
       "crop": "mysticalagriculture:fiery_ingot"
     },
     {
-      "type": "mysticalagriculture:crop_component",
+      "neoforge:ingredient_type": "mysticalagriculture:crop_component",
       "component": "material",
       "crop": "mysticalagriculture:fiery_ingot"
     },
     {
-      "type": "mysticalagriculture:crop_component",
+      "neoforge:ingredient_type": "mysticalagriculture:crop_component",
       "component": "essence",
       "crop": "mysticalagriculture:fiery_ingot"
     },
     {
-      "type": "mysticalagriculture:crop_component",
+      "neoforge:ingredient_type": "mysticalagriculture:crop_component",
       "component": "material",
       "crop": "mysticalagriculture:fiery_ingot"
     },
     {
-      "type": "mysticalagriculture:crop_component",
+      "neoforge:ingredient_type": "mysticalagriculture:crop_component",
       "component": "essence",
       "crop": "mysticalagriculture:fiery_ingot"
     },
     {
-      "type": "mysticalagriculture:crop_component",
+      "neoforge:ingredient_type": "mysticalagriculture:crop_component",
       "component": "material",
       "crop": "mysticalagriculture:fiery_ingot"
     },
     {
-      "type": "mysticalagriculture:crop_component",
+      "neoforge:ingredient_type": "mysticalagriculture:crop_component",
       "component": "essence",
       "crop": "mysticalagriculture:fiery_ingot"
     }
   ],
   "input": {
-    "type": "mysticalagriculture:crop_component",
+    "neoforge:ingredient_type": "mysticalagriculture:crop_component",
     "component": "seed",
     "crop": "mysticalagriculture:fiery_ingot"
   },
   "result": {
-    "count": 1,
     "id": "mysticalagriculture:fiery_ingot_seeds"
   }
 }

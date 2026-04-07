@@ -12,53 +12,52 @@
   "type": "mysticalagriculture:infusion",
   "ingredients": [
     {
-      "type": "mysticalagriculture:crop_component",
+      "neoforge:ingredient_type": "mysticalagriculture:crop_component",
       "component": "material",
       "crop": "mysticalagriculture:chicken"
     },
     {
-      "type": "mysticalagriculture:crop_component",
+      "neoforge:ingredient_type": "mysticalagriculture:crop_component",
       "component": "essence",
       "crop": "mysticalagriculture:chicken"
     },
     {
-      "type": "mysticalagriculture:crop_component",
+      "neoforge:ingredient_type": "mysticalagriculture:crop_component",
       "component": "material",
       "crop": "mysticalagriculture:chicken"
     },
     {
-      "type": "mysticalagriculture:crop_component",
+      "neoforge:ingredient_type": "mysticalagriculture:crop_component",
       "component": "essence",
       "crop": "mysticalagriculture:chicken"
     },
     {
-      "type": "mysticalagriculture:crop_component",
+      "neoforge:ingredient_type": "mysticalagriculture:crop_component",
       "component": "material",
       "crop": "mysticalagriculture:chicken"
     },
     {
-      "type": "mysticalagriculture:crop_component",
+      "neoforge:ingredient_type": "mysticalagriculture:crop_component",
       "component": "essence",
       "crop": "mysticalagriculture:chicken"
     },
     {
-      "type": "mysticalagriculture:crop_component",
+      "neoforge:ingredient_type": "mysticalagriculture:crop_component",
       "component": "material",
       "crop": "mysticalagriculture:chicken"
     },
     {
-      "type": "mysticalagriculture:crop_component",
+      "neoforge:ingredient_type": "mysticalagriculture:crop_component",
       "component": "essence",
       "crop": "mysticalagriculture:chicken"
     }
   ],
   "input": {
-    "type": "mysticalagriculture:crop_component",
+    "neoforge:ingredient_type": "mysticalagriculture:crop_component",
     "component": "seed",
     "crop": "mysticalagriculture:chicken"
   },
   "result": {
-    "count": 1,
     "id": "mysticalagriculture:chicken_seeds"
   }
 }

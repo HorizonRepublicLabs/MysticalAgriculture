@@ -12,53 +12,52 @@
   "type": "mysticalagriculture:infusion",
   "ingredients": [
     {
-      "type": "mysticalagriculture:crop_component",
+      "neoforge:ingredient_type": "mysticalagriculture:crop_component",
       "component": "material",
       "crop": "mysticalagriculture:prismarine"
     },
     {
-      "type": "mysticalagriculture:crop_component",
+      "neoforge:ingredient_type": "mysticalagriculture:crop_component",
       "component": "essence",
       "crop": "mysticalagriculture:prismarine"
     },
     {
-      "type": "mysticalagriculture:crop_component",
+      "neoforge:ingredient_type": "mysticalagriculture:crop_component",
       "component": "material",
       "crop": "mysticalagriculture:prismarine"
     },
     {
-      "type": "mysticalagriculture:crop_component",
+      "neoforge:ingredient_type": "mysticalagriculture:crop_component",
       "component": "essence",
       "crop": "mysticalagriculture:prismarine"
     },
     {
-      "type": "mysticalagriculture:crop_component",
+      "neoforge:ingredient_type": "mysticalagriculture:crop_component",
       "component": "material",
       "crop": "mysticalagriculture:prismarine"
     },
     {
-      "type": "mysticalagriculture:crop_component",
+      "neoforge:ingredient_type": "mysticalagriculture:crop_component",
       "component": "essence",
       "crop": "mysticalagriculture:prismarine"
     },
     {
-      "type": "mysticalagriculture:crop_component",
+      "neoforge:ingredient_type": "mysticalagriculture:crop_component",
       "component": "material",
       "crop": "mysticalagriculture:prismarine"
     },
     {
-      "type": "mysticalagriculture:crop_component",
+      "neoforge:ingredient_type": "mysticalagriculture:crop_component",
       "component": "essence",
       "crop": "mysticalagriculture:prismarine"
     }
   ],
   "input": {
-    "type": "mysticalagriculture:crop_component",
+    "neoforge:ingredient_type": "mysticalagriculture:crop_component",
     "component": "seed",
     "crop": "mysticalagriculture:prismarine"
   },
   "result": {
-    "count": 1,
     "id": "mysticalagriculture:prismarine_seeds"
   }
 }

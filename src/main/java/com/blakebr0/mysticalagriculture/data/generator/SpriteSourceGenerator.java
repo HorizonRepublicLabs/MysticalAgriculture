@@ -1,9 +1,9 @@
 package com.blakebr0.mysticalagriculture.data.generator;
 
 import com.blakebr0.mysticalagriculture.api.crop.CropTextures;
-import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.atlas.sources.SingleFile;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.data.AtlasIds;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.client.data.SpriteSourceProvider;
 
@@ -17,7 +17,7 @@ public class SpriteSourceGenerator extends SpriteSourceProvider {
 
     @Override
     protected void gather() {
-        this.atlas(TextureAtlas.LOCATION_BLOCKS)
+        this.atlas(AtlasIds.BLOCKS)
                 .addSource(new SingleFile(CropTextures.FLOWER_DUST_BLANK, Optional.empty()))
                 .addSource(new SingleFile(CropTextures.FLOWER_FACE_BLANK, Optional.empty()))
                 .addSource(new SingleFile(CropTextures.FLOWER_INGOT_BLANK, Optional.empty()))

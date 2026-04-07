@@ -19,53 +19,52 @@
   "type": "mysticalagriculture:infusion",
   "ingredients": [
     {
-      "type": "mysticalagriculture:crop_component",
+      "neoforge:ingredient_type": "mysticalagriculture:crop_component",
       "component": "material",
       "crop": "mysticalagriculture:nether_quartz"
     },
     {
-      "type": "mysticalagriculture:crop_component",
+      "neoforge:ingredient_type": "mysticalagriculture:crop_component",
       "component": "essence",
       "crop": "mysticalagriculture:nether_quartz"
     },
     {
-      "type": "mysticalagriculture:crop_component",
+      "neoforge:ingredient_type": "mysticalagriculture:crop_component",
       "component": "material",
       "crop": "mysticalagriculture:nether_quartz"
     },
     {
-      "type": "mysticalagriculture:crop_component",
+      "neoforge:ingredient_type": "mysticalagriculture:crop_component",
       "component": "essence",
       "crop": "mysticalagriculture:nether_quartz"
     },
     {
-      "type": "mysticalagriculture:crop_component",
+      "neoforge:ingredient_type": "mysticalagriculture:crop_component",
       "component": "material",
       "crop": "mysticalagriculture:nether_quartz"
     },
     {
-      "type": "mysticalagriculture:crop_component",
+      "neoforge:ingredient_type": "mysticalagriculture:crop_component",
       "component": "essence",
       "crop": "mysticalagriculture:nether_quartz"
     },
     {
-      "type": "mysticalagriculture:crop_component",
+      "neoforge:ingredient_type": "mysticalagriculture:crop_component",
       "component": "material",
       "crop": "mysticalagriculture:nether_quartz"
     },
     {
-      "type": "mysticalagriculture:crop_component",
+      "neoforge:ingredient_type": "mysticalagriculture:crop_component",
       "component": "essence",
       "crop": "mysticalagriculture:nether_quartz"
     }
   ],
   "input": {
-    "type": "mysticalagriculture:crop_component",
+    "neoforge:ingredient_type": "mysticalagriculture:crop_component",
     "component": "seed",
     "crop": "mysticalagriculture:nether_quartz"
   },
   "result": {
-    "count": 1,
     "id": "mysticalagriculture:nether_quartz_seeds"
   }
 }

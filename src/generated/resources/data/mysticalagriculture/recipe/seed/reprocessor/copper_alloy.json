@@ -6,9 +6,7 @@
     }
   ],
   "type": "mysticalagriculture:reprocessor",
-  "input": {
-    "item": "mysticalagriculture:copper_alloy_seeds"
-  },
+  "input": "mysticalagriculture:copper_alloy_seeds",
   "result": {
     "count": 2,
     "id": "mysticalagriculture:copper_alloy_essence"

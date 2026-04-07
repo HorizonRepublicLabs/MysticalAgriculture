@@ -5,44 +5,48 @@ import com.blakebr0.mysticalagriculture.crafting.condition.CropEnabledCondition;
 import com.blakebr0.mysticalagriculture.crafting.condition.CropHasMaterialCondition;
 import com.blakebr0.mysticalagriculture.crafting.ingredient.CropComponentIngredient;
 import com.blakebr0.mysticalagriculture.crafting.recipe.InfusionRecipe;
-import net.minecraft.core.NonNullList;
+import net.minecraft.advancements.Criterion;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
 import net.neoforged.neoforge.common.conditions.ICondition;
 import net.neoforged.neoforge.common.conditions.NotCondition;
 import net.neoforged.neoforge.common.conditions.TagEmptyCondition;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class InfusionRecipeBuilder {
+public class InfusionRecipeBuilder implements RecipeBuilder {
+    private final Identifier id;
     private final List<Ingredient> inputs;
-    private final ItemStack result;
+    private final ItemStackTemplate result;
     private final List<ICondition> conditions;
     private Ingredient input;
 
-    public InfusionRecipeBuilder(ItemStack result) {
+    public InfusionRecipeBuilder(Identifier id, ItemStackTemplate result) {
+        this.id = id;
         this.inputs = new ArrayList<>(8);
         this.result = result;
         this.conditions = new ArrayList<>();
     }
 
-    public void addIngredient(int index, Ingredient ingredient) {
-        this.inputs.set(index, ingredient);
+    public void addIngredient(Ingredient ingredient) {
+        this.inputs.add(ingredient);
     }
 
     public void addCondition(ICondition condition) {
         this.conditions.add(condition);
     }
 
-    public void build(RecipeOutput consumer, Identifier id) {
-//        consumer.accept(id, new InfusionRecipe(this.input, this.inputs, this.result, false), null, this.conditions.toArray(new ICondition[0]));
-    }
-
-    public static InfusionRecipeBuilder newSeedRecipe(Crop crop) {
-        var builder = new InfusionRecipeBuilder(new ItemStack(crop.getSeedsItem()));
+    public static InfusionRecipeBuilder seed(Identifier id, Crop crop) {
+        var builder = new InfusionRecipeBuilder(id, new ItemStackTemplate(crop.getSeedsItem()));
 
         var essence = CropComponentIngredient.of(crop.getId(), CropComponentIngredient.ComponentType.ESSENCE);
         var seed = CropComponentIngredient.of(crop.getId(), CropComponentIngredient.ComponentType.SEED);
@@ -50,14 +54,14 @@ public class InfusionRecipeBuilder {
 
         builder.input = seed;
 
-        builder.addIngredient(0, material);
-        builder.addIngredient(1, essence);
-        builder.addIngredient(2, material);
-        builder.addIngredient(3, essence);
-        builder.addIngredient(4, material);
-        builder.addIngredient(5, essence);
-        builder.addIngredient(6, material);
-        builder.addIngredient(7, essence);
+        builder.addIngredient(material);
+        builder.addIngredient(essence);
+        builder.addIngredient(material);
+        builder.addIngredient(essence);
+        builder.addIngredient(material);
+        builder.addIngredient(essence);
+        builder.addIngredient(material);
+        builder.addIngredient(essence);
 
         builder.addCondition(new CropEnabledCondition(crop.getId()));
         builder.addCondition(new CropHasMaterialCondition(crop.getId()));
@@ -65,9 +69,35 @@ public class InfusionRecipeBuilder {
         var ingredient = crop.getLazyIngredient();
 
         if (ingredient.isTag()) {
-//            builder.addCondition(new NotCondition(new TagEmptyCondition(ingredient.getId())));
+            var tag = ItemTags.create(Identifier.parse(ingredient.getId()));
+            builder.addCondition(new NotCondition(new TagEmptyCondition<>(tag)));
         }
 
         return builder;
+    }
+
+    @Override
+    public RecipeBuilder unlockedBy(String name, Criterion<?> criterion) {
+        return this;
+    }
+
+    @Override
+    public RecipeBuilder group(@Nullable String group) {
+        return this;
+    }
+
+    @Override
+    public ResourceKey<Recipe<?>> defaultId() {
+        return ResourceKey.create(Registries.RECIPE, this.id);
+    }
+
+    @Override
+    public void save(RecipeOutput output, ResourceKey<Recipe<?>> id) {
+        output.accept(id, new InfusionRecipe(
+                this.input,
+                this.inputs,
+                this.result,
+                false
+        ), null, this.conditions.toArray(new ICondition[0]));
     }
 }

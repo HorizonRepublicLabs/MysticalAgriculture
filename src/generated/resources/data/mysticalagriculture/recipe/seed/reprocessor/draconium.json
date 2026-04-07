@@ -6,9 +6,7 @@
     }
   ],
   "type": "mysticalagriculture:reprocessor",
-  "input": {
-    "item": "mysticalagriculture:draconium_seeds"
-  },
+  "input": "mysticalagriculture:draconium_seeds",
   "result": {
     "count": 2,
     "id": "mysticalagriculture:draconium_essence"

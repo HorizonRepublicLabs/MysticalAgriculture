@@ -6,9 +6,7 @@
     }
   ],
   "type": "mysticalagriculture:reprocessor",
-  "input": {
-    "item": "mysticalagriculture:nether_quartz_seeds"
-  },
+  "input": "mysticalagriculture:nether_quartz_seeds",
   "result": {
     "count": 2,
     "id": "mysticalagriculture:nether_quartz_essence"

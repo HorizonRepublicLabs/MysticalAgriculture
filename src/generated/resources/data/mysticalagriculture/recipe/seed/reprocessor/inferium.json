@@ -6,9 +6,7 @@
     }
   ],
   "type": "mysticalagriculture:reprocessor",
-  "input": {
-    "item": "mysticalagriculture:inferium_seeds"
-  },
+  "input": "mysticalagriculture:inferium_seeds",
   "result": {
     "count": 2,
     "id": "mysticalagriculture:inferium_essence"

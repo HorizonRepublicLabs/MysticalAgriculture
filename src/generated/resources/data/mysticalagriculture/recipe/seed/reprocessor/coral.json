@@ -6,9 +6,7 @@
     }
   ],
   "type": "mysticalagriculture:reprocessor",
-  "input": {
-    "item": "mysticalagriculture:coral_seeds"
-  },
+  "input": "mysticalagriculture:coral_seeds",
   "result": {
     "count": 2,
     "id": "mysticalagriculture:coral_essence"

@@ -6,9 +6,7 @@
     }
   ],
   "type": "mysticalagriculture:reprocessor",
-  "input": {
-    "item": "mysticalagriculture:steeleaf_seeds"
-  },
+  "input": "mysticalagriculture:steeleaf_seeds",
   "result": {
     "count": 2,
     "id": "mysticalagriculture:steeleaf_essence"

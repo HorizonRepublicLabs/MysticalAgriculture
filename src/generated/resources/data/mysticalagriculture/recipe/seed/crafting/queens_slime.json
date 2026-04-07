@@ -24,17 +24,17 @@
   "group": "mysticalagriculture:seeds",
   "key": {
     "E": {
-      "type": "mysticalagriculture:crop_component",
+      "neoforge:ingredient_type": "mysticalagriculture:crop_component",
       "component": "essence",
       "crop": "mysticalagriculture:queens_slime"
     },
     "M": {
-      "type": "mysticalagriculture:crop_component",
+      "neoforge:ingredient_type": "mysticalagriculture:crop_component",
       "component": "material",
       "crop": "mysticalagriculture:queens_slime"
     },
     "S": {
-      "type": "mysticalagriculture:crop_component",
+      "neoforge:ingredient_type": "mysticalagriculture:crop_component",
       "component": "seed",
       "crop": "mysticalagriculture:queens_slime"
     }
@@ -45,7 +45,7 @@
     "MEM"
   ],
   "result": {
-    "count": 1,
     "id": "mysticalagriculture:queens_slime_seeds"
-  }
+  },
+  "show_notification": false
 }

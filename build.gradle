@@ -63,14 +63,8 @@ neoForge {
             server()
         }
 
-        clientData {
+        data {
             clientData()
-
-            programArguments.addAll '--mod', 'mysticalagriculture', '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
-        }
-
-        serverData {
-            serverData()
 
             programArguments.addAll '--mod', 'mysticalagriculture', '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
         }

@@ -24,17 +24,17 @@
   "group": "mysticalagriculture:seeds",
   "key": {
     "E": {
-      "type": "mysticalagriculture:crop_component",
+      "neoforge:ingredient_type": "mysticalagriculture:crop_component",
       "component": "essence",
       "crop": "mysticalagriculture:silver"
     },
     "M": {
-      "type": "mysticalagriculture:crop_component",
+      "neoforge:ingredient_type": "mysticalagriculture:crop_component",
       "component": "material",
       "crop": "mysticalagriculture:silver"
     },
     "S": {
-      "type": "mysticalagriculture:crop_component",
+      "neoforge:ingredient_type": "mysticalagriculture:crop_component",
       "component": "seed",
       "crop": "mysticalagriculture:silver"
     }
@@ -45,7 +45,7 @@
     "MEM"
   ],
   "result": {
-    "count": 1,
     "id": "mysticalagriculture:silver_seeds"
-  }
+  },
+  "show_notification": false
 }

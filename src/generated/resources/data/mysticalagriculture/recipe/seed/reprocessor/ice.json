@@ -6,9 +6,7 @@
     }
   ],
   "type": "mysticalagriculture:reprocessor",
-  "input": {
-    "item": "mysticalagriculture:ice_seeds"
-  },
+  "input": "mysticalagriculture:ice_seeds",
   "result": {
     "count": 2,
     "id": "mysticalagriculture:ice_essence"

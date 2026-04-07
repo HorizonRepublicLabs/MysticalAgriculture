@@ -6,9 +6,7 @@
     }
   ],
   "type": "mysticalagriculture:reprocessor",
-  "input": {
-    "item": "mysticalagriculture:end_steel_seeds"
-  },
+  "input": "mysticalagriculture:end_steel_seeds",
   "result": {
     "count": 2,
     "id": "mysticalagriculture:end_steel_essence"

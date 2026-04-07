@@ -6,9 +6,7 @@
     }
   ],
   "type": "mysticalagriculture:reprocessor",
-  "input": {
-    "item": "mysticalagriculture:gold_seeds"
-  },
+  "input": "mysticalagriculture:gold_seeds",
   "result": {
     "count": 2,
     "id": "mysticalagriculture:gold_essence"

@@ -6,9 +6,7 @@
     }
   ],
   "type": "mysticalagriculture:reprocessor",
-  "input": {
-    "item": "mysticalagriculture:marble_seeds"
-  },
+  "input": "mysticalagriculture:marble_seeds",
   "result": {
     "count": 2,
     "id": "mysticalagriculture:marble_essence"

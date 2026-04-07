@@ -6,9 +6,7 @@
     }
   ],
   "type": "mysticalagriculture:reprocessor",
-  "input": {
-    "item": "mysticalagriculture:cyanite_seeds"
-  },
+  "input": "mysticalagriculture:cyanite_seeds",
   "result": {
     "count": 2,
     "id": "mysticalagriculture:cyanite_essence"

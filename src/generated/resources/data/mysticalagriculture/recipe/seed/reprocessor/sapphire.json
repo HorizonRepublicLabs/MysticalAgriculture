@@ -6,9 +6,7 @@
     }
   ],
   "type": "mysticalagriculture:reprocessor",
-  "input": {
-    "item": "mysticalagriculture:sapphire_seeds"
-  },
+  "input": "mysticalagriculture:sapphire_seeds",
   "result": {
     "count": 2,
     "id": "mysticalagriculture:sapphire_essence"

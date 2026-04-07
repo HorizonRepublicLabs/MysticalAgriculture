@@ -6,9 +6,7 @@
     }
   ],
   "type": "mysticalagriculture:reprocessor",
-  "input": {
-    "item": "mysticalagriculture:enderman_seeds"
-  },
+  "input": "mysticalagriculture:enderman_seeds",
   "result": {
     "count": 2,
     "id": "mysticalagriculture:enderman_essence"

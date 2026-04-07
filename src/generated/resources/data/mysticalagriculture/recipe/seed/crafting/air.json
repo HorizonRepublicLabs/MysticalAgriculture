@@ -17,17 +17,17 @@
   "group": "mysticalagriculture:seeds",
   "key": {
     "E": {
-      "type": "mysticalagriculture:crop_component",
+      "neoforge:ingredient_type": "mysticalagriculture:crop_component",
       "component": "essence",
       "crop": "mysticalagriculture:air"
     },
     "M": {
-      "type": "mysticalagriculture:crop_component",
+      "neoforge:ingredient_type": "mysticalagriculture:crop_component",
       "component": "material",
       "crop": "mysticalagriculture:air"
     },
     "S": {
-      "type": "mysticalagriculture:crop_component",
+      "neoforge:ingredient_type": "mysticalagriculture:crop_component",
       "component": "seed",
       "crop": "mysticalagriculture:air"
     }
@@ -38,7 +38,7 @@
     "MEM"
   ],
   "result": {
-    "count": 1,
     "id": "mysticalagriculture:air_seeds"
-  }
+  },
+  "show_notification": false
 }

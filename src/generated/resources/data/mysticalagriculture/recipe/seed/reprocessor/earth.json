@@ -6,9 +6,7 @@
     }
   ],
   "type": "mysticalagriculture:reprocessor",
-  "input": {
-    "item": "mysticalagriculture:earth_seeds"
-  },
+  "input": "mysticalagriculture:earth_seeds",
   "result": {
     "count": 2,
     "id": "mysticalagriculture:earth_essence"
