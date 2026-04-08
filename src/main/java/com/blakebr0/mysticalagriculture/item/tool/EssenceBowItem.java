@@ -46,6 +46,8 @@ public class EssenceBowItem extends BaseBowItem implements ITinkerable {
                 p.component(DataComponents.UNBREAKABLE, Unit.INSTANCE);
             }
 
+            p.durability(uses);
+
             return p;
         });
         this.tinkerableTier = tinkerableTier;

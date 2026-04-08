@@ -23,7 +23,7 @@ public class EssenceStaffItem extends BaseItem implements ITinkerable, IElementa
     private final int slots;
 
     public EssenceStaffItem(Identifier id, int tinkerableTier, int slots) {
-        super(id, p -> p.component(ModDataComponentTypes.EQUIPPED_AUGMENTS, new ArrayList<>(slots)));
+        super(id, p -> p.stacksTo(1).component(ModDataComponentTypes.EQUIPPED_AUGMENTS, new ArrayList<>(slots)));
         this.tinkerableTier = tinkerableTier;
         this.slots = slots;
     }
