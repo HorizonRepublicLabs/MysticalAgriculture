@@ -1,6 +1,18 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "mysticalagriculture:item/jump_boost_ii_augment"
+    "model": "mysticalagriculture:item/jump_boost_ii_augment",
+    "tints": [
+      {
+        "type": "mysticalagriculture:augment",
+        "id": "mysticalagriculture:jump_boost_ii",
+        "index": 0
+      },
+      {
+        "type": "mysticalagriculture:augment",
+        "id": "mysticalagriculture:jump_boost_ii",
+        "index": 1
+      }
+    ]
   }
 }

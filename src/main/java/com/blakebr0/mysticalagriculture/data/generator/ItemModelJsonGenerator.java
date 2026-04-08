@@ -1,6 +1,7 @@
 package com.blakebr0.mysticalagriculture.data.generator;
 
 import com.blakebr0.mysticalagriculture.MysticalAgriculture;
+import com.blakebr0.mysticalagriculture.client.tints.AugmentTintSource;
 import com.blakebr0.mysticalagriculture.registry.AugmentRegistry;
 import com.blakebr0.mysticalagriculture.registry.CropRegistry;
 import net.minecraft.client.data.models.BlockModelGenerators;
@@ -76,7 +77,7 @@ public class ItemModelJsonGenerator extends ModelProvider {
                 itemModels.itemModelOutput.register(
                         item,
                         new ClientItem(
-                                ItemModelUtils.plainModel(location),
+                                ItemModelUtils.tintedModel(location, new AugmentTintSource(augment.getId(), 0), new AugmentTintSource(augment.getId(), 1)),
                                 ClientItem.Properties.DEFAULT
                         )
                 );

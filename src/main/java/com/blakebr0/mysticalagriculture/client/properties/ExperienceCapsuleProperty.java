@@ -8,8 +8,8 @@ import net.minecraft.world.entity.ItemOwner;
 import net.minecraft.world.item.ItemStack;
 import org.jspecify.annotations.Nullable;
 
-public record ExperienceCapsuleFillProperty() implements RangeSelectItemModelProperty {
-    public static final MapCodec<ExperienceCapsuleFillProperty> MAP_CODEC = MapCodec.unit(new ExperienceCapsuleFillProperty());
+public record ExperienceCapsuleProperty() implements RangeSelectItemModelProperty {
+    public static final MapCodec<ExperienceCapsuleProperty> MAP_CODEC = MapCodec.unit(ExperienceCapsuleProperty::new);
 
     @Override
     public float get(ItemStack stack, @Nullable ClientLevel level, @Nullable ItemOwner owner, int seed) {

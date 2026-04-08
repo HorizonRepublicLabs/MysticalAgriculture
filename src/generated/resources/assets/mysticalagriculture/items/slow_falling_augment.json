@@ -1,6 +1,18 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "mysticalagriculture:item/slow_falling_augment"
+    "model": "mysticalagriculture:item/slow_falling_augment",
+    "tints": [
+      {
+        "type": "mysticalagriculture:augment",
+        "id": "mysticalagriculture:slow_falling",
+        "index": 0
+      },
+      {
+        "type": "mysticalagriculture:augment",
+        "id": "mysticalagriculture:slow_falling",
+        "index": 1
+      }
+    ]
   }
 }

@@ -1,6 +1,82 @@
 {
   "model": {
-    "type": "minecraft:model",
-    "model": "mysticalagriculture:item/experience_capsule"
+    "type": "minecraft:range_dispatch",
+    "property": "mysticalagriculture:experience_capsule",
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "mysticalagriculture:item/experience_capsule"
+    },
+    "entries": [
+      {
+        "threshold": 1,
+        "model": {
+          "type": "minecraft:model",
+          "model": "mysticalagriculture:item/experience_capsule_1"
+        }
+      },
+      {
+        "threshold": 2,
+        "model": {
+          "type": "minecraft:model",
+          "model": "mysticalagriculture:item/experience_capsule_2"
+        }
+      },
+      {
+        "threshold": 3,
+        "model": {
+          "type": "minecraft:model",
+          "model": "mysticalagriculture:item/experience_capsule_3"
+        }
+      },
+      {
+        "threshold": 4,
+        "model": {
+          "type": "minecraft:model",
+          "model": "mysticalagriculture:item/experience_capsule_4"
+        }
+      },
+      {
+        "threshold": 5,
+        "model": {
+          "type": "minecraft:model",
+          "model": "mysticalagriculture:item/experience_capsule_5"
+        }
+      },
+      {
+        "threshold": 6,
+        "model": {
+          "type": "minecraft:model",
+          "model": "mysticalagriculture:item/experience_capsule_6"
+        }
+      },
+      {
+        "threshold": 7,
+        "model": {
+          "type": "minecraft:model",
+          "model": "mysticalagriculture:item/experience_capsule_7"
+        }
+      },
+      {
+        "threshold": 8,
+        "model": {
+          "type": "minecraft:model",
+          "model": "mysticalagriculture:item/experience_capsule_8"
+        }
+      },
+      {
+        "threshold": 9,
+        "model": {
+          "type": "minecraft:model",
+          "model": "mysticalagriculture:item/experience_capsule_9"
+        }
+      },
+      {
+        "threshold": 10,
+        "model": {
+          "type": "minecraft:model",
+          "model": "mysticalagriculture:item/experience_capsule_10"
+        }
+      }
+    ]
   }
 }

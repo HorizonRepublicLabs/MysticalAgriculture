@@ -1,6 +1,54 @@
 {
   "model": {
-    "type": "minecraft:model",
-    "model": "mysticalagriculture:item/supremium_crossbow"
+    "type": "minecraft:select",
+    "property": "minecraft:charge_type",
+    "cases": [
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "mysticalagriculture:item/supremium_crossbow_arrow"
+        },
+        "when": "arrow"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "mysticalagriculture:item/supremium_crossbow_firework"
+        },
+        "when": "rocket"
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:condition",
+      "property": "minecraft:using_item",
+      "on_false": {
+        "type": "minecraft:model",
+        "model": "mysticalagriculture:item/supremium_crossbow"
+      },
+      "on_true": {
+        "type": "minecraft:range_dispatch",
+        "property": "cucumber:custom_bow_pull",
+        "entries": [
+          {
+            "model": {
+              "type": "minecraft:model",
+              "model": "mysticalagriculture:item/supremium_crossbow_pulling_1"
+            },
+            "threshold": 0.58
+          },
+          {
+            "model": {
+              "type": "minecraft:model",
+              "model": "mysticalagriculture:item/supremium_crossbow_pulling_2"
+            },
+            "threshold": 1.0
+          }
+        ],
+        "fallback": {
+          "type": "minecraft:model",
+          "model": "mysticalagriculture:item/supremium_crossbow_pulling_0"
+        }
+      }
+    }
   }
 }

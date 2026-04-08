@@ -1,6 +1,18 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "mysticalagriculture:item/speed_i_augment"
+    "model": "mysticalagriculture:item/speed_i_augment",
+    "tints": [
+      {
+        "type": "mysticalagriculture:augment",
+        "id": "mysticalagriculture:speed_i",
+        "index": 0
+      },
+      {
+        "type": "mysticalagriculture:augment",
+        "id": "mysticalagriculture:speed_i",
+        "index": 1
+      }
+    ]
   }
 }

@@ -1,6 +1,18 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "mysticalagriculture:item/luck_i_augment"
+    "model": "mysticalagriculture:item/luck_i_augment",
+    "tints": [
+      {
+        "type": "mysticalagriculture:augment",
+        "id": "mysticalagriculture:luck_i",
+        "index": 0
+      },
+      {
+        "type": "mysticalagriculture:augment",
+        "id": "mysticalagriculture:luck_i",
+        "index": 1
+      }
+    ]
   }
 }

@@ -1,6 +1,18 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "mysticalagriculture:item/no_fall_damage_augment"
+    "model": "mysticalagriculture:item/no_fall_damage_augment",
+    "tints": [
+      {
+        "type": "mysticalagriculture:augment",
+        "id": "mysticalagriculture:no_fall_damage",
+        "index": 0
+      },
+      {
+        "type": "mysticalagriculture:augment",
+        "id": "mysticalagriculture:no_fall_damage",
+        "index": 1
+      }
+    ]
   }
 }

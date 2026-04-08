@@ -1,6 +1,18 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "mysticalagriculture:item/pathing_aoe_ii_augment"
+    "model": "mysticalagriculture:item/pathing_aoe_ii_augment",
+    "tints": [
+      {
+        "type": "mysticalagriculture:augment",
+        "id": "mysticalagriculture:pathing_aoe_ii",
+        "index": 0
+      },
+      {
+        "type": "mysticalagriculture:augment",
+        "id": "mysticalagriculture:pathing_aoe_ii",
+        "index": 1
+      }
+    ]
   }
 }

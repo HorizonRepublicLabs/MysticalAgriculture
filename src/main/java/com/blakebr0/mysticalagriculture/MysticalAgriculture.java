@@ -9,9 +9,9 @@ import com.blakebr0.mysticalagriculture.client.ModTESRs;
 import com.blakebr0.mysticalagriculture.client.ModelHandler;
 import com.blakebr0.mysticalagriculture.client.handler.AOEAugmentClientHandler;
 import com.blakebr0.mysticalagriculture.client.handler.AugmentTooltipHandler;
-import com.blakebr0.mysticalagriculture.client.handler.ColorHandler;
 import com.blakebr0.mysticalagriculture.client.handler.GuiOverlayHandler;
 import com.blakebr0.mysticalagriculture.client.handler.ItemModelPropertyHandler;
+import com.blakebr0.mysticalagriculture.client.handler.TintSourceHandler;
 import com.blakebr0.mysticalagriculture.compat.TOPCompat;
 import com.blakebr0.mysticalagriculture.config.ModConfigs;
 import com.blakebr0.mysticalagriculture.crafting.DynamicRecipeManager;
@@ -83,7 +83,7 @@ public final class MysticalAgriculture {
 		bus.register(new RegisterCapabilityHandler());
 
 		if (FMLEnvironment.getDist() == Dist.CLIENT) {
-			bus.register(new ColorHandler());
+			bus.register(new TintSourceHandler());
 			bus.register(new ModelHandler());
 			bus.register(new ItemModelPropertyHandler());
 			bus.register(new ModTESRs());

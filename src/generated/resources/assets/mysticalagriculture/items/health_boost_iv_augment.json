@@ -1,6 +1,18 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "mysticalagriculture:item/health_boost_iv_augment"
+    "model": "mysticalagriculture:item/health_boost_iv_augment",
+    "tints": [
+      {
+        "type": "mysticalagriculture:augment",
+        "id": "mysticalagriculture:health_boost_iv",
+        "index": 0
+      },
+      {
+        "type": "mysticalagriculture:augment",
+        "id": "mysticalagriculture:health_boost_iv",
+        "index": 1
+      }
+    ]
   }
 }

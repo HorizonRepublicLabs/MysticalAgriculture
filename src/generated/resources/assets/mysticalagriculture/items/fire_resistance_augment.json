@@ -1,6 +1,18 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "mysticalagriculture:item/fire_resistance_augment"
+    "model": "mysticalagriculture:item/fire_resistance_augment",
+    "tints": [
+      {
+        "type": "mysticalagriculture:augment",
+        "id": "mysticalagriculture:fire_resistance",
+        "index": 0
+      },
+      {
+        "type": "mysticalagriculture:augment",
+        "id": "mysticalagriculture:fire_resistance",
+        "index": 1
+      }
+    ]
   }
 }

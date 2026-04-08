@@ -1,6 +1,18 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "mysticalagriculture:item/attack_aoe_i_augment"
+    "model": "mysticalagriculture:item/attack_aoe_i_augment",
+    "tints": [
+      {
+        "type": "mysticalagriculture:augment",
+        "id": "mysticalagriculture:attack_aoe_i",
+        "index": 0
+      },
+      {
+        "type": "mysticalagriculture:augment",
+        "id": "mysticalagriculture:attack_aoe_i",
+        "index": 1
+      }
+    ]
   }
 }

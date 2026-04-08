@@ -1,6 +1,11 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "mysticalagriculture:item/infusion_crystal"
+    "model": "mysticalagriculture:item/infusion_crystal",
+    "tints": [
+      {
+        "type": "mysticalagriculture:infusion_crystal"
+      }
+    ]
   }
 }

@@ -9,7 +9,7 @@ import net.minecraft.world.item.ItemStack;
 import org.jspecify.annotations.Nullable;
 
 public record SoulJarProperty() implements RangeSelectItemModelProperty {
-    public static final MapCodec<SoulJarProperty> MAP_CODEC = MapCodec.unit(new SoulJarProperty());
+    public static final MapCodec<SoulJarProperty> MAP_CODEC = MapCodec.unit(SoulJarProperty::new);
 
     @Override
     public float get(ItemStack stack, @Nullable ClientLevel level, @Nullable ItemOwner owner, int seed) {

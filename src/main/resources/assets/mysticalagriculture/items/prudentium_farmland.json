@@ -1,6 +1,12 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "mysticalagriculture:item/prudentium_farmland"
+    "model": "mysticalagriculture:item/prudentium_farmland",
+    "tints": [
+      {
+        "type": "cucumber:item_block_colors",
+        "index": 0
+      }
+    ]
   }
 }
