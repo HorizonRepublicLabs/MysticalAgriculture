@@ -6,7 +6,7 @@
       "augment": "mysticalagriculture:mining_fatigue_resistance"
     }
   ],
-  "input": "mysticalagriculture:unattuned_augment",
+  "input": "mysticalagriculture:blank_augment",
   "ingredients": [
     "#c:ingots/gold",
     "mysticalagriculture:imperium_essence",

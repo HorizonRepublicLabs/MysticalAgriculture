@@ -36,8 +36,8 @@ import java.util.List;
 public class Augment {
     private final Identifier id;
     private final DeferredHolder<Item, Item> item;
-    private int tier;
-    private EnumSet<AugmentType> types;
+    private final int tier;
+    private final EnumSet<AugmentType> types;
     private int primaryColor;
     private int secondaryColor;
     private boolean enabled;

@@ -6,7 +6,7 @@
       "augment": "mysticalagriculture:poison_resistance"
     }
   ],
-  "input": "mysticalagriculture:unattuned_augment",
+  "input": "mysticalagriculture:blank_augment",
   "ingredients": [
     "minecraft:milk_bucket",
     "mysticalagriculture:imperium_essence",

@@ -158,7 +158,7 @@ public final class ModCreativeModeTabs {
                 output.accept(ModItems.WAND);
                 output.accept(ModItems.BLANK_SKULL);
                 output.accept(ModItems.BLANK_RECORD);
-                output.accept(ModItems.UNATTUNED_AUGMENT);
+                output.accept(ModItems.BLANK_AUGMENT);
                 output.accept(ModItems.SOUL_JAR);
 
                 for (var type : MobSoulTypeRegistry.getInstance().getMobSoulTypes()) {

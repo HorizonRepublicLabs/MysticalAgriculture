@@ -6,7 +6,7 @@
       "augment": "mysticalagriculture:hunger_resistance"
     }
   ],
-  "input": "mysticalagriculture:unattuned_augment",
+  "input": "mysticalagriculture:blank_augment",
   "ingredients": [
     "minecraft:pumpkin_pie",
     "mysticalagriculture:imperium_essence",

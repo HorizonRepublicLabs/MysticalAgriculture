@@ -6,7 +6,7 @@
       "augment": "mysticalagriculture:fire_resistance"
     }
   ],
-  "input": "mysticalagriculture:unattuned_augment",
+  "input": "mysticalagriculture:blank_augment",
   "ingredients": [
     "minecraft:magma_cream",
     "mysticalagriculture:tertium_essence",

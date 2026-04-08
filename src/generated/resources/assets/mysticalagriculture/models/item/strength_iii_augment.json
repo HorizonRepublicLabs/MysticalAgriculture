@@ -1,3 +1,6 @@
 {
-  "parent": "mysticalagriculture:item/augment"
+  "parent": "mysticalagriculture:item/augment",
+  "textures": {
+    "layer1": "mysticalagriculture:item/augment_5"
+  }
 }

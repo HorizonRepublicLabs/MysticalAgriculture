@@ -117,7 +117,7 @@ public final class ModItems {
     public static final DeferredHolder<Item, Item> WAND = register("wand", WandItem::new);
     public static final DeferredHolder<Item, Item> BLANK_SKULL = register("blank_skull");
     public static final DeferredHolder<Item, Item> BLANK_RECORD = register("blank_record");
-    public static final DeferredHolder<Item, Item> UNATTUNED_AUGMENT = register("unattuned_augment");
+    public static final DeferredHolder<Item, Item> BLANK_AUGMENT = register("blank_augment");
     public static final DeferredHolder<Item, Item> SOUL_JAR = register("soul_jar", SoulJarItem::new);
     public static final DeferredHolder<Item, Item> EXPERIENCE_CAPSULE = register("experience_capsule", ExperienceCapsuleItem::new);
     public static final DeferredHolder<Item, Item> WATERING_CAN = register("watering_can", id -> new WateringCanItem(id, 3, 0.25));

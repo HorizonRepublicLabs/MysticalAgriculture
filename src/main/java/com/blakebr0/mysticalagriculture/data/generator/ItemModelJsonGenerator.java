@@ -84,7 +84,9 @@ public class ItemModelJsonGenerator extends ModelProvider {
 
                 itemModels.modelOutput.accept(location, () -> template.createBaseTemplate(
                         MysticalAgriculture.resource(augment.getNameWithSuffix("augment")),
-                        Map.of()
+                        Map.of(
+                                TextureSlot.LAYER1, new Material(MysticalAgriculture.resource("item/augment_%s".formatted(augment.getTier())))
+                        )
                 ));
             }
         }

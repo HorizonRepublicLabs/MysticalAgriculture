@@ -6,7 +6,7 @@
       "augment": "mysticalagriculture:strength_i"
     }
   ],
-  "input": "mysticalagriculture:unattuned_augment",
+  "input": "mysticalagriculture:blank_augment",
   "ingredients": [
     "minecraft:quartz_block",
     "mysticalagriculture:tertium_essence",

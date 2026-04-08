@@ -6,7 +6,7 @@
       "augment": "mysticalagriculture:no_fall_damage"
     }
   ],
-  "input": "mysticalagriculture:unattuned_augment",
+  "input": "mysticalagriculture:blank_augment",
   "ingredients": [
     "#c:gems/diamond",
     "mysticalagriculture:tertium_essence",

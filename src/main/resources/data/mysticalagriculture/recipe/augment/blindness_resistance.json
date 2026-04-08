@@ -6,7 +6,7 @@
       "augment": "mysticalagriculture:blindness_resistance"
     }
   ],
-  "input": "mysticalagriculture:unattuned_augment",
+  "input": "mysticalagriculture:blank_augment",
   "ingredients": [
     "minecraft:torch",
     "mysticalagriculture:prudentium_essence",

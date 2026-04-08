@@ -6,7 +6,7 @@
       "augment": "mysticalagriculture:luck_i"
     }
   ],
-  "input": "mysticalagriculture:unattuned_augment",
+  "input": "mysticalagriculture:blank_augment",
   "ingredients": [
     "minecraft:gold_ingot",
     "mysticalagriculture:inferium_essence",

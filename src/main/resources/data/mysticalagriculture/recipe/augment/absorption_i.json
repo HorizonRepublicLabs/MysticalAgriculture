@@ -6,7 +6,7 @@
       "augment": "mysticalagriculture:absorption_i"
     }
   ],
-  "input": "mysticalagriculture:unattuned_augment",
+  "input": "mysticalagriculture:blank_augment",
   "ingredients": [
     "minecraft:golden_apple",
     "mysticalagriculture:inferium_essence",

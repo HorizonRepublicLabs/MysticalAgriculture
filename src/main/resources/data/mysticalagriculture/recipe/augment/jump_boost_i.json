@@ -6,7 +6,7 @@
       "augment": "mysticalagriculture:jump_boost_i"
     }
   ],
-  "input": "mysticalagriculture:unattuned_augment",
+  "input": "mysticalagriculture:blank_augment",
   "ingredients": [
     "minecraft:rabbit_foot",
     "mysticalagriculture:prudentium_essence",

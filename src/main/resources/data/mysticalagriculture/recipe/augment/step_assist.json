@@ -6,7 +6,7 @@
       "augment": "mysticalagriculture:step_assist"
     }
   ],
-  "input": "mysticalagriculture:unattuned_augment",
+  "input": "mysticalagriculture:blank_augment",
   "ingredients": [
     "#minecraft:stairs",
     "mysticalagriculture:tertium_essence",

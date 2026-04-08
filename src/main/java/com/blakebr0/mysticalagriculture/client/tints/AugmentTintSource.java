@@ -24,8 +24,8 @@ public record AugmentTintSource(Identifier id, int index) implements ItemTintSou
         var augment = AugmentRegistry.getInstance().getAugmentById(this.id);
 
         return switch (this.index) {
-            case 0 -> augment.getSecondaryColor();
-            case 1 -> augment.getPrimaryColor();
+            case 0 -> augment.getPrimaryColor();
+            case 1 -> augment.getSecondaryColor();
             default -> -1;
         };
     }
