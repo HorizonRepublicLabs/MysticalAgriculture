@@ -16,9 +16,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:niotic_crystal_essence"
-    }
+    "E": "mysticalagriculture:niotic_crystal_essence"
   },
   "result": {
     "id": "powah:crystal_niotic",

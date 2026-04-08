@@ -16,9 +16,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:draconium_essence"
-    }
+    "E": "mysticalagriculture:draconium_essence"
   },
   "result": {
     "id": "draconicevolution:draconium_ingot"

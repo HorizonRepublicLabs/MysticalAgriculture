@@ -16,12 +16,8 @@
     "   "
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:wood_essence"
-    },
-    "N": {
-      "item": "mysticalagriculture:nether_essence"
-    }
+    "E": "mysticalagriculture:wood_essence",
+    "N": "mysticalagriculture:nether_essence"
   },
   "result": {
     "id": "minecraft:crimson_stem",

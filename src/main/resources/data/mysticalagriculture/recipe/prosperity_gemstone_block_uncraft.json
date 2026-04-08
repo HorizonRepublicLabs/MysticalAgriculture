@@ -1,9 +1,7 @@
 {
   "type": "crafting_shapeless",
   "ingredients": [
-    {
-      "item": "mysticalagriculture:prosperity_gemstone_block"
-    }
+    "mysticalagriculture:prosperity_gemstone_block"
   ],
   "result": {
     "id": "mysticalagriculture:prosperity_gemstone",

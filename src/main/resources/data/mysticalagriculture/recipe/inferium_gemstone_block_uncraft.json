@@ -1,9 +1,7 @@
 {
   "type": "crafting_shapeless",
   "ingredients": [
-    {
-      "item": "mysticalagriculture:inferium_gemstone_block"
-    }
+    "mysticalagriculture:inferium_gemstone_block"
   ],
   "result": {
     "id": "mysticalagriculture:inferium_gemstone",

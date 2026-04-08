@@ -7,7 +7,7 @@
     }
   ],
   "input": {
-    "item": "mysticalagriculture:rabbit_essence",
+    "ingredient": "mysticalagriculture:rabbit_essence",
     "count": 16
   },
   "entities": [

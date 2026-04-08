@@ -2,11 +2,11 @@
   "type": "mysticalagriculture:enchanter",
   "ingredients": [
     {
-      "item": "minecraft:diamond",
+      "ingredient": "minecraft:diamond",
       "count": 4
     },
     {
-      "item": "mysticalagriculture:experience_essence",
+      "ingredient": "mysticalagriculture:experience_essence",
       "count": 64
     }
   ],

@@ -16,12 +16,8 @@
     "   "
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:dirt_essence"
-    },
-    "F": {
-      "item": "mysticalagriculture:stone_essence"
-    }
+    "E": "mysticalagriculture:dirt_essence",
+    "F": "mysticalagriculture:stone_essence"
   },
   "result": {
     "id": "minecraft:gravel",

@@ -7,15 +7,9 @@
     " G "
   ],
   "key": {
-    "G": {
-      "item": "mysticalagriculture:inferium_gemstone"
-    },
-    "I": {
-      "item": "mysticalagriculture:inferium_ingot"
-    },
-    "S": {
-      "item": "minecraft:diamond_shovel"
-    }
+    "G": "mysticalagriculture:inferium_gemstone",
+    "I": "mysticalagriculture:inferium_ingot",
+    "S": "minecraft:diamond_shovel"
   },
   "result": {
     "id": "mysticalagriculture:inferium_shovel"

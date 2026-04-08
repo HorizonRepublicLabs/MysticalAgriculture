@@ -12,9 +12,7 @@
     "   "
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:dye_essence"
-    }
+    "E": "mysticalagriculture:dye_essence"
   },
   "result": {
     "id": "minecraft:green_dye",

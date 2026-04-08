@@ -16,12 +16,8 @@
     "ENE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:dirt_essence"
-    },
-    "N": {
-      "item": "mysticalagriculture:nature_essence"
-    }
+    "E": "mysticalagriculture:dirt_essence",
+    "N": "mysticalagriculture:nature_essence"
   },
   "result": {
     "id": "minecraft:mycelium",

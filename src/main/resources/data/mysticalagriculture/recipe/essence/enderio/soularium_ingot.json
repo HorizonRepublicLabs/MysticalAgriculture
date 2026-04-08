@@ -16,9 +16,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:soularium_essence"
-    }
+    "E": "mysticalagriculture:soularium_essence"
   },
   "result": {
     "id": "enderio:soularium_ingot",

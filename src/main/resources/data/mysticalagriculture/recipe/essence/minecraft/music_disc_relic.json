@@ -20,18 +20,10 @@
     "   "
   ],
   "key": {
-    "R": {
-      "item": "mysticalagriculture:blank_record"
-    },
-    "C": {
-      "item": "mysticalagriculture:stone_essence"
-    },
-    "S": {
-      "item": "mysticalagriculture:copper_essence"
-    },
-    "D": {
-      "item": "mysticalagriculture:diamond_essence"
-    }
+    "R": "mysticalagriculture:blank_record",
+    "C": "mysticalagriculture:stone_essence",
+    "S": "mysticalagriculture:copper_essence",
+    "D": "mysticalagriculture:diamond_essence"
   },
   "result": {
     "id": "minecraft:music_disc_relic"

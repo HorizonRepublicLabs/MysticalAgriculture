@@ -16,9 +16,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:ironwood_essence"
-    }
+    "E": "mysticalagriculture:ironwood_essence"
   },
   "result": {
     "id": "twilightforest:ironwood_ingot",

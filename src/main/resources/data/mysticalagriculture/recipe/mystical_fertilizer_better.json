@@ -6,15 +6,9 @@
     "%#%"
   ],
   "key": {
-    "#": {
-      "item": "mysticalagriculture:fertilized_essence"
-    },
-    "%": {
-      "item": "mysticalagriculture:inferium_essence"
-    },
-    "X": {
-      "tag": "c:gems/diamond"
-    }
+    "#": "mysticalagriculture:fertilized_essence",
+    "%": "mysticalagriculture:inferium_essence",
+    "X": "#c:gems/diamond"
   },
   "result": {
     "id": "mysticalagriculture:mystical_fertilizer",

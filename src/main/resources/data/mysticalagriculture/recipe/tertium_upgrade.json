@@ -6,15 +6,9 @@
     "EIE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:tertium_essence"
-    },
-    "I": {
-      "item": "mysticalagriculture:tertium_ingot"
-    },
-    "U": {
-      "item": "mysticalagriculture:prudentium_upgrade"
-    }
+    "E": "mysticalagriculture:tertium_essence",
+    "I": "mysticalagriculture:tertium_ingot",
+    "U": "mysticalagriculture:prudentium_upgrade"
   },
   "result": {
     "id": "mysticalagriculture:tertium_upgrade"

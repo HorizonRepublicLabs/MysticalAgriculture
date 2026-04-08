@@ -4,6 +4,13 @@
     {
       "type": "mysticalagriculture:crop_enabled",
       "crop": "mysticalagriculture:zinc"
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:ingots/zinc"
+      }
     }
   ],
   "pattern": [
@@ -12,9 +19,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:zinc_essence"
-    }
+    "E": "mysticalagriculture:zinc_essence"
   },
   "result": {
     "tag": "c:ingots/zinc",

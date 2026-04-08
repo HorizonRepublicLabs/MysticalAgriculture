@@ -6,9 +6,7 @@
     "###"
   ],
   "key": {
-    "#": {
-      "item": "mysticalagriculture:prudentium_nugget"
-    }
+    "#": "mysticalagriculture:prudentium_nugget"
   },
   "result": {
     "id": "mysticalagriculture:prudentium_ingot"

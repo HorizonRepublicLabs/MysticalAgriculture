@@ -1,8 +1,6 @@
 {
   "type": "smelting",
-  "ingredient": {
-    "tag": "c:ores/soulium"
-  },
+  "ingredient": "#c:ores/soulium",
   "result": {
     "id": "mysticalagriculture:soulium_dust"
   },

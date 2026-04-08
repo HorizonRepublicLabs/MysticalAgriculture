@@ -16,9 +16,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:flux_infused_ingot_essence"
-    }
+    "E": "mysticalagriculture:flux_infused_ingot_essence"
   },
   "result": {
     "id": "redstone_arsenal:flux_ingot",

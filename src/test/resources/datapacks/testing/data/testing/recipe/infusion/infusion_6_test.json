@@ -1,27 +1,13 @@
 {
   "type": "mysticalagriculture:infusion",
-  "input": {
-    "item": "minecraft:apple"
-  },
+  "input": "minecraft:apple",
   "ingredients": [
-    {
-      "item": "minecraft:carrot"
-    },
-    {
-      "item": "minecraft:carrot"
-    },
-    {
-      "item": "minecraft:carrot"
-    },
-    {
-      "item": "minecraft:carrot"
-    },
-    {
-      "item": "minecraft:carrot"
-    },
-    {
-      "item": "minecraft:carrot"
-    }
+    "minecraft:carrot",
+    "minecraft:carrot",
+    "minecraft:carrot",
+    "minecraft:carrot",
+    "minecraft:carrot",
+    "minecraft:carrot"
   ],
   "result": {
     "id": "minecraft:lime_dye"

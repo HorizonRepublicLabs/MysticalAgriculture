@@ -6,34 +6,16 @@
       "augment": "mysticalagriculture:hunger_resistance"
     }
   ],
-  "input": {
-    "item": "mysticalagriculture:unattuned_augment"
-  },
+  "input": "mysticalagriculture:unattuned_augment",
   "ingredients": [
-    {
-      "item": "minecraft:pumpkin_pie"
-    },
-    {
-      "item": "mysticalagriculture:imperium_essence"
-    },
-    {
-      "item": "minecraft:mushroom_stew"
-    },
-    {
-      "item": "mysticalagriculture:imperium_essence"
-    },
-    {
-      "item": "minecraft:pumpkin_pie"
-    },
-    {
-      "item": "mysticalagriculture:imperium_essence"
-    },
-    {
-      "item": "minecraft:mushroom_stew"
-    },
-    {
-      "item": "mysticalagriculture:imperium_essence"
-    }
+    "minecraft:pumpkin_pie",
+    "mysticalagriculture:imperium_essence",
+    "minecraft:mushroom_stew",
+    "mysticalagriculture:imperium_essence",
+    "minecraft:pumpkin_pie",
+    "mysticalagriculture:imperium_essence",
+    "minecraft:mushroom_stew",
+    "mysticalagriculture:imperium_essence"
   ],
   "result": {
     "id": "mysticalagriculture:hunger_resistance_augment"

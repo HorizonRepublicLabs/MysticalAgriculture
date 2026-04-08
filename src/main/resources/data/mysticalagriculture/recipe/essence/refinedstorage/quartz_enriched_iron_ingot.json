@@ -16,9 +16,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:quartz_enriched_iron_essence"
-    }
+    "E": "mysticalagriculture:quartz_enriched_iron_essence"
   },
   "result": {
     "id": "refinedstorage:quartz_enriched_iron",

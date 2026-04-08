@@ -6,9 +6,7 @@
     "###"
   ],
   "key": {
-    "#": {
-      "item": "mysticalagriculture:prosperity_ingot"
-    }
+    "#": "mysticalagriculture:prosperity_ingot"
   },
   "result": {
     "id": "mysticalagriculture:prosperity_ingot_block"

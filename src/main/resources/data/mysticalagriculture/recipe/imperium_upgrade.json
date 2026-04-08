@@ -6,15 +6,9 @@
     "EIE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:imperium_essence"
-    },
-    "I": {
-      "item": "mysticalagriculture:imperium_ingot"
-    },
-    "U": {
-      "item": "mysticalagriculture:tertium_upgrade"
-    }
+    "E": "mysticalagriculture:imperium_essence",
+    "I": "mysticalagriculture:imperium_ingot",
+    "U": "mysticalagriculture:tertium_upgrade"
   },
   "result": {
     "id": "mysticalagriculture:imperium_upgrade"

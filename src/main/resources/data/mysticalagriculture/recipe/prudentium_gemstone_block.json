@@ -6,9 +6,7 @@
     "###"
   ],
   "key": {
-    "#": {
-      "item": "mysticalagriculture:prudentium_gemstone"
-    }
+    "#": "mysticalagriculture:prudentium_gemstone"
   },
   "result": {
     "id": "mysticalagriculture:prudentium_gemstone_block"

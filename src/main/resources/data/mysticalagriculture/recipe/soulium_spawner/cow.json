@@ -7,7 +7,7 @@
     }
   ],
   "input": {
-    "item": "mysticalagriculture:cow_essence",
+    "ingredient": "mysticalagriculture:cow_essence",
     "count": 12
   },
   "entities": [

@@ -4,6 +4,13 @@
     {
       "type": "mysticalagriculture:crop_enabled",
       "crop": "mysticalagriculture:lumium"
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:ingots/lumium"
+      }
     }
   ],
   "pattern": [
@@ -12,9 +19,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:lumium_essence"
-    }
+    "E": "mysticalagriculture:lumium_essence"
   },
   "result": {
     "tag": "c:ingots/lumium",

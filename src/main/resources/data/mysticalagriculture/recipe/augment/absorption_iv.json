@@ -10,34 +10,16 @@
       "augment": "mysticalagriculture:absorption_iv"
     }
   ],
-  "input": {
-    "item": "mysticalagriculture:absorption_iii_augment"
-  },
+  "input": "mysticalagriculture:absorption_iii_augment",
   "ingredients": [
-    {
-      "item": "minecraft:golden_apple"
-    },
-    {
-      "item": "mysticalagriculture:imperium_essence"
-    },
-    {
-      "item": "minecraft:golden_apple"
-    },
-    {
-      "item": "mysticalagriculture:imperium_essence"
-    },
-    {
-      "item": "minecraft:golden_apple"
-    },
-    {
-      "item": "mysticalagriculture:imperium_essence"
-    },
-    {
-      "item": "minecraft:golden_apple"
-    },
-    {
-      "item": "mysticalagriculture:imperium_essence"
-    }
+    "minecraft:golden_apple",
+    "mysticalagriculture:imperium_essence",
+    "minecraft:golden_apple",
+    "mysticalagriculture:imperium_essence",
+    "minecraft:golden_apple",
+    "mysticalagriculture:imperium_essence",
+    "minecraft:golden_apple",
+    "mysticalagriculture:imperium_essence"
   ],
   "result": {
     "id": "mysticalagriculture:absorption_iv_augment"

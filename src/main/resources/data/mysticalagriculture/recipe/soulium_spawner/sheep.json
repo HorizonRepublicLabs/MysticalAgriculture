@@ -7,7 +7,7 @@
     }
   ],
   "input": {
-    "item": "mysticalagriculture:sheep_essence",
+    "ingredient": "mysticalagriculture:sheep_essence",
     "count": 12
   },
   "entities": [

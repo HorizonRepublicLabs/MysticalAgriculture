@@ -6,15 +6,9 @@
     "ESE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:awakened_supremium_essence"
-    },
-    "S": {
-      "tag": "c:stones"
-    },
-    "D": {
-      "item": "mysticalagriculture:awakened_supremium_gemstone"
-    }
+    "E": "mysticalagriculture:awakened_supremium_essence",
+    "S": "#c:stones",
+    "D": "mysticalagriculture:awakened_supremium_gemstone"
   },
   "result": {
     "id": "mysticalagriculture:awakened_supremium_growth_accelerator",

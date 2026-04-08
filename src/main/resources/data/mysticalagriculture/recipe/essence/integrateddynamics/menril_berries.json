@@ -16,9 +16,7 @@
     " E "
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:menril_essence"
-    }
+    "E": "mysticalagriculture:menril_essence"
   },
   "result": {
     "id": "integrateddynamics:menril_berries",

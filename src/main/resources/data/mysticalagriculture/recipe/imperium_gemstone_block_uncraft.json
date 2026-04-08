@@ -1,9 +1,7 @@
 {
   "type": "crafting_shapeless",
   "ingredients": [
-    {
-      "item": "mysticalagriculture:imperium_gemstone_block"
-    }
+    "mysticalagriculture:imperium_gemstone_block"
   ],
   "result": {
     "id": "mysticalagriculture:imperium_gemstone",

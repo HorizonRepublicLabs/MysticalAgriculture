@@ -6,9 +6,7 @@
     "###"
   ],
   "key": {
-    "#": {
-      "item": "mysticalagriculture:supremium_essence"
-    }
+    "#": "mysticalagriculture:supremium_essence"
   },
   "result": {
     "id": "mysticalagriculture:supremium_block"

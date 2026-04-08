@@ -6,12 +6,8 @@
     " # "
   ],
   "key": {
-    "#": {
-      "item": "mysticalagriculture:imperium_essence"
-    },
-    "X": {
-      "tag": "mysticalagriculture:infusion_crystals"
-    }
+    "#": "mysticalagriculture:imperium_essence",
+    "X": "#mysticalagriculture:infusion_crystals"
   },
   "result": {
     "id": "mysticalagriculture:supremium_essence"

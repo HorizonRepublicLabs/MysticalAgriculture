@@ -6,12 +6,8 @@
     "S  "
   ],
   "key": {
-    "I": {
-      "tag": "c:gems/diamond"
-    },
-    "S": {
-      "tag": "c:rods/wooden"
-    }
+    "I": "#c:gems/diamond",
+    "S": "#c:rods/wooden"
   },
   "result": {
     "id": "mysticalagriculture:diamond_scythe"

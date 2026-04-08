@@ -12,12 +12,8 @@
     "CCC"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:water_essence"
-    },
-    "C": {
-      "item": "minecraft:red_concrete_powder"
-    }
+    "E": "mysticalagriculture:water_essence",
+    "C": "minecraft:red_concrete_powder"
   },
   "result": {
     "id": "minecraft:red_concrete",

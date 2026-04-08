@@ -16,9 +16,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:hop_graphite_essence"
-    }
+    "E": "mysticalagriculture:hop_graphite_essence"
   },
   "result": {
     "id": "immersiveengineering:ingot_hop_graphite",

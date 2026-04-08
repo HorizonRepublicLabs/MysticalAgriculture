@@ -12,9 +12,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:armadillo_essence"
-    }
+    "E": "mysticalagriculture:armadillo_essence"
   },
   "result": {
     "id": "minecraft:armadillo_scute",

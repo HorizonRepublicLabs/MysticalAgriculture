@@ -2,11 +2,11 @@
   "type": "mysticalagriculture:enchanter",
   "ingredients": [
     {
-      "item": "minecraft:rose_bush",
+      "ingredient": "minecraft:rose_bush",
       "count": 12
     },
     {
-      "item": "mysticalagriculture:experience_essence",
+      "ingredient": "mysticalagriculture:experience_essence",
       "count": 64
     }
   ],

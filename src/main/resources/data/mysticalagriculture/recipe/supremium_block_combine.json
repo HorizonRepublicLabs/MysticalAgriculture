@@ -6,12 +6,8 @@
     " # "
   ],
   "key": {
-    "#": {
-      "item": "mysticalagriculture:imperium_block"
-    },
-    "X": {
-      "item": "mysticalagriculture:master_infusion_crystal"
-    }
+    "#": "mysticalagriculture:imperium_block",
+    "X": "mysticalagriculture:master_infusion_crystal"
   },
   "result": {
     "id": "mysticalagriculture:supremium_block"

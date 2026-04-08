@@ -6,9 +6,7 @@
     "###"
   ],
   "key": {
-    "#": {
-      "item": "mysticalagriculture:soulium_nugget"
-    }
+    "#": "mysticalagriculture:soulium_nugget"
   },
   "result": {
     "id": "mysticalagriculture:soulium_ingot"

@@ -16,9 +16,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:basalz_essence"
-    }
+    "E": "mysticalagriculture:basalz_essence"
   },
   "result": {
     "id": "thermal:basalz_rod",

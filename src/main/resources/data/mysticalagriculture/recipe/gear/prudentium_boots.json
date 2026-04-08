@@ -7,15 +7,9 @@
     " G "
   ],
   "key": {
-    "G": {
-      "item": "mysticalagriculture:prudentium_gemstone"
-    },
-    "I": {
-      "item": "mysticalagriculture:prudentium_ingot"
-    },
-    "S": {
-      "item": "mysticalagriculture:inferium_boots"
-    }
+    "G": "mysticalagriculture:prudentium_gemstone",
+    "I": "mysticalagriculture:prudentium_ingot",
+    "S": "mysticalagriculture:inferium_boots"
   },
   "result": {
     "id": "mysticalagriculture:prudentium_boots"

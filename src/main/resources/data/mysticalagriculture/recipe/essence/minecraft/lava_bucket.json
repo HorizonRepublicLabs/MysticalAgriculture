@@ -12,12 +12,8 @@
     " E "
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:fire_essence"
-    },
-    "B": {
-      "item": "minecraft:bucket"
-    }
+    "E": "mysticalagriculture:fire_essence",
+    "B": "minecraft:bucket"
   },
   "result": {
     "id": "minecraft:lava_bucket"

@@ -12,9 +12,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:diamond_essence"
-    }
+    "E": "mysticalagriculture:diamond_essence"
   },
   "result": {
     "id": "minecraft:diamond",

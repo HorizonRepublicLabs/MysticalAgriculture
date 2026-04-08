@@ -16,9 +16,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:knightmetal_essence"
-    }
+    "E": "mysticalagriculture:knightmetal_essence"
   },
   "result": {
     "id": "twilightforest:knightmetal_ingot",

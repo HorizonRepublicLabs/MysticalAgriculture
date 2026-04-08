@@ -5,18 +5,10 @@
     "CS"
   ],
   "key": {
-    "P": {
-      "item": "minecraft:pumpkin"
-    },
-    "O": {
-      "item": "minecraft:potato"
-    },
-    "C": {
-      "item": "minecraft:cactus"
-    },
-    "S": {
-      "item": "minecraft:sugar_cane"
-    }
+    "P": "minecraft:pumpkin",
+    "O": "minecraft:potato",
+    "C": "minecraft:cactus",
+    "S": "minecraft:sugar_cane"
   },
   "result": {
     "id": "mysticalagriculture:nature_agglomeratio"

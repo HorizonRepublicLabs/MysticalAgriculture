@@ -12,9 +12,7 @@
     "   "
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:honey_essence"
-    }
+    "E": "mysticalagriculture:honey_essence"
   },
   "result": {
     "id": "minecraft:honeycomb",

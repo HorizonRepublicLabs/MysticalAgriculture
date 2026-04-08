@@ -12,12 +12,8 @@
     "   "
   ],
   "key": {
-    "P": {
-      "item": "minecraft:potato"
-    },
-    "E": {
-      "item": "mysticalagriculture:nature_essence"
-    }
+    "P": "minecraft:potato",
+    "E": "mysticalagriculture:nature_essence"
   },
   "result": {
     "id": "minecraft:poisonous_potato"

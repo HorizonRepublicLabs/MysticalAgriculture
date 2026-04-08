@@ -7,7 +7,7 @@
     }
   ],
   "input": {
-    "item": "mysticalagriculture:creeper_essence",
+    "ingredient": "mysticalagriculture:creeper_essence",
     "count": 16
   },
   "entities": [

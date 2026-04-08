@@ -7,15 +7,9 @@
     " G "
   ],
   "key": {
-    "G": {
-      "item": "mysticalagriculture:imperium_gemstone"
-    },
-    "I": {
-      "item": "mysticalagriculture:imperium_ingot"
-    },
-    "S": {
-      "item": "mysticalagriculture:tertium_scythe"
-    }
+    "G": "mysticalagriculture:imperium_gemstone",
+    "I": "mysticalagriculture:imperium_ingot",
+    "S": "mysticalagriculture:tertium_scythe"
   },
   "result": {
     "id": "mysticalagriculture:imperium_scythe"

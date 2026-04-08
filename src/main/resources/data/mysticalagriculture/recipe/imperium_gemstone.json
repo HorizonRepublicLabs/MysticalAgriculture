@@ -1,15 +1,9 @@
 {
   "type": "crafting_shapeless",
   "ingredients": [
-    {
-      "item": "mysticalagriculture:prosperity_gemstone"
-    },
-    {
-      "item": "mysticalagriculture:imperium_essence"
-    },
-    {
-      "item": "mysticalagriculture:imperium_essence"
-    }
+    "mysticalagriculture:prosperity_gemstone",
+    "mysticalagriculture:imperium_essence",
+    "mysticalagriculture:imperium_essence"
   ],
   "result": {
     "id": "mysticalagriculture:imperium_gemstone"

@@ -16,9 +16,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:elementium_essence"
-    }
+    "E": "mysticalagriculture:elementium_essence"
   },
   "result": {
     "id": "botania:elementium_ingot",

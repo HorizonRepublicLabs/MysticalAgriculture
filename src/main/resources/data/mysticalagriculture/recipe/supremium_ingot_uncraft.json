@@ -1,9 +1,7 @@
 {
   "type": "crafting_shapeless",
   "ingredients": [
-    {
-      "item": "mysticalagriculture:supremium_ingot"
-    }
+    "mysticalagriculture:supremium_ingot"
   ],
   "result": {
     "id": "mysticalagriculture:supremium_nugget",

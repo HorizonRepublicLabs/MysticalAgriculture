@@ -6,34 +6,16 @@
       "augment": "mysticalagriculture:strength_i"
     }
   ],
-  "input": {
-    "item": "mysticalagriculture:unattuned_augment"
-  },
+  "input": "mysticalagriculture:unattuned_augment",
   "ingredients": [
-    {
-      "item": "minecraft:quartz_block"
-    },
-    {
-      "item": "mysticalagriculture:tertium_essence"
-    },
-    {
-      "item": "minecraft:iron_sword"
-    },
-    {
-      "item": "mysticalagriculture:tertium_essence"
-    },
-    {
-      "item": "minecraft:quartz_block"
-    },
-    {
-      "item": "mysticalagriculture:tertium_essence"
-    },
-    {
-      "item": "minecraft:iron_sword"
-    },
-    {
-      "item": "mysticalagriculture:tertium_essence"
-    }
+    "minecraft:quartz_block",
+    "mysticalagriculture:tertium_essence",
+    "minecraft:iron_sword",
+    "mysticalagriculture:tertium_essence",
+    "minecraft:quartz_block",
+    "mysticalagriculture:tertium_essence",
+    "minecraft:iron_sword",
+    "mysticalagriculture:tertium_essence"
   ],
   "result": {
     "id": "mysticalagriculture:strength_i_augment"

@@ -16,18 +16,10 @@
     "   "
   ],
   "key": {
-    "R": {
-      "item": "mysticalagriculture:blank_record"
-    },
-    "C": {
-      "item": "mysticalagriculture:deepslate_essence"
-    },
-    "S": {
-      "item": "mysticalagriculture:end_essence"
-    },
-    "D": {
-      "tag": "c:dyes/cyan"
-    }
+    "R": "mysticalagriculture:blank_record",
+    "C": "mysticalagriculture:deepslate_essence",
+    "S": "mysticalagriculture:end_essence",
+    "D": "#c:dyes/cyan"
   },
   "result": {
     "id": "minecraft:music_disc_5"

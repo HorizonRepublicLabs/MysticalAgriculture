@@ -6,34 +6,16 @@
       "augment": "mysticalagriculture:poison_resistance"
     }
   ],
-  "input": {
-    "item": "mysticalagriculture:unattuned_augment"
-  },
+  "input": "mysticalagriculture:unattuned_augment",
   "ingredients": [
-    {
-      "item": "minecraft:milk_bucket"
-    },
-    {
-      "item": "mysticalagriculture:imperium_essence"
-    },
-    {
-      "item": "minecraft:milk_bucket"
-    },
-    {
-      "item": "mysticalagriculture:imperium_essence"
-    },
-    {
-      "item": "minecraft:milk_bucket"
-    },
-    {
-      "item": "mysticalagriculture:imperium_essence"
-    },
-    {
-      "item": "minecraft:milk_bucket"
-    },
-    {
-      "item": "mysticalagriculture:imperium_essence"
-    }
+    "minecraft:milk_bucket",
+    "mysticalagriculture:imperium_essence",
+    "minecraft:milk_bucket",
+    "mysticalagriculture:imperium_essence",
+    "minecraft:milk_bucket",
+    "mysticalagriculture:imperium_essence",
+    "minecraft:milk_bucket",
+    "mysticalagriculture:imperium_essence"
   ],
   "result": {
     "id": "mysticalagriculture:poison_resistance_augment"

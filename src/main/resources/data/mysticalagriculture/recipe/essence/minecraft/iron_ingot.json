@@ -12,9 +12,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:iron_essence"
-    }
+    "E": "mysticalagriculture:iron_essence"
   },
   "result": {
     "id": "minecraft:iron_ingot",

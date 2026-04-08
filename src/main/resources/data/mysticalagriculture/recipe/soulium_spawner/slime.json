@@ -7,7 +7,7 @@
     }
   ],
   "input": {
-    "item": "mysticalagriculture:slime_essence",
+    "ingredient": "mysticalagriculture:slime_essence",
     "count": 12
   },
   "entities": [

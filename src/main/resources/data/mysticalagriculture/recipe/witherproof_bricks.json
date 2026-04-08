@@ -5,9 +5,7 @@
     "##"
   ],
   "key": {
-    "#": {
-      "item": "mysticalagriculture:witherproof_block"
-    }
+    "#": "mysticalagriculture:witherproof_block"
   },
   "result": {
     "id": "mysticalagriculture:witherproof_bricks",

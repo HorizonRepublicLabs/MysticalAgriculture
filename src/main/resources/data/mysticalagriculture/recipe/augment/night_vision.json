@@ -6,34 +6,16 @@
       "augment": "mysticalagriculture:night_vision"
     }
   ],
-  "input": {
-    "item": "mysticalagriculture:unattuned_augment"
-  },
+  "input": "mysticalagriculture:unattuned_augment",
   "ingredients": [
-    {
-      "item": "minecraft:golden_carrot"
-    },
-    {
-      "item": "mysticalagriculture:prudentium_essence"
-    },
-    {
-      "item": "minecraft:golden_carrot"
-    },
-    {
-      "item": "mysticalagriculture:prudentium_essence"
-    },
-    {
-      "item": "minecraft:golden_carrot"
-    },
-    {
-      "item": "mysticalagriculture:prudentium_essence"
-    },
-    {
-      "item": "minecraft:golden_carrot"
-    },
-    {
-      "item": "mysticalagriculture:prudentium_essence"
-    }
+    "minecraft:golden_carrot",
+    "mysticalagriculture:prudentium_essence",
+    "minecraft:golden_carrot",
+    "mysticalagriculture:prudentium_essence",
+    "minecraft:golden_carrot",
+    "mysticalagriculture:prudentium_essence",
+    "minecraft:golden_carrot",
+    "mysticalagriculture:prudentium_essence"
   ],
   "result": {
     "id": "mysticalagriculture:night_vision_augment"

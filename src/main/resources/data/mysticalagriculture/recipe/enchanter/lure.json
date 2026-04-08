@@ -2,11 +2,11 @@
   "type": "mysticalagriculture:enchanter",
   "ingredients": [
     {
-      "tag": "minecraft:fishes",
+      "ingredient": "#minecraft:fishes",
       "count": 16
     },
     {
-      "item": "mysticalagriculture:experience_essence",
+      "ingredient": "mysticalagriculture:experience_essence",
       "count": 64
     }
   ],

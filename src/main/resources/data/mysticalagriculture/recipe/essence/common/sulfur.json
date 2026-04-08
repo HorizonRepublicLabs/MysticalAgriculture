@@ -4,6 +4,13 @@
     {
       "type": "mysticalagriculture:crop_enabled",
       "crop": "mysticalagriculture:sulfur"
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:dusts/sulfur"
+      }
     }
   ],
   "pattern": [
@@ -12,9 +19,7 @@
     "   "
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:sulfur_essence"
-    }
+    "E": "mysticalagriculture:sulfur_essence"
   },
   "result": {
     "tag": "c:dusts/sulfur",

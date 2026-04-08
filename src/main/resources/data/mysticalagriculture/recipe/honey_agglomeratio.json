@@ -5,12 +5,8 @@
     "CB"
   ],
   "key": {
-    "B": {
-      "item": "minecraft:honey_bottle"
-    },
-    "C": {
-      "item": "minecraft:honeycomb"
-    }
+    "B": "minecraft:honey_bottle",
+    "C": "minecraft:honeycomb"
   },
   "result": {
     "id": "mysticalagriculture:honey_agglomeratio"

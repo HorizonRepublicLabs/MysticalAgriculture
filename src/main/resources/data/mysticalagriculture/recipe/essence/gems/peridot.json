@@ -4,6 +4,13 @@
     {
       "type": "mysticalagriculture:crop_enabled",
       "crop": "mysticalagriculture:peridot"
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:gems/peridot"
+      }
     }
   ],
   "pattern": [
@@ -12,9 +19,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:peridot_essence"
-    }
+    "E": "mysticalagriculture:peridot_essence"
   },
   "result": {
     "tag": "c:gems/peridot",

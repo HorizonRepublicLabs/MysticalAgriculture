@@ -6,34 +6,16 @@
       "augment": "mysticalagriculture:step_assist"
     }
   ],
-  "input": {
-    "item": "mysticalagriculture:unattuned_augment"
-  },
+  "input": "mysticalagriculture:unattuned_augment",
   "ingredients": [
-    {
-      "tag": "minecraft:stairs"
-    },
-    {
-      "item": "mysticalagriculture:tertium_essence"
-    },
-    {
-      "tag": "minecraft:stairs"
-    },
-    {
-      "item": "mysticalagriculture:tertium_essence"
-    },
-    {
-      "tag": "minecraft:stairs"
-    },
-    {
-      "item": "mysticalagriculture:tertium_essence"
-    },
-    {
-      "tag": "minecraft:stairs"
-    },
-    {
-      "item": "mysticalagriculture:tertium_essence"
-    }
+    "#minecraft:stairs",
+    "mysticalagriculture:tertium_essence",
+    "#minecraft:stairs",
+    "mysticalagriculture:tertium_essence",
+    "#minecraft:stairs",
+    "mysticalagriculture:tertium_essence",
+    "#minecraft:stairs",
+    "mysticalagriculture:tertium_essence"
   ],
   "result": {
     "id": "mysticalagriculture:step_assist_augment"

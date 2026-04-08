@@ -7,15 +7,9 @@
     " G "
   ],
   "key": {
-    "G": {
-      "item": "mysticalagriculture:tertium_gemstone"
-    },
-    "I": {
-      "item": "mysticalagriculture:tertium_ingot"
-    },
-    "S": {
-      "item": "mysticalagriculture:prudentium_helmet"
-    }
+    "G": "mysticalagriculture:tertium_gemstone",
+    "I": "mysticalagriculture:tertium_ingot",
+    "S": "mysticalagriculture:prudentium_helmet"
   },
   "result": {
     "id": "mysticalagriculture:tertium_helmet"

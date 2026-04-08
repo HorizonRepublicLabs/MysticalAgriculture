@@ -12,9 +12,7 @@
     "   "
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:rabbit_essence"
-    }
+    "E": "mysticalagriculture:rabbit_essence"
   },
   "result": {
     "id": "minecraft:rabbit_foot",

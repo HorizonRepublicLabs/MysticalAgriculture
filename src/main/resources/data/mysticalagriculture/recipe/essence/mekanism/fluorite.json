@@ -16,9 +16,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:fluorite_essence"
-    }
+    "E": "mysticalagriculture:fluorite_essence"
   },
   "result": {
     "id": "mekanism:fluorite_gem",

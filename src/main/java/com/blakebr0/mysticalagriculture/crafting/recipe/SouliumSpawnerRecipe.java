@@ -44,6 +44,8 @@ public class SouliumSpawnerRecipe implements ISouliumSpawnerRecipe {
     private final SizedIngredient input;
     private final WeightedList<EntityType<?>> entityTypes;
 
+    private PlacementInfo placementInfo;
+
     public SouliumSpawnerRecipe(SizedIngredient input, WeightedList<EntityType<?>> entityTypes) {
         this.input = input;
         this.entityTypes = entityTypes;
@@ -62,7 +64,11 @@ public class SouliumSpawnerRecipe implements ISouliumSpawnerRecipe {
 
     @Override
     public PlacementInfo placementInfo() {
-        return PlacementInfo.NOT_PLACEABLE;
+        if (this.placementInfo == null)  {
+            this.placementInfo = PlacementInfo.create(this.input.ingredient());
+        }
+
+        return this.placementInfo;
     }
 
     @Override

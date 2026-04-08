@@ -16,9 +16,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:fiery_ingot_essence"
-    }
+    "E": "mysticalagriculture:fiery_ingot_essence"
   },
   "result": {
     "id": "twilightforest:fiery_ingot",

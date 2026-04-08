@@ -16,18 +16,10 @@
     "   "
   ],
   "key": {
-    "R": {
-      "item": "mysticalagriculture:blank_record"
-    },
-    "C": {
-      "item": "mysticalagriculture:copper_essence"
-    },
-    "S": {
-      "item": "mysticalagriculture:stone_essence"
-    },
-    "D": {
-      "tag": "c:dyes/cyan"
-    }
+    "R": "mysticalagriculture:blank_record",
+    "C": "mysticalagriculture:copper_essence",
+    "S": "mysticalagriculture:stone_essence",
+    "D": "#c:dyes/cyan"
   },
   "result": {
     "id": "minecraft:music_disc_precipice"

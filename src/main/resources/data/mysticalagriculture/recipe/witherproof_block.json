@@ -12,12 +12,8 @@
     " E "
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:wither_skeleton_essence"
-    },
-    "S": {
-      "item": "mysticalagriculture:soulstone"
-    }
+    "E": "mysticalagriculture:wither_skeleton_essence",
+    "S": "mysticalagriculture:soulstone"
   },
   "result": {
     "id": "mysticalagriculture:witherproof_block"

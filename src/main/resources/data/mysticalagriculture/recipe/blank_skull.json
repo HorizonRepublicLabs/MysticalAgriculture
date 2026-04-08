@@ -6,12 +6,8 @@
     " S "
   ],
   "key": {
-    "S": {
-      "item": "mysticalagriculture:soul_dust"
-    },
-    "B": {
-      "item": "minecraft:bone_block"
-    }
+    "S": "mysticalagriculture:soul_dust",
+    "B": "minecraft:bone_block"
   },
   "result": {
     "id": "mysticalagriculture:blank_skull",

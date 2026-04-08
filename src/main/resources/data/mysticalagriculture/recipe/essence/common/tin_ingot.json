@@ -4,6 +4,13 @@
     {
       "type": "mysticalagriculture:crop_enabled",
       "crop": "mysticalagriculture:tin"
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:ingots/tin"
+      }
     }
   ],
   "pattern": [
@@ -12,9 +19,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:tin_essence"
-    }
+    "E": "mysticalagriculture:tin_essence"
   },
   "result": {
     "tag": "c:ingots/tin",

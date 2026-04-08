@@ -4,6 +4,13 @@
     {
       "type": "mysticalagriculture:crop_enabled",
       "crop": "mysticalagriculture:electrum"
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:ingots/electrum"
+      }
     }
   ],
   "pattern": [
@@ -12,9 +19,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:electrum_essence"
-    }
+    "E": "mysticalagriculture:electrum_essence"
   },
   "result": {
     "tag": "c:ingots/electrum",

@@ -12,9 +12,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:deepslate_essence"
-    }
+    "E": "mysticalagriculture:deepslate_essence"
   },
   "result": {
     "id": "minecraft:cobbled_deepslate",

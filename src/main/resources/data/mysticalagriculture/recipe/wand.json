@@ -6,15 +6,9 @@
     "R  "
   ],
   "key": {
-    "S": {
-      "tag": "c:rods/wooden"
-    },
-    "R": {
-      "tag": "c:stones"
-    },
-    "E": {
-      "item": "mysticalagriculture:inferium_essence"
-    }
+    "S": "#c:rods/wooden",
+    "R": "#c:stones",
+    "E": "mysticalagriculture:inferium_essence"
   },
   "result": {
     "id": "mysticalagriculture:wand"

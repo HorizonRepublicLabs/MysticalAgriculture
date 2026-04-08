@@ -37,6 +37,8 @@ public class SoulJarEmptyRecipe implements CraftingRecipe {
     private final ItemStackTemplate result;
     private final List<Ingredient> ingredients;
 
+    private PlacementInfo placementInfo;
+
     public SoulJarEmptyRecipe(ItemStackTemplate result, List<Ingredient> ingredients) {
         this.result = result;
         this.ingredients = ingredients;
@@ -84,7 +86,11 @@ public class SoulJarEmptyRecipe implements CraftingRecipe {
 
     @Override
     public PlacementInfo placementInfo() {
-        return PlacementInfo.create(this.ingredients);
+        if (this.placementInfo == null) {
+            this.placementInfo = PlacementInfo.create(this.ingredients);
+        }
+
+        return this.placementInfo;
     }
 
     @Override

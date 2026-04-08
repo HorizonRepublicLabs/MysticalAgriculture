@@ -10,34 +10,16 @@
       "augment": "mysticalagriculture:speed_ii"
     }
   ],
-  "input": {
-    "item": "mysticalagriculture:speed_i_augment"
-  },
+  "input": "mysticalagriculture:speed_i_augment",
   "ingredients": [
-    {
-      "item": "minecraft:sugar"
-    },
-    {
-      "item": "mysticalagriculture:tertium_essence"
-    },
-    {
-      "item": "minecraft:sugar"
-    },
-    {
-      "item": "mysticalagriculture:tertium_essence"
-    },
-    {
-      "item": "minecraft:sugar"
-    },
-    {
-      "item": "mysticalagriculture:tertium_essence"
-    },
-    {
-      "item": "minecraft:sugar"
-    },
-    {
-      "item": "mysticalagriculture:tertium_essence"
-    }
+    "minecraft:sugar",
+    "mysticalagriculture:tertium_essence",
+    "minecraft:sugar",
+    "mysticalagriculture:tertium_essence",
+    "minecraft:sugar",
+    "mysticalagriculture:tertium_essence",
+    "minecraft:sugar",
+    "mysticalagriculture:tertium_essence"
   ],
   "result": {
     "id": "mysticalagriculture:speed_ii_augment"

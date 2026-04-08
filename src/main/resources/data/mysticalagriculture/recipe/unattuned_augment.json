@@ -6,12 +6,8 @@
     "SIS"
   ],
   "key": {
-    "I": {
-      "tag": "c:ingots/iron"
-    },
-    "S": {
-      "item": "mysticalagriculture:prosperity_shard"
-    }
+    "I": "#c:ingots/iron",
+    "S": "mysticalagriculture:prosperity_shard"
   },
   "result": {
     "id": "mysticalagriculture:unattuned_augment"

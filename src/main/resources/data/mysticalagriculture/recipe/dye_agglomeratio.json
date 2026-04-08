@@ -5,18 +5,10 @@
     "PL"
   ],
   "key": {
-    "C": {
-      "tag": "c:dyes/cyan"
-    },
-    "O": {
-      "tag": "c:dyes/orange"
-    },
-    "P": {
-      "tag": "c:dyes/pink"
-    },
-    "L": {
-      "tag": "c:dyes/lime"
-    }
+    "C": "#c:dyes/cyan",
+    "O": "#c:dyes/orange",
+    "P": "#c:dyes/pink",
+    "L": "#c:dyes/lime"
   },
   "result": {
     "id": "mysticalagriculture:dye_agglomeratio"

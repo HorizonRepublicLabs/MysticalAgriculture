@@ -6,9 +6,7 @@
       "modid": "thermal"
     }
   ],
-  "input": {
-    "item": "thermal:basalz_rod"
-  },
+  "input": "thermal:basalz_rod",
   "result": {
     "type": "mysticalagriculture:basalz",
     "souls": 0.5

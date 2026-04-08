@@ -6,15 +6,9 @@
     "%#%"
   ],
   "key": {
-    "#": {
-      "item": "mysticalagriculture:prosperity_shard"
-    },
-    "%": {
-      "item": "mysticalagriculture:inferium_essence"
-    },
-    "X": {
-      "tag": "c:gems/diamond"
-    }
+    "#": "mysticalagriculture:prosperity_shard",
+    "%": "mysticalagriculture:inferium_essence",
+    "X": "#c:gems/diamond"
   },
   "result": {
     "id": "mysticalagriculture:infusion_crystal"

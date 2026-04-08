@@ -6,9 +6,7 @@
     "###"
   ],
   "key": {
-    "#": {
-      "item": "mysticalagriculture:prosperity_gemstone"
-    }
+    "#": "mysticalagriculture:prosperity_gemstone"
   },
   "result": {
     "id": "mysticalagriculture:prosperity_gemstone_block"

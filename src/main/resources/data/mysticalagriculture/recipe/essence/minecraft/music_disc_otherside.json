@@ -16,18 +16,10 @@
     "   "
   ],
   "key": {
-    "R": {
-      "item": "mysticalagriculture:blank_record"
-    },
-    "C": {
-      "item": "mysticalagriculture:stone_essence"
-    },
-    "S": {
-      "item": "mysticalagriculture:enderman_essence"
-    },
-    "D": {
-      "tag": "c:dyes/cyan"
-    }
+    "R": "mysticalagriculture:blank_record",
+    "C": "mysticalagriculture:stone_essence",
+    "S": "mysticalagriculture:enderman_essence",
+    "D": "#c:dyes/cyan"
   },
   "result": {
     "id": "minecraft:music_disc_otherside"

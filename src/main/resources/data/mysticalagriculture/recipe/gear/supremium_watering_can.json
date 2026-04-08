@@ -7,18 +7,10 @@
     "FGF"
   ],
   "key": {
-    "G": {
-      "item": "mysticalagriculture:supremium_ingot"
-    },
-    "I": {
-      "item": "mysticalagriculture:supremium_ingot"
-    },
-    "S": {
-      "item": "mysticalagriculture:imperium_watering_can"
-    },
-    "F": {
-      "item": "mysticalagriculture:mystical_fertilizer"
-    }
+    "G": "mysticalagriculture:supremium_ingot",
+    "I": "mysticalagriculture:supremium_ingot",
+    "S": "mysticalagriculture:imperium_watering_can",
+    "F": "mysticalagriculture:mystical_fertilizer"
   },
   "result": {
     "id": "mysticalagriculture:supremium_watering_can"

@@ -12,9 +12,7 @@
     "   "
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:pig_essence"
-    }
+    "E": "mysticalagriculture:pig_essence"
   },
   "result": {
     "id": "minecraft:porkchop",

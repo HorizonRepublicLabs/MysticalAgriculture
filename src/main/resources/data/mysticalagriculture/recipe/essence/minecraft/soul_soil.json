@@ -16,12 +16,8 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:nether_essence"
-    },
-    "F": {
-      "item": "mysticalagriculture:earth_essence"
-    }
+    "E": "mysticalagriculture:nether_essence",
+    "F": "mysticalagriculture:earth_essence"
   },
   "result": {
     "id": "minecraft:soul_soil",

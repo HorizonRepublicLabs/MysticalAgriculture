@@ -5,9 +5,7 @@
     "###"
   ],
   "key": {
-    "#": {
-      "item": "mysticalagriculture:soulstone_smooth"
-    }
+    "#": "mysticalagriculture:soulstone_smooth"
   },
   "result": {
     "id": "mysticalagriculture:soulstone_smooth_slab",

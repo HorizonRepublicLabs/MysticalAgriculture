@@ -16,9 +16,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:compressed_iron_essence"
-    }
+    "E": "mysticalagriculture:compressed_iron_essence"
   },
   "result": {
     "id": "pneumaticcraft:ingot_iron_compressed",

@@ -10,34 +10,16 @@
       "augment": "mysticalagriculture:attack_aoe_iii"
     }
   ],
-  "input": {
-    "item": "mysticalagriculture:attack_aoe_ii_augment"
-  },
+  "input": "mysticalagriculture:attack_aoe_ii_augment",
   "ingredients": [
-    {
-      "item": "minecraft:diamond_sword"
-    },
-    {
-      "item": "mysticalagriculture:supremium_essence"
-    },
-    {
-      "item": "minecraft:diamond_sword"
-    },
-    {
-      "item": "mysticalagriculture:supremium_essence"
-    },
-    {
-      "item": "minecraft:diamond_sword"
-    },
-    {
-      "item": "mysticalagriculture:supremium_essence"
-    },
-    {
-      "item": "minecraft:diamond_sword"
-    },
-    {
-      "item": "mysticalagriculture:supremium_essence"
-    }
+    "minecraft:diamond_sword",
+    "mysticalagriculture:supremium_essence",
+    "minecraft:diamond_sword",
+    "mysticalagriculture:supremium_essence",
+    "minecraft:diamond_sword",
+    "mysticalagriculture:supremium_essence",
+    "minecraft:diamond_sword",
+    "mysticalagriculture:supremium_essence"
   ],
   "result": {
     "id": "mysticalagriculture:attack_aoe_iii_augment"

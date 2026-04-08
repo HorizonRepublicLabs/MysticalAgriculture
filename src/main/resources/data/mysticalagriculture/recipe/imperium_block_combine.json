@@ -6,12 +6,8 @@
     " # "
   ],
   "key": {
-    "#": {
-      "item": "mysticalagriculture:tertium_block"
-    },
-    "X": {
-      "item": "mysticalagriculture:master_infusion_crystal"
-    }
+    "#": "mysticalagriculture:tertium_block",
+    "X": "mysticalagriculture:master_infusion_crystal"
   },
   "result": {
     "id": "mysticalagriculture:imperium_block"

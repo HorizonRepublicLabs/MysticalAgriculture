@@ -16,9 +16,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:conductive_alloy_essence"
-    }
+    "E": "mysticalagriculture:conductive_alloy_essence"
   },
   "result": {
     "id": "enderio:conductive_alloy_ingot",

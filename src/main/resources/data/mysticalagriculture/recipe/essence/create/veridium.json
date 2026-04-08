@@ -20,12 +20,8 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:stone_essence"
-    },
-    "F": {
-      "item": "mysticalagriculture:copper_essence"
-    }
+    "E": "mysticalagriculture:stone_essence",
+    "F": "mysticalagriculture:copper_essence"
   },
   "result": {
     "id": "create:veridium",

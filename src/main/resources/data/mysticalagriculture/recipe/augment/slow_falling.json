@@ -6,34 +6,16 @@
       "augment": "mysticalagriculture:slow_falling"
     }
   ],
-  "input": {
-    "item": "mysticalagriculture:unattuned_augment"
-  },
+  "input": "mysticalagriculture:unattuned_augment",
   "ingredients": [
-    {
-      "item": "minecraft:phantom_membrane"
-    },
-    {
-      "item": "mysticalagriculture:tertium_essence"
-    },
-    {
-      "item": "minecraft:phantom_membrane"
-    },
-    {
-      "item": "mysticalagriculture:tertium_essence"
-    },
-    {
-      "item": "minecraft:phantom_membrane"
-    },
-    {
-      "item": "mysticalagriculture:tertium_essence"
-    },
-    {
-      "item": "minecraft:phantom_membrane"
-    },
-    {
-      "item": "mysticalagriculture:tertium_essence"
-    }
+    "minecraft:phantom_membrane",
+    "mysticalagriculture:tertium_essence",
+    "minecraft:phantom_membrane",
+    "mysticalagriculture:tertium_essence",
+    "minecraft:phantom_membrane",
+    "mysticalagriculture:tertium_essence",
+    "minecraft:phantom_membrane",
+    "mysticalagriculture:tertium_essence"
   ],
   "result": {
     "id": "mysticalagriculture:slow_falling_augment"

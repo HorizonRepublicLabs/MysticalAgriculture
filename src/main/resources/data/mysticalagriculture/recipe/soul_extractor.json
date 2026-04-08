@@ -6,18 +6,10 @@
     "ISI"
   ],
   "key": {
-    "I": {
-      "tag": "c:ingots/iron"
-    },
-    "S": {
-      "item": "mysticalagriculture:soulium_ingot"
-    },
-    "H": {
-      "item": "mysticalagriculture:soulium_dagger"
-    },
-    "B": {
-      "item": "mysticalagriculture:machine_frame"
-    }
+    "I": "#c:ingots/iron",
+    "S": "mysticalagriculture:soulium_ingot",
+    "H": "mysticalagriculture:soulium_dagger",
+    "B": "mysticalagriculture:machine_frame"
   },
   "result": {
     "id": "mysticalagriculture:soul_extractor"

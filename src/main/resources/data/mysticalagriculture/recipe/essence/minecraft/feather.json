@@ -12,9 +12,7 @@
     "  E"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:chicken_essence"
-    }
+    "E": "mysticalagriculture:chicken_essence"
   },
   "result": {
     "id": "minecraft:feather",

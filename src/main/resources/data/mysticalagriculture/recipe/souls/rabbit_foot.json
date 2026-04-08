@@ -1,8 +1,6 @@
 {
   "type": "mysticalagriculture:soul_extraction",
-  "input": {
-    "item": "minecraft:rabbit_foot"
-  },
+  "input": "minecraft:rabbit_foot",
   "result": {
     "type": "mysticalagriculture:rabbit",
     "souls": 0.25

@@ -6,9 +6,7 @@
     "###"
   ],
   "key": {
-    "#": {
-      "item": "mysticalagriculture:prudentium_ingot"
-    }
+    "#": "mysticalagriculture:prudentium_ingot"
   },
   "result": {
     "id": "mysticalagriculture:prudentium_ingot_block"

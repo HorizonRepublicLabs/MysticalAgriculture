@@ -16,9 +16,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:certus_quartz_essence"
-    },
+    "E": "mysticalagriculture:certus_quartz_essence",
     "M": {
       "tag": "c:gems/diamond"
     }

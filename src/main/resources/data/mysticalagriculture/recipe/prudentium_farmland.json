@@ -2,12 +2,8 @@
   "type": "crafting_shapeless",
   "group": "mysticalagriculture:farmland",
   "ingredients": [
-    {
-      "item": "mysticalagriculture:prudentium_essence"
-    },
-    {
-      "item": "minecraft:farmland"
-    }
+    "mysticalagriculture:prudentium_essence",
+    "minecraft:farmland"
   ],
   "result": {
     "id": "mysticalagriculture:prudentium_farmland",

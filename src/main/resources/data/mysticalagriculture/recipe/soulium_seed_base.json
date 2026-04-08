@@ -1,15 +1,9 @@
 {
   "type": "crafting_shapeless",
   "ingredients": [
-    {
-      "item": "mysticalagriculture:prosperity_seed_base"
-    },
-    {
-      "item": "mysticalagriculture:soulium_dust"
-    },
-    {
-      "item": "mysticalagriculture:soulium_dust"
-    }
+    "mysticalagriculture:prosperity_seed_base",
+    "mysticalagriculture:soulium_dust",
+    "mysticalagriculture:soulium_dust"
   ],
   "result": {
     "id": "mysticalagriculture:soulium_seed_base"

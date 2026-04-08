@@ -1,9 +1,7 @@
 {
   "type": "crafting_shapeless",
   "ingredients": [
-    {
-      "item": "mysticalagriculture:prudentium_block"
-    }
+    "mysticalagriculture:prudentium_block"
   ],
   "result": {
     "id": "mysticalagriculture:prudentium_essence",

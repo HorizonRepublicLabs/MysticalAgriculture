@@ -12,9 +12,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:glowstone_essence"
-    }
+    "E": "mysticalagriculture:glowstone_essence"
   },
   "result": {
     "id": "minecraft:glowstone_dust",

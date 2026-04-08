@@ -16,15 +16,9 @@
     "CSC"
   ],
   "key": {
-    "C": {
-      "item": "mysticalagriculture:creeper_essence"
-    },
-    "S": {
-      "item": "mysticalagriculture:skeleton_essence"
-    },
-    "I": {
-      "tag": "c:ingots/iron"
-    }
+    "C": "mysticalagriculture:creeper_essence",
+    "S": "mysticalagriculture:skeleton_essence",
+    "I": "#c:ingots/iron"
   },
   "result": {
     "id": "mysticalagriculture:blank_record"

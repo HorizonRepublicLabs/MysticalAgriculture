@@ -1,8 +1,6 @@
 {
   "type": "mysticalagriculture:soul_extraction",
-  "input": {
-    "item": "minecraft:turtle_scute"
-  },
+  "input": "minecraft:turtle_scute",
   "result": {
     "type": "mysticalagriculture:turtle",
     "souls": 0.5

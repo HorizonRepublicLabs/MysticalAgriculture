@@ -1,8 +1,6 @@
 {
   "type": "mysticalagriculture:soul_extraction",
-  "input": {
-    "item": "minecraft:leather"
-  },
+  "input": "minecraft:leather",
   "result": {
     "type": "mysticalagriculture:cow",
     "souls": 0.25

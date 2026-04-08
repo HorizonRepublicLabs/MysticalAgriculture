@@ -16,9 +16,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:manyullyn_essence"
-    }
+    "E": "mysticalagriculture:manyullyn_essence"
   },
   "result": {
     "id": "tconstruct:manyullyn_ingot",

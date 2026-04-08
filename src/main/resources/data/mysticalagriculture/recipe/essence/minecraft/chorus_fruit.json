@@ -16,12 +16,8 @@
     "   "
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:end_essence"
-    },
-    "N": {
-      "item": "mysticalagriculture:nature_essence"
-    }
+    "E": "mysticalagriculture:end_essence",
+    "N": "mysticalagriculture:nature_essence"
   },
   "result": {
     "id": "minecraft:chorus_fruit",

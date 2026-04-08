@@ -7,18 +7,10 @@
     "FGF"
   ],
   "key": {
-    "G": {
-      "item": "mysticalagriculture:prudentium_ingot"
-    },
-    "I": {
-      "item": "mysticalagriculture:prudentium_ingot"
-    },
-    "S": {
-      "item": "mysticalagriculture:inferium_watering_can"
-    },
-    "F": {
-      "item": "mysticalagriculture:mystical_fertilizer"
-    }
+    "G": "mysticalagriculture:prudentium_ingot",
+    "I": "mysticalagriculture:prudentium_ingot",
+    "S": "mysticalagriculture:inferium_watering_can",
+    "F": "mysticalagriculture:mystical_fertilizer"
   },
   "result": {
     "id": "mysticalagriculture:prudentium_watering_can"

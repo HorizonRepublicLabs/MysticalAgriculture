@@ -16,12 +16,8 @@
     "ENE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:nether_essence"
-    },
-    "N": {
-      "item": "mysticalagriculture:nature_essence"
-    }
+    "E": "mysticalagriculture:nether_essence",
+    "N": "mysticalagriculture:nature_essence"
   },
   "result": {
     "id": "minecraft:crimson_nylium",

@@ -6,9 +6,7 @@
     "###"
   ],
   "key": {
-    "#": {
-      "item": "mysticalagriculture:inferium_essence"
-    }
+    "#": "mysticalagriculture:inferium_essence"
   },
   "result": {
     "id": "mysticalagriculture:inferium_block"

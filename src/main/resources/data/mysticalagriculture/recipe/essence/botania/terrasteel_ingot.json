@@ -16,9 +16,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:terrasteel_essence"
-    }
+    "E": "mysticalagriculture:terrasteel_essence"
   },
   "result": {
     "id": "botania:terrasteel_ingot",

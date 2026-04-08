@@ -16,18 +16,10 @@
     "   "
   ],
   "key": {
-    "R": {
-      "item": "mysticalagriculture:blank_record"
-    },
-    "C": {
-      "item": "mysticalagriculture:copper_essence"
-    },
-    "S": {
-      "item": "mysticalagriculture:gold_essence"
-    },
-    "D": {
-      "tag": "c:dyes/orange"
-    }
+    "R": "mysticalagriculture:blank_record",
+    "C": "mysticalagriculture:copper_essence",
+    "S": "mysticalagriculture:gold_essence",
+    "D": "#c:dyes/orange"
   },
   "result": {
     "id": "minecraft:music_disc_creator_music_box"

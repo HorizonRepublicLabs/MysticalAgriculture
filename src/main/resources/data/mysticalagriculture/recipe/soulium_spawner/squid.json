@@ -7,7 +7,7 @@
     }
   ],
   "input": {
-    "item": "mysticalagriculture:squid_essence",
+    "ingredient": "mysticalagriculture:squid_essence",
     "count": 12
   },
   "entities": [

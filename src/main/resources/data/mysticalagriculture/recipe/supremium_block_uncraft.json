@@ -1,9 +1,7 @@
 {
   "type": "crafting_shapeless",
   "ingredients": [
-    {
-      "item": "mysticalagriculture:supremium_block"
-    }
+    "mysticalagriculture:supremium_block"
   ],
   "result": {
     "id": "mysticalagriculture:supremium_essence",

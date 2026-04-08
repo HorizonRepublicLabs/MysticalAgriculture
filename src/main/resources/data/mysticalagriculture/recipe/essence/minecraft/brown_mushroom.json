@@ -16,12 +16,8 @@
     "   "
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:nature_essence"
-    },
-    "F": {
-      "item": "mysticalagriculture:dirt_essence"
-    }
+    "E": "mysticalagriculture:nature_essence",
+    "F": "mysticalagriculture:dirt_essence"
   },
   "result": {
     "id": "minecraft:brown_mushroom",

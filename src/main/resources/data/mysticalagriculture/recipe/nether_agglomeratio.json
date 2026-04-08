@@ -5,18 +5,10 @@
     "BW"
   ],
   "key": {
-    "N": {
-      "item": "minecraft:netherrack"
-    },
-    "S": {
-      "item": "minecraft:soul_sand"
-    },
-    "B": {
-      "item": "minecraft:nether_bricks"
-    },
-    "W": {
-      "item": "minecraft:nether_wart"
-    }
+    "N": "minecraft:netherrack",
+    "S": "minecraft:soul_sand",
+    "B": "minecraft:nether_bricks",
+    "W": "minecraft:nether_wart"
   },
   "result": {
     "id": "mysticalagriculture:nether_agglomeratio"

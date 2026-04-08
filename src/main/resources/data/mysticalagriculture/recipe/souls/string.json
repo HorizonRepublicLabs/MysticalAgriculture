@@ -1,8 +1,6 @@
 {
   "type": "mysticalagriculture:soul_extraction",
-  "input": {
-    "item": "minecraft:string"
-  },
+  "input": "minecraft:string",
   "result": {
     "type": "mysticalagriculture:spider",
     "souls": 0.25

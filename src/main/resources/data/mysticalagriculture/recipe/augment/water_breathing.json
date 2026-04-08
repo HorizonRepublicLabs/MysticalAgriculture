@@ -6,34 +6,16 @@
       "augment": "mysticalagriculture:water_breathing"
     }
   ],
-  "input": {
-    "item": "mysticalagriculture:unattuned_augment"
-  },
+  "input": "mysticalagriculture:unattuned_augment",
   "ingredients": [
-    {
-      "item": "minecraft:pufferfish"
-    },
-    {
-      "item": "mysticalagriculture:prudentium_essence"
-    },
-    {
-      "item": "minecraft:pufferfish"
-    },
-    {
-      "item": "mysticalagriculture:prudentium_essence"
-    },
-    {
-      "item": "minecraft:pufferfish"
-    },
-    {
-      "item": "mysticalagriculture:prudentium_essence"
-    },
-    {
-      "item": "minecraft:pufferfish"
-    },
-    {
-      "item": "mysticalagriculture:prudentium_essence"
-    }
+    "minecraft:pufferfish",
+    "mysticalagriculture:prudentium_essence",
+    "minecraft:pufferfish",
+    "mysticalagriculture:prudentium_essence",
+    "minecraft:pufferfish",
+    "mysticalagriculture:prudentium_essence",
+    "minecraft:pufferfish",
+    "mysticalagriculture:prudentium_essence"
   ],
   "result": {
     "id": "mysticalagriculture:water_breathing_augment"

@@ -12,9 +12,7 @@
     "   "
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:fish_essence"
-    }
+    "E": "mysticalagriculture:fish_essence"
   },
   "result": {
     "id": "minecraft:tropical_fish",

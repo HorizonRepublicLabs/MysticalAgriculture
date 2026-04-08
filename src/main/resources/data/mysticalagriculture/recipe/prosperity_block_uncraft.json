@@ -1,9 +1,7 @@
 {
   "type": "crafting_shapeless",
   "ingredients": [
-    {
-      "item": "mysticalagriculture:prosperity_block"
-    }
+    "mysticalagriculture:prosperity_block"
   ],
   "result": {
     "id": "mysticalagriculture:prosperity_shard",

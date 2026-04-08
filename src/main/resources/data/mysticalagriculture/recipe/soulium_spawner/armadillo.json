@@ -7,7 +7,7 @@
     }
   ],
   "input": {
-    "item": "mysticalagriculture:armadillo_essence",
+    "ingredient": "mysticalagriculture:armadillo_essence",
     "count": 12
   },
   "entities": [

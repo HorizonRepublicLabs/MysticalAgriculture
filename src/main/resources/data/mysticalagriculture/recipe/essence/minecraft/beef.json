@@ -12,9 +12,7 @@
     "   "
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:cow_essence"
-    }
+    "E": "mysticalagriculture:cow_essence"
   },
   "result": {
     "id": "minecraft:beef",

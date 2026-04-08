@@ -16,9 +16,7 @@
     "   "
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:fluix_essence"
-    }
+    "E": "mysticalagriculture:fluix_essence"
   },
   "result": {
     "id": "ae2:fluix_dust",

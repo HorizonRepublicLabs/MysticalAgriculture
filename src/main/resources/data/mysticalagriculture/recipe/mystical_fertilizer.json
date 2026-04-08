@@ -6,15 +6,9 @@
     "%#%"
   ],
   "key": {
-    "#": {
-      "item": "minecraft:bone_meal"
-    },
-    "%": {
-      "item": "mysticalagriculture:inferium_essence"
-    },
-    "X": {
-      "tag": "c:gems/diamond"
-    }
+    "#": "minecraft:bone_meal",
+    "%": "mysticalagriculture:inferium_essence",
+    "X": "#c:gems/diamond"
   },
   "result": {
     "id": "mysticalagriculture:mystical_fertilizer",

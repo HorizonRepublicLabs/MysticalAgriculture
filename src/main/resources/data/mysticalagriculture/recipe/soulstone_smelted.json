@@ -1,8 +1,6 @@
 {
   "type": "smelting",
-  "ingredient": {
-    "item": "mysticalagriculture:soulstone_cobble"
-  },
+  "ingredient": "mysticalagriculture:soulstone_cobble",
   "result": {
     "id": "mysticalagriculture:soulstone"
   },

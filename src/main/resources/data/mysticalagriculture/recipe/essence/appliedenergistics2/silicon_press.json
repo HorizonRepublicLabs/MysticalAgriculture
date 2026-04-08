@@ -16,12 +16,8 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:certus_quartz_essence"
-    },
-    "M": {
-      "item": "ae2:silicon"
-    }
+    "E": "mysticalagriculture:certus_quartz_essence",
+    "M": "ae2:silicon"
   },
   "result": {
     "id": "ae2:silicon_press",

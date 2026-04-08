@@ -2,11 +2,11 @@
   "type": "mysticalagriculture:enchanter",
   "ingredients": [
     {
-      "item": "minecraft:wind_charge",
+      "ingredient": "minecraft:wind_charge",
       "count": 20
     },
     {
-      "item": "mysticalagriculture:experience_essence",
+      "ingredient": "mysticalagriculture:experience_essence",
       "count": 64
     }
   ],

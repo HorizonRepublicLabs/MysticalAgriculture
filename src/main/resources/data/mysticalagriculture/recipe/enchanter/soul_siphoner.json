@@ -2,11 +2,11 @@
   "type": "mysticalagriculture:enchanter",
   "ingredients": [
     {
-      "item": "mysticalagriculture:soulium_dust",
+      "ingredient": "mysticalagriculture:soulium_dust",
       "count": 8
     },
     {
-      "item": "mysticalagriculture:experience_essence",
+      "ingredient": "mysticalagriculture:experience_essence",
       "count": 64
     }
   ],

@@ -6,12 +6,8 @@
     " E "
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:soul_dust"
-    },
-    "G": {
-      "tag": "c:glass_blocks/colorless"
-    }
+    "E": "mysticalagriculture:soul_dust",
+    "G": "#c:glass_blocks/colorless"
   },
   "result": {
     "id": "mysticalagriculture:soul_glass"

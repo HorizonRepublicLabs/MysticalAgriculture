@@ -12,12 +12,8 @@
     " E "
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:cow_essence"
-    },
-    "B": {
-      "item": "minecraft:bucket"
-    }
+    "E": "mysticalagriculture:cow_essence",
+    "B": "minecraft:bucket"
   },
   "result": {
     "id": "minecraft:milk_bucket",

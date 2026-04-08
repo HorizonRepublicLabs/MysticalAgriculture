@@ -20,18 +20,10 @@
     "   "
   ],
   "key": {
-    "R": {
-      "item": "mysticalagriculture:blank_record"
-    },
-    "C": {
-      "item": "mysticalagriculture:nether_essence"
-    },
-    "S": {
-      "item": "mysticalagriculture:netherite_essence"
-    },
-    "D": {
-      "item": "mysticalagriculture:gold_essence"
-    }
+    "R": "mysticalagriculture:blank_record",
+    "C": "mysticalagriculture:nether_essence",
+    "S": "mysticalagriculture:netherite_essence",
+    "D": "mysticalagriculture:gold_essence"
   },
   "result": {
     "id": "minecraft:music_disc_pigstep"

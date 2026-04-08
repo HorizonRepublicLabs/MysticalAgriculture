@@ -5,18 +5,10 @@
     "DC"
   ],
   "key": {
-    "I": {
-      "item": "minecraft:lava_bucket"
-    },
-    "G": {
-      "item": "minecraft:gravel"
-    },
-    "D": {
-      "item": "minecraft:dirt"
-    },
-    "C": {
-      "item": "minecraft:clay_ball"
-    }
+    "I": "minecraft:lava_bucket",
+    "G": "minecraft:gravel",
+    "D": "minecraft:dirt",
+    "C": "minecraft:clay_ball"
   },
   "result": {
     "id": "mysticalagriculture:fire_agglomeratio"

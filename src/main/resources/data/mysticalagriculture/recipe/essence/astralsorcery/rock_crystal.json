@@ -16,9 +16,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:rock_crystal_essence"
-    }
+    "E": "mysticalagriculture:rock_crystal_essence"
   },
   "result": {
     "id": "astralsorcery:rock_crystal"

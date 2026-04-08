@@ -6,15 +6,9 @@
     "EIE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:supremium_essence"
-    },
-    "I": {
-      "item": "mysticalagriculture:supremium_ingot"
-    },
-    "U": {
-      "item": "mysticalagriculture:imperium_upgrade"
-    }
+    "E": "mysticalagriculture:supremium_essence",
+    "I": "mysticalagriculture:supremium_ingot",
+    "U": "mysticalagriculture:imperium_upgrade"
   },
   "result": {
     "id": "mysticalagriculture:supremium_upgrade"

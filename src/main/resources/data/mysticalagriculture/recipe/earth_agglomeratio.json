@@ -5,18 +5,10 @@
     "DC"
   ],
   "key": {
-    "I": {
-      "item": "minecraft:short_grass"
-    },
-    "G": {
-      "item": "minecraft:gravel"
-    },
-    "D": {
-      "item": "minecraft:dirt"
-    },
-    "C": {
-      "item": "minecraft:clay_ball"
-    }
+    "I": "minecraft:short_grass",
+    "G": "minecraft:gravel",
+    "D": "minecraft:dirt",
+    "C": "minecraft:clay_ball"
   },
   "result": {
     "id": "mysticalagriculture:earth_agglomeratio"

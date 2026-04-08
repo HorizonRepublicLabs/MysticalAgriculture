@@ -1,8 +1,6 @@
 {
   "type": "mysticalagriculture:soul_extraction",
-  "input": {
-    "item": "minecraft:egg"
-  },
+  "input": "minecraft:egg",
   "result": {
     "type": "mysticalagriculture:chicken",
     "souls": 0.25

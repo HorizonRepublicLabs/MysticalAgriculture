@@ -16,9 +16,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:blitz_essence"
-    }
+    "E": "mysticalagriculture:blitz_essence"
   },
   "result": {
     "id": "thermal:blitz_rod",

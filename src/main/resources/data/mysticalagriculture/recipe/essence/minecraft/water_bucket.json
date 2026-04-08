@@ -12,12 +12,8 @@
     " E "
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:water_essence"
-    },
-    "B": {
-      "item": "minecraft:bucket"
-    }
+    "E": "mysticalagriculture:water_essence",
+    "B": "minecraft:bucket"
   },
   "result": {
     "id": "minecraft:water_bucket"

@@ -12,9 +12,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:redstone_essence"
-    }
+    "E": "mysticalagriculture:redstone_essence"
   },
   "result": {
     "id": "minecraft:redstone",

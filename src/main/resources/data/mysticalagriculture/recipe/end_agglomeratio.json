@@ -5,15 +5,9 @@
     "PS"
   ],
   "key": {
-    "S": {
-      "item": "minecraft:end_stone"
-    },
-    "C": {
-      "item": "minecraft:chorus_fruit"
-    },
-    "P": {
-      "item": "minecraft:purpur_block"
-    }
+    "S": "minecraft:end_stone",
+    "C": "minecraft:chorus_fruit",
+    "P": "minecraft:purpur_block"
   },
   "result": {
     "id": "mysticalagriculture:end_agglomeratio"

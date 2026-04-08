@@ -6,34 +6,16 @@
       "augment": "mysticalagriculture:luck_iii"
     }
   ],
-  "input": {
-    "item": "mysticalagriculture:luck_ii_augment"
-  },
+  "input": "mysticalagriculture:luck_ii_augment",
   "ingredients": [
-    {
-      "item": "minecraft:gold_ingot"
-    },
-    {
-      "item": "mysticalagriculture:supremium_essence"
-    },
-    {
-      "item": "minecraft:gold_ingot"
-    },
-    {
-      "item": "mysticalagriculture:supremium_essence"
-    },
-    {
-      "item": "minecraft:gold_ingot"
-    },
-    {
-      "item": "mysticalagriculture:supremium_essence"
-    },
-    {
-      "item": "minecraft:gold_ingot"
-    },
-    {
-      "item": "mysticalagriculture:supremium_essence"
-    }
+    "minecraft:gold_ingot",
+    "mysticalagriculture:supremium_essence",
+    "minecraft:gold_ingot",
+    "mysticalagriculture:supremium_essence",
+    "minecraft:gold_ingot",
+    "mysticalagriculture:supremium_essence",
+    "minecraft:gold_ingot",
+    "mysticalagriculture:supremium_essence"
   ],
   "result": {
     "id": "mysticalagriculture:luck_iii_augment"

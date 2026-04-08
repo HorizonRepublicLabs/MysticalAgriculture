@@ -12,9 +12,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:amethyst_essence"
-    }
+    "E": "mysticalagriculture:amethyst_essence"
   },
   "result": {
     "id": "minecraft:amethyst_shard",

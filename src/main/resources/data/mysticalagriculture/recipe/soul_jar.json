@@ -6,12 +6,8 @@
     " G "
   ],
   "key": {
-    "S": {
-      "item": "mysticalagriculture:soulium_ingot"
-    },
-    "G": {
-      "item": "mysticalagriculture:soul_glass"
-    }
+    "S": "mysticalagriculture:soulium_ingot",
+    "G": "mysticalagriculture:soul_glass"
   },
   "result": {
     "id": "mysticalagriculture:soul_jar"

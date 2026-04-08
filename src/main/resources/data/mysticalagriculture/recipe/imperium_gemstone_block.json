@@ -6,9 +6,7 @@
     "###"
   ],
   "key": {
-    "#": {
-      "item": "mysticalagriculture:imperium_gemstone"
-    }
+    "#": "mysticalagriculture:imperium_gemstone"
   },
   "result": {
     "id": "mysticalagriculture:imperium_gemstone_block"

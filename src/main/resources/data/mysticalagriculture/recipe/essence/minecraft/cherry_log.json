@@ -12,9 +12,7 @@
     "E  "
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:wood_essence"
-    }
+    "E": "mysticalagriculture:wood_essence"
   },
   "result": {
     "id": "minecraft:cherry_log",

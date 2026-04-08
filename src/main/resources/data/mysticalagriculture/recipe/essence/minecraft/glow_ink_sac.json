@@ -12,9 +12,7 @@
     " E "
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:squid_essence"
-    }
+    "E": "mysticalagriculture:squid_essence"
   },
   "result": {
     "id": "minecraft:glow_ink_sac",

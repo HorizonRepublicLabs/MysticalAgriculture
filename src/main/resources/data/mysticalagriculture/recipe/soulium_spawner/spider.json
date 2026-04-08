@@ -7,7 +7,7 @@
     }
   ],
   "input": {
-    "item": "mysticalagriculture:spider_essence",
+    "ingredient": "mysticalagriculture:spider_essence",
     "count": 16
   },
   "entities": [

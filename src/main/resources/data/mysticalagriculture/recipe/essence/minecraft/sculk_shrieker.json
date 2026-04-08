@@ -12,9 +12,7 @@
     "E E"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:sculk_essence"
-    }
+    "E": "mysticalagriculture:sculk_essence"
   },
   "result": {
     "id": "minecraft:sculk_shrieker",

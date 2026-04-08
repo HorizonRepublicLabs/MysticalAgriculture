@@ -12,9 +12,7 @@
     "   "
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:zombie_essence"
-    }
+    "E": "mysticalagriculture:zombie_essence"
   },
   "result": {
     "id": "minecraft:rotten_flesh",

@@ -16,9 +16,7 @@
     "EE "
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:mystical_flower_essence"
-    }
+    "E": "mysticalagriculture:mystical_flower_essence"
   },
   "result": {
     "id": "botania:orange_mystical_flower",

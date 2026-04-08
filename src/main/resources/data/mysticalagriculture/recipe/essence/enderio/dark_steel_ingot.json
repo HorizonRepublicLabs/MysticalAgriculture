@@ -16,9 +16,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:dark_steel_essence"
-    }
+    "E": "mysticalagriculture:dark_steel_essence"
   },
   "result": {
     "id": "enderio:dark_steel_ingot",

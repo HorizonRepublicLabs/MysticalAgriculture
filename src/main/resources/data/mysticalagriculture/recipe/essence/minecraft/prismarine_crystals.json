@@ -12,9 +12,7 @@
     "  E"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:prismarine_essence"
-    }
+    "E": "mysticalagriculture:prismarine_essence"
   },
   "result": {
     "id": "minecraft:prismarine_crystals",

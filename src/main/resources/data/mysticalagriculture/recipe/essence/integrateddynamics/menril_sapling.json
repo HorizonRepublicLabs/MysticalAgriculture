@@ -20,12 +20,8 @@
     "   "
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:menril_essence"
-    },
-    "F": {
-      "item": "mysticalagriculture:nature_essence"
-    }
+    "E": "mysticalagriculture:menril_essence",
+    "F": "mysticalagriculture:nature_essence"
   },
   "result": {
     "id": "integrateddynamics:menril_sapling",

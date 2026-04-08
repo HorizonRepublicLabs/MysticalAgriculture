@@ -12,9 +12,7 @@
     "   "
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:nature_essence"
-    }
+    "E": "mysticalagriculture:nature_essence"
   },
   "result": {
     "id": "minecraft:wheat",

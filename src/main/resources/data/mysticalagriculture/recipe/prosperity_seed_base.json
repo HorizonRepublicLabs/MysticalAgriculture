@@ -6,12 +6,8 @@
     " # "
   ],
   "key": {
-    "#": {
-      "item": "mysticalagriculture:prosperity_shard"
-    },
-    "X": {
-      "item": "minecraft:wheat_seeds"
-    }
+    "#": "mysticalagriculture:prosperity_shard",
+    "X": "minecraft:wheat_seeds"
   },
   "result": {
     "id": "mysticalagriculture:prosperity_seed_base"

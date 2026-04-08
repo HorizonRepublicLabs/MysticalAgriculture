@@ -16,9 +16,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:steeleaf_essence"
-    }
+    "E": "mysticalagriculture:steeleaf_essence"
   },
   "result": {
     "id": "twilightforest:steeleaf_ingot",

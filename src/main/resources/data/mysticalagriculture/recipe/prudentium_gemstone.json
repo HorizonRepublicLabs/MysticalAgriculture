@@ -1,15 +1,9 @@
 {
   "type": "crafting_shapeless",
   "ingredients": [
-    {
-      "item": "mysticalagriculture:prosperity_gemstone"
-    },
-    {
-      "item": "mysticalagriculture:prudentium_essence"
-    },
-    {
-      "item": "mysticalagriculture:prudentium_essence"
-    }
+    "mysticalagriculture:prosperity_gemstone",
+    "mysticalagriculture:prudentium_essence",
+    "mysticalagriculture:prudentium_essence"
   ],
   "result": {
     "id": "mysticalagriculture:prudentium_gemstone"

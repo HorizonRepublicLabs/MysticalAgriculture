@@ -16,9 +16,7 @@
     "   "
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:certus_quartz_essence"
-    }
+    "E": "mysticalagriculture:certus_quartz_essence"
   },
   "result": {
     "id": "ae2:certus_quartz_dust",

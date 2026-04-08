@@ -7,12 +7,8 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:inferium_essence"
-    },
-    "S": {
-      "item": "minecraft:wheat_seeds"
-    }
+    "E": "mysticalagriculture:inferium_essence",
+    "S": "minecraft:wheat_seeds"
   },
   "result": {
     "id": "mysticalagriculture:inferium_seeds"

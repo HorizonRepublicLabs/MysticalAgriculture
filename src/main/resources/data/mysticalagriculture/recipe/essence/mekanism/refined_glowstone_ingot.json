@@ -16,9 +16,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:refined_glowstone_essence"
-    }
+    "E": "mysticalagriculture:refined_glowstone_essence"
   },
   "result": {
     "id": "mekanism:ingot_refined_glowstone",

@@ -7,7 +7,7 @@
     }
   ],
   "input": {
-    "item": "mysticalagriculture:ghast_essence",
+    "ingredient": "mysticalagriculture:ghast_essence",
     "count": 24
   },
   "entities": [

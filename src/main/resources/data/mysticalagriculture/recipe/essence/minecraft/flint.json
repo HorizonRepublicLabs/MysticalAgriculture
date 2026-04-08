@@ -16,12 +16,8 @@
     "   "
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:stone_essence"
-    },
-    "F": {
-      "item": "mysticalagriculture:fire_essence"
-    }
+    "E": "mysticalagriculture:stone_essence",
+    "F": "mysticalagriculture:fire_essence"
   },
   "result": {
     "id": "minecraft:flint",

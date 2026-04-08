@@ -16,9 +16,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:copper_alloy_essence"
-    }
+    "E": "mysticalagriculture:copper_alloy_essence"
   },
   "result": {
     "id": "enderio:copper_alloy_ingot",

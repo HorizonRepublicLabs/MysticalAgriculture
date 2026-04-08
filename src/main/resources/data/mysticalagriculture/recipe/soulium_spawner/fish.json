@@ -7,7 +7,7 @@
     }
   ],
   "input": {
-    "item": "mysticalagriculture:fish_essence",
+    "ingredient": "mysticalagriculture:fish_essence",
     "count": 12
   },
   "entities": [

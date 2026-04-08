@@ -16,9 +16,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:blizz_essence"
-    }
+    "E": "mysticalagriculture:blizz_essence"
   },
   "result": {
     "id": "thermal:blizz_rod",

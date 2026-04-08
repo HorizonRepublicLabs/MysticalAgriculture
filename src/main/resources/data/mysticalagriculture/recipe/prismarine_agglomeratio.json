@@ -5,12 +5,8 @@
     "SC"
   ],
   "key": {
-    "C": {
-      "item": "minecraft:prismarine_crystals"
-    },
-    "S": {
-      "item": "minecraft:prismarine_shard"
-    }
+    "C": "minecraft:prismarine_crystals",
+    "S": "minecraft:prismarine_shard"
   },
   "result": {
     "id": "mysticalagriculture:prismarine_agglomeratio"

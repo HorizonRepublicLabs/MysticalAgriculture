@@ -12,9 +12,7 @@
     "   "
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:slime_essence"
-    }
+    "E": "mysticalagriculture:slime_essence"
   },
   "result": {
     "id": "minecraft:slime_ball",

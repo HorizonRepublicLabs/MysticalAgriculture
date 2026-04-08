@@ -16,12 +16,8 @@
     " E "
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:stone_essence"
-    },
-    "A": {
-      "item": "mysticalagriculture:fire_essence"
-    }
+    "E": "mysticalagriculture:stone_essence",
+    "A": "mysticalagriculture:fire_essence"
   },
   "result": {
     "id": "minecraft:tuff",

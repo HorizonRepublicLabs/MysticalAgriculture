@@ -6,34 +6,16 @@
       "augment": "mysticalagriculture:pathing_aoe_i"
     }
   ],
-  "input": {
-    "item": "mysticalagriculture:unattuned_augment"
-  },
+  "input": "mysticalagriculture:unattuned_augment",
   "ingredients": [
-    {
-      "item": "minecraft:iron_shovel"
-    },
-    {
-      "item": "mysticalagriculture:inferium_essence"
-    },
-    {
-      "item": "minecraft:iron_shovel"
-    },
-    {
-      "item": "mysticalagriculture:inferium_essence"
-    },
-    {
-      "item": "minecraft:iron_shovel"
-    },
-    {
-      "item": "mysticalagriculture:inferium_essence"
-    },
-    {
-      "item": "minecraft:iron_shovel"
-    },
-    {
-      "item": "mysticalagriculture:inferium_essence"
-    }
+    "minecraft:iron_shovel",
+    "mysticalagriculture:inferium_essence",
+    "minecraft:iron_shovel",
+    "mysticalagriculture:inferium_essence",
+    "minecraft:iron_shovel",
+    "mysticalagriculture:inferium_essence",
+    "minecraft:iron_shovel",
+    "mysticalagriculture:inferium_essence"
   ],
   "result": {
     "id": "mysticalagriculture:pathing_aoe_i_augment"

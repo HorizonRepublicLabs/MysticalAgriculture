@@ -12,9 +12,7 @@
     "   "
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:creeper_essence"
-    }
+    "E": "mysticalagriculture:creeper_essence"
   },
   "result": {
     "id": "minecraft:gunpowder",

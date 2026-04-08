@@ -12,9 +12,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:turtle_essence"
-    }
+    "E": "mysticalagriculture:turtle_essence"
   },
   "result": {
     "id": "minecraft:turtle_scute",

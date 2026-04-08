@@ -10,34 +10,16 @@
       "augment": "mysticalagriculture:pathing_aoe_ii"
     }
   ],
-  "input": {
-    "item": "mysticalagriculture:pathing_aoe_i_augment"
-  },
+  "input": "mysticalagriculture:pathing_aoe_i_augment",
   "ingredients": [
-    {
-      "item": "minecraft:iron_shovel"
-    },
-    {
-      "item": "mysticalagriculture:prudentium_essence"
-    },
-    {
-      "item": "minecraft:iron_shovel"
-    },
-    {
-      "item": "mysticalagriculture:prudentium_essence"
-    },
-    {
-      "item": "minecraft:iron_shovel"
-    },
-    {
-      "item": "mysticalagriculture:prudentium_essence"
-    },
-    {
-      "item": "minecraft:iron_shovel"
-    },
-    {
-      "item": "mysticalagriculture:prudentium_essence"
-    }
+    "minecraft:iron_shovel",
+    "mysticalagriculture:prudentium_essence",
+    "minecraft:iron_shovel",
+    "mysticalagriculture:prudentium_essence",
+    "minecraft:iron_shovel",
+    "mysticalagriculture:prudentium_essence",
+    "minecraft:iron_shovel",
+    "mysticalagriculture:prudentium_essence"
   ],
   "result": {
     "id": "mysticalagriculture:pathing_aoe_ii_augment"

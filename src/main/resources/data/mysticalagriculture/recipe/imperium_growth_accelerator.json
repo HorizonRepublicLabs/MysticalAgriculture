@@ -6,15 +6,9 @@
     "ESE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:imperium_essence"
-    },
-    "S": {
-      "tag": "c:stones"
-    },
-    "D": {
-      "item": "mysticalagriculture:imperium_gemstone"
-    }
+    "E": "mysticalagriculture:imperium_essence",
+    "S": "#c:stones",
+    "D": "mysticalagriculture:imperium_gemstone"
   },
   "result": {
     "id": "mysticalagriculture:imperium_growth_accelerator",

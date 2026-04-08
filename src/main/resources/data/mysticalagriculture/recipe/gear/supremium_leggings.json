@@ -7,15 +7,9 @@
     " G "
   ],
   "key": {
-    "G": {
-      "item": "mysticalagriculture:supremium_gemstone"
-    },
-    "I": {
-      "item": "mysticalagriculture:supremium_ingot"
-    },
-    "S": {
-      "item": "mysticalagriculture:imperium_leggings"
-    }
+    "G": "mysticalagriculture:supremium_gemstone",
+    "I": "mysticalagriculture:supremium_ingot",
+    "S": "mysticalagriculture:imperium_leggings"
   },
   "result": {
     "id": "mysticalagriculture:supremium_leggings"

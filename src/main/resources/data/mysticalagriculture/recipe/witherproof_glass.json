@@ -12,12 +12,8 @@
     " E "
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:wither_skeleton_essence"
-    },
-    "G": {
-      "item": "mysticalagriculture:soul_glass"
-    }
+    "E": "mysticalagriculture:wither_skeleton_essence",
+    "G": "mysticalagriculture:soul_glass"
   },
   "result": {
     "id": "mysticalagriculture:witherproof_glass"

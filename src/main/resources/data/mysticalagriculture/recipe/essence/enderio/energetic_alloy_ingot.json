@@ -16,9 +16,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:energetic_alloy_essence"
-    }
+    "E": "mysticalagriculture:energetic_alloy_essence"
   },
   "result": {
     "id": "enderio:energetic_alloy_ingot",

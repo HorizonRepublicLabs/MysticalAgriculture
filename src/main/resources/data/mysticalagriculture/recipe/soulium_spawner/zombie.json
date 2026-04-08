@@ -7,7 +7,7 @@
     }
   ],
   "input": {
-    "item": "mysticalagriculture:zombie_essence",
+    "ingredient": "mysticalagriculture:zombie_essence",
     "count": 16
   },
   "entities": [

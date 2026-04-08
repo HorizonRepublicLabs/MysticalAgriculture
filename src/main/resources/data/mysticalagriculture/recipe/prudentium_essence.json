@@ -6,12 +6,8 @@
     " # "
   ],
   "key": {
-    "#": {
-      "item": "mysticalagriculture:inferium_essence"
-    },
-    "X": {
-      "tag": "mysticalagriculture:infusion_crystals"
-    }
+    "#": "mysticalagriculture:inferium_essence",
+    "X": "#mysticalagriculture:infusion_crystals"
   },
   "result": {
     "id": "mysticalagriculture:prudentium_essence"

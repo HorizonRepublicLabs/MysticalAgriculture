@@ -16,12 +16,8 @@
     "   "
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:nature_essence"
-    },
-    "W": {
-      "item": "mysticalagriculture:water_essence"
-    }
+    "E": "mysticalagriculture:nature_essence",
+    "W": "mysticalagriculture:water_essence"
   },
   "result": {
     "id": "minecraft:kelp",

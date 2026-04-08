@@ -16,9 +16,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:flux_infused_gem_essence"
-    }
+    "E": "mysticalagriculture:flux_infused_gem_essence"
   },
   "result": {
     "id": "redstone_arsenal:flux_gem",

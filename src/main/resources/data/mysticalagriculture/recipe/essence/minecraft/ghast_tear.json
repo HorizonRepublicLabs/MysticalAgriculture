@@ -12,9 +12,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:ghast_essence"
-    }
+    "E": "mysticalagriculture:ghast_essence"
   },
   "result": {
     "id": "minecraft:ghast_tear",

@@ -10,34 +10,16 @@
       "augment": "mysticalagriculture:strength_iii"
     }
   ],
-  "input": {
-    "item": "mysticalagriculture:strength_ii_augment"
-  },
+  "input": "mysticalagriculture:strength_ii_augment",
   "ingredients": [
-    {
-      "item": "minecraft:quartz_block"
-    },
-    {
-      "item": "mysticalagriculture:supremium_essence"
-    },
-    {
-      "item": "minecraft:diamond_sword"
-    },
-    {
-      "item": "mysticalagriculture:supremium_essence"
-    },
-    {
-      "item": "minecraft:quartz_block"
-    },
-    {
-      "item": "mysticalagriculture:supremium_essence"
-    },
-    {
-      "item": "minecraft:diamond_sword"
-    },
-    {
-      "item": "mysticalagriculture:supremium_essence"
-    }
+    "minecraft:quartz_block",
+    "mysticalagriculture:supremium_essence",
+    "minecraft:diamond_sword",
+    "mysticalagriculture:supremium_essence",
+    "minecraft:quartz_block",
+    "mysticalagriculture:supremium_essence",
+    "minecraft:diamond_sword",
+    "mysticalagriculture:supremium_essence"
   ],
   "result": {
     "id": "mysticalagriculture:strength_iii_augment"

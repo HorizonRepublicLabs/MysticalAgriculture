@@ -12,9 +12,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:blaze_essence"
-    }
+    "E": "mysticalagriculture:blaze_essence"
   },
   "result": {
     "id": "minecraft:blaze_rod",

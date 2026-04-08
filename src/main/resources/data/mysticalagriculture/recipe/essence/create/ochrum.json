@@ -20,12 +20,8 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:stone_essence"
-    },
-    "F": {
-      "item": "mysticalagriculture:gold_essence"
-    }
+    "E": "mysticalagriculture:stone_essence",
+    "F": "mysticalagriculture:gold_essence"
   },
   "result": {
     "id": "create:ochrum",

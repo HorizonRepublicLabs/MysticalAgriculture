@@ -4,6 +4,13 @@
     {
       "type": "mysticalagriculture:crop_enabled",
       "crop": "mysticalagriculture:rubber"
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:rubbers"
+      }
     }
   ],
   "pattern": [
@@ -12,9 +19,7 @@
     "   "
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:rubber_essence"
-    }
+    "E": "mysticalagriculture:rubber_essence"
   },
   "result": {
     "tag": "c:rubbers",

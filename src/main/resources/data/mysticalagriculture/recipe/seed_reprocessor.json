@@ -6,18 +6,10 @@
     "ISI"
   ],
   "key": {
-    "I": {
-      "tag": "c:ingots/iron"
-    },
-    "S": {
-      "item": "mysticalagriculture:soulium_ingot"
-    },
-    "H": {
-      "item": "minecraft:iron_hoe"
-    },
-    "B": {
-      "item": "mysticalagriculture:machine_frame"
-    }
+    "I": "#c:ingots/iron",
+    "S": "mysticalagriculture:soulium_ingot",
+    "H": "minecraft:iron_hoe",
+    "B": "mysticalagriculture:machine_frame"
   },
   "result": {
     "id": "mysticalagriculture:seed_reprocessor"

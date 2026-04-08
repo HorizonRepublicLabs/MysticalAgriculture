@@ -16,12 +16,8 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:nether_essence"
-    },
-    "F": {
-      "item": "mysticalagriculture:ice_essence"
-    }
+    "E": "mysticalagriculture:nether_essence",
+    "F": "mysticalagriculture:ice_essence"
   },
   "result": {
     "id": "minecraft:basalt",

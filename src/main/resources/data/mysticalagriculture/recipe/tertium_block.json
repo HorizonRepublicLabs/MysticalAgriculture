@@ -6,9 +6,7 @@
     "###"
   ],
   "key": {
-    "#": {
-      "item": "mysticalagriculture:tertium_essence"
-    }
+    "#": "mysticalagriculture:tertium_essence"
   },
   "result": {
     "id": "mysticalagriculture:tertium_block"

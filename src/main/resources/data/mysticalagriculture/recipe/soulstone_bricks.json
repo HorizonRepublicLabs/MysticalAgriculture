@@ -5,9 +5,7 @@
     "##"
   ],
   "key": {
-    "#": {
-      "item": "mysticalagriculture:soulstone"
-    }
+    "#": "mysticalagriculture:soulstone"
   },
   "result": {
     "id": "mysticalagriculture:soulstone_bricks",

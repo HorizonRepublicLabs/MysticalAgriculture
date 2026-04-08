@@ -10,34 +10,16 @@
       "augment": "mysticalagriculture:jump_boost_ii"
     }
   ],
-  "input": {
-    "item": "mysticalagriculture:jump_boost_i_augment"
-  },
+  "input": "mysticalagriculture:jump_boost_i_augment",
   "ingredients": [
-    {
-      "item": "minecraft:rabbit_foot"
-    },
-    {
-      "item": "mysticalagriculture:tertium_essence"
-    },
-    {
-      "item": "minecraft:rabbit_foot"
-    },
-    {
-      "item": "mysticalagriculture:tertium_essence"
-    },
-    {
-      "item": "minecraft:rabbit_foot"
-    },
-    {
-      "item": "mysticalagriculture:tertium_essence"
-    },
-    {
-      "item": "minecraft:rabbit_foot"
-    },
-    {
-      "item": "mysticalagriculture:tertium_essence"
-    }
+    "minecraft:rabbit_foot",
+    "mysticalagriculture:tertium_essence",
+    "minecraft:rabbit_foot",
+    "mysticalagriculture:tertium_essence",
+    "minecraft:rabbit_foot",
+    "mysticalagriculture:tertium_essence",
+    "minecraft:rabbit_foot",
+    "mysticalagriculture:tertium_essence"
   ],
   "result": {
     "id": "mysticalagriculture:jump_boost_ii_augment"

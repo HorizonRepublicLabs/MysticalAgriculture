@@ -6,15 +6,9 @@
     "IRI"
   ],
   "key": {
-    "I": {
-      "tag": "c:ingots/iron"
-    },
-    "R": {
-      "tag": "c:dusts/redstone"
-    },
-    "S": {
-      "tag": "c:stones"
-    }
+    "I": "#c:ingots/iron",
+    "R": "#c:dusts/redstone",
+    "S": "#c:stones"
   },
   "result": {
     "id": "mysticalagriculture:machine_frame"

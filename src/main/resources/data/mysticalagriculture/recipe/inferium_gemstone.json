@@ -1,15 +1,9 @@
 {
   "type": "crafting_shapeless",
   "ingredients": [
-    {
-      "item": "mysticalagriculture:prosperity_gemstone"
-    },
-    {
-      "item": "mysticalagriculture:inferium_essence"
-    },
-    {
-      "item": "mysticalagriculture:inferium_essence"
-    }
+    "mysticalagriculture:prosperity_gemstone",
+    "mysticalagriculture:inferium_essence",
+    "mysticalagriculture:inferium_essence"
   ],
   "result": {
     "id": "mysticalagriculture:inferium_gemstone"

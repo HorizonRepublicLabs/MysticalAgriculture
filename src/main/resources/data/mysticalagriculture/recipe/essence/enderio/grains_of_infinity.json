@@ -16,9 +16,7 @@
     "   "
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:grains_of_infinity_essence"
-    }
+    "E": "mysticalagriculture:grains_of_infinity_essence"
   },
   "result": {
     "id": "enderio:grains_of_infinity",

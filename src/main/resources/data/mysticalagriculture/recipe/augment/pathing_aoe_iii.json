@@ -10,34 +10,16 @@
       "augment": "mysticalagriculture:pathing_aoe_iii"
     }
   ],
-  "input": {
-    "item": "mysticalagriculture:pathing_aoe_ii_augment"
-  },
+  "input": "mysticalagriculture:pathing_aoe_ii_augment",
   "ingredients": [
-    {
-      "item": "minecraft:diamond_shovel"
-    },
-    {
-      "item": "mysticalagriculture:tertium_essence"
-    },
-    {
-      "item": "minecraft:diamond_shovel"
-    },
-    {
-      "item": "mysticalagriculture:tertium_essence"
-    },
-    {
-      "item": "minecraft:diamond_shovel"
-    },
-    {
-      "item": "mysticalagriculture:tertium_essence"
-    },
-    {
-      "item": "minecraft:diamond_shovel"
-    },
-    {
-      "item": "mysticalagriculture:tertium_essence"
-    }
+    "minecraft:diamond_shovel",
+    "mysticalagriculture:tertium_essence",
+    "minecraft:diamond_shovel",
+    "mysticalagriculture:tertium_essence",
+    "minecraft:diamond_shovel",
+    "mysticalagriculture:tertium_essence",
+    "minecraft:diamond_shovel",
+    "mysticalagriculture:tertium_essence"
   ],
   "result": {
     "id": "mysticalagriculture:pathing_aoe_iii_augment"

@@ -12,9 +12,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:sheep_essence"
-    }
+    "E": "mysticalagriculture:sheep_essence"
   },
   "result": {
     "id": "minecraft:white_wool",

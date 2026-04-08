@@ -16,12 +16,8 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:dirt_essence"
-    },
-    "F": {
-      "item": "mysticalagriculture:nature_essence"
-    }
+    "E": "mysticalagriculture:dirt_essence",
+    "F": "mysticalagriculture:nature_essence"
   },
   "result": {
     "id": "minecraft:grass_block",

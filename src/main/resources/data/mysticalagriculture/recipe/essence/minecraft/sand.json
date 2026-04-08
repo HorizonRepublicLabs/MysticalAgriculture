@@ -16,12 +16,8 @@
     "   "
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:fire_essence"
-    },
-    "F": {
-      "item": "mysticalagriculture:dirt_essence"
-    }
+    "E": "mysticalagriculture:fire_essence",
+    "F": "mysticalagriculture:dirt_essence"
   },
   "result": {
     "id": "minecraft:sand",

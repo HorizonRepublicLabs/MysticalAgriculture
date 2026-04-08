@@ -12,9 +12,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:coal_essence"
-    }
+    "E": "mysticalagriculture:coal_essence"
   },
   "result": {
     "id": "minecraft:coal",

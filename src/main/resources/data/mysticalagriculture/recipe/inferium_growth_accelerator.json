@@ -6,15 +6,9 @@
     "ESE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:inferium_essence"
-    },
-    "S": {
-      "tag": "c:stones"
-    },
-    "D": {
-      "item": "mysticalagriculture:inferium_gemstone"
-    }
+    "E": "mysticalagriculture:inferium_essence",
+    "S": "#c:stones",
+    "D": "mysticalagriculture:inferium_gemstone"
   },
   "result": {
     "id": "mysticalagriculture:inferium_growth_accelerator",

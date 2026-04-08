@@ -12,12 +12,8 @@
     " E "
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:coral_essence"
-    },
-    "D": {
-      "tag": "c:dyes/pink"
-    }
+    "E": "mysticalagriculture:coral_essence",
+    "D": "#c:dyes/pink"
   },
   "result": {
     "id": "minecraft:brain_coral",

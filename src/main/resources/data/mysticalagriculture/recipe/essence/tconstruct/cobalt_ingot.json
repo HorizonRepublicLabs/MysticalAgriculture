@@ -16,9 +16,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:cobalt_essence"
-    }
+    "E": "mysticalagriculture:cobalt_essence"
   },
   "result": {
     "id": "tconstruct:cobalt_ingot",

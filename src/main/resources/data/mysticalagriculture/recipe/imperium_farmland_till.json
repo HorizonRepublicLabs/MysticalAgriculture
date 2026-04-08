@@ -2,15 +2,9 @@
   "type": "mysticalagriculture:farmland_till",
   "group": "mysticalagriculture:farmland_till",
   "ingredients": [
-    {
-      "type": "mysticalagriculture:all_hoes"
-    },
-    {
-      "item": "mysticalagriculture:imperium_essence"
-    },
-    {
-      "item": "minecraft:dirt"
-    }
+    "#minecraft:hoes",
+    "mysticalagriculture:imperium_essence",
+    "minecraft:dirt"
   ],
   "result": {
     "id": "mysticalagriculture:imperium_farmland",

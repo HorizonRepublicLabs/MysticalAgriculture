@@ -6,9 +6,7 @@
     "###"
   ],
   "key": {
-    "#": {
-      "item": "mysticalagriculture:soulium_gemstone"
-    }
+    "#": "mysticalagriculture:soulium_gemstone"
   },
   "result": {
     "id": "mysticalagriculture:soulium_gemstone_block"

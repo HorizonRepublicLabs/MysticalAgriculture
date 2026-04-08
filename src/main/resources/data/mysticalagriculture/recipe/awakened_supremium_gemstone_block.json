@@ -6,9 +6,7 @@
     "###"
   ],
   "key": {
-    "#": {
-      "item": "mysticalagriculture:awakened_supremium_gemstone"
-    }
+    "#": "mysticalagriculture:awakened_supremium_gemstone"
   },
   "result": {
     "id": "mysticalagriculture:awakened_supremium_gemstone_block"

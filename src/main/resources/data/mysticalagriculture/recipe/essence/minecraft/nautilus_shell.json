@@ -16,12 +16,8 @@
     "EFE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:prismarine_essence"
-    },
-    "F": {
-      "item": "mysticalagriculture:fish_essence"
-    }
+    "E": "mysticalagriculture:prismarine_essence",
+    "F": "mysticalagriculture:fish_essence"
   },
   "result": {
     "id": "minecraft:nautilus_shell"

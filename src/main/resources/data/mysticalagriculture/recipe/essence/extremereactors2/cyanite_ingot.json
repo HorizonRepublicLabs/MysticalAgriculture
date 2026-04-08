@@ -16,9 +16,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:cyanite_essence"
-    }
+    "E": "mysticalagriculture:cyanite_essence"
   },
   "result": {
     "id": "bigreactors:cyanite_ingot",

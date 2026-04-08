@@ -16,9 +16,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:limestone_essence"
-    }
+    "E": "mysticalagriculture:limestone_essence"
   },
   "result": {
     "id": "create:limestone",

@@ -6,9 +6,7 @@
       "modid": "thermal"
     }
   ],
-  "input": {
-    "item": "thermal:blitz_rod"
-  },
+  "input": "thermal:blitz_rod",
   "result": {
     "type": "mysticalagriculture:blitz",
     "souls": 0.5

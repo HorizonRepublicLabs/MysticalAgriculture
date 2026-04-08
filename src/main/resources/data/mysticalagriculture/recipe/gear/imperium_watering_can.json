@@ -7,18 +7,10 @@
     "FGF"
   ],
   "key": {
-    "G": {
-      "item": "mysticalagriculture:imperium_ingot"
-    },
-    "I": {
-      "item": "mysticalagriculture:imperium_ingot"
-    },
-    "S": {
-      "item": "mysticalagriculture:tertium_watering_can"
-    },
-    "F": {
-      "item": "mysticalagriculture:mystical_fertilizer"
-    }
+    "G": "mysticalagriculture:imperium_ingot",
+    "I": "mysticalagriculture:imperium_ingot",
+    "S": "mysticalagriculture:tertium_watering_can",
+    "F": "mysticalagriculture:mystical_fertilizer"
   },
   "result": {
     "id": "mysticalagriculture:imperium_watering_can"

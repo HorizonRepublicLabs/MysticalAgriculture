@@ -12,9 +12,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:experience_essence"
-    }
+    "E": "mysticalagriculture:experience_essence"
   },
   "result": {
     "id": "mysticalagriculture:experience_droplet",

@@ -16,18 +16,10 @@
     "   "
   ],
   "key": {
-    "R": {
-      "item": "mysticalagriculture:blank_record"
-    },
-    "C": {
-      "item": "mysticalagriculture:creeper_essence"
-    },
-    "S": {
-      "item": "mysticalagriculture:skeleton_essence"
-    },
-    "D": {
-      "tag": "c:dyes/lime"
-    }
+    "R": "mysticalagriculture:blank_record",
+    "C": "mysticalagriculture:creeper_essence",
+    "S": "mysticalagriculture:skeleton_essence",
+    "D": "#c:dyes/lime"
   },
   "result": {
     "id": "minecraft:music_disc_cat"

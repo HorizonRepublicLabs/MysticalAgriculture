@@ -12,9 +12,7 @@
     "   "
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:skeleton_essence"
-    }
+    "E": "mysticalagriculture:skeleton_essence"
   },
   "result": {
     "id": "minecraft:arrow",

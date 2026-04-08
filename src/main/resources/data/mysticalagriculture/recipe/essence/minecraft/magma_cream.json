@@ -16,12 +16,8 @@
     " E "
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:slime_essence"
-    },
-    "B": {
-      "item": "mysticalagriculture:blaze_essence"
-    }
+    "E": "mysticalagriculture:slime_essence",
+    "B": "mysticalagriculture:blaze_essence"
   },
   "result": {
     "id": "minecraft:magma_cream",

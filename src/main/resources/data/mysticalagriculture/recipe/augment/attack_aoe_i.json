@@ -6,34 +6,16 @@
       "augment": "mysticalagriculture:attack_aoe_i"
     }
   ],
-  "input": {
-    "item": "mysticalagriculture:unattuned_augment"
-  },
+  "input": "mysticalagriculture:unattuned_augment",
   "ingredients": [
-    {
-      "item": "minecraft:iron_sword"
-    },
-    {
-      "item": "mysticalagriculture:tertium_essence"
-    },
-    {
-      "item": "minecraft:iron_sword"
-    },
-    {
-      "item": "mysticalagriculture:tertium_essence"
-    },
-    {
-      "item": "minecraft:iron_sword"
-    },
-    {
-      "item": "mysticalagriculture:tertium_essence"
-    },
-    {
-      "item": "minecraft:iron_sword"
-    },
-    {
-      "item": "mysticalagriculture:tertium_essence"
-    }
+    "minecraft:iron_sword",
+    "mysticalagriculture:tertium_essence",
+    "minecraft:iron_sword",
+    "mysticalagriculture:tertium_essence",
+    "minecraft:iron_sword",
+    "mysticalagriculture:tertium_essence",
+    "minecraft:iron_sword",
+    "mysticalagriculture:tertium_essence"
   ],
   "result": {
     "id": "mysticalagriculture:attack_aoe_i_augment"

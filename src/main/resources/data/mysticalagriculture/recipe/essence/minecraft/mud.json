@@ -16,12 +16,8 @@
     " E "
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:dirt_essence"
-    },
-    "W": {
-      "item": "mysticalagriculture:water_essence"
-    }
+    "E": "mysticalagriculture:dirt_essence",
+    "W": "mysticalagriculture:water_essence"
   },
   "result": {
     "id": "minecraft:mud",

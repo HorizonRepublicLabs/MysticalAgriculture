@@ -6,34 +6,16 @@
       "augment": "mysticalagriculture:tilling_aoe_i"
     }
   ],
-  "input": {
-    "item": "mysticalagriculture:unattuned_augment"
-  },
+  "input": "mysticalagriculture:unattuned_augment",
   "ingredients": [
-    {
-      "item": "minecraft:iron_hoe"
-    },
-    {
-      "item": "mysticalagriculture:prudentium_essence"
-    },
-    {
-      "item": "minecraft:iron_hoe"
-    },
-    {
-      "item": "mysticalagriculture:prudentium_essence"
-    },
-    {
-      "item": "minecraft:iron_hoe"
-    },
-    {
-      "item": "mysticalagriculture:prudentium_essence"
-    },
-    {
-      "item": "minecraft:iron_hoe"
-    },
-    {
-      "item": "mysticalagriculture:prudentium_essence"
-    }
+    "minecraft:iron_hoe",
+    "mysticalagriculture:prudentium_essence",
+    "minecraft:iron_hoe",
+    "mysticalagriculture:prudentium_essence",
+    "minecraft:iron_hoe",
+    "mysticalagriculture:prudentium_essence",
+    "minecraft:iron_hoe",
+    "mysticalagriculture:prudentium_essence"
   ],
   "result": {
     "id": "mysticalagriculture:tilling_aoe_i_augment"

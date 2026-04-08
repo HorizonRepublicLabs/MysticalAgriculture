@@ -16,12 +16,8 @@
     "E  "
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:wood_essence"
-    },
-    "F": {
-      "item": "mysticalagriculture:nature_essence"
-    }
+    "E": "mysticalagriculture:wood_essence",
+    "F": "mysticalagriculture:nature_essence"
   },
   "result": {
     "id": "minecraft:cherry_sapling",

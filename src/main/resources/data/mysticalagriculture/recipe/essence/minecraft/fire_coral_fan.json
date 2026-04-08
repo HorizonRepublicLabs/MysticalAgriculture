@@ -12,12 +12,8 @@
     "E E"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:coral_essence"
-    },
-    "D": {
-      "tag": "c:dyes/red"
-    }
+    "E": "mysticalagriculture:coral_essence",
+    "D": "#c:dyes/red"
   },
   "result": {
     "id": "minecraft:fire_coral_fan",

@@ -1,8 +1,6 @@
 {
   "type": "mysticalagriculture:soul_extraction",
-  "input": {
-    "item": "minecraft:breeze_rod"
-  },
+  "input": "minecraft:breeze_rod",
   "result": {
     "type": "mysticalagriculture:breeze",
     "souls": 0.5

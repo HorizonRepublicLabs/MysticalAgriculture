@@ -12,9 +12,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:phantom_essence"
-    }
+    "E": "mysticalagriculture:phantom_essence"
   },
   "result": {
     "id": "minecraft:phantom_membrane",

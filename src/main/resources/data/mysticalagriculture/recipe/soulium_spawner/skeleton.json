@@ -7,7 +7,7 @@
     }
   ],
   "input": {
-    "item": "mysticalagriculture:skeleton_essence",
+    "ingredient": "mysticalagriculture:skeleton_essence",
     "count": 16
   },
   "entities": [

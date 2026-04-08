@@ -16,12 +16,8 @@
     " E "
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:stone_essence"
-    },
-    "A": {
-      "item": "mysticalagriculture:water_essence"
-    }
+    "E": "mysticalagriculture:stone_essence",
+    "A": "mysticalagriculture:water_essence"
   },
   "result": {
     "id": "minecraft:dripstone_block",

@@ -16,9 +16,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:yellorium_essence"
-    }
+    "E": "mysticalagriculture:yellorium_essence"
   },
   "result": {
     "id": "bigreactors:yellorium_ingot",

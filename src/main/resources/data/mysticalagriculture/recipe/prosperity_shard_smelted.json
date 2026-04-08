@@ -1,8 +1,6 @@
 {
   "type": "smelting",
-  "ingredient": {
-    "tag": "c:ores/prosperity"
-  },
+  "ingredient": "#c:ores/prosperity",
   "result": {
     "id": "mysticalagriculture:prosperity_shard"
   },

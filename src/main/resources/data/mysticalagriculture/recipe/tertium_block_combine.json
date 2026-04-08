@@ -6,12 +6,8 @@
     " # "
   ],
   "key": {
-    "#": {
-      "item": "mysticalagriculture:prudentium_block"
-    },
-    "X": {
-      "item": "mysticalagriculture:master_infusion_crystal"
-    }
+    "#": "mysticalagriculture:prudentium_block",
+    "X": "mysticalagriculture:master_infusion_crystal"
   },
   "result": {
     "id": "mysticalagriculture:tertium_block"

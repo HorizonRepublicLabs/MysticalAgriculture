@@ -12,9 +12,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:netherite_essence"
-    }
+    "E": "mysticalagriculture:netherite_essence"
   },
   "result": {
     "id": "minecraft:netherite_ingot",

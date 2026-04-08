@@ -1,8 +1,6 @@
 {
   "type": "minecraft:stonecutting",
-  "ingredient": {
-    "item": "mysticalagriculture:soulstone"
-  },
+  "ingredient": "mysticalagriculture:soulstone",
   "result": {
     "id": "mysticalagriculture:soulstone_bricks"
   }

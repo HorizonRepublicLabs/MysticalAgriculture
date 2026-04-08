@@ -7,7 +7,7 @@
     }
   ],
   "input": {
-    "item": "mysticalagriculture:phantom_essence",
+    "ingredient": "mysticalagriculture:phantom_essence",
     "count": 12
   },
   "entities": [

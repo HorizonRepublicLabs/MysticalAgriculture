@@ -6,18 +6,10 @@
     "ISI"
   ],
   "key": {
-    "I": {
-      "tag": "c:ingots/iron"
-    },
-    "S": {
-      "item": "mysticalagriculture:soulium_ingot"
-    },
-    "W": {
-      "item": "minecraft:wither_skeleton_skull"
-    },
-    "B": {
-      "item": "mysticalagriculture:machine_frame"
-    }
+    "I": "#c:ingots/iron",
+    "S": "mysticalagriculture:soulium_ingot",
+    "W": "minecraft:wither_skeleton_skull",
+    "B": "mysticalagriculture:machine_frame"
   },
   "result": {
     "id": "mysticalagriculture:soulium_spawner"

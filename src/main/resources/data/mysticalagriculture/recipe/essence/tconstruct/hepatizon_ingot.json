@@ -16,9 +16,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:hepatizon_essence"
-    }
+    "E": "mysticalagriculture:hepatizon_essence"
   },
   "result": {
     "id": "tconstruct:hepatizon_ingot",

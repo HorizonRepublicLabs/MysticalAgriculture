@@ -6,9 +6,7 @@
     "###"
   ],
   "key": {
-    "#": {
-      "item": "mysticalagriculture:supremium_ingot"
-    }
+    "#": "mysticalagriculture:supremium_ingot"
   },
   "result": {
     "id": "mysticalagriculture:supremium_ingot_block"

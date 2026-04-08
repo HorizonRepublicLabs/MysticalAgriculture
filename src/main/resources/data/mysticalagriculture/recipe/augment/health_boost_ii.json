@@ -10,34 +10,16 @@
       "augment": "mysticalagriculture:health_boost_ii"
     }
   ],
-  "input": {
-    "item": "mysticalagriculture:health_boost_i_augment"
-  },
+  "input": "mysticalagriculture:health_boost_i_augment",
   "ingredients": [
-    {
-      "item": "minecraft:golden_apple"
-    },
-    {
-      "item": "mysticalagriculture:prudentium_essence"
-    },
-    {
-      "item": "minecraft:wither_skeleton_skull"
-    },
-    {
-      "item": "mysticalagriculture:prudentium_essence"
-    },
-    {
-      "item": "minecraft:golden_apple"
-    },
-    {
-      "item": "mysticalagriculture:prudentium_essence"
-    },
-    {
-      "item": "minecraft:wither_skeleton_skull"
-    },
-    {
-      "item": "mysticalagriculture:prudentium_essence"
-    }
+    "minecraft:golden_apple",
+    "mysticalagriculture:prudentium_essence",
+    "minecraft:wither_skeleton_skull",
+    "mysticalagriculture:prudentium_essence",
+    "minecraft:golden_apple",
+    "mysticalagriculture:prudentium_essence",
+    "minecraft:wither_skeleton_skull",
+    "mysticalagriculture:prudentium_essence"
   ],
   "result": {
     "id": "mysticalagriculture:health_boost_ii_augment"

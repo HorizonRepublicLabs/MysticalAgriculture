@@ -6,15 +6,9 @@
     "ESE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:tertium_essence"
-    },
-    "S": {
-      "tag": "c:stones"
-    },
-    "D": {
-      "item": "mysticalagriculture:tertium_gemstone"
-    }
+    "E": "mysticalagriculture:tertium_essence",
+    "S": "#c:stones",
+    "D": "mysticalagriculture:tertium_gemstone"
   },
   "result": {
     "id": "mysticalagriculture:tertium_growth_accelerator",

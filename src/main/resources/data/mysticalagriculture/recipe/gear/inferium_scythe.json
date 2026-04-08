@@ -7,15 +7,9 @@
     " G "
   ],
   "key": {
-    "G": {
-      "item": "mysticalagriculture:inferium_gemstone"
-    },
-    "I": {
-      "item": "mysticalagriculture:inferium_ingot"
-    },
-    "S": {
-      "tag": "mysticalagriculture:diamond_scythes"
-    }
+    "G": "mysticalagriculture:inferium_gemstone",
+    "I": "mysticalagriculture:inferium_ingot",
+    "S": "#mysticalagriculture:diamond_scythes"
   },
   "result": {
     "id": "mysticalagriculture:inferium_scythe"

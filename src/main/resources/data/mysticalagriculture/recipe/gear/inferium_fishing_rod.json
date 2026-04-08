@@ -7,15 +7,9 @@
     " G "
   ],
   "key": {
-    "G": {
-      "item": "mysticalagriculture:inferium_gemstone"
-    },
-    "I": {
-      "item": "mysticalagriculture:inferium_ingot"
-    },
-    "S": {
-      "item": "minecraft:fishing_rod"
-    }
+    "G": "mysticalagriculture:inferium_gemstone",
+    "I": "mysticalagriculture:inferium_ingot",
+    "S": "minecraft:fishing_rod"
   },
   "result": {
     "id": "mysticalagriculture:inferium_fishing_rod"

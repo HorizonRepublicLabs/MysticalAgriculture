@@ -6,34 +6,16 @@
       "augment": "mysticalagriculture:jump_boost_i"
     }
   ],
-  "input": {
-    "item": "mysticalagriculture:unattuned_augment"
-  },
+  "input": "mysticalagriculture:unattuned_augment",
   "ingredients": [
-    {
-      "item": "minecraft:rabbit_foot"
-    },
-    {
-      "item": "mysticalagriculture:prudentium_essence"
-    },
-    {
-      "item": "minecraft:rabbit_foot"
-    },
-    {
-      "item": "mysticalagriculture:prudentium_essence"
-    },
-    {
-      "item": "minecraft:rabbit_foot"
-    },
-    {
-      "item": "mysticalagriculture:prudentium_essence"
-    },
-    {
-      "item": "minecraft:rabbit_foot"
-    },
-    {
-      "item": "mysticalagriculture:prudentium_essence"
-    }
+    "minecraft:rabbit_foot",
+    "mysticalagriculture:prudentium_essence",
+    "minecraft:rabbit_foot",
+    "mysticalagriculture:prudentium_essence",
+    "minecraft:rabbit_foot",
+    "mysticalagriculture:prudentium_essence",
+    "minecraft:rabbit_foot",
+    "mysticalagriculture:prudentium_essence"
   ],
   "result": {
     "id": "mysticalagriculture:jump_boost_i_augment"

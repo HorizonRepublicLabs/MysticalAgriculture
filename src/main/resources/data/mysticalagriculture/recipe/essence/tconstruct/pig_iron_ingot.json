@@ -16,9 +16,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:pig_iron_essence"
-    }
+    "E": "mysticalagriculture:pig_iron_essence"
   },
   "result": {
     "id": "tconstruct:pig_iron_ingot",

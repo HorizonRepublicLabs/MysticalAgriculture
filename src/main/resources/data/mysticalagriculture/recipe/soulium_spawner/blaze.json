@@ -7,7 +7,7 @@
     }
   ],
   "input": {
-    "item": "mysticalagriculture:blaze_essence",
+    "ingredient": "mysticalagriculture:blaze_essence",
     "count": 24
   },
   "entities": [

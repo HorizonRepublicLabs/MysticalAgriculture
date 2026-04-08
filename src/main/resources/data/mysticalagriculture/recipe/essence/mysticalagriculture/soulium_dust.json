@@ -12,9 +12,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:soulium_essence"
-    }
+    "E": "mysticalagriculture:soulium_essence"
   },
   "result": {
     "id": "mysticalagriculture:soulium_dust",

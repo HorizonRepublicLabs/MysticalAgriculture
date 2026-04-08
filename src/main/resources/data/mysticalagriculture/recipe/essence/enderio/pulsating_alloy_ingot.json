@@ -16,9 +16,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:pulsating_alloy_essence"
-    }
+    "E": "mysticalagriculture:pulsating_alloy_essence"
   },
   "result": {
     "id": "enderio:pulsating_alloy_ingot",

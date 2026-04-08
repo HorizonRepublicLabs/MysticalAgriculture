@@ -16,9 +16,7 @@
     "EEE"
   ],
   "key": {
-    "E": {
-      "item": "mysticalagriculture:spirited_crystal_essence"
-    }
+    "E": "mysticalagriculture:spirited_crystal_essence"
   },
   "result": {
     "id": "powah:crystal_spirited",

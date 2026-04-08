@@ -1,8 +1,6 @@
 {
   "type": "mysticalagriculture:soul_extraction",
-  "input": {
-    "item": "minecraft:arrow"
-  },
+  "input": "minecraft:arrow",
   "result": {
     "type": "mysticalagriculture:skeleton",
     "souls": 0.1

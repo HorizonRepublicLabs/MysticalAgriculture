@@ -6,18 +6,10 @@
     "ISI"
   ],
   "key": {
-    "I": {
-      "tag": "c:ingots/iron"
-    },
-    "S": {
-      "item": "mysticalagriculture:prosperity_ingot"
-    },
-    "H": {
-      "item": "minecraft:furnace"
-    },
-    "B": {
-      "item": "mysticalagriculture:machine_frame"
-    }
+    "I": "#c:ingots/iron",
+    "S": "mysticalagriculture:prosperity_ingot",
+    "H": "minecraft:furnace",
+    "B": "mysticalagriculture:machine_frame"
   },
   "result": {
     "id": "mysticalagriculture:furnace"

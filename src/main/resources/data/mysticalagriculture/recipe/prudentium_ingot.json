@@ -1,15 +1,9 @@
 {
   "type": "crafting_shapeless",
   "ingredients": [
-    {
-      "item": "mysticalagriculture:prosperity_ingot"
-    },
-    {
-      "item": "mysticalagriculture:prudentium_essence"
-    },
-    {
-      "item": "mysticalagriculture:prudentium_essence"
-    }
+    "mysticalagriculture:prosperity_ingot",
+    "mysticalagriculture:prudentium_essence",
+    "mysticalagriculture:prudentium_essence"
   ],
   "result": {
     "id": "mysticalagriculture:prudentium_ingot"

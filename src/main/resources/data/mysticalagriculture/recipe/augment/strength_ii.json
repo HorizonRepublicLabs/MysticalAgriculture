@@ -10,34 +10,16 @@
       "augment": "mysticalagriculture:strength_ii"
     }
   ],
-  "input": {
-    "item": "mysticalagriculture:strength_i_augment"
-  },
+  "input": "mysticalagriculture:strength_i_augment",
   "ingredients": [
-    {
-      "item": "minecraft:quartz_block"
-    },
-    {
-      "item": "mysticalagriculture:imperium_essence"
-    },
-    {
-      "item": "minecraft:iron_sword"
-    },
-    {
-      "item": "mysticalagriculture:imperium_essence"
-    },
-    {
-      "item": "minecraft:quartz_block"
-    },
-    {
-      "item": "mysticalagriculture:imperium_essence"
-    },
-    {
-      "item": "minecraft:iron_sword"
-    },
-    {
-      "item": "mysticalagriculture:imperium_essence"
-    }
+    "minecraft:quartz_block",
+    "mysticalagriculture:imperium_essence",
+    "minecraft:iron_sword",
+    "mysticalagriculture:imperium_essence",
+    "minecraft:quartz_block",
+    "mysticalagriculture:imperium_essence",
+    "minecraft:iron_sword",
+    "mysticalagriculture:imperium_essence"
   ],
   "result": {
     "id": "mysticalagriculture:strength_ii_augment"
