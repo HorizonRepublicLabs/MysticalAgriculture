@@ -4,6 +4,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.ARGB;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 
@@ -41,7 +42,7 @@ public class CropTier {
     public CropTier(Identifier id, int value, int color, ChatFormatting textColor) {
         this.id = id;
         this.value = value;
-        this.color = color;
+        this.color = ARGB.color(255, color);
         this.textColor = textColor;
         this.fertilizable = true;
         this.secondarySeedDrop = true;
