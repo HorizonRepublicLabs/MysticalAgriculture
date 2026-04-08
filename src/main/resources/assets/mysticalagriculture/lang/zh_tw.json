@@ -195,7 +195,6 @@
   "tooltip.mysticalagriculture.machine_fuel_capacity": "燃料容量: %s",
   "tooltip.mysticalagriculture.tool_area": "範圍: %s",
   "tooltip.mysticalagriculture.experience_capsule": "%s / %s 經驗值",
-  "tooltip.mysticalagriculture.soul_jar": "%s (%s/%s)",
   "tooltip.mysticalagriculture.invalid_entity": "無效實體",
   "tooltip.mysticalagriculture.passive_soulium_dagger": "通過殺死生物增加瓶中的靈魂.",
   "tooltip.mysticalagriculture.activate_with_redstone": "通過紅石信號激活",
@@ -415,10 +414,10 @@
   "book.mysticalagriculture.entry.elemental_essences": "元素精華",
   "book.mysticalagriculture.entry.elemental_essences.page.1": "WIP",
 
-  "book.mysticalagriculture.entry.essence_furnaces": "精華熔爐",
-  "book.mysticalagriculture.entry.essence_furnaces.page.1": "用精華升級一個普通的熔爐將會提升它的熔煉速度和燃料效率.",
-  "book.mysticalagriculture.entry.seed_reprocessors": "種子再處理器",
-  "book.mysticalagriculture.entry.seed_reprocessors.page.1": "種子再處理器用來把你多餘的種子轉換為它們各自的精華. 他們消耗固體燃料，並有一個內部能量緩存區.",
+  "book.mysticalagriculture.entry.furnaces": "精華熔爐",
+  "book.mysticalagriculture.entry.furnaces.page.1": "用精華升級一個普通的熔爐將會提升它的熔煉速度和燃料效率.",
+  "book.mysticalagriculture.entry.seed_reprocessor": "種子再處理器",
+  "book.mysticalagriculture.entry.seed_reprocessor.page.1": "種子再處理器用來把你多餘的種子轉換為它們各自的精華. 他們消耗固體燃料，並有一個內部能量緩存區.",
 
   "book.mysticalagriculture.entry.essence_tools": "精華工具",
   "book.mysticalagriculture.entry.essence_tools.page.1": "用精華升級你的鑽石工具來提升它們的耐久值和挖掘速度. 這也讓它們可以被裝上$(l:tinkering/augments)升級$ (). $(br2)精華工具可以在鐵砧上用對應的精華錠修復. 這些工具都有1個升級槽.",

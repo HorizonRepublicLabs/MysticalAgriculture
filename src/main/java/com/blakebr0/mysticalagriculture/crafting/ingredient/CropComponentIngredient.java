@@ -49,8 +49,8 @@ public class CropComponentIngredient implements ICustomIngredient {
         if (values == null) {
             var crop = CropRegistry.getInstance().getCropById(this.crop);
             this.values = switch (this.type) {
-                case ESSENCE -> HolderSet.direct(crop.getTier().getEssence().builtInRegistryHolder());
-                case SEED -> HolderSet.direct(crop.getType().getCraftingSeed().builtInRegistryHolder());
+                case ESSENCE -> HolderSet.direct(crop.getTier().getEssenceItem().builtInRegistryHolder());
+                case SEED -> HolderSet.direct(crop.getType().getCraftingSeedItem().builtInRegistryHolder());
                 case MATERIAL -> {
                     var material = crop.getCraftingMaterial();
                     yield material != null ? HolderSet.direct(material.items().toList()) : HolderSet.empty();

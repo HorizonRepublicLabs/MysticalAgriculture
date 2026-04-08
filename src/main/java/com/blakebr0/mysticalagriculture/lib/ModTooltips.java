@@ -24,7 +24,6 @@ public final class ModTooltips {
     public static final Tooltip SET_BONUS = new Tooltip("tooltip.mysticalagriculture.set_bonus");
     public static final Tooltip AUGMENTS = new Tooltip("tooltip.mysticalagriculture.augments");
     public static final Tooltip REQUIRED_BIOMES = new Tooltip("tooltip.mysticalagriculture.required_biomes");
-    public static final Tooltip CHANCE = new Tooltip("tooltip.mysticalagriculture.chance");
     public static final Tooltip SECONDARY_CHANCE = new Tooltip("tooltip.mysticalagriculture.secondary_chance");
     public static final Tooltip INFERIUM_OUTPUT = new Tooltip("tooltip.mysticalagriculture.inferium_output");
     public static final Tooltip REQUIRES_EFFECTIVE_FARMLAND = new Tooltip("tooltip.mysticalagriculture.requires_effective_farmland");

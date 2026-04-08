@@ -43,7 +43,7 @@ public class JadeCompat implements IWailaPlugin {
                 var belowBlock = level.getBlockState(downPos).getBlock();
 
                 if (ModConfigs.REQUIRES_EFFECTIVE_FARMLAND.get() && crop != ModCrops.INFERIUM) {
-                    var farmland = crop.getTier().getFarmland();
+                    var farmland = crop.getTier().getFarmlandBlock();
                     if (farmland != null) {
                         tooltip.add(ModTooltips.REQUIRES_EFFECTIVE_FARMLAND.args(farmland.getName().withStyle(crop.getTier().getTextColor())).toComponent());
                     }

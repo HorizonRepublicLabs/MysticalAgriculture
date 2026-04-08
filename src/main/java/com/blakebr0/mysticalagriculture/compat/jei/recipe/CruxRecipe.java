@@ -32,7 +32,7 @@ public class CruxRecipe {
     public static List<CruxRecipe> getGeneratedRecipes() {
         farmlands = CropRegistry.getInstance().getCrops()
                 .stream()
-                .map(c -> c.getTier().getFarmland())
+                .map(c -> c.getTier().getFarmlandBlock())
                 .distinct()
                 .collect(Collectors.toList());
 

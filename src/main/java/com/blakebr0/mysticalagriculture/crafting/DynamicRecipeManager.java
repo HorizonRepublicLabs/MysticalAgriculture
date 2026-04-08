@@ -7,10 +7,8 @@ import com.blakebr0.mysticalagriculture.config.ModConfigs;
 import com.blakebr0.mysticalagriculture.crafting.recipe.InfusionRecipe;
 import com.blakebr0.mysticalagriculture.crafting.recipe.ReprocessorRecipe;
 import com.blakebr0.mysticalagriculture.registry.CropRegistry;
-import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingRecipe;
@@ -23,7 +21,6 @@ import net.neoforged.bus.api.SubscribeEvent;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 public class DynamicRecipeManager {
     public static final DynamicRecipeManager INSTANCE = new DynamicRecipeManager();
@@ -50,11 +47,11 @@ public class DynamicRecipeManager {
         if (!crop.isEnabled() || !crop.getRecipeConfig().isSeedInfusionRecipeEnabled())
             return null;
 
-        var essenceItem = crop.getTier().getEssence();
+        var essenceItem = crop.getTier().getEssenceItem();
         if (essenceItem == null)
             return null;
 
-        var craftingSeedItem = crop.getType().getCraftingSeed();
+        var craftingSeedItem = crop.getType().getCraftingSeedItem();
         if (craftingSeedItem == null)
             return null;
 
@@ -84,11 +81,11 @@ public class DynamicRecipeManager {
         if (!ModConfigs.SEED_CRAFTING_RECIPES.get())
             return null;
 
-        var essenceItem = crop.getTier().getEssence();
+        var essenceItem = crop.getTier().getEssenceItem();
         if (essenceItem == null)
             return null;
 
-        var craftingSeedItem = crop.getType().getCraftingSeed();
+        var craftingSeedItem = crop.getType().getCraftingSeedItem();
         if (craftingSeedItem == null)
             return null;
 

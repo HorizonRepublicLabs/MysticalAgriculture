@@ -33,7 +33,7 @@ public class SoulJarItem extends BaseItem {
             var souls = DECIMAL_FORMAT.format(MobSoulUtils.getSouls(stack));
             var requirement = DECIMAL_FORMAT.format(type.getSoulRequirement());
 
-            builder.accept(ModTooltips.SOUL_JAR.args(entityName, souls, requirement).toComponent());
+            builder.accept(Component.literal("%s (%s/%s)".formatted(entityName.getString(), souls, requirement)).withStyle(ChatFormatting.GRAY));
 
             if (flag.isAdvanced()) {
                 builder.accept(ModTooltips.MST_ID.args(type.getId().toString()).color(ChatFormatting.DARK_GRAY).toComponent());

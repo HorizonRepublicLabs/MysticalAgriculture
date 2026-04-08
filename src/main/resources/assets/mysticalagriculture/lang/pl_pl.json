@@ -206,7 +206,6 @@
   "tooltip.mysticalagriculture.machine_fuel_capacity": "Pojemność paliwa: %s",
   "tooltip.mysticalagriculture.tool_area": "Zasięg: %s",
   "tooltip.mysticalagriculture.experience_capsule": "%s/%s punktów doświadczenia",
-  "tooltip.mysticalagriculture.soul_jar": "%s (%s/%s)",
   "tooltip.mysticalagriculture.invalid_entity": "Niewłaściwy byt",
   "tooltip.mysticalagriculture.passive_soulium_dagger": "Daje dodatkowe dusze z pokojowych stworów.",
   "tooltip.mysticalagriculture.hostile_soulium_dagger": "Daje dodatkowe dusze z wrogich stworów.",
@@ -217,7 +216,7 @@
   "tooltip.mysticalagriculture.activate_with_redstone": "Aktywuj z użyciem Redstone",
   "tooltip.mysticalagriculture.fertilized_essence_chance": "Szansa wypadnięcia: %s",
   "tooltip.mysticalagriculture.mystical_fertilizer": "Natychmiastowo wzrasta uprawę lub sadzonkę.",
-  
+
   "jei.category.mysticalagriculture.infusion": "Wytwarzanie infuzyjne",
   "jei.category.mysticalagriculture.reprocessor": "Przetwarzanie nasion",
   "jei.category.mysticalagriculture.soul_extractor": "Wysysanie dusz",
@@ -508,10 +507,10 @@
   "book.mysticalagriculture.entry.elemental_essences": "Esencje żywiołów",
   "book.mysticalagriculture.entry.elemental_essences.page.1": "WIP",
   
-  "book.mysticalagriculture.entry.essence_furnaces": "Piece z esencji",
-  "book.mysticalagriculture.entry.essence_furnaces.page.1": "Ulepszając zwyczajny piec esencjami można zwiększyć jego prędkość przepalania i efektywność paliwową.",
-  "book.mysticalagriculture.entry.seed_reprocessors": "Przetwarzacze nasion",
-  "book.mysticalagriculture.entry.seed_reprocessors.page.1": "Przetwarzacze nasion mogą być użyte do zamiany nadmiarowych nasion na odpowiadającą mu esencję. Są zasilane paliwami stałymi i mają wewnętrzny bufor energetyczny.",
+  "book.mysticalagriculture.entry.furnaces": "Piece z esencji",
+  "book.mysticalagriculture.entry.furnaces.page.1": "Ulepszając zwyczajny piec esencjami można zwiększyć jego prędkość przepalania i efektywność paliwową.",
+  "book.mysticalagriculture.entry.seed_reprocessor": "Przetwarzacze nasion",
+  "book.mysticalagriculture.entry.seed_reprocessor.page.1": "Przetwarzacze nasion mogą być użyte do zamiany nadmiarowych nasion na odpowiadającą mu esencję. Są zasilane paliwami stałymi i mają wewnętrzny bufor energetyczny.",
   "book.mysticalagriculture.entry.soul_extractor": "Wysysacz dusz",
   "book.mysticalagriculture.entry.soul_extractor.page.1": "Wysysacz dusz może być użyty do zamiany przedmiotów upuszczanych przez moby na ich dusze. Są zasilane paliwami stałymi i mają wewnętrzny bufor energetyczny. Wysysacz dusz daje dodatkowe zastosowanie dla niepotrzebnych przedmiotów z mobów, jednak jest znacznie mniej efektywny, niż $(l:souls/soulium_dagger)sztylet dusz$().",
   
