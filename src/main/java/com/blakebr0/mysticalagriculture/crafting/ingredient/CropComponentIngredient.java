@@ -47,7 +47,15 @@ public class CropComponentIngredient implements ICustomIngredient {
     @Override
     public Stream<Holder<Item>> items() {
         if (values == null) {
-            this.initMatchingStacks();
+            var crop = CropRegistry.getInstance().getCropById(this.crop);
+            this.values = switch (this.type) {
+                case ESSENCE -> HolderSet.direct(crop.getTier().getEssence().builtInRegistryHolder());
+                case SEED -> HolderSet.direct(crop.getType().getCraftingSeed().builtInRegistryHolder());
+                case MATERIAL -> {
+                    var material = crop.getCraftingMaterial();
+                    yield material != null ? HolderSet.direct(material.items().toList()) : HolderSet.empty();
+                }
+            };
         }
 
         return this.values.stream();
@@ -61,18 +69,6 @@ public class CropComponentIngredient implements ICustomIngredient {
     @Override
     public IngredientType<?> getType() {
         return ModIngredientTypes.CROP_COMPONENT.get();
-    }
-
-    private void initMatchingStacks() {
-        var crop = CropRegistry.getInstance().getCropById(this.crop);
-        this.values = switch (this.type) {
-            case ESSENCE -> HolderSet.direct(crop.getTier().getEssence().builtInRegistryHolder());
-            case SEED -> HolderSet.direct(crop.getType().getCraftingSeed().builtInRegistryHolder());
-            case MATERIAL -> {
-                var material = crop.getCraftingMaterial();
-                yield material != null ? material.getValues() : HolderSet.empty();
-            }
-        };
     }
 
     public static Ingredient of(Identifier crop, ComponentType type) {
