@@ -20,10 +20,10 @@ import java.util.Arrays;
 public final class ModCrops {
     private static final boolean DEBUG = !FMLEnvironment.isProduction();
 
-    public static final Crop AIR = new Crop(MysticalAgriculture.resource("air"), CropTier.ELEMENTAL, CropType.RESOURCE, CropTextures.ELEMENTAL_CROP_TEXTURES, 0xDAD64D, LazyIngredient.item("mysticalagriculture:air_agglomeratio"));
-    public static final Crop EARTH = new Crop(MysticalAgriculture.resource("earth"), CropTier.ELEMENTAL, CropType.RESOURCE, CropTextures.ELEMENTAL_CROP_TEXTURES, 0x54DA4D, LazyIngredient.item("mysticalagriculture:earth_agglomeratio"));
-    public static final Crop WATER = new Crop(MysticalAgriculture.resource("water"), CropTier.ELEMENTAL, CropType.RESOURCE, CropTextures.ELEMENTAL_CROP_TEXTURES, 0x4D7EDA, LazyIngredient.item("mysticalagriculture:water_agglomeratio"));
-    public static final Crop FIRE = new Crop(MysticalAgriculture.resource("fire"), CropTier.ELEMENTAL, CropType.RESOURCE, CropTextures.ELEMENTAL_CROP_TEXTURES, 0xDA4D4D, LazyIngredient.item("mysticalagriculture:fire_agglomeratio"));
+    public static final Crop AIR = new Crop(MysticalAgriculture.resource("air"), CropTier.ELEMENTAL, CropType.RESOURCE, LazyIngredient.item("mysticalagriculture:air_agglomeratio"));
+    public static final Crop EARTH = new Crop(MysticalAgriculture.resource("earth"), CropTier.ELEMENTAL, CropType.RESOURCE, LazyIngredient.item("mysticalagriculture:earth_agglomeratio"));
+    public static final Crop WATER = new Crop(MysticalAgriculture.resource("water"), CropTier.ELEMENTAL, CropType.RESOURCE, LazyIngredient.item("mysticalagriculture:water_agglomeratio"));
+    public static final Crop FIRE = new Crop(MysticalAgriculture.resource("fire"), CropTier.ELEMENTAL, CropType.RESOURCE, LazyIngredient.item("mysticalagriculture:fire_agglomeratio"));
 
     public static final Crop INFERIUM = new Crop(MysticalAgriculture.resource("inferium"), CropTier.ONE, CropType.RESOURCE, LazyIngredient.item("mysticalagriculture:inferium_essence"));
     public static final Crop STONE = new Crop(MysticalAgriculture.resource("stone"), CropTier.ONE, CropType.RESOURCE, LazyIngredient.item("minecraft:stone"));

@@ -28,11 +28,6 @@ public final class ColorHandler {
 //            return ColorHelper.saturate(0x00D9D9, damage);
 //        }, ModItems.INFUSION_CRYSTAL.get());
 //
-//        event.register((stack, tint) -> ModCrops.AIR.getEssenceColor(), ModItems.AIR_AGGLOMERATIO.get());
-//        event.register((stack, tint) -> ModCrops.EARTH.getEssenceColor(), ModItems.EARTH_AGGLOMERATIO.get());
-//        event.register((stack, tint) -> ModCrops.WATER.getEssenceColor(), ModItems.WATER_AGGLOMERATIO.get());
-//        event.register((stack, tint) -> ModCrops.FIRE.getEssenceColor(), ModItems.FIRE_AGGLOMERATIO.get());
-//
 //        event.register((stack, tint) -> {
 //            var type = MobSoulUtils.getType(stack);
 //            return tint == 1 && type != null ? type.getColor() : -1;

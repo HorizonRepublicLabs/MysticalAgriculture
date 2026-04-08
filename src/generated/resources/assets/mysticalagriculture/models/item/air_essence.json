@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "mysticalagriculture:item/essence_flame"
+    "layer0": "mysticalagriculture:item/essence/air_essence"
   }
 }
