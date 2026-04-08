@@ -2,7 +2,6 @@ package com.blakebr0.mysticalagriculture.tileentity;
 
 import com.blakebr0.cucumber.energy.CEnergyStorage;
 import com.blakebr0.cucumber.helper.CropHelper;
-import com.blakebr0.cucumber.helper.StackHelper;
 import com.blakebr0.cucumber.inventory.CItemStacksHandler;
 import com.blakebr0.cucumber.inventory.OnContentsChangedFunction;
 import com.blakebr0.cucumber.tileentity.BaseInventoryTileEntity;
@@ -319,7 +318,7 @@ public class HarvesterTileEntity extends BaseInventoryTileEntity implements Menu
                 return;
         }
 
-        Block.popResource(level, pos, StackHelper.withSize(stack, remaining, false));
+        Block.popResource(level, pos, stack.copyWithCount(remaining));
     }
 
     public static CItemStacksHandler createInventoryHandler() {

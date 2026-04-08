@@ -1,6 +1,5 @@
 package com.blakebr0.mysticalagriculture.crafting.recipe;
 
-import com.blakebr0.cucumber.helper.StackHelper;
 import com.blakebr0.mysticalagriculture.api.crafting.ISoulExtractionRecipe;
 import com.blakebr0.mysticalagriculture.api.soul.MobSoulType;
 import com.blakebr0.mysticalagriculture.api.util.MobSoulUtils;
@@ -74,7 +73,7 @@ public class SoulExtractionRecipe implements ISoulExtractionRecipe {
     @Override
     public ItemStack assemble(CraftingInput inventory) {
         var stack = inventory.getItem(2);
-        var jar = StackHelper.withSize(stack, 1, false);
+        var jar = stack.copyWithCount(1);
 
         MobSoulUtils.addSoulsToJar(jar, this.type, this.souls);
 
