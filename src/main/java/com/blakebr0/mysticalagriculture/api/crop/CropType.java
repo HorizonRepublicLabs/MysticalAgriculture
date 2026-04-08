@@ -57,7 +57,7 @@ public class CropType {
      * The crafting seed used in recipes for all crops of this type
      * @return the crafting seed of this type
      */
-    public Item getCraftingSeed() {
+    public Item getCraftingSeedItem() {
         return this.craftingSeed == null ? null : this.craftingSeed.get();
     }
 
@@ -66,7 +66,7 @@ public class CropType {
      * @param item the crafting seed item
      * @return this crop type
      */
-    public CropType setCraftingSeed(Supplier<? extends Item> item) {
+    public CropType setCraftingSeedItem(Supplier<? extends Item> item) {
         this.craftingSeed = item;
         return this;
     }

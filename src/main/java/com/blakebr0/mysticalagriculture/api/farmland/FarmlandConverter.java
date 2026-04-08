@@ -47,7 +47,7 @@ public final class FarmlandConverter {
                     stack.shrink(1);
 
                     if (Math.random() < 0.25) {
-                        Block.popResource(level, pos.above(), new ItemStack(farmland.getTier().getEssence()));
+                        Block.popResource(level, pos.above(), new ItemStack(farmland.getTier().getEssenceItem()));
                     }
 
                     return InteractionResult.SUCCESS;

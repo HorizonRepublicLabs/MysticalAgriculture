@@ -95,7 +95,7 @@ public class CropTier {
      * Gets the block instance of the effective farmland for this tier
      * @return the farmland for this tier
      */
-    public Block getFarmland() {
+    public Block getFarmlandBlock() {
         return this.farmland == null ? null : this.farmland.get();
     }
 
@@ -104,7 +104,7 @@ public class CropTier {
      * @param farmland the farmland block
      * @return this crop tier
      */
-    public CropTier setFarmland(Supplier<? extends Block> farmland) {
+    public CropTier setFarmlandBlock(Supplier<? extends Block> farmland) {
         this.farmland = farmland;
         return this;
     }
@@ -113,7 +113,7 @@ public class CropTier {
      * Gets the item instance of the essence for this tier
      * @return the essence for this tier
      */
-    public Item getEssence() {
+    public Item getEssenceItem() {
         return this.essence == null ? null : this.essence.get();
     }
 
@@ -122,7 +122,7 @@ public class CropTier {
      * @param essence the essence item
      * @return this crop tier
      */
-    public CropTier setEssence(Supplier<? extends Item> essence) {
+    public CropTier setEssenceItem(Supplier<? extends Item> essence) {
         this.essence = essence;
         return this;
     }
