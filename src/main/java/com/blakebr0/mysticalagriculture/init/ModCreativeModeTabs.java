@@ -50,6 +50,7 @@ public final class ModCreativeModeTabs {
                 output.accept(ModBlocks.TERTIUM_FARMLAND);
                 output.accept(ModBlocks.IMPERIUM_FARMLAND);
                 output.accept(ModBlocks.SUPREMIUM_FARMLAND);
+                output.accept(ModBlocks.AWAKENED_SUPREMIUM_FARMLAND);
                 output.accept(ModBlocks.INFERIUM_GROWTH_ACCELERATOR);
                 output.accept(ModBlocks.PRUDENTIUM_GROWTH_ACCELERATOR);
                 output.accept(ModBlocks.TERTIUM_GROWTH_ACCELERATOR);

@@ -1,0 +1,13 @@
+{
+  "type": "mysticalagriculture:farmland_till",
+  "group": "mysticalagriculture:farmland_till",
+  "ingredients": [
+    "#minecraft:hoes",
+    "mysticalagriculture:awakened_supremium_essence",
+    "minecraft:dirt"
+  ],
+  "result": {
+    "id": "mysticalagriculture:awakened_supremium_farmland",
+    "count": 1
+  }
+}

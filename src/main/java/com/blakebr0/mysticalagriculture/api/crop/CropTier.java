@@ -1,5 +1,7 @@
 package com.blakebr0.mysticalagriculture.api.crop;
 
+import com.blakebr0.mysticalagriculture.api.MysticalAgricultureAPI;
+import com.blakebr0.mysticalagriculture.api.MysticalAgricultureTags;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -11,15 +13,13 @@ import net.minecraft.world.level.block.Block;
 import java.util.Objects;
 import java.util.function.Supplier;
 
-import static com.blakebr0.mysticalagriculture.api.MysticalAgricultureAPI.MOD_ID;
-
 public class CropTier {
-    public static final CropTier ELEMENTAL = new CropTier(Identifier.fromNamespaceAndPath(MOD_ID, "elemental"), 1, 0x748E00, ChatFormatting.YELLOW);
-    public static final CropTier ONE = new CropTier(Identifier.fromNamespaceAndPath(MOD_ID, "1"), 1, 0x748E00, ChatFormatting.YELLOW);
-    public static final CropTier TWO = new CropTier(Identifier.fromNamespaceAndPath(MOD_ID, "2"), 2, 0x008C23, ChatFormatting.GREEN);
-    public static final CropTier THREE = new CropTier(Identifier.fromNamespaceAndPath(MOD_ID, "3"), 3, 0xB74900, ChatFormatting.GOLD);
-    public static final CropTier FOUR = new CropTier(Identifier.fromNamespaceAndPath(MOD_ID, "4"), 4, 0x007FDB, ChatFormatting.AQUA);
-    public static final CropTier FIVE = new CropTier(Identifier.fromNamespaceAndPath(MOD_ID, "5"), 5, 0xC40000, ChatFormatting.RED);
+    public static final CropTier ELEMENTAL = new CropTier(MysticalAgricultureAPI.resource("elemental"), 1, 0x748E00, ChatFormatting.YELLOW);
+    public static final CropTier ONE = new CropTier(MysticalAgricultureAPI.resource("1"), 1, 0x748E00, ChatFormatting.YELLOW);
+    public static final CropTier TWO = new CropTier(MysticalAgricultureAPI.resource("2"), 2, 0x008C23, ChatFormatting.GREEN);
+    public static final CropTier THREE = new CropTier(MysticalAgricultureAPI.resource("3"), 3, 0xB74900, ChatFormatting.GOLD);
+    public static final CropTier FOUR = new CropTier(MysticalAgricultureAPI.resource("4"), 4, 0x007FDB, ChatFormatting.AQUA);
+    public static final CropTier FIVE = new CropTier(MysticalAgricultureAPI.resource("5"), 5, 0xC40000, ChatFormatting.RED);
 
     private final Identifier id;
     private final int value;
@@ -133,7 +133,8 @@ public class CropTier {
      * @return is the correct farmland
      */
     public boolean isEffectiveFarmland(Block block) {
-        return this.farmland != null && this.farmland.get() == block;
+        return this.farmland != null && this.farmland.get() == block
+                || block.builtInRegistryHolder().is(MysticalAgricultureTags.Blocks.ALWAYS_EFFECTIVE_FARMLAND);
     }
 
     /**

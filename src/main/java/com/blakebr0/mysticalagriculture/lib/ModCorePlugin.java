@@ -10,8 +10,11 @@ import com.blakebr0.mysticalagriculture.api.registry.ICropRegistry;
 import com.blakebr0.mysticalagriculture.api.registry.IMobSoulTypeRegistry;
 import com.blakebr0.mysticalagriculture.init.ModBlocks;
 import com.blakebr0.mysticalagriculture.init.ModItems;
+import net.minecraft.ChatFormatting;
 
 public final class ModCorePlugin implements IMysticalAgriculturePlugin {
+    public static final CropTier AWAKENED_SUPREMIUM_TIER = new CropTier(MysticalAgriculture.resource("5"), 6, 0xC47200, ChatFormatting.RED);
+
     @Override
     public void configure(PluginConfig config) {
         config.setModId(MysticalAgriculture.MOD_ID);
@@ -46,6 +49,8 @@ public final class ModCorePlugin implements IMysticalAgriculturePlugin {
 
         CropType.RESOURCE.setCraftingSeedItem(ModItems.PROSPERITY_SEED_BASE);
         CropType.MOB.setCraftingSeedItem(ModItems.SOULIUM_SEED_BASE);
+
+        AWAKENED_SUPREMIUM_TIER.setFarmlandBlock(ModBlocks.AWAKENED_SUPREMIUM_FARMLAND).setEssenceItem(ModItems.AWAKENED_SUPREMIUM_ESSENCE);
     }
 
     @Override
