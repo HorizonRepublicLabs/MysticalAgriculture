@@ -9,6 +9,7 @@ import com.blakebr0.mysticalagriculture.client.ModTESRs;
 import com.blakebr0.mysticalagriculture.client.ModelHandler;
 import com.blakebr0.mysticalagriculture.client.handler.AOEAugmentClientHandler;
 import com.blakebr0.mysticalagriculture.client.handler.AugmentTooltipHandler;
+import com.blakebr0.mysticalagriculture.client.handler.ClientRecipeHandler;
 import com.blakebr0.mysticalagriculture.client.handler.GuiOverlayHandler;
 import com.blakebr0.mysticalagriculture.client.handler.ItemModelPropertyHandler;
 import com.blakebr0.mysticalagriculture.client.handler.TintSourceHandler;
@@ -110,6 +111,8 @@ public final class MysticalAgriculture {
         NeoForge.EVENT_BUS.register(EssenceVesselColorManager.INSTANCE);
 		NeoForge.EVENT_BUS.register(RecipeIngredientCache.INSTANCE);
 
+		NeoForge.EVENT_BUS.addListener(ModRecipeTypes::onDatapackSync);
+
 		CropRegistry.getInstance().onCommonSetup();
 		AugmentRegistry.getInstance().onCommonSetup();
 		MobSoulTypeRegistry.getInstance().onCommonSetup();
@@ -120,6 +123,7 @@ public final class MysticalAgriculture {
 		NeoForge.EVENT_BUS.register(new AugmentTooltipHandler());
 		NeoForge.EVENT_BUS.register(new GuiOverlayHandler());
 		NeoForge.EVENT_BUS.register(new AOEAugmentClientHandler());
+		NeoForge.EVENT_BUS.register(new ClientRecipeHandler());
 
 		ModelHandler.onClientSetup(event);
 	}
