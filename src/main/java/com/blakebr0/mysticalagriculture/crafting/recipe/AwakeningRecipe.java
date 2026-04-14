@@ -162,7 +162,7 @@ public class AwakeningRecipe implements IAwakeningRecipe {
     @Override
     public List<RecipeDisplay> display() {
         return List.of(new ShapelessCraftingRecipeDisplay(
-                this.placementInfo.ingredients().stream().map(Ingredient::display).toList(),
+                this.placementInfo().ingredients().stream().map(Ingredient::display).toList(),
                 new SlotDisplay.ItemStackSlotDisplay(this.result),
                 new SlotDisplay.ItemSlotDisplay(ModBlocks.AWAKENING_ALTAR.get().asItem())
         ));
@@ -279,7 +279,12 @@ public class AwakeningRecipe implements IAwakeningRecipe {
 
     private static AwakeningRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
         var input = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
-        var inputs = Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()).decode(buffer);
+
+        var inputs = new ArrayList<Ingredient>();
+        for (int i = 0; i < 4; i++) {
+            inputs.add(Ingredient.CONTENTS_STREAM_CODEC.decode(buffer));
+        }
+
         var essences = SizedIngredient.STREAM_CODEC.apply(ByteBufCodecs.list()).decode(buffer);
         var result = ItemStackTemplate.STREAM_CODEC.decode(buffer);
         var transferComponents = buffer.readBoolean();

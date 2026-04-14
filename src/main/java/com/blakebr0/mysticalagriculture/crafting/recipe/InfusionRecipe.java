@@ -125,7 +125,7 @@ public class InfusionRecipe implements IInfusionRecipe {
     @Override
     public List<RecipeDisplay> display() {
         return List.of(new ShapelessCraftingRecipeDisplay(
-                this.placementInfo.ingredients().stream().map(Ingredient::display).toList(),
+                this.placementInfo().ingredients().stream().map(Ingredient::display).toList(),
                 new SlotDisplay.ItemStackSlotDisplay(this.result),
                 new SlotDisplay.ItemSlotDisplay(ModBlocks.INFUSION_ALTAR.get().asItem())
         ));
@@ -195,7 +195,7 @@ public class InfusionRecipe implements IInfusionRecipe {
 
     private static void toNetwork(RegistryFriendlyByteBuf buffer, InfusionRecipe recipe) {
         Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.input);
-        Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()).decode(buffer);
+        Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()).encode(buffer, recipe.inputs);
         ItemStackTemplate.STREAM_CODEC.encode(buffer, recipe.result);
         buffer.writeBoolean(recipe.transferComponents);
     }
