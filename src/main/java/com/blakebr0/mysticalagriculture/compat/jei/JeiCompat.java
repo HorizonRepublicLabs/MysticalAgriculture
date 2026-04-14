@@ -1,8 +1,8 @@
 package com.blakebr0.mysticalagriculture.compat.jei;
 
-import com.blakebr0.cucumber.helper.RecipeHelper;
 import com.blakebr0.mysticalagriculture.MysticalAgriculture;
 import com.blakebr0.mysticalagriculture.api.util.MobSoulUtils;
+import com.blakebr0.mysticalagriculture.client.handler.ClientRecipeHandler;
 import com.blakebr0.mysticalagriculture.client.screen.EnchanterScreen;
 import com.blakebr0.mysticalagriculture.client.screen.EssenceFurnaceScreen;
 import com.blakebr0.mysticalagriculture.client.screen.ReprocessorScreen;
@@ -18,7 +18,6 @@ import com.blakebr0.mysticalagriculture.compat.jei.category.SouliumSpawnerCatego
 import com.blakebr0.mysticalagriculture.compat.jei.recipe.CruxRecipe;
 import com.blakebr0.mysticalagriculture.init.ModBlocks;
 import com.blakebr0.mysticalagriculture.init.ModItems;
-import com.blakebr0.mysticalagriculture.init.ModRecipeTypes;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes;
@@ -27,7 +26,6 @@ import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.registration.ISubtypeRegistration;
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
@@ -72,20 +70,14 @@ public final class JeiCompat implements IModPlugin {
 
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
-        var level = Minecraft.getInstance().level;
-        if (level != null) {
-//            TODO sync recipes to client for JEI
-//            var manager = level.getRecipeManager();
-//
-//            registration.addRecipes(InfusionCategory.RECIPE_TYPE, RecipeHelper.byTypeValues(manager, ModRecipeTypes.INFUSION.get()));
-//            registration.addRecipes(AwakeningCategory.RECIPE_TYPE, RecipeHelper.byTypeValues(manager, ModRecipeTypes.AWAKENING.get()));
-//            registration.addRecipes(EnchanterCategory.RECIPE_TYPE, RecipeHelper.byTypeValues(manager, ModRecipeTypes.ENCHANTER.get()));
-//            registration.addRecipes(ReprocessorCategory.RECIPE_TYPE, RecipeHelper.byTypeValues(manager, ModRecipeTypes.REPROCESSOR.get()));
-//            registration.addRecipes(SoulExtractorCategory.RECIPE_TYPE, RecipeHelper.byTypeValues(manager, ModRecipeTypes.SOUL_EXTRACTION.get()));
-//            registration.addRecipes(SouliumSpawnerCategory.RECIPE_TYPE, RecipeHelper.byTypeValues(manager, ModRecipeTypes.SOULIUM_SPAWNER.get()));
-//
-//            registration.addRecipes(CruxCategory.RECIPE_TYPE, CruxRecipe.getGeneratedRecipes());
-        }
+        registration.addRecipes(InfusionCategory.RECIPE_TYPE, ClientRecipeHandler.INFUSION_RECIPES);
+        registration.addRecipes(AwakeningCategory.RECIPE_TYPE, ClientRecipeHandler.AWAKENING_RECIPES);
+        registration.addRecipes(EnchanterCategory.RECIPE_TYPE, ClientRecipeHandler.ENCHANTER_RECIPES);
+        registration.addRecipes(ReprocessorCategory.RECIPE_TYPE, ClientRecipeHandler.REPROCESSOR_RECIPES);
+        registration.addRecipes(SoulExtractorCategory.RECIPE_TYPE, ClientRecipeHandler.SOUL_EXTRACTION_RECIPES);
+        registration.addRecipes(SouliumSpawnerCategory.RECIPE_TYPE, ClientRecipeHandler.SOULIUM_SPAWNER_RECIPES);
+
+        registration.addRecipes(CruxCategory.RECIPE_TYPE, CruxRecipe.getGeneratedRecipes());
 
         registration.addIngredientInfo(
                 new ItemStack(ModItems.COGNIZANT_DUST.get()),

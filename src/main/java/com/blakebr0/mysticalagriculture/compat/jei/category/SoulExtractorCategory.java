@@ -65,6 +65,7 @@ public class SoulExtractorCategory implements IRecipeCategory<RecipeHolder<ISoul
 
     @Override
     public void draw(RecipeHolder<ISoulExtractionRecipe> recipe, IRecipeSlotsView slots, GuiGraphicsExtractor gfx, double mouseX, double mouseY) {
+        this.background.draw(gfx);
         this.arrow.draw(gfx, 24, 4);
     }
 

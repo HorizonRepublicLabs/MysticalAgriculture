@@ -1,10 +1,8 @@
 package com.blakebr0.mysticalagriculture.compat.jei.category;
 
-import com.blakebr0.cucumber.util.Formatting;
 import com.blakebr0.mysticalagriculture.MysticalAgriculture;
 import com.blakebr0.mysticalagriculture.api.crafting.ISouliumSpawnerRecipe;
 import com.blakebr0.mysticalagriculture.init.ModBlocks;
-import com.blakebr0.mysticalagriculture.lib.ModTooltips;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -12,23 +10,14 @@ import mezz.jei.api.gui.drawable.IDrawableAnimated;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
-import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.api.recipe.types.IRecipeHolderType;
 import mezz.jei.api.recipe.types.IRecipeType;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.SpawnEggItem;
-import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.crafting.RecipeHolder;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class SouliumSpawnerCategory implements IRecipeCategory<RecipeHolder<ISouliumSpawnerRecipe>> {
     private static final Identifier TEXTURE = MysticalAgriculture.resource("textures/jei/soulium_spawner.png");
@@ -74,6 +63,7 @@ public class SouliumSpawnerCategory implements IRecipeCategory<RecipeHolder<ISou
 
     @Override
     public void draw(RecipeHolder<ISouliumSpawnerRecipe> recipe, IRecipeSlotsView slots, GuiGraphicsExtractor gfx, double mouseX, double mouseY) {
+        this.background.draw(gfx);
         this.arrow.draw(gfx, 24, 4);
     }
 

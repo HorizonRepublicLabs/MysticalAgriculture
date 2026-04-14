@@ -65,6 +65,7 @@ public class ReprocessorCategory implements IRecipeCategory<RecipeHolder<IReproc
 
     @Override
     public void draw(RecipeHolder<IReprocessorRecipe> recipe, IRecipeSlotsView slots, GuiGraphicsExtractor gfx, double mouseX, double mouseY) {
+        this.background.draw(gfx);
         this.arrow.draw(gfx, 24, 4);
     }
 
