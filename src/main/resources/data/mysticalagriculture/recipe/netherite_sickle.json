@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": "minecraft:netherite_ingot",
+  "base": "mysticalagriculture:diamond_sickle",
+  "template": "minecraft:netherite_upgrade_smithing_template",
+  "result": {
+    "id": "mysticalagriculture:netherite_sickle"
+  }
+}

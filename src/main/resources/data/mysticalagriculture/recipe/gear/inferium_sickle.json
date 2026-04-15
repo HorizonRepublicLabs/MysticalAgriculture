@@ -9,7 +9,7 @@
   "key": {
     "G": "mysticalagriculture:inferium_gemstone",
     "I": "mysticalagriculture:inferium_ingot",
-    "S": "#mysticalagriculture:diamond_sickles"
+    "S": "mysticalagriculture:diamond_sickle"
   },
   "result": {
     "id": "mysticalagriculture:inferium_sickle"

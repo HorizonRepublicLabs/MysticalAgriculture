@@ -121,8 +121,6 @@ public final class ModItems {
     public static final DeferredHolder<Item, Item> SOUL_JAR = register("soul_jar", SoulJarItem::new);
     public static final DeferredHolder<Item, Item> EXPERIENCE_CAPSULE = register("experience_capsule", ExperienceCapsuleItem::new);
     public static final DeferredHolder<Item, Item> WATERING_CAN = register("watering_can", id -> new WateringCanItem(id, 3, 0.25));
-    public static final DeferredHolder<Item, Item> DIAMOND_SICKLE = register("diamond_sickle", id -> new BaseSickleItem(id, ToolMaterial.DIAMOND, 3));
-    public static final DeferredHolder<Item, Item> DIAMOND_SCYTHE = register("diamond_scythe", id -> new BaseScytheItem(id, ToolMaterial.DIAMOND, 3));
     public static final DeferredHolder<Item, Item> UPGRADE_BASE = register("upgrade_base");
     public static final DeferredHolder<Item, Item> INFERIUM_UPGRADE = register("inferium_upgrade", id -> new MachineUpgradeItem(id, MachineUpgradeTier.INFERIUM));
     public static final DeferredHolder<Item, Item> PRUDENTIUM_UPGRADE = register("prudentium_upgrade", id -> new MachineUpgradeItem(id, MachineUpgradeTier.PRUDENTIUM));
@@ -130,6 +128,22 @@ public final class ModItems {
     public static final DeferredHolder<Item, Item> IMPERIUM_UPGRADE = register("imperium_upgrade", id -> new MachineUpgradeItem(id, MachineUpgradeTier.IMPERIUM));
     public static final DeferredHolder<Item, Item> SUPREMIUM_UPGRADE = register("supremium_upgrade", id -> new MachineUpgradeItem(id, MachineUpgradeTier.SUPREMIUM));
     public static final DeferredHolder<Item, Item> AWAKENED_SUPREMIUM_UPGRADE = register("awakened_supremium_upgrade", id -> new MachineUpgradeItem(id, MachineUpgradeTier.AWAKENED_SUPREMIUM));
+
+    public static final DeferredHolder<Item, Item> WOODEN_SICKLE = register("wooden_sickle", id -> new BaseSickleItem(id, ToolMaterial.WOOD, 1));
+    public static final DeferredHolder<Item, Item> STONE_SICKLE = register("stone_sickle", id -> new BaseSickleItem(id, ToolMaterial.STONE, 1));
+    public static final DeferredHolder<Item, Item> COPPER_SICKLE = register("copper_sickle", id -> new BaseSickleItem(id, ToolMaterial.COPPER, 1));
+    public static final DeferredHolder<Item, Item> IRON_SICKLE = register("iron_sickle", id -> new BaseSickleItem(id, ToolMaterial.IRON, 2));
+    public static final DeferredHolder<Item, Item> GOLDEN_SICKLE = register("golden_sickle", id -> new BaseSickleItem(id, ToolMaterial.GOLD, 2));
+    public static final DeferredHolder<Item, Item> DIAMOND_SICKLE = register("diamond_sickle", id -> new BaseSickleItem(id, ToolMaterial.DIAMOND, 3));
+    public static final DeferredHolder<Item, Item> NETHERITE_SICKLE = register("netherite_sickle", id -> new BaseSickleItem(id, ToolMaterial.NETHERITE, 3));
+
+    public static final DeferredHolder<Item, Item> WOODEN_SCYTHE = register("wooden_scythe", id -> new BaseScytheItem(id, ToolMaterial.WOOD, 1));
+    public static final DeferredHolder<Item, Item> STONE_SCYTHE = register("stone_scythe", id -> new BaseScytheItem(id, ToolMaterial.STONE, 1));
+    public static final DeferredHolder<Item, Item> COPPER_SCYTHE = register("copper_scythe", id -> new BaseScytheItem(id, ToolMaterial.COPPER, 1));
+    public static final DeferredHolder<Item, Item> IRON_SCYTHE = register("iron_scythe", id -> new BaseScytheItem(id, ToolMaterial.IRON, 2));
+    public static final DeferredHolder<Item, Item> GOLDEN_SCYTHE = register("golden_scythe", id -> new BaseScytheItem(id, ToolMaterial.GOLD, 2));
+    public static final DeferredHolder<Item, Item> DIAMOND_SCYTHE = register("diamond_scythe", id -> new BaseScytheItem(id, ToolMaterial.DIAMOND, 3));
+    public static final DeferredHolder<Item, Item> NETHERITE_SCYTHE = register("netherite_scythe", id -> new BaseScytheItem(id, ToolMaterial.NETHERITE, 3));
 
     public static final DeferredHolder<Item, Item> INFERIUM_SWORD = registerGear("inferium_sword", id -> new EssenceSwordItem(id, ModToolMaterials.INFERIUM, 1, 1));
     public static final DeferredHolder<Item, Item> INFERIUM_PICKAXE = registerGear("inferium_pickaxe", id -> new EssencePickaxeItem(id, ModToolMaterials.INFERIUM, 1, 1));

@@ -1,7 +1,13 @@
 {
   "replace": false,
   "values": [
+    "mysticalagriculture:wooden_scythe",
+    "mysticalagriculture:copper_scythe",
+    "mysticalagriculture:stone_scythe",
+    "mysticalagriculture:iron_scythe",
+    "mysticalagriculture:golden_scythe",
     "mysticalagriculture:diamond_scythe",
+    "mysticalagriculture:netherite_scythe",
     "mysticalagriculture:inferium_scythe",
     "mysticalagriculture:prudentium_scythe",
     "mysticalagriculture:tertium_scythe",

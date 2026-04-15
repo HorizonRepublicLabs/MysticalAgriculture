@@ -1,7 +1,13 @@
 {
   "replace": false,
   "values": [
+    "mysticalagriculture:wooden_sickle",
+    "mysticalagriculture:copper_sickle",
+    "mysticalagriculture:stone_sickle",
+    "mysticalagriculture:iron_sickle",
+    "mysticalagriculture:golden_sickle",
     "mysticalagriculture:diamond_sickle",
+    "mysticalagriculture:netherite_sickle",
     "mysticalagriculture:inferium_sickle",
     "mysticalagriculture:prudentium_sickle",
     "mysticalagriculture:tertium_sickle",

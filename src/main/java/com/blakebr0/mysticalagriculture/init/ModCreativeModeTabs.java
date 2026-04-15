@@ -170,9 +170,6 @@ public final class ModCreativeModeTabs {
 
                 output.accept(ModItems.EXPERIENCE_CAPSULE);
                 output.accept(ModItems.WATERING_CAN);
-
-                output.accept(ModItems.DIAMOND_SICKLE);
-                output.accept(ModItems.DIAMOND_SCYTHE);
                 output.accept(ModItems.UPGRADE_BASE);
                 output.accept(ModItems.INFERIUM_UPGRADE);
                 output.accept(ModItems.PRUDENTIUM_UPGRADE);
@@ -180,6 +177,22 @@ public final class ModCreativeModeTabs {
                 output.accept(ModItems.IMPERIUM_UPGRADE);
                 output.accept(ModItems.SUPREMIUM_UPGRADE);
                 output.accept(ModItems.AWAKENED_SUPREMIUM_UPGRADE);
+
+                output.accept(ModItems.WOODEN_SICKLE);
+                output.accept(ModItems.COPPER_SICKLE);
+                output.accept(ModItems.STONE_SICKLE);
+                output.accept(ModItems.IRON_SICKLE);
+                output.accept(ModItems.GOLDEN_SICKLE);
+                output.accept(ModItems.DIAMOND_SICKLE);
+                output.accept(ModItems.NETHERITE_SICKLE);
+
+                output.accept(ModItems.WOODEN_SCYTHE);
+                output.accept(ModItems.COPPER_SCYTHE);
+                output.accept(ModItems.STONE_SCYTHE);
+                output.accept(ModItems.IRON_SCYTHE);
+                output.accept(ModItems.GOLDEN_SCYTHE);
+                output.accept(ModItems.DIAMOND_SCYTHE);
+                output.accept(ModItems.NETHERITE_SCYTHE);
 
                 for (var crop : CropRegistry.getInstance().getCrops()) {
                     if (crop.isEnabled()) {
