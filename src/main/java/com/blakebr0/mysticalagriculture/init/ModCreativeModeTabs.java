@@ -215,6 +215,7 @@ public final class ModCreativeModeTabs {
                 output.accept(ModItems.INFERIUM_WATERING_CAN);
                 output.accept(ModItems.INFERIUM_BOW);
                 output.accept(ModItems.INFERIUM_CROSSBOW);
+                output.accept(ModItems.INFERIUM_SPEAR);
                 output.accept(ModItems.INFERIUM_SHEARS);
                 output.accept(ModItems.INFERIUM_FISHING_ROD);
                 output.accept(ModItems.INFERIUM_SICKLE);
@@ -228,6 +229,7 @@ public final class ModCreativeModeTabs {
                 output.accept(ModItems.PRUDENTIUM_WATERING_CAN);
                 output.accept(ModItems.PRUDENTIUM_BOW);
                 output.accept(ModItems.PRUDENTIUM_CROSSBOW);
+                output.accept(ModItems.PRUDENTIUM_SPEAR);
                 output.accept(ModItems.PRUDENTIUM_SHEARS);
                 output.accept(ModItems.PRUDENTIUM_FISHING_ROD);
                 output.accept(ModItems.PRUDENTIUM_SICKLE);
@@ -241,6 +243,7 @@ public final class ModCreativeModeTabs {
                 output.accept(ModItems.TERTIUM_WATERING_CAN);
                 output.accept(ModItems.TERTIUM_BOW);
                 output.accept(ModItems.TERTIUM_CROSSBOW);
+                output.accept(ModItems.TERTIUM_SPEAR);
                 output.accept(ModItems.TERTIUM_SHEARS);
                 output.accept(ModItems.TERTIUM_FISHING_ROD);
                 output.accept(ModItems.TERTIUM_SICKLE);
@@ -254,6 +257,7 @@ public final class ModCreativeModeTabs {
                 output.accept(ModItems.IMPERIUM_WATERING_CAN);
                 output.accept(ModItems.IMPERIUM_BOW);
                 output.accept(ModItems.IMPERIUM_CROSSBOW);
+                output.accept(ModItems.IMPERIUM_SPEAR);
                 output.accept(ModItems.IMPERIUM_SHEARS);
                 output.accept(ModItems.IMPERIUM_FISHING_ROD);
                 output.accept(ModItems.IMPERIUM_SICKLE);
@@ -267,6 +271,7 @@ public final class ModCreativeModeTabs {
                 output.accept(ModItems.SUPREMIUM_WATERING_CAN);
                 output.accept(ModItems.SUPREMIUM_BOW);
                 output.accept(ModItems.SUPREMIUM_CROSSBOW);
+                output.accept(ModItems.SUPREMIUM_SPEAR);
                 output.accept(ModItems.SUPREMIUM_SHEARS);
                 output.accept(ModItems.SUPREMIUM_FISHING_ROD);
                 output.accept(ModItems.SUPREMIUM_SICKLE);
@@ -279,6 +284,7 @@ public final class ModCreativeModeTabs {
                 output.accept(ModItems.AWAKENED_SUPREMIUM_WATERING_CAN);
                 output.accept(ModItems.AWAKENED_SUPREMIUM_BOW);
                 output.accept(ModItems.AWAKENED_SUPREMIUM_CROSSBOW);
+                output.accept(ModItems.AWAKENED_SUPREMIUM_SPEAR);
                 output.accept(ModItems.AWAKENED_SUPREMIUM_SHEARS);
                 output.accept(ModItems.AWAKENED_SUPREMIUM_FISHING_ROD);
                 output.accept(ModItems.AWAKENED_SUPREMIUM_SICKLE);

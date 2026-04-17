@@ -1,0 +1,17 @@
+{
+  "type": "cucumber:shaped_transfer_damage",
+  "transfer_components": true,
+  "pattern": [
+    " G ",
+    "ISI",
+    " G "
+  ],
+  "key": {
+    "G": "mysticalagriculture:inferium_gemstone",
+    "I": "mysticalagriculture:inferium_ingot",
+    "S": "minecraft:diamond_spear"
+  },
+  "result": {
+    "id": "mysticalagriculture:inferium_spear"
+  }
+}

@@ -54,6 +54,7 @@ public final class AugmentTooltipHandler {
                     new ItemStack(Items.DIAMOND_SWORD),
                     new ItemStack(Items.BOW),
                     new ItemStack(Items.CROSSBOW),
+                    new ItemStack(Items.DIAMOND_SPEAR),
                     new ItemStack(ModItems.DIAMOND_SICKLE.get()),
                     new ItemStack(ModItems.DIAMOND_SCYTHE.get())
             );
@@ -84,6 +85,7 @@ public final class AugmentTooltipHandler {
             case HOE -> Items.DIAMOND_HOE;
             case BOW -> Items.BOW;
             case CROSSBOW -> Items.CROSSBOW;
+            case SPEAR -> Items.DIAMOND_SPEAR;
             case SHEARS -> Items.SHEARS;
             case FISHING_ROD -> Items.FISHING_ROD;
             case SICKLE -> ModItems.DIAMOND_SICKLE.get();

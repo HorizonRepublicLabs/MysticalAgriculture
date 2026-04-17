@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "mysticalagriculture:inferium_spear",
+    "mysticalagriculture:prudentium_spear",
+    "mysticalagriculture:tertium_spear",
+    "mysticalagriculture:imperium_spear",
+    "mysticalagriculture:supremium_spear",
+    "mysticalagriculture:awakened_supremium_spear"
+  ]
+}

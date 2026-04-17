@@ -1,0 +1,32 @@
+{
+  "type": "mysticalagriculture:awakening",
+  "transfer_components": true,
+  "essences": [
+    {
+      "ingredient": "mysticalagriculture:air_essence",
+      "count": 40
+    },
+    {
+      "ingredient": "mysticalagriculture:earth_essence",
+      "count": 40
+    },
+    {
+      "ingredient": "mysticalagriculture:water_essence",
+      "count": 40
+    },
+    {
+      "ingredient": "mysticalagriculture:fire_essence",
+      "count": 40
+    }
+  ],
+  "input": "mysticalagriculture:supremium_spear",
+  "ingredients": [
+    "mysticalagriculture:awakened_supremium_gemstone",
+    "mysticalagriculture:awakened_supremium_ingot",
+    "mysticalagriculture:awakened_supremium_gemstone",
+    "mysticalagriculture:awakened_supremium_ingot"
+  ],
+  "result": {
+    "id": "mysticalagriculture:awakened_supremium_spear"
+  }
+}

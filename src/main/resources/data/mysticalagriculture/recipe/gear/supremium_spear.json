@@ -1,0 +1,17 @@
+{
+  "type": "cucumber:shaped_transfer_damage",
+  "transfer_components": true,
+  "pattern": [
+    " G ",
+    "ISI",
+    " G "
+  ],
+  "key": {
+    "G": "mysticalagriculture:supremium_gemstone",
+    "I": "mysticalagriculture:supremium_ingot",
+    "S": "mysticalagriculture:imperium_spear"
+  },
+  "result": {
+    "id": "mysticalagriculture:supremium_spear"
+  }
+}
