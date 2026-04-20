@@ -1,7 +1,6 @@
 package com.blakebr0.mysticalagriculture.crafting.recipe;
 
 import com.blakebr0.mysticalagriculture.api.crafting.IReprocessorRecipe;
-import com.blakebr0.mysticalagriculture.init.ModBlocks;
 import com.blakebr0.mysticalagriculture.init.ModRecipeTypes;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -11,15 +10,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.PlacementInfo;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.item.crafting.display.RecipeDisplay;
-import net.minecraft.world.item.crafting.display.ShapelessCraftingRecipeDisplay;
-import net.minecraft.world.item.crafting.display.SlotDisplay;
 import net.minecraft.world.level.Level;
-
-import java.util.List;
 
 public class ReprocessorRecipe implements IReprocessorRecipe {
     public static final MapCodec<ReprocessorRecipe> MAP_CODEC = RecordCodecBuilder.mapCodec(builder ->
@@ -35,8 +28,6 @@ public class ReprocessorRecipe implements IReprocessorRecipe {
 
     private final Ingredient input;
     private final ItemStackTemplate result;
-
-    private PlacementInfo placementInfo;
 
     public ReprocessorRecipe(Ingredient input, ItemStackTemplate result) {
         this.input = input;
@@ -54,21 +45,8 @@ public class ReprocessorRecipe implements IReprocessorRecipe {
     }
 
     @Override
-    public PlacementInfo placementInfo() {
-        if (this.placementInfo == null) {
-            this.placementInfo = PlacementInfo.create(this.input);
-        }
-
-        return this.placementInfo;
-    }
-
-    @Override
-    public List<RecipeDisplay> display() {
-        return List.of(new ShapelessCraftingRecipeDisplay(
-                List.of(this.input.display()),
-                new SlotDisplay.ItemStackSlotDisplay(this.result),
-                new SlotDisplay.ItemSlotDisplay(ModBlocks.REPROCESSOR.get().asItem())
-        ));
+    public Ingredient getIngredient() {
+        return this.input;
     }
 
     @Override

@@ -17,9 +17,9 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingInput;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.display.ShapelessCraftingRecipeDisplay;
-import net.minecraft.world.item.crafting.display.SlotDisplay;
 
 public class InfusionCategory implements IRecipeCategory<RecipeHolder<IInfusionRecipe>> {
     private static final Identifier TEXTURE = MysticalAgriculture.resource("textures/jei/infusion.png");
@@ -64,75 +64,73 @@ public class InfusionCategory implements IRecipeCategory<RecipeHolder<IInfusionR
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<IInfusionRecipe> recipe, IFocusGroup focuses) {
-        var displays = recipe.value().display();
-        if (!displays.isEmpty() && displays.getFirst() instanceof ShapelessCraftingRecipeDisplay display) {
+    public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<IInfusionRecipe> recipeHolder, IFocusGroup focuses) {
+        var recipe = recipeHolder.value();
 
-            var inputs = display.ingredients();
-            var result = display.result();
+        builder.addSlot(RecipeIngredientRole.INPUT, 33, 33).add(recipe.getAltarIngredient());
 
-            builder.addSlot(RecipeIngredientRole.INPUT, 33, 33).add(inputs.get(0));
+        var inputs = recipe.getPedestalIngredients();
+        var pedestals = inputs.size();
 
-            var pedestals = inputs.size() - 1;
-
-            switch (pedestals) {
-                case 1 -> addSlot(builder, SlotPosition.NORTH, inputs.get(1));
-                case 2 -> {
-                    addSlot(builder, SlotPosition.NORTH, inputs.get(1));
-                    addSlot(builder, SlotPosition.SOUTH, inputs.get(2));
-                }
-                case 3 -> {
-                    addSlot(builder, SlotPosition.WEST, inputs.get(1));
-                    addSlot(builder, SlotPosition.NORTH, inputs.get(2));
-                    addSlot(builder, SlotPosition.EAST, inputs.get(3));
-                }
-                case 4 -> {
-                    addSlot(builder, SlotPosition.NORTH, inputs.get(1));
-                    addSlot(builder, SlotPosition.EAST, inputs.get(2));
-                    addSlot(builder, SlotPosition.SOUTH, inputs.get(3));
-                    addSlot(builder, SlotPosition.WEST, inputs.get(4));
-                }
-                case 5 -> {
-                    addSlot(builder, SlotPosition.NORTH_WEST, inputs.get(1));
-                    addSlot(builder, SlotPosition.NORTH, inputs.get(2));
-                    addSlot(builder, SlotPosition.NORTH_EAST, inputs.get(3));
-                    addSlot(builder, SlotPosition.SOUTH_EAST, inputs.get(4));
-                    addSlot(builder, SlotPosition.SOUTH_WEST, inputs.get(5));
-                }
-                case 6 -> {
-                    addSlot(builder, SlotPosition.NORTH_WEST, inputs.get(1));
-                    addSlot(builder, SlotPosition.NORTH, inputs.get(2));
-                    addSlot(builder, SlotPosition.NORTH_EAST, inputs.get(3));
-                    addSlot(builder, SlotPosition.SOUTH_EAST, inputs.get(4));
-                    addSlot(builder, SlotPosition.SOUTH, inputs.get(5));
-                    addSlot(builder, SlotPosition.SOUTH_WEST, inputs.get(6));
-                }
-                case 7 -> {
-                    addSlot(builder, SlotPosition.WEST, inputs.get(1));
-                    addSlot(builder, SlotPosition.NORTH_WEST, inputs.get(2));
-                    addSlot(builder, SlotPosition.NORTH, inputs.get(3));
-                    addSlot(builder, SlotPosition.NORTH_EAST, inputs.get(4));
-                    addSlot(builder, SlotPosition.EAST, inputs.get(5));
-                    addSlot(builder, SlotPosition.SOUTH_EAST, inputs.get(6));
-                    addSlot(builder, SlotPosition.SOUTH_WEST, inputs.get(7));
-                }
-                case 8 -> {
-                    addSlot(builder, SlotPosition.NORTH_WEST, inputs.get(1));
-                    addSlot(builder, SlotPosition.NORTH, inputs.get(2));
-                    addSlot(builder, SlotPosition.NORTH_EAST, inputs.get(3));
-                    addSlot(builder, SlotPosition.EAST, inputs.get(4));
-                    addSlot(builder, SlotPosition.SOUTH_EAST, inputs.get(5));
-                    addSlot(builder, SlotPosition.SOUTH, inputs.get(6));
-                    addSlot(builder, SlotPosition.SOUTH_WEST, inputs.get(7));
-                    addSlot(builder, SlotPosition.WEST, inputs.get(8));
-                }
+        switch (pedestals) {
+            case 1 -> addSlot(builder, SlotPosition.NORTH, inputs.get(0));
+            case 2 -> {
+                addSlot(builder, SlotPosition.NORTH, inputs.get(0));
+                addSlot(builder, SlotPosition.SOUTH, inputs.get(1));
             }
-
-            builder.addSlot(RecipeIngredientRole.OUTPUT, 123, 33).add(result);
+            case 3 -> {
+                addSlot(builder, SlotPosition.WEST, inputs.get(0));
+                addSlot(builder, SlotPosition.NORTH, inputs.get(1));
+                addSlot(builder, SlotPosition.EAST, inputs.get(2));
+            }
+            case 4 -> {
+                addSlot(builder, SlotPosition.NORTH, inputs.get(0));
+                addSlot(builder, SlotPosition.EAST, inputs.get(1));
+                addSlot(builder, SlotPosition.SOUTH, inputs.get(2));
+                addSlot(builder, SlotPosition.WEST, inputs.get(3));
+            }
+            case 5 -> {
+                addSlot(builder, SlotPosition.NORTH_WEST, inputs.get(0));
+                addSlot(builder, SlotPosition.NORTH, inputs.get(1));
+                addSlot(builder, SlotPosition.NORTH_EAST, inputs.get(2));
+                addSlot(builder, SlotPosition.SOUTH_EAST, inputs.get(3));
+                addSlot(builder, SlotPosition.SOUTH_WEST, inputs.get(4));
+            }
+            case 6 -> {
+                addSlot(builder, SlotPosition.NORTH_WEST, inputs.get(0));
+                addSlot(builder, SlotPosition.NORTH, inputs.get(1));
+                addSlot(builder, SlotPosition.NORTH_EAST, inputs.get(2));
+                addSlot(builder, SlotPosition.SOUTH_EAST, inputs.get(3));
+                addSlot(builder, SlotPosition.SOUTH, inputs.get(4));
+                addSlot(builder, SlotPosition.SOUTH_WEST, inputs.get(5));
+            }
+            case 7 -> {
+                addSlot(builder, SlotPosition.WEST, inputs.get(0));
+                addSlot(builder, SlotPosition.NORTH_WEST, inputs.get(1));
+                addSlot(builder, SlotPosition.NORTH, inputs.get(2));
+                addSlot(builder, SlotPosition.NORTH_EAST, inputs.get(3));
+                addSlot(builder, SlotPosition.EAST, inputs.get(4));
+                addSlot(builder, SlotPosition.SOUTH_EAST, inputs.get(5));
+                addSlot(builder, SlotPosition.SOUTH_WEST, inputs.get(6));
+            }
+            case 8 -> {
+                addSlot(builder, SlotPosition.NORTH_WEST, inputs.get(0));
+                addSlot(builder, SlotPosition.NORTH, inputs.get(1));
+                addSlot(builder, SlotPosition.NORTH_EAST, inputs.get(2));
+                addSlot(builder, SlotPosition.EAST, inputs.get(3));
+                addSlot(builder, SlotPosition.SOUTH_EAST, inputs.get(4));
+                addSlot(builder, SlotPosition.SOUTH, inputs.get(5));
+                addSlot(builder, SlotPosition.SOUTH_WEST, inputs.get(6));
+                addSlot(builder, SlotPosition.WEST, inputs.get(7));
+            }
         }
+
+        var result = recipe.assemble(CraftingInput.EMPTY);
+
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 123, 33).add(result);
     }
 
-    private static void addSlot(IRecipeLayoutBuilder builder, SlotPosition position, SlotDisplay ingredient) {
+    private static void addSlot(IRecipeLayoutBuilder builder, SlotPosition position, Ingredient ingredient) {
         builder.addSlot(RecipeIngredientRole.INPUT, position.x, position.y).add(ingredient);
     }
 

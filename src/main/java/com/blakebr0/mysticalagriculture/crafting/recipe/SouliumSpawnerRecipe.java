@@ -1,7 +1,6 @@
 package com.blakebr0.mysticalagriculture.crafting.recipe;
 
 import com.blakebr0.mysticalagriculture.api.crafting.ISouliumSpawnerRecipe;
-import com.blakebr0.mysticalagriculture.init.ModBlocks;
 import com.blakebr0.mysticalagriculture.init.ModRecipeTypes;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -14,18 +13,12 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CraftingInput;
-import net.minecraft.world.item.crafting.PlacementInfo;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.item.crafting.display.RecipeDisplay;
-import net.minecraft.world.item.crafting.display.ShapelessCraftingRecipeDisplay;
-import net.minecraft.world.item.crafting.display.SlotDisplay;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
 
-import java.util.List;
 import java.util.Optional;
 
 public class SouliumSpawnerRecipe implements ISouliumSpawnerRecipe {
@@ -44,8 +37,6 @@ public class SouliumSpawnerRecipe implements ISouliumSpawnerRecipe {
     private final SizedIngredient input;
     private final WeightedList<EntityType<?>> entityTypes;
 
-    private PlacementInfo placementInfo;
-
     public SouliumSpawnerRecipe(SizedIngredient input, WeightedList<EntityType<?>> entityTypes) {
         this.input = input;
         this.entityTypes = entityTypes;
@@ -63,21 +54,8 @@ public class SouliumSpawnerRecipe implements ISouliumSpawnerRecipe {
     }
 
     @Override
-    public PlacementInfo placementInfo() {
-        if (this.placementInfo == null)  {
-            this.placementInfo = PlacementInfo.create(this.input.ingredient());
-        }
-
-        return this.placementInfo;
-    }
-
-    @Override
-    public List<RecipeDisplay> display() {
-        return List.of(new ShapelessCraftingRecipeDisplay(
-                List.of(this.input.ingredient().display()),
-                new SlotDisplay.ItemSlotDisplay(Items.AIR),
-                new SlotDisplay.ItemSlotDisplay(ModBlocks.SOULIUM_SPAWNER.get().asItem())
-        ));
+    public SizedIngredient getIngredient() {
+        return this.input;
     }
 
     @Override
@@ -103,11 +81,6 @@ public class SouliumSpawnerRecipe implements ISouliumSpawnerRecipe {
     @Override
     public Optional<EntityType<?>> getRandomEntityType(RandomSource random) {
         return this.entityTypes.getRandom(random);
-    }
-
-    @Override
-    public int getCount() {
-        return this.input.count();
     }
 
     private static SouliumSpawnerRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {

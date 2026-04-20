@@ -13,20 +13,15 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.api.recipe.types.IRecipeHolderType;
 import mezz.jei.api.recipe.types.IRecipeType;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.display.ShapelessCraftingRecipeDisplay;
-import net.minecraft.world.item.crafting.display.SlotDisplay;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -73,37 +68,34 @@ public class EnchanterCategory implements IRecipeCategory<RecipeHolder<IEnchante
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<IEnchanterRecipe> recipe, IFocusGroup focuses) {
-//        TODO enchanter recipe category
-//        var displays = recipe.value().display();
-//        if (!displays.isEmpty() && displays.getFirst() instanceof ShapelessCraftingRecipeDisplay display) {
-//            var ingredients = display.ingredients();
-//
-//            builder.addSlot(RecipeIngredientRole.INPUT, 1, 5).addItemStacks(createIngredientItemStack(recipe.value(), ingredients, 0));
-//            builder.addSlot(RecipeIngredientRole.INPUT, 23, 5).addItemStacks(createIngredientItemStack(recipe.value(), ingredients, 1));
-//            builder.addSlot(RecipeIngredientRole.INPUT, 63, 5).addItemStacks(createIngredientItemStack(recipe.value(), ingredients, 2));
-//
-//            builder.addSlot(RecipeIngredientRole.OUTPUT, 123, 5).addItemStacks(createIngredientItemStack(recipe.value(), ingredients, 3));
-//        }
+    public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<IEnchanterRecipe> recipeHolder, IFocusGroup focuses) {
+        var recipe = recipeHolder.value();
+
+        builder.addSlot(RecipeIngredientRole.INPUT, 1, 5).addItemStacks(createIngredientItemStack(recipe, 0));
+        builder.addSlot(RecipeIngredientRole.INPUT, 23, 5).addItemStacks(createIngredientItemStack(recipe, 1));
+        builder.addSlot(RecipeIngredientRole.INPUT, 63, 5).addItemStacks(createIngredientItemStack(recipe, 2));
+
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 123, 5).addItemStacks(createIngredientItemStack(recipe, 3));
     }
-//
-//    private static List<ItemStack> createIngredientItemStack(IEnchanterRecipe recipe, List<SlotDisplay> ingredients, int slot) {
-//        if (slot == 2) {
-//            return List.of(new ItemStack(Items.BOOK));
-//        }
-//
-//        var enchantment = recipe.getEnchantment();
-//        var maxLevel = enchantment.value().getMaxLevel();
-//
-//        if (slot == 3) {
-//            return IntStream.rangeClosed(1, maxLevel)
-//                    .mapToObj(i -> EnchantmentHelper.createBook(new EnchantmentInstance(enchantment, i)))
-//                    .toList();
-//        }
-//
-//        return Arrays.stream(ingredients.get(slot).getItems()).flatMap(stack ->
-//            IntStream.rangeClosed(1, maxLevel)
-//                    .mapToObj(i -> stack.copyWithCount(recipe.getCount(slot) * i))
-//        ).toList();
-//    }
+
+    private static List<ItemStack> createIngredientItemStack(IEnchanterRecipe recipe, int slot) {
+        if (slot == 2) {
+            return List.of(new ItemStack(Items.BOOK));
+        }
+
+        var enchantment = recipe.getEnchantment();
+        var maxLevel = enchantment.value().getMaxLevel();
+
+        if (slot == 3) {
+            return IntStream.rangeClosed(1, maxLevel)
+                    .mapToObj(i -> EnchantmentHelper.createBook(new EnchantmentInstance(enchantment, i)))
+                    .toList();
+        }
+
+        var input = recipe.getIngredients().get(slot);
+
+        return input.ingredient().items().flatMap(item ->
+            IntStream.rangeClosed(1, maxLevel).mapToObj(i -> new ItemStack(item, input.count() * i))
+        ).toList();
+    }
 }

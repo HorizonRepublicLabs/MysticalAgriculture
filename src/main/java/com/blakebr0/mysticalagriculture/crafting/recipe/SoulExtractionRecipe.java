@@ -3,7 +3,6 @@ package com.blakebr0.mysticalagriculture.crafting.recipe;
 import com.blakebr0.mysticalagriculture.api.crafting.ISoulExtractionRecipe;
 import com.blakebr0.mysticalagriculture.api.soul.MobSoulType;
 import com.blakebr0.mysticalagriculture.api.util.MobSoulUtils;
-import com.blakebr0.mysticalagriculture.init.ModBlocks;
 import com.blakebr0.mysticalagriculture.init.ModItems;
 import com.blakebr0.mysticalagriculture.init.ModRecipeTypes;
 import com.blakebr0.mysticalagriculture.registry.MobSoulTypeRegistry;
@@ -15,18 +14,11 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.PlacementInfo;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.item.crafting.display.RecipeDisplay;
-import net.minecraft.world.item.crafting.display.ShapelessCraftingRecipeDisplay;
-import net.minecraft.world.item.crafting.display.SlotDisplay;
 import net.minecraft.world.level.Level;
-
-import java.util.List;
 
 public class SoulExtractionRecipe implements ISoulExtractionRecipe {
     public static final MapCodec<SoulExtractionRecipe> MAP_CODEC = RecordCodecBuilder.mapCodec(builder ->
@@ -44,8 +36,6 @@ public class SoulExtractionRecipe implements ISoulExtractionRecipe {
     private final MobSoulType type;
     private final double souls;
     private final Result result;
-
-    private PlacementInfo placementInfo;
 
     public SoulExtractionRecipe(Ingredient input, Result result) {
         this.input = input;
@@ -72,6 +62,9 @@ public class SoulExtractionRecipe implements ISoulExtractionRecipe {
 
     @Override
     public ItemStack assemble(CraftingInput inventory) {
+        if (inventory.ingredientCount() == 0)
+            return this.result.stack();
+
         var stack = inventory.getItem(2);
         var jar = stack.copyWithCount(1);
 
@@ -81,21 +74,8 @@ public class SoulExtractionRecipe implements ISoulExtractionRecipe {
     }
 
     @Override
-    public PlacementInfo placementInfo() {
-        if (this.placementInfo == null) {
-            this.placementInfo = PlacementInfo.create(this.input);
-        }
-
-        return this.placementInfo;
-    }
-
-    @Override
-    public List<RecipeDisplay> display() {
-        return List.of(new ShapelessCraftingRecipeDisplay(
-                List.of(this.input.display()),
-                new SlotDisplay.ItemStackSlotDisplay(ItemStackTemplate.fromNonEmptyStack(this.result.stack())),
-                new SlotDisplay.ItemSlotDisplay(ModBlocks.SOUL_EXTRACTOR.get().asItem())
-        ));
+    public Ingredient getIngredient() {
+        return this.input;
     }
 
     @Override

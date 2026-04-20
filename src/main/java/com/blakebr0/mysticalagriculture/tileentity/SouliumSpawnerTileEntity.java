@@ -229,7 +229,7 @@ public class SouliumSpawnerTileEntity extends BaseInventoryTileEntity implements
                 var recipe = tile.getActiveRecipe();
                 var amount = tile.inventory.getAmountAsInt(INPUT_SLOT);
 
-                if (recipe != null && amount >= recipe.getCount()) {
+                if (recipe != null && amount >= recipe.getIngredient().count()) {
                     tile.isRunning = true;
                     tile.progress++;
 
@@ -238,7 +238,7 @@ public class SouliumSpawnerTileEntity extends BaseInventoryTileEntity implements
 
                         if (tile.progress >= tile.getOperationTime()) {
                             if (tile.attemptSpawn(recipe)) {
-                                tile.inventory.extract(INPUT_SLOT, input, recipe.getCount(), tx, true);
+                                tile.inventory.extract(INPUT_SLOT, input, recipe.getIngredient().count(), tx, true);
                                 tile.progress = 0;
                                 tile.sendSpawnParticles();
                             } else {

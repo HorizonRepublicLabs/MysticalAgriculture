@@ -1,25 +1,6 @@
 package com.blakebr0.mysticalagriculture.compat;
 
-import com.blakebr0.mysticalagriculture.MysticalAgriculture;
-import com.blakebr0.mysticalagriculture.api.crop.ICropProvider;
-import com.blakebr0.mysticalagriculture.api.farmland.IEssenceFarmland;
-import com.blakebr0.mysticalagriculture.block.InferiumCropBlock;
-import com.blakebr0.mysticalagriculture.config.ModConfigs;
-import com.blakebr0.mysticalagriculture.lib.ModCrops;
-import com.blakebr0.mysticalagriculture.lib.ModTooltips;
-import com.blakebr0.mysticalagriculture.tileentity.EssenceVesselTileEntity;
-import mcjty.theoneprobe.api.IProbeHitData;
-import mcjty.theoneprobe.api.IProbeInfo;
-import mcjty.theoneprobe.api.IProbeInfoProvider;
 import mcjty.theoneprobe.api.ITheOneProbe;
-import mcjty.theoneprobe.api.ProbeMode;
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.Component;
-import net.minecraft.resources.Identifier;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.fml.InterModComms;
 
 import java.util.function.Function;

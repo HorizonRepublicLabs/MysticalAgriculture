@@ -18,8 +18,8 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.display.ShapelessCraftingRecipeDisplay;
 
 public class ReprocessorCategory implements IRecipeCategory<RecipeHolder<IReprocessorRecipe>> {
     private static final Identifier TEXTURE = MysticalAgriculture.resource("textures/jei/reprocessor.png");
@@ -70,15 +70,12 @@ public class ReprocessorCategory implements IRecipeCategory<RecipeHolder<IReproc
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<IReprocessorRecipe> recipe, IFocusGroup focuses) {
-        var displays = recipe.value().display();
-        if (!displays.isEmpty() && displays.getFirst() instanceof ShapelessCraftingRecipeDisplay display) {
-            var inputs = display.ingredients();
-            var result = display.result();
+    public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<IReprocessorRecipe> recipeHolder, IFocusGroup focuses) {
+        var recipe = recipeHolder.value();
+        var input = recipe.getIngredient();
+        var result = recipe.assemble(CraftingInput.EMPTY);
 
-            builder.addSlot(RecipeIngredientRole.INPUT, 1, 5).add(inputs.getFirst());
-
-            builder.addSlot(RecipeIngredientRole.OUTPUT, 61, 5).add(result);
-        }
+        builder.addSlot(RecipeIngredientRole.INPUT, 1, 5).add(input);
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 61, 5).add(result);
     }
 }

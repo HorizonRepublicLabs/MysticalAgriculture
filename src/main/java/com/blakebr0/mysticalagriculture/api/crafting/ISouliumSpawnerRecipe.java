@@ -4,21 +4,19 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.crafting.CraftingInput;
+import net.minecraft.world.item.crafting.PlacementInfo;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeBookCategories;
 import net.minecraft.world.item.crafting.RecipeBookCategory;
+import net.neoforged.neoforge.common.crafting.SizedIngredient;
 
 import java.util.Optional;
 
 public interface ISouliumSpawnerRecipe extends Recipe<CraftingInput> {
+    SizedIngredient getIngredient();
     WeightedList<EntityType<?>> getEntityTypes();
     EntityType<?> getFirstEntityType();
     Optional<EntityType<?>> getRandomEntityType(RandomSource random);
-
-    /**
-     * Get the count for the ingredient at the requested index
-     */
-    int getCount();
 
     @Override
     default String group() {
@@ -33,5 +31,10 @@ public interface ISouliumSpawnerRecipe extends Recipe<CraftingInput> {
     @Override
     default RecipeBookCategory recipeBookCategory() {
         return RecipeBookCategories.CRAFTING_MISC;
+    }
+
+    @Override
+    default PlacementInfo placementInfo() {
+        return PlacementInfo.NOT_PLACEABLE;
     }
 }

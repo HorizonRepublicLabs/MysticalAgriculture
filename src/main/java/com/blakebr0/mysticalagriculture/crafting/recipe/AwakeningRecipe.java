@@ -1,7 +1,6 @@
 package com.blakebr0.mysticalagriculture.crafting.recipe;
 
 import com.blakebr0.mysticalagriculture.api.crafting.IAwakeningRecipe;
-import com.blakebr0.mysticalagriculture.init.ModBlocks;
 import com.blakebr0.mysticalagriculture.init.ModRecipeTypes;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
@@ -15,12 +14,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.PlacementInfo;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.item.crafting.display.RecipeDisplay;
-import net.minecraft.world.item.crafting.display.ShapelessCraftingRecipeDisplay;
-import net.minecraft.world.item.crafting.display.SlotDisplay;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
 import net.neoforged.neoforge.common.util.RecipeMatcher;
@@ -55,7 +50,7 @@ public class AwakeningRecipe implements IAwakeningRecipe {
                                     },
                                     DataResult::success
                             )
-                            .forGetter(recipe -> recipe.inputs),
+                            .forGetter(recipe -> recipe.allIngredients),
                     SizedIngredient.NESTED_CODEC
                             .listOf()
                             .fieldOf("essences")
@@ -86,22 +81,23 @@ public class AwakeningRecipe implements IAwakeningRecipe {
     public static final RecipeSerializer<AwakeningRecipe> SERIALIZER = new RecipeSerializer<>(MAP_CODEC, STREAM_CODEC);
 
     private final Ingredient input;
-    private final List<Ingredient> inputs;
+    private final List<Ingredient> ingredients;
     private final List<SizedIngredient> essences;
+    private final List<Ingredient> allIngredients;
     private final ItemStackTemplate result;
     private final boolean transferComponents;
-    private PlacementInfo placementInfo;
     // for CraftTweaker recipes
     private BiFunction<Integer, ItemStack, ItemStack> transformer;
 
     // the input is specified separately in JSON but is part of the ingredient list in practice
     public AwakeningRecipe(Ingredient input, List<Ingredient> ingredients, List<SizedIngredient> essences, ItemStackTemplate result, boolean transferComponents) {
         this.input = input;
+        this.ingredients = ingredients;
         this.essences = essences;
         this.result = result;
         this.transferComponents = transferComponents;
 
-        this.inputs = List.of(
+        this.allIngredients = List.of(
                 essences.get(0).ingredient(),
                 ingredients.get(0),
                 essences.get(1).ingredient(),
@@ -116,7 +112,7 @@ public class AwakeningRecipe implements IAwakeningRecipe {
     @Override
     public boolean matches(CraftingInput inventory, Level level) {
         // -1 ingredient for the input item
-        if (this.inputs.size() != inventory.ingredientCount() - 1)
+        if (this.allIngredients.size() != inventory.ingredientCount() - 1)
             return false;
 
         var input = inventory.getItem(0);
@@ -132,13 +128,17 @@ public class AwakeningRecipe implements IAwakeningRecipe {
             }
         }
 
-        return RecipeMatcher.findMatches(inputs, this.inputs) != null;
+        return RecipeMatcher.findMatches(inputs, this.allIngredients) != null;
     }
 
     @Override
     public ItemStack assemble(CraftingInput inventory) {
-        var stack = inventory.getItem(0);
         var result = this.result.create();
+
+        if (inventory.ingredientCount() == 0)
+            return result;
+
+        var stack = inventory.getItem(0);
 
         if (this.transferComponents) {
             result.applyComponents(stack.getComponentsPatch());
@@ -148,24 +148,18 @@ public class AwakeningRecipe implements IAwakeningRecipe {
     }
 
     @Override
-    public PlacementInfo placementInfo() {
-        if (this.placementInfo == null) {
-            var ingredients = new ArrayList<Ingredient>();
-            ingredients.add(this.input);
-            ingredients.addAll(this.inputs);
-            this.placementInfo = PlacementInfo.create(ingredients);
-        }
-
-        return this.placementInfo;
+    public Ingredient getAltarIngredient() {
+        return this.input;
     }
 
     @Override
-    public List<RecipeDisplay> display() {
-        return List.of(new ShapelessCraftingRecipeDisplay(
-                this.placementInfo().ingredients().stream().map(Ingredient::display).toList(),
-                new SlotDisplay.ItemStackSlotDisplay(this.result),
-                new SlotDisplay.ItemSlotDisplay(ModBlocks.AWAKENING_ALTAR.get().asItem())
-        ));
+    public List<Ingredient> getPedestalIngredients() {
+        return this.ingredients;
+    }
+
+    @Override
+    public List<SizedIngredient> getEssenceIngredients() {
+        return this.essences;
     }
 
     @Override
@@ -190,7 +184,7 @@ public class AwakeningRecipe implements IAwakeningRecipe {
 
             // slot indexes 5 -> 8 are the essence vessels
             if (i > 4) {
-                var input = this.inputs.get(vesselIndex);
+                var input = this.allIngredients.get(vesselIndex);
 
                 vesselIndex += 2;
 
@@ -217,7 +211,7 @@ public class AwakeningRecipe implements IAwakeningRecipe {
                     var inputs = NonNullList.<Ingredient>create();
 
                     inputs.add(this.input);
-                    inputs.addAll(this.inputs);
+                    inputs.addAll(this.allIngredients);
 
                     for (int j = 0; j < inputs.size(); j += 2) {
                         var input = inputs.get(j);
@@ -237,11 +231,6 @@ public class AwakeningRecipe implements IAwakeningRecipe {
         }
 
         return remaining;
-    }
-
-    @Override
-    public List<SizedIngredient> getEssences() {
-        return this.essences;
     }
 
     @Override
@@ -297,7 +286,7 @@ public class AwakeningRecipe implements IAwakeningRecipe {
 
         // only send the non-vessel ingredients
         for (int i = 1; i <= 7; i += 2) {
-            Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.inputs.get(i));
+            Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.allIngredients.get(i));
         }
 
         SizedIngredient.STREAM_CODEC.apply(ByteBufCodecs.list()).encode(buffer, recipe.essences);

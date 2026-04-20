@@ -17,8 +17,11 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.display.ShapelessCraftingRecipeDisplay;
+import net.neoforged.neoforge.common.crafting.SizedIngredient;
+
+import java.util.List;
 
 public class AwakeningCategory implements IRecipeCategory<RecipeHolder<IAwakeningRecipe>> {
     private static final Identifier TEXTURE = MysticalAgriculture.resource("textures/jei/infusion.png");
@@ -63,23 +66,26 @@ public class AwakeningCategory implements IRecipeCategory<RecipeHolder<IAwakenin
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<IAwakeningRecipe> recipe, IFocusGroup focuses) {
-        var displays = recipe.value().display();
-        if (!displays.isEmpty() && displays.getFirst() instanceof ShapelessCraftingRecipeDisplay display) {
-            var result = display.result();
-            var ingredients = display.ingredients();
+    public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<IAwakeningRecipe> recipeHolder, IFocusGroup focuses) {
+        var recipe = recipeHolder.value();
+        var pedestals = recipe.getPedestalIngredients();
+        var essences = recipe.getEssenceIngredients();
+        var result = recipe.assemble(CraftingInput.EMPTY);
 
-            builder.addSlot(RecipeIngredientRole.INPUT, 33, 33).add(ingredients.get(0));
-            builder.addSlot(RecipeIngredientRole.INPUT, 7, 7).add(ingredients.get(1));
-            builder.addSlot(RecipeIngredientRole.INPUT, 33, 1).add(ingredients.get(2));
-            builder.addSlot(RecipeIngredientRole.INPUT, 59, 7).add(ingredients.get(3));
-            builder.addSlot(RecipeIngredientRole.INPUT, 65, 33).add(ingredients.get(4));
-            builder.addSlot(RecipeIngredientRole.INPUT, 59, 59).add(ingredients.get(5));
-            builder.addSlot(RecipeIngredientRole.INPUT, 33, 64).add(ingredients.get(6));
-            builder.addSlot(RecipeIngredientRole.INPUT, 7, 59).add(ingredients.get(7));
-            builder.addSlot(RecipeIngredientRole.INPUT, 1, 33).add(ingredients.get(8));
+        builder.addSlot(RecipeIngredientRole.INPUT, 33, 33).add(recipe.getAltarIngredient());
+        builder.addSlot(RecipeIngredientRole.INPUT, 7, 7).addItemStacks(createEssenceIngredient(essences.get(0)));
+        builder.addSlot(RecipeIngredientRole.INPUT, 33, 1).add(pedestals.get(0));
+        builder.addSlot(RecipeIngredientRole.INPUT, 59, 7).addItemStacks(createEssenceIngredient(essences.get(1)));
+        builder.addSlot(RecipeIngredientRole.INPUT, 65, 33).add(pedestals.get(1));
+        builder.addSlot(RecipeIngredientRole.INPUT, 59, 59).addItemStacks(createEssenceIngredient(essences.get(2)));
+        builder.addSlot(RecipeIngredientRole.INPUT, 33, 64).add(pedestals.get(2));
+        builder.addSlot(RecipeIngredientRole.INPUT, 7, 59).addItemStacks(createEssenceIngredient(essences.get(3)));
+        builder.addSlot(RecipeIngredientRole.INPUT, 1, 33).add(pedestals.get(3));
 
-            builder.addSlot(RecipeIngredientRole.OUTPUT, 123, 33).add(result);
-        }
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 123, 33).add(result);
+    }
+
+    private static List<ItemStack> createEssenceIngredient(SizedIngredient ingredient) {
+        return ingredient.ingredient().items().map(item -> new ItemStack(item, ingredient.count())).toList();
     }
 }

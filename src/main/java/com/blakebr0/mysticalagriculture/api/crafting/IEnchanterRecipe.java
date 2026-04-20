@@ -4,25 +4,22 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingInput;
+import net.minecraft.world.item.crafting.PlacementInfo;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeBookCategories;
 import net.minecraft.world.item.crafting.RecipeBookCategory;
 import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.neoforged.neoforge.common.crafting.SizedIngredient;
+
+import java.util.List;
 
 /**
  * Used to represent an Enchanter recipe for the recipe type
  */
 public interface IEnchanterRecipe extends Recipe<CraftingInput> {
+    List<SizedIngredient> getIngredients();
     Holder<Enchantment> getEnchantment();
-
-    /**
-     * Get the count for the ingredient at the requested index
-     *
-     * @param index the ingredient index
-     * @return either the count or -1 if invalid
-     */
-    int getCount(int index);
 
     /**
      * Get the maximum enchantment level for the provided recipe input
@@ -67,5 +64,10 @@ public interface IEnchanterRecipe extends Recipe<CraftingInput> {
     @Override
     default RecipeBookCategory recipeBookCategory() {
         return RecipeBookCategories.CRAFTING_MISC;
+    }
+
+    @Override
+    default PlacementInfo placementInfo() {
+        return PlacementInfo.NOT_PLACEABLE;
     }
 }
