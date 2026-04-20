@@ -84,24 +84,24 @@ public class HarvesterTileEntity extends BaseInventoryTileEntity implements Menu
     public void loadAdditional(ValueInput input) {
         super.loadAdditional(input);
 
-        this.progress = input.getIntOr("Progress", 0);
-        this.fuelLeft = input.getIntOr("FuelLeft", 0);
-        this.fuelItemValue = input.getIntOr("FuelItemValue", 0);
-        this.lastScanIndex = input.getIntOr("LastScanIndex", -1);
-        this.energy.deserialize(input.childOrEmpty("Energy"));
-        this.upgradeInventory.deserialize(input.childOrEmpty("UpgradeInventory"));
+        this.progress = input.getIntOr("progress", 0);
+        this.fuelLeft = input.getIntOr("fuel_left", 0);
+        this.fuelItemValue = input.getIntOr("fuel_left_value", 0);
+        this.lastScanIndex = input.getIntOr("last_scan_index", -1);
+        this.energy.deserialize(input.childOrEmpty("energy"));
+        this.upgradeInventory.deserialize(input.childOrEmpty("upgrade_inventory"));
     }
 
     @Override
     public void saveAdditional(ValueOutput output) {
         super.saveAdditional(output);
 
-        output.putInt("Progress", this.progress);
-        output.putInt("FuelLeft", this.fuelLeft);
-        output.putInt("FuelItemValue", this.fuelItemValue);
-        output.putInt("LastScanIndex", this.lastScanIndex);
-        output.putChild("Energy", this.energy);
-        output.putChild("UpgradeInventory", this.upgradeInventory);
+        output.putInt("progress", this.progress);
+        output.putInt("fuel_left", this.fuelLeft);
+        output.putInt("fuel_item_value", this.fuelItemValue);
+        output.putInt("last_scan_index", this.lastScanIndex);
+        output.putChild("energy", this.energy);
+        output.putChild("upgrade_inventory", this.upgradeInventory);
     }
 
     @Override

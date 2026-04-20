@@ -57,16 +57,16 @@ public class AwakeningAltarTileEntity extends BaseInventoryTileEntity implements
     public void loadAdditional(ValueInput input) {
         super.loadAdditional(input);
 
-        this.progress = input.getIntOr("Progress", 0);
-        this.active = input.getBooleanOr("Active", false);
+        this.progress = input.getIntOr("progress", 0);
+        this.active = input.getBooleanOr("active", false);
     }
 
     @Override
     public void saveAdditional(ValueOutput output) {
         super.saveAdditional(output);
 
-        output.putInt("Progress", this.progress);
-        output.putBoolean("Active", this.active);
+        output.putInt("progress", this.progress);
+        output.putBoolean("active", this.active);
     }
 
     @Override
