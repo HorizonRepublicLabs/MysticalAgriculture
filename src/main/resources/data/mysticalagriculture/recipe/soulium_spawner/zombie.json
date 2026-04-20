@@ -13,10 +13,14 @@
   "entities": [
     {
       "entity": "minecraft:zombie",
-      "weight": 19
+      "weight": 18
     },
     {
       "entity": "minecraft:zombie_villager",
+      "weight": 1
+    },
+    {
+      "entity": "minecraft:husk",
       "weight": 1
     }
   ]

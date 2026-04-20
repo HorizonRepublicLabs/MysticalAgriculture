@@ -13,10 +13,14 @@
   "entities": [
     {
       "entity": "minecraft:skeleton",
-      "weight": 19
+      "weight": 18
     },
     {
       "entity": "minecraft:bogged",
+      "weight": 1
+    },
+    {
+      "entity": "minecraft:parched",
       "weight": 1
     }
   ]
