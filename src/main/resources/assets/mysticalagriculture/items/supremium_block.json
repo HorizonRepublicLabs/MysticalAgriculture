@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "mysticalagriculture:item/supremium_block"
+    "model": "mysticalagriculture:block/supremium_block"
   }
 }

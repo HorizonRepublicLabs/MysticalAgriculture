@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "mysticalagriculture:item/imperium_block"
+    "model": "mysticalagriculture:block/imperium_block"
   }
 }

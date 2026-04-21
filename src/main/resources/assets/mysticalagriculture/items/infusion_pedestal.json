@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "mysticalagriculture:item/infusion_pedestal"
+    "model": "mysticalagriculture:block/infusion_pedestal"
   }
 }

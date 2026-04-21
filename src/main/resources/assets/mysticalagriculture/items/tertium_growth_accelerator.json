@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "mysticalagriculture:item/tertium_growth_accelerator"
+    "model": "mysticalagriculture:block/tertium_growth_accelerator"
   }
 }

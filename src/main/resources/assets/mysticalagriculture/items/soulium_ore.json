@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "mysticalagriculture:item/soulium_ore"
+    "model": "mysticalagriculture:block/soulium_ore"
   }
 }

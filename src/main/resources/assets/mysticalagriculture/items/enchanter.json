@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "mysticalagriculture:item/enchanter"
+    "model": "mysticalagriculture:block/enchanter"
   }
 }

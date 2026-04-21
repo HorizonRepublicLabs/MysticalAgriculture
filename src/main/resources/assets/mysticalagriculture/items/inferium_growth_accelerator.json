@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "mysticalagriculture:item/inferium_growth_accelerator"
+    "model": "mysticalagriculture:block/inferium_growth_accelerator"
   }
 }

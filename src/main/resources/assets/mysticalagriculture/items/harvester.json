@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "mysticalagriculture:item/harvester"
+    "model": "mysticalagriculture:block/harvester"
   }
 }

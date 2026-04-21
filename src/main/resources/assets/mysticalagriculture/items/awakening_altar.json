@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "mysticalagriculture:item/awakening_altar"
+    "model": "mysticalagriculture:block/awakening_altar"
   }
 }

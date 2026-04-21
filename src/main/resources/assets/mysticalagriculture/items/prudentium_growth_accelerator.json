@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "mysticalagriculture:item/prudentium_growth_accelerator"
+    "model": "mysticalagriculture:block/prudentium_growth_accelerator"
   }
 }

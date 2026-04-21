@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "mysticalagriculture:item/tertium_block"
+    "model": "mysticalagriculture:block/tertium_block"
   }
 }

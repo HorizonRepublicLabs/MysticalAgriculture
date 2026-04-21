@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "mysticalagriculture:item/essence_vessel"
+    "model": "mysticalagriculture:block/essence_vessel"
   }
 }

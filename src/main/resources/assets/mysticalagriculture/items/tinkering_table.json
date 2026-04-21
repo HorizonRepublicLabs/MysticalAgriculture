@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "mysticalagriculture:item/tinkering_table"
+    "model": "mysticalagriculture:block/tinkering_table"
   }
 }

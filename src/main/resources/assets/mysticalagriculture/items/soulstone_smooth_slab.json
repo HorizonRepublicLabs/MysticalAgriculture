@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "mysticalagriculture:item/soulstone_smooth_slab"
+    "model": "mysticalagriculture:block/soulstone_smooth_slab"
   }
 }

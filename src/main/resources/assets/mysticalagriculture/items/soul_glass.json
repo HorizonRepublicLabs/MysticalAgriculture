@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "mysticalagriculture:item/soul_glass"
+    "model": "mysticalagriculture:block/soul_glass"
   }
 }

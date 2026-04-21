@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "mysticalagriculture:item/soulstone_stairs"
+    "model": "mysticalagriculture:block/soulstone_stairs"
   }
 }

@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "mysticalagriculture:item/seed_reprocessor"
+    "model": "mysticalagriculture:block/seed_reprocessor"
   }
 }

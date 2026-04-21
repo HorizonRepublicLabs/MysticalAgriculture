@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "mysticalagriculture:item/awakened_supremium_growth_accelerator"
+    "model": "mysticalagriculture:block/awakened_supremium_growth_accelerator"
   }
 }
