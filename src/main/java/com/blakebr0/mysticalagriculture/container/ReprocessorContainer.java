@@ -45,6 +45,8 @@ public class ReprocessorContainer extends BaseContainerMenu {
         for (int i = 0; i < 9; i++) {
             this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 170));
         }
+
+        this.addDataSlots(data);
     }
 
     @Override
