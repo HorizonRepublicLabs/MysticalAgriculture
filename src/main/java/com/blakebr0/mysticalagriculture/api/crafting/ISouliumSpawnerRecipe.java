@@ -19,6 +19,11 @@ public interface ISouliumSpawnerRecipe extends Recipe<CraftingInput> {
     Optional<EntityType<?>> getRandomEntityType(RandomSource random);
 
     @Override
+    default boolean isSpecial() {
+        return true;
+    }
+
+    @Override
     default String group() {
         return "mysticalagriculture:soulium_spawner";
     }

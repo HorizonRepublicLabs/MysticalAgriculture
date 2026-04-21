@@ -52,6 +52,11 @@ public interface IEnchanterRecipe extends Recipe<CraftingInput> {
     NonNullList<ItemStack> getRemainingItems(CraftingInput input, int level);
 
     @Override
+    default boolean isSpecial() {
+        return true;
+    }
+
+    @Override
     default String group() {
         return "mysticalagriculture:enchanter";
     }

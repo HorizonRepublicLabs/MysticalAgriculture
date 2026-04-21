@@ -17,6 +17,11 @@ public interface ISoulExtractionRecipe extends Recipe<CraftingInput> {
     double getSouls();
 
     @Override
+    default boolean isSpecial() {
+        return true;
+    }
+
+    @Override
     default String group() {
         return "mysticalagriculture:soul_extraction";
     }

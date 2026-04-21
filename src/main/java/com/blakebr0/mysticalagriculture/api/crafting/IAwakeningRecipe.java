@@ -48,6 +48,11 @@ public interface IAwakeningRecipe extends Recipe<CraftingInput> {
     NonNullList<ItemStack> getRemainingItems(CraftingInput input);
 
     @Override
+    default boolean isSpecial() {
+        return true;
+    }
+
+    @Override
     default String group() {
         return "mysticalagriculture:awakening";
     }

@@ -14,6 +14,11 @@ public interface IReprocessorRecipe extends Recipe<CraftingInput> {
     Ingredient getIngredient();
 
     @Override
+    default boolean isSpecial() {
+        return true;
+    }
+
+    @Override
     default String group() {
         return "mysticalagriculture:reprocessor";
     }
