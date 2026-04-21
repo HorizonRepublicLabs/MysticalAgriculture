@@ -20,7 +20,7 @@ public class SouliumDaggerItem extends BaseSwordItem implements ISoulSiphoningIt
     private final DaggerType type;
 
     public SouliumDaggerItem(Identifier id, ToolMaterial material, DaggerType type) {
-        super(id, material);
+        super(id, material, p -> p.overrideDescription("item.mysticalagriculture.soulium_dagger"));
         this.type = type;
     }
 
