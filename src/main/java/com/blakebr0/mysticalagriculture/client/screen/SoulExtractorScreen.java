@@ -5,7 +5,6 @@ import com.blakebr0.cucumber.client.screen.widget.EnergyBarWidget;
 import com.blakebr0.cucumber.util.Formatting;
 import com.blakebr0.mysticalagriculture.MysticalAgriculture;
 import com.blakebr0.mysticalagriculture.container.SoulExtractorContainer;
-import com.blakebr0.mysticalagriculture.tileentity.SoulExtractorTileEntity;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
@@ -14,7 +13,6 @@ import net.minecraft.world.entity.player.Inventory;
 
 public class SoulExtractorScreen extends BaseContainerScreen<SoulExtractorContainer> {
     private static final Identifier BACKGROUND = MysticalAgriculture.resource("textures/gui/soul_extractor.png");
-    private SoulExtractorTileEntity tile;
 
     public SoulExtractorScreen(SoulExtractorContainer container, Inventory inv, Component title) {
         super(container, inv, title, BACKGROUND, 176, 194);
@@ -27,11 +25,7 @@ public class SoulExtractorScreen extends BaseContainerScreen<SoulExtractorContai
         int x = this.getGuiLeft();
         int y = this.getGuiTop();
 
-        this.tile = this.getTileEntity();
-
-        if (this.tile != null) {
-            this.addRenderableWidget(new EnergyBarWidget(x + 7, y + 17, this.menu::getEnergyStored, this.menu::getEnergyCapacity));
-        }
+        this.addRenderableWidget(new EnergyBarWidget(x + 7, y + 17, this.menu::getEnergyStored, this.menu::getEnergyCapacity));
     }
 
     @Override
@@ -48,7 +42,7 @@ public class SoulExtractorScreen extends BaseContainerScreen<SoulExtractorContai
         super.extractTooltip(gfx, mouseX, mouseY);
 
         if (mouseX > x + 30 && mouseX < x + 45 && mouseY > y + 39 && mouseY < y + 53) {
-            gfx.setTooltipForNextFrame(this.font, Formatting.energy(this.getFuelLeft()), mouseX, mouseY);
+            gfx.setTooltipForNextFrame(this.font, Formatting.energy(this.menu.getFuelLeft()), mouseX, mouseY);
         }
     }
 
@@ -59,72 +53,26 @@ public class SoulExtractorScreen extends BaseContainerScreen<SoulExtractorContai
         int x = this.getGuiLeft();
         int y = this.getGuiTop();
 
-        if (this.getFuelItemValue() > 0) {
+        if (this.menu.getFuelItemValue() > 0) {
             int i = this.getBurnLeftScaled(13);
             gfx.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, x + 31, y + 52 - i, 176, 12 - i, 14, i + 1, 256, 256);
         }
 
-        if (this.getProgress() > 0) {
+        if (this.menu.getProgress() > 0) {
             int i2 = this.getProgressScaled(24);
             gfx.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, x + 98, y + 51, 176, 14, i2 + 1, 16, 256, 256);
         }
     }
 
-    private SoulExtractorTileEntity getTileEntity() {
-        var level = this.getMinecraft().level;
-
-        if (level != null) {
-            var tile = level.getBlockEntity(this.getMenu().getBlockPos());
-
-            if (tile instanceof SoulExtractorTileEntity extractor) {
-                return extractor;
-            }
-        }
-
-        return null;
-    }
-
-    public int getProgress() {
-        if (this.tile == null)
-            return 0;
-
-        return this.tile.getProgress();
-    }
-
-    public int getOperationTime() {
-        if (this.tile == null)
-            return 0;
-
-        var tier = this.tile.getMachineTier();
-        if (tier == null)
-            return this.tile.getOperationTime();
-
-        return (int) (this.tile.getOperationTime() * tier.getOperationTimeMultiplier());
-    }
-
-    public int getFuelLeft() {
-        if (this.tile == null)
-            return 0;
-
-        return this.tile.getFuelLeft();
-    }
-
-    public int getFuelItemValue() {
-        if (this.tile == null)
-            return 0;
-
-        return this.tile.getFuelItemValue();
-    }
-
     public int getProgressScaled(int pixels) {
-        int i = this.getProgress();
-        int j = this.getOperationTime();
+        int i = this.menu.getProgress();
+        int j = this.menu.getOperationTime();
         return j != 0 && i != 0 ? i * pixels / j : 0;
     }
 
     public int getBurnLeftScaled(int pixels) {
-        int i = this.getFuelLeft();
-        int j = this.getFuelItemValue();
+        int i = this.menu.getFuelLeft();
+        int j = this.menu.getFuelItemValue();
         return (int) (j != 0 && i != 0 ? (long) i * pixels / j : 0);
     }
 }
