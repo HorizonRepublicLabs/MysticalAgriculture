@@ -1,0 +1,27 @@
+{
+  "type": "mysticalagriculture:ore_infusion",
+  "neoforge:conditions": [
+    {
+      "type": "mysticalagriculture:crop_enabled",
+      "crop": "mysticalagriculture:rock_crystal"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "astralsorcery"
+    }
+  ],
+  "ingredients": [
+    {
+      "ingredient": "minecraft:stone",
+      "count": 1
+    },
+    {
+      "ingredient": "mysticalagriculture:rock_crystal_essence",
+      "count": 8
+    }
+  ],
+  "result": {
+    "id": "astralsorcery:rock_crystal_ore",
+    "count": 1
+  }
+}

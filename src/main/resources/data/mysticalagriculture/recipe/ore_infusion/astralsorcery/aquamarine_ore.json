@@ -1,0 +1,27 @@
+{
+  "type": "mysticalagriculture:ore_infusion",
+  "neoforge:conditions": [
+    {
+      "type": "mysticalagriculture:crop_enabled",
+      "crop": "mysticalagriculture:aquamarine"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "astralsorcery"
+    }
+  ],
+  "ingredients": [
+    {
+      "ingredient": "minecraft:sand",
+      "count": 1
+    },
+    {
+      "ingredient": "mysticalagriculture:aquamarine_essence",
+      "count": 4
+    }
+  ],
+  "result": {
+    "id": "astralsorcery:aquamarine_shale",
+    "count": 1
+  }
+}

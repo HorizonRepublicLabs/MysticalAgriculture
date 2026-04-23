@@ -1,0 +1,30 @@
+{
+  "type": "mysticalagriculture:ore_infusion",
+  "neoforge:conditions": [
+    {
+      "type": "mysticalagriculture:crop_enabled",
+      "crop": "mysticalagriculture:iridium"
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:ores/iridium"
+      }
+    }
+  ],
+  "ingredients": [
+    {
+      "ingredient": "minecraft:deepslate",
+      "count": 1
+    },
+    {
+      "ingredient": "mysticalagriculture:iridium_essence",
+      "count": 8
+    }
+  ],
+  "result": {
+    "tag": "minecraft:iridium_ore",
+    "count": 1
+  }
+}
