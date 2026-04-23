@@ -3,21 +3,21 @@
   "neoforge:conditions": [
     {
       "type": "mysticalagriculture:crop_enabled",
-      "crop": "mysticalagriculture:iron"
+      "crop": "mysticalagriculture:redstone"
     }
   ],
   "ingredients": [
     {
-      "ingredient": "minecraft:stone",
+      "ingredient": "minecraft:deepslate",
       "count": 1
     },
     {
-      "ingredient": "mysticalagriculture:iron_essence",
-      "count": 3
+      "ingredient": "mysticalagriculture:redstone_essence",
+      "count": 4
     }
   ],
   "result": {
-    "id": "minecraft:iron_ore",
+    "id": "minecraft:deepslate_redstone_ore",
     "count": 1
   }
 }

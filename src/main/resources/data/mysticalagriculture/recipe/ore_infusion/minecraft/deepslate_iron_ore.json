@@ -1,0 +1,23 @@
+{
+  "type": "mysticalagriculture:ore_infusion",
+  "neoforge:conditions": [
+    {
+      "type": "mysticalagriculture:crop_enabled",
+      "crop": "mysticalagriculture:iron"
+    }
+  ],
+  "ingredients": [
+    {
+      "ingredient": "minecraft:deepslate",
+      "count": 1
+    },
+    {
+      "ingredient": "mysticalagriculture:iron_essence",
+      "count": 4
+    }
+  ],
+  "result": {
+    "id": "minecraft:deepslate_iron_ore",
+    "count": 1
+  }
+}

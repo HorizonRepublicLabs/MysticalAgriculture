@@ -1,0 +1,23 @@
+{
+  "type": "mysticalagriculture:ore_infusion",
+  "neoforge:conditions": [
+    {
+      "type": "mysticalagriculture:crop_enabled",
+      "crop": "mysticalagriculture:redstone"
+    }
+  ],
+  "ingredients": [
+    {
+      "ingredient": "minecraft:stone",
+      "count": 1
+    },
+    {
+      "ingredient": "mysticalagriculture:redstone_essence",
+      "count": 4
+    }
+  ],
+  "result": {
+    "id": "minecraft:redstone_ore",
+    "count": 1
+  }
+}

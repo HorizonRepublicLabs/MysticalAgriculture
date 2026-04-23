@@ -1,0 +1,23 @@
+{
+  "type": "mysticalagriculture:ore_infusion",
+  "neoforge:conditions": [
+    {
+      "type": "mysticalagriculture:crop_enabled",
+      "crop": "mysticalagriculture:lapis_lazuli"
+    }
+  ],
+  "ingredients": [
+    {
+      "ingredient": "minecraft:stone",
+      "count": 1
+    },
+    {
+      "ingredient": "mysticalagriculture:lapis_lazuli_essence",
+      "count": 6
+    }
+  ],
+  "result": {
+    "id": "minecraft:lapis_ore",
+    "count": 1
+  }
+}

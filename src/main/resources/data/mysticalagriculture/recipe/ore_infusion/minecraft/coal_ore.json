@@ -1,0 +1,23 @@
+{
+  "type": "mysticalagriculture:ore_infusion",
+  "neoforge:conditions": [
+    {
+      "type": "mysticalagriculture:crop_enabled",
+      "crop": "mysticalagriculture:coal"
+    }
+  ],
+  "ingredients": [
+    {
+      "ingredient": "minecraft:stone",
+      "count": 1
+    },
+    {
+      "ingredient": "mysticalagriculture:coal_essence",
+      "count": 3
+    }
+  ],
+  "result": {
+    "id": "minecraft:coal_ore",
+    "count": 1
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "type": "mysticalagriculture:ore_infusion",
+  "neoforge:conditions": [
+    {
+      "type": "mysticalagriculture:crop_enabled",
+      "crop": "mysticalagriculture:copper"
+    }
+  ],
+  "ingredients": [
+    {
+      "ingredient": "minecraft:stone",
+      "count": 1
+    },
+    {
+      "ingredient": "mysticalagriculture:copper_essence",
+      "count": 4
+    }
+  ],
+  "result": {
+    "id": "minecraft:copper_ore",
+    "count": 1
+  }
+}

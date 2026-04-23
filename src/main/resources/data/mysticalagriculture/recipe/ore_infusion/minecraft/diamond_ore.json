@@ -1,0 +1,23 @@
+{
+  "type": "mysticalagriculture:ore_infusion",
+  "neoforge:conditions": [
+    {
+      "type": "mysticalagriculture:crop_enabled",
+      "crop": "mysticalagriculture:diamond"
+    }
+  ],
+  "ingredients": [
+    {
+      "ingredient": "minecraft:stone",
+      "count": 1
+    },
+    {
+      "ingredient": "mysticalagriculture:diamond_essence",
+      "count": 8
+    }
+  ],
+  "result": {
+    "id": "minecraft:diamond_ore",
+    "count": 1
+  }
+}

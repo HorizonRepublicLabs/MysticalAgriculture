@@ -1,0 +1,23 @@
+{
+  "type": "mysticalagriculture:ore_infusion",
+  "neoforge:conditions": [
+    {
+      "type": "mysticalagriculture:crop_enabled",
+      "crop": "mysticalagriculture:nether_quartz"
+    }
+  ],
+  "ingredients": [
+    {
+      "ingredient": "minecraft:netherrack",
+      "count": 1
+    },
+    {
+      "ingredient": "mysticalagriculture:nether_quartz_essence",
+      "count": 4
+    }
+  ],
+  "result": {
+    "id": "minecraft:nether_quartz_ore",
+    "count": 1
+  }
+}
