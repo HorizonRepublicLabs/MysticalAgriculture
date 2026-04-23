@@ -62,7 +62,7 @@ public class CruxCategory implements IRecipeCategory<CruxRecipe> {
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, CruxRecipe recipe, IFocusGroup focuses) {
         var inputs = recipe.getIngredients();
-        var output = recipe.essence;
+        var output = recipe.essence();
 
         builder.addSlot(RecipeIngredientRole.INPUT, 1, 1).add(inputs.get(0));
         builder.addSlot(RecipeIngredientRole.INPUT, 1, 19).add(inputs.get(1));

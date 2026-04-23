@@ -9,6 +9,7 @@ import com.blakebr0.mysticalagriculture.tileentity.EssenceVesselTileEntity;
 import com.blakebr0.mysticalagriculture.tileentity.HarvesterTileEntity;
 import com.blakebr0.mysticalagriculture.tileentity.InfusionAltarTileEntity;
 import com.blakebr0.mysticalagriculture.tileentity.InfusionPedestalTileEntity;
+import com.blakebr0.mysticalagriculture.tileentity.OreInfuserTileEntity;
 import com.blakebr0.mysticalagriculture.tileentity.ReprocessorTileEntity;
 import com.blakebr0.mysticalagriculture.tileentity.SoulExtractorTileEntity;
 import com.blakebr0.mysticalagriculture.tileentity.SouliumSpawnerTileEntity;
@@ -37,6 +38,7 @@ public final class ModTileEntities {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SoulExtractorTileEntity>> SOUL_EXTRACTOR = register("soul_extractor", SoulExtractorTileEntity::new, () -> new Block[] { ModBlocks.SOUL_EXTRACTOR.get() });
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<HarvesterTileEntity>> HARVESTER = register("harvester", HarvesterTileEntity::new, () -> new Block[] { ModBlocks.HARVESTER.get() });
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SouliumSpawnerTileEntity>> SOULIUM_SPAWNER = register("soulium_spawner", SouliumSpawnerTileEntity::new, () -> new Block[] { ModBlocks.SOULIUM_SPAWNER.get() });
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<OreInfuserTileEntity>> ORE_INFUSER = register("ore_infuser", OreInfuserTileEntity::new, () -> new Block[] { ModBlocks.ORE_INFUSER.get() });
 
     private static <T extends BlockEntity> DeferredHolder<BlockEntityType<?>, BlockEntityType<T>> register(String name, BlockEntityType.BlockEntitySupplier<T> tile, Supplier<Block[]> blocks) {
         return REGISTRY.register(name, () -> new BlockEntityType<>(tile, blocks.get()));

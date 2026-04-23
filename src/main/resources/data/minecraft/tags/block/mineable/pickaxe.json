@@ -66,6 +66,7 @@
     "mysticalagriculture:seed_reprocessor",
     "mysticalagriculture:soul_extractor",
     "mysticalagriculture:harvester",
-    "mysticalagriculture:soulium_spawner"
+    "mysticalagriculture:soulium_spawner",
+    "mysticalagriculture:ore_infuser"
   ]
 }

@@ -1,22 +1,21 @@
 package com.blakebr0.mysticalagriculture.tileentity;
 
 import com.blakebr0.cucumber.energy.CEnergyStorage;
+import com.blakebr0.cucumber.helper.ItemResourceHelper;
 import com.blakebr0.cucumber.inventory.CItemStacksHandler;
 import com.blakebr0.cucumber.inventory.CachedRecipe;
 import com.blakebr0.cucumber.inventory.OnContentsChangedFunction;
 import com.blakebr0.cucumber.inventory.SidedInventoryWrapper;
 import com.blakebr0.cucumber.tileentity.BaseInventoryTileEntity;
 import com.blakebr0.cucumber.util.ContainerDataBuilder;
-import com.blakebr0.mysticalagriculture.api.crafting.ISoulExtractionRecipe;
+import com.blakebr0.mysticalagriculture.api.crafting.IOreInfusionRecipe;
 import com.blakebr0.mysticalagriculture.api.machine.IUpgradeableMachine;
 import com.blakebr0.mysticalagriculture.api.machine.MachineUpgradeItemStackHandler;
 import com.blakebr0.mysticalagriculture.api.machine.MachineUpgradeTier;
-import com.blakebr0.mysticalagriculture.api.util.MobSoulUtils;
-import com.blakebr0.mysticalagriculture.block.SoulExtractorBlock;
-import com.blakebr0.mysticalagriculture.container.SoulExtractorContainer;
+import com.blakebr0.mysticalagriculture.block.OreInfuserBlock;
+import com.blakebr0.mysticalagriculture.container.OreInfuserContainer;
 import com.blakebr0.mysticalagriculture.init.ModRecipeTypes;
 import com.blakebr0.mysticalagriculture.init.ModTileEntities;
-import com.blakebr0.mysticalagriculture.item.SoulJarItem;
 import com.blakebr0.mysticalagriculture.util.RecipeIngredientCache;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -40,22 +39,23 @@ import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 import java.util.function.Supplier;
+import java.util.stream.IntStream;
 
-public class SoulExtractorTileEntity extends BaseInventoryTileEntity implements MenuProvider, IUpgradeableMachine {
-    private static final int INPUT_SLOT = 0;
-    private static final int FUEL_SLOT = 1;
-    private static final int OUTPUT_SLOT = 2;
+public class OreInfuserTileEntity extends BaseInventoryTileEntity implements MenuProvider, IUpgradeableMachine {
+    private static final int[] INPUT_SLOTS = IntStream.rangeClosed(0, 1).toArray();
+    private static final int FUEL_SLOT = 2;
+    private static final int OUTPUT_SLOT = 3;
 
     public static final int FUEL_TICK_MULTIPLIER = 20;
-    public static final int OPERATION_TIME = 100;
-    public static final int FUEL_USAGE = 40;
+    public static final int OPERATION_TIME = 200;
+    public static final int FUEL_USAGE = 20;
     public static final int FUEL_CAPACITY = 80000;
 
     private final CItemStacksHandler inventory;
     private final MachineUpgradeItemStackHandler upgradeInventory;
     private final CEnergyStorage energy;
     private final SidedInventoryWrapper[] sidedInventoryWrappers;
-    private final CachedRecipe<CraftingInput, ISoulExtractionRecipe> recipe;
+    private final CachedRecipe<CraftingInput, IOreInfusionRecipe> recipe;
 
     private final ContainerData dataAccess;
 
@@ -65,13 +65,13 @@ public class SoulExtractorTileEntity extends BaseInventoryTileEntity implements 
     private int fuelItemValue;
     private boolean isRunning;
 
-    public SoulExtractorTileEntity(BlockPos pos, BlockState state) {
-        super(ModTileEntities.SOUL_EXTRACTOR.get(), pos, state);
+    public OreInfuserTileEntity(BlockPos pos, BlockState state) {
+        super(ModTileEntities.ORE_INFUSER.get(), pos, state);
         this.inventory = createInventoryHandler((_, _) -> this.setChanged(), this::getLevel);
         this.upgradeInventory = new MachineUpgradeItemStackHandler();
         this.energy = new CEnergyStorage(FUEL_CAPACITY, _ -> this.setChangedFast());
         this.sidedInventoryWrappers = SidedInventoryWrapper.create(this.inventory, List.of(Direction.UP, Direction.DOWN, Direction.NORTH), this::canInsertStackSided, null);
-        this.recipe = new CachedRecipe<>(ModRecipeTypes.SOUL_EXTRACTION.get());
+        this.recipe = new CachedRecipe<>(ModRecipeTypes.ORE_INFUSION.get());
 
         this.dataAccess = ContainerDataBuilder.builder()
                 .sync(this.energy::getAmountAsInt, this.energy::set)
@@ -112,12 +112,12 @@ public class SoulExtractorTileEntity extends BaseInventoryTileEntity implements 
 
     @Override
     public Component getDisplayName() {
-        return Component.translatable("container.mysticalagriculture.soul_extractor");
+        return Component.translatable("container.mysticalagriculture.reprocessor");
     }
 
     @Override
     public AbstractContainerMenu createMenu(int id, Inventory playerInventory, Player player) {
-        return new SoulExtractorContainer(id, playerInventory, this.inventory, this.upgradeInventory, this.dataAccess, this.getBlockPos());
+        return new OreInfuserContainer(id, playerInventory, this.inventory, this.upgradeInventory, this.dataAccess, this.getBlockPos());
     }
 
     @Override
@@ -134,7 +134,7 @@ public class SoulExtractorTileEntity extends BaseInventoryTileEntity implements 
         return this.upgradeInventory;
     }
 
-    public ItemStacksResourceHandler getSidedInventory(@Nullable Direction direction) {
+    public ItemStacksResourceHandler getSidedInventory(@Nullable  Direction direction) {
         if (direction == null) direction = Direction.NORTH;
 
         return switch (direction) {
@@ -144,7 +144,7 @@ public class SoulExtractorTileEntity extends BaseInventoryTileEntity implements 
         };
     }
 
-    public static void tick(Level level, BlockPos pos, BlockState state, SoulExtractorTileEntity tile) {
+    public static void tick(Level level, BlockPos pos, BlockState state, OreInfuserTileEntity tile) {
         if (tile.energy.getAmountAsInt() < tile.energy.getCapacityAsInt()) {
             var fuel = tile.inventory.getResource(FUEL_SLOT);
 
@@ -190,42 +190,52 @@ public class SoulExtractorTileEntity extends BaseInventoryTileEntity implements 
         }
 
         var wasRunning = tile.isRunning;
-        var recipe = tile.getActiveRecipe();
 
-        tile.isRunning = false;
+        if (tile.energy.getAmountAsInt() >= tile.getFuelUsage()) {
+            tile.isRunning = false;
 
-        if (recipe != null) {
-            if (tile.energy.getAmountAsInt() >= tile.getFuelUsage()) {
-                tile.isRunning = true;
-                tile.progress++;
+            var recipe = tile.getActiveRecipe();
 
-                try (var tx = Transaction.openRoot()) {
-                    tile.energy.extract(tile.getFuelUsage(), tx);
+            if (recipe != null) {
+                var result = recipe.assemble(tile.toCraftingInput());
 
-                    if (tile.progress >= tile.getOperationTime()) {
-                        var result = recipe.assemble(tile.toCraftingInput());
+                if (ItemResourceHelper.canCombine(tile.inventory, OUTPUT_SLOT, result)) {
+                    tile.isRunning = true;
+                    tile.progress++;
 
-                        tile.inventory.extract(0, tile.inventory.getResource(0), 1, tx, true);
-                        tile.inventory.set(2, ItemResource.of(result), result.count());
+                    try (var tx = Transaction.openRoot()) {
+                        tile.energy.extract(tile.getFuelUsage(), tx);
 
-                        tile.progress = 0;
+                        if (tile.progress >= tile.getOperationTime()) {
+                            var ingredients = recipe.getIngredients();
+                            for (int i = 0; i < INPUT_SLOTS.length && i < ingredients.size(); i++) {
+                                var slot = INPUT_SLOTS[i];
+                                tile.inventory.extract(slot, tile.inventory.getResource(slot), ingredients.get(i).count(), tx, true);
+                            }
+
+                            tile.inventory.insert(OUTPUT_SLOT, ItemResource.of(result), result.count(), tx, true);
+
+                            tile.progress = 0;
+                        }
+
+                        tx.commit();
                     }
 
-                    tx.commit();
+                    tile.setChangedFast();
                 }
+            } else {
+                if (tile.progress > 0) {
+                    tile.progress = 0;
 
-                tile.setChangedFast();
+                    tile.setChangedFast();
+                }
             }
         } else {
-            if (tile.progress > 0) {
-                tile.progress = 0;
-
-                tile.setChangedFast();
-            }
+            tile.isRunning = false;
         }
 
         if (wasRunning != tile.isRunning) {
-            level.setBlock(pos, state.setValue(SoulExtractorBlock.RUNNING, tile.isRunning), 3);
+            level.setBlock(pos, state.setValue(OreInfuserBlock.RUNNING, tile.isRunning), 3);
 
             tile.setChangedFast();
         }
@@ -233,29 +243,7 @@ public class SoulExtractorTileEntity extends BaseInventoryTileEntity implements 
         tile.dispatchIfChanged();
     }
 
-    public static CItemStacksHandler createInventoryHandler() {
-        return createInventoryHandler(null, () -> null);
-    }
-
-    public static CItemStacksHandler createInventoryHandler(@Nullable OnContentsChangedFunction onContentsChanged, Supplier<Level> level) {
-        return CItemStacksHandler.create(3, onContentsChanged, builder -> {
-            builder.setCanInsert((slot, resource) -> switch (slot) {
-                case FUEL_SLOT -> level.get() != null && level.get().fuelValues().isFuel(resource.toStack());
-                case OUTPUT_SLOT -> resource.getItem() instanceof SoulJarItem;
-                default -> true;
-            });
-            builder.setCanExtract(slot -> switch (slot) {
-                case FUEL_SLOT -> level.get() == null || !level.get().fuelValues().isFuel(builder.getResource(slot).toStack());
-                case OUTPUT_SLOT -> {
-                    var resource = builder.getResource(slot);
-                    yield resource.getItem() instanceof SoulJarItem && MobSoulUtils.isJarFull(resource.toStack());
-                }
-                default -> false;
-            });
-        });
-    }
-
-    public ISoulExtractionRecipe getActiveRecipe() {
+    public IOreInfusionRecipe getActiveRecipe() {
         if (this.level == null)
             return null;
 
@@ -293,20 +281,37 @@ public class SoulExtractorTileEntity extends BaseInventoryTileEntity implements 
     }
 
     private CraftingInput toCraftingInput() {
-        return this.inventory.toShapelessCraftingInput();
+        return this.inventory.toShapelessCraftingInput(0, 2);
     }
 
     private boolean canInsertStackSided(int slot, ItemResource resource, Direction direction) {
         var stack = resource.toStack();
         if (direction == null)
             return true;
-        if (slot == INPUT_SLOT && direction == Direction.UP)
-            return RecipeIngredientCache.INSTANCE.isValidInput(stack, ModRecipeTypes.SOUL_EXTRACTION.get());
+        if (slot == INPUT_SLOTS[0] && direction == Direction.UP)
+            return RecipeIngredientCache.INSTANCE.isValidInput(stack, ModRecipeTypes.ORE_INFUSION.get());
         if (slot == FUEL_SLOT && direction == Direction.NORTH)
             return this.level != null && this.level.fuelValues().isFuel(stack);
-        if (slot == OUTPUT_SLOT && direction == Direction.NORTH)
-            return stack.getItem() instanceof SoulJarItem;
 
         return false;
+    }
+
+    public static CItemStacksHandler createInventoryHandler() {
+        return createInventoryHandler(null, () -> null);
+    }
+
+    public static CItemStacksHandler createInventoryHandler(@Nullable OnContentsChangedFunction onContentsChanged, Supplier<Level> level) {
+        return CItemStacksHandler.create(4, onContentsChanged, builder -> {
+            builder.setCanInsert((slot, resource) -> switch (slot) {
+                case FUEL_SLOT -> level.get() != null && level.get().fuelValues().isFuel(resource.toStack());
+                case OUTPUT_SLOT -> false;
+                default -> true;
+            });
+            builder.setCanExtract(slot -> switch (slot) {
+                case FUEL_SLOT -> level.get() == null || !level.get().fuelValues().isFuel(builder.getResource(slot).toStack());
+                case OUTPUT_SLOT -> true;
+                default -> false;
+            });
+        });
     }
 }

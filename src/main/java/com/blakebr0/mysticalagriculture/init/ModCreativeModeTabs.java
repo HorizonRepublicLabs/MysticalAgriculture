@@ -94,6 +94,7 @@ public final class ModCreativeModeTabs {
                 output.accept(ModBlocks.SOUL_EXTRACTOR);
                 output.accept(ModBlocks.HARVESTER);
                 output.accept(ModBlocks.SOULIUM_SPAWNER);
+                output.accept(ModBlocks.ORE_INFUSER);
 
                 output.accept(ModItems.PROSPERITY_SHARD);
                 output.accept(ModItems.INFERIUM_ESSENCE);

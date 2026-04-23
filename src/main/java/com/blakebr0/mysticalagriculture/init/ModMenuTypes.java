@@ -4,6 +4,7 @@ import com.blakebr0.mysticalagriculture.MysticalAgriculture;
 import com.blakebr0.mysticalagriculture.container.EnchanterContainer;
 import com.blakebr0.mysticalagriculture.container.EssenceFurnaceContainer;
 import com.blakebr0.mysticalagriculture.container.HarvesterContainer;
+import com.blakebr0.mysticalagriculture.container.OreInfuserContainer;
 import com.blakebr0.mysticalagriculture.container.ReprocessorContainer;
 import com.blakebr0.mysticalagriculture.container.SoulExtractorContainer;
 import com.blakebr0.mysticalagriculture.container.SouliumSpawnerContainer;
@@ -25,4 +26,5 @@ public final class ModMenuTypes {
     public static final DeferredHolder<MenuType<?>, MenuType<SoulExtractorContainer>> SOUL_EXTRACTOR = REGISTRY.register("soul_extractor", () -> new MenuType<>((IContainerFactory<SoulExtractorContainer>) SoulExtractorContainer::new, FeatureFlagSet.of()));
     public static final DeferredHolder<MenuType<?>, MenuType<HarvesterContainer>> HARVESTER = REGISTRY.register("harvester", () -> new MenuType<>((IContainerFactory<HarvesterContainer>) HarvesterContainer::new, FeatureFlagSet.of()));
     public static final DeferredHolder<MenuType<?>, MenuType<SouliumSpawnerContainer>> SOULIUM_SPAWNER = REGISTRY.register("soulium_spawner", () -> new MenuType<>((IContainerFactory<SouliumSpawnerContainer>) SouliumSpawnerContainer::new, FeatureFlagSet.of()));
+    public static final DeferredHolder<MenuType<?>, MenuType<OreInfuserContainer>> ORE_INFUSER = REGISTRY.register("ore_infuser", () -> new MenuType<>((IContainerFactory<OreInfuserContainer>) OreInfuserContainer::new, FeatureFlagSet.of()));
 }

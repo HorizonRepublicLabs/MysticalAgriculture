@@ -1,0 +1,17 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+    "ISI",
+    "HBH",
+    "ISI"
+  ],
+  "key": {
+    "I": "#c:ingots/iron",
+    "S": "mysticalagriculture:soulium_ingot",
+    "H": "minecraft:iron_pickaxe",
+    "B": "mysticalagriculture:machine_frame"
+  },
+  "result": {
+    "id": "mysticalagriculture:ore_infuser"
+  }
+}

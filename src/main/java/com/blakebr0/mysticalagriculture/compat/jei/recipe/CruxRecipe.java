@@ -9,17 +9,8 @@ import net.minecraft.world.level.block.Block;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class CruxRecipe {
+public record CruxRecipe(ItemStack seed, ItemStack crux, ItemStack essence) {
     private static List<Block> farmlands;
-    public final ItemStack seed;
-    public final ItemStack crux;
-    public final ItemStack essence;
-
-    public CruxRecipe(ItemStack seed, ItemStack crux, ItemStack essence) {
-        this.seed = seed;
-        this.crux = crux;
-        this.essence = essence;
-    }
 
     public List<Ingredient> getIngredients() {
         return Lists.newArrayList(
@@ -29,7 +20,7 @@ public class CruxRecipe {
         );
     }
 
-    public static List<CruxRecipe> getGeneratedRecipes() {
+    public static List<CruxRecipe> createAll() {
         farmlands = CropRegistry.getInstance().getCrops()
                 .stream()
                 .map(c -> c.getTier().getFarmlandBlock())

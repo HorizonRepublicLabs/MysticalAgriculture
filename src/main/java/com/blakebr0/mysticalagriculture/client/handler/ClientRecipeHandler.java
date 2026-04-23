@@ -3,6 +3,7 @@ package com.blakebr0.mysticalagriculture.client.handler;
 import com.blakebr0.mysticalagriculture.api.crafting.IAwakeningRecipe;
 import com.blakebr0.mysticalagriculture.api.crafting.IEnchanterRecipe;
 import com.blakebr0.mysticalagriculture.api.crafting.IInfusionRecipe;
+import com.blakebr0.mysticalagriculture.api.crafting.IOreInfusionRecipe;
 import com.blakebr0.mysticalagriculture.api.crafting.IReprocessorRecipe;
 import com.blakebr0.mysticalagriculture.api.crafting.ISoulExtractionRecipe;
 import com.blakebr0.mysticalagriculture.api.crafting.ISouliumSpawnerRecipe;
@@ -22,6 +23,7 @@ public final class ClientRecipeHandler {
     public static final List<RecipeHolder<IReprocessorRecipe>> REPROCESSOR_RECIPES = new ArrayList<>();
     public static final List<RecipeHolder<ISoulExtractionRecipe>> SOUL_EXTRACTION_RECIPES = new ArrayList<>();
     public static final List<RecipeHolder<ISouliumSpawnerRecipe>> SOULIUM_SPAWNER_RECIPES = new ArrayList<>();
+    public static final List<RecipeHolder<IOreInfusionRecipe>> ORE_INFUSION_RECIPES = new ArrayList<>();
 
     @SubscribeEvent
     public void onRecipesReceived(RecipesReceivedEvent event) {
@@ -33,6 +35,7 @@ public final class ClientRecipeHandler {
         REPROCESSOR_RECIPES.addAll(recipes.byType(ModRecipeTypes.REPROCESSOR.get()));
         SOUL_EXTRACTION_RECIPES.addAll(recipes.byType(ModRecipeTypes.SOUL_EXTRACTION.get()));
         SOULIUM_SPAWNER_RECIPES.addAll(recipes.byType(ModRecipeTypes.SOULIUM_SPAWNER.get()));
+        ORE_INFUSION_RECIPES.addAll(recipes.byType(ModRecipeTypes.ORE_INFUSION.get()));
     }
 
     @SubscribeEvent
@@ -43,5 +46,6 @@ public final class ClientRecipeHandler {
         REPROCESSOR_RECIPES.clear();
         SOUL_EXTRACTION_RECIPES.clear();
         SOULIUM_SPAWNER_RECIPES.clear();
+        ORE_INFUSION_RECIPES.clear();
     }
 }

@@ -74,6 +74,7 @@
   "block.mysticalagriculture.soul_extractor": "Soul Extractor",
   "block.mysticalagriculture.harvester": "Harvester",
   "block.mysticalagriculture.soulium_spawner": "Soulium Spawner",
+  "block.mysticalagriculture.ore_infuser": "Ore Infuser",
 
   "block.mysticalagriculture.mystical_crop": "%s Crop",
 
@@ -339,6 +340,7 @@
   "jei.category.mysticalagriculture.reprocessor": "Seed Reprocessing",
   "jei.category.mysticalagriculture.soul_extractor": "Soul Extraction",
   "jei.category.mysticalagriculture.soulium_spawner": "Soulium Spawner",
+  "jei.category.mysticalagriculture.ore_infuser": "Ore Infusion",
   "jei.category.mysticalagriculture.crux": "Cruxes",
 
   "jei.desc.mysticalagriculture.cognizant_dust": "Dropped by the Wither and the Ender Dragon when killed with an Essence Weapon enchanted with Mystical Enlightenment.",

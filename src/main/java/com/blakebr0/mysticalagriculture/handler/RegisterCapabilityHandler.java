@@ -28,5 +28,6 @@ public final class RegisterCapabilityHandler {
         event.registerBlockEntity(Capabilities.Energy.BLOCK, ModTileEntities.REPROCESSOR.get(), (block, _) -> block.getEnergy());
         event.registerBlockEntity(Capabilities.Energy.BLOCK, ModTileEntities.SOUL_EXTRACTOR.get(), (block, _) -> block.getEnergy());
         event.registerBlockEntity(Capabilities.Energy.BLOCK, ModTileEntities.SOULIUM_SPAWNER.get(), (block, _) -> block.getEnergy());
+        event.registerBlockEntity(Capabilities.Energy.BLOCK, ModTileEntities.ORE_INFUSER.get(), (block, _) -> block.getEnergy());
     }
 }

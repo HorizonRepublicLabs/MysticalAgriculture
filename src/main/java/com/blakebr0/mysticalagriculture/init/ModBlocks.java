@@ -20,6 +20,7 @@ import com.blakebr0.mysticalagriculture.block.InferiumCropBlock;
 import com.blakebr0.mysticalagriculture.block.InfusedFarmlandBlock;
 import com.blakebr0.mysticalagriculture.block.InfusionAltarBlock;
 import com.blakebr0.mysticalagriculture.block.InfusionPedestalBlock;
+import com.blakebr0.mysticalagriculture.block.OreInfuserBlock;
 import com.blakebr0.mysticalagriculture.block.ReprocessorBlock;
 import com.blakebr0.mysticalagriculture.block.SoulExtractorBlock;
 import com.blakebr0.mysticalagriculture.block.SouliumSpawnerBlock;
@@ -118,6 +119,7 @@ public final class ModBlocks {
     public static final DeferredHolder<Block, Block> SOUL_EXTRACTOR = register("soul_extractor", SoulExtractorBlock::new);
     public static final DeferredHolder<Block, Block> HARVESTER = register("harvester", HarvesterBlock::new);
     public static final DeferredHolder<Block, Block> SOULIUM_SPAWNER = register("soulium_spawner", SouliumSpawnerBlock::new);
+    public static final DeferredHolder<Block, Block> ORE_INFUSER = register("ore_infuser", OreInfuserBlock::new);
 
     public static final DeferredHolder<Block, Block> INFERIUM_CROP = registerNoItem("inferium_crop", id -> new InferiumCropBlock(id, ModCrops.INFERIUM));
 

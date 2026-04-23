@@ -3,6 +3,7 @@ package com.blakebr0.mysticalagriculture.client;
 import com.blakebr0.mysticalagriculture.client.screen.EnchanterScreen;
 import com.blakebr0.mysticalagriculture.client.screen.EssenceFurnaceScreen;
 import com.blakebr0.mysticalagriculture.client.screen.HarvesterScreen;
+import com.blakebr0.mysticalagriculture.client.screen.OreInfuserScreen;
 import com.blakebr0.mysticalagriculture.client.screen.ReprocessorScreen;
 import com.blakebr0.mysticalagriculture.client.screen.SoulExtractorScreen;
 import com.blakebr0.mysticalagriculture.client.screen.SouliumSpawnerScreen;
@@ -21,5 +22,6 @@ public final class ModMenuScreens {
         event.register(ModMenuTypes.SOUL_EXTRACTOR.get(), SoulExtractorScreen::new);
         event.register(ModMenuTypes.HARVESTER.get(), HarvesterScreen::new);
         event.register(ModMenuTypes.SOULIUM_SPAWNER.get(), SouliumSpawnerScreen::new);
+        event.register(ModMenuTypes.ORE_INFUSER.get(), OreInfuserScreen::new);
     }
 }

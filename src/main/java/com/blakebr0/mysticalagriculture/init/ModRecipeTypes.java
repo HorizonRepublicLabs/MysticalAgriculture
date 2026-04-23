@@ -4,6 +4,7 @@ import com.blakebr0.mysticalagriculture.MysticalAgriculture;
 import com.blakebr0.mysticalagriculture.api.crafting.IAwakeningRecipe;
 import com.blakebr0.mysticalagriculture.api.crafting.IEnchanterRecipe;
 import com.blakebr0.mysticalagriculture.api.crafting.IInfusionRecipe;
+import com.blakebr0.mysticalagriculture.api.crafting.IOreInfusionRecipe;
 import com.blakebr0.mysticalagriculture.api.crafting.IReprocessorRecipe;
 import com.blakebr0.mysticalagriculture.api.crafting.ISoulExtractionRecipe;
 import com.blakebr0.mysticalagriculture.api.crafting.ISouliumSpawnerRecipe;
@@ -22,6 +23,7 @@ public final class ModRecipeTypes {
     public static final DeferredHolder<RecipeType<?>, RecipeType<IReprocessorRecipe>> REPROCESSOR = REGISTRY.register("reprocessor", () -> RecipeType.simple(MysticalAgriculture.resource("reprocessor")));
     public static final DeferredHolder<RecipeType<?>, RecipeType<ISoulExtractionRecipe>> SOUL_EXTRACTION = REGISTRY.register("soul_extraction", () -> RecipeType.simple(MysticalAgriculture.resource("soul_extraction")));
     public static final DeferredHolder<RecipeType<?>, RecipeType<ISouliumSpawnerRecipe>> SOULIUM_SPAWNER = REGISTRY.register("soulium_spawner", () -> RecipeType.simple(MysticalAgriculture.resource("soulium_spawner")));
+    public static final DeferredHolder<RecipeType<?>, RecipeType<IOreInfusionRecipe>> ORE_INFUSION = REGISTRY.register("ore_infusion", () -> RecipeType.simple(MysticalAgriculture.resource("ore_infusion")));
 
     public static void onDatapackSync(OnDatapackSyncEvent event) {
         event.sendRecipes(
@@ -30,7 +32,8 @@ public final class ModRecipeTypes {
                 INFUSION.get(),
                 REPROCESSOR.get(),
                 SOUL_EXTRACTION.get(),
-                SOULIUM_SPAWNER.get()
+                SOULIUM_SPAWNER.get(),
+                ORE_INFUSION.get()
         );
     }
 }
