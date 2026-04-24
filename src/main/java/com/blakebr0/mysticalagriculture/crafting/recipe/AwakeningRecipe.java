@@ -191,15 +191,12 @@ public class AwakeningRecipe implements IAwakeningRecipe {
                 if (input.isEmpty())
                     continue;
 
-                // the ingredient will have the same ItemStack instance as the essence
-                // this *should* be the quickest way to find the exact essence in the recipe
-//                TODO handle remaining items in awakening recipes
-//                for (var essence : this.essences) {
-//                    if (input.getValues() == essence) {
-//                        remaining.set(i, StackHelper.shrink(stack, essence.count(), false));
-//                        break;
-//                    }
-//                }
+                for (var essence : this.essences) {
+                    if (input == essence.ingredient()) {
+                        remaining.set(i, stack.copyWithCount(stack.count() - essence.count()));
+                        break;
+                    }
+                }
             } else {
                 var remainder = stack.getCraftingRemainder();
                 if (remainder != null) {
