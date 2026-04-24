@@ -71,10 +71,10 @@ public class AwakeningPedestalBlock extends BaseTileEntityBlock {
                 player.setItemInHand(hand, held.copyWithCount(held.count() - 1));
                 level.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 1.0F, 1.0F);
             } else if (!input.isEmpty()) {
-                inventory.set(0, ItemResource.EMPTY, 0);
-
                 var amount = inventory.getAmountAsInt(0);
                 var item = new ItemEntity(level, player.getX(), player.getY(), player.getZ(), input.toStack(amount));
+
+                inventory.set(0, ItemResource.EMPTY, 0);
 
                 item.setNoPickUpDelay();
                 level.addFreshEntity(item);

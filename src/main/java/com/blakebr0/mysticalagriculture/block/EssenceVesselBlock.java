@@ -24,6 +24,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
 
 public class EssenceVesselBlock extends BaseTileEntityBlock {
     public static final VoxelShape VESSEL_SHAPE = VoxelShapeBuilder.fromShapes(
@@ -68,15 +69,23 @@ public class EssenceVesselBlock extends BaseTileEntityBlock {
             var input = inventory.getResource(0);
             var held = player.getItemInHand(hand);
 
-            if (input.isEmpty() && !held.isEmpty()) {
-                inventory.set(0, ItemResource.of(held), 1);
-                player.setItemInHand(hand, held.copyWithCount(held.count() - 1));
+            var inserted = 0;
+
+            if (!held.isEmpty()) {
+                try (var tx = Transaction.openRoot()) {
+                    inserted = inventory.insert(0, ItemResource.of(held), held.count(), tx);
+                    tx.commit();
+                }
+            }
+
+            if (inserted > 0) {
+                player.setItemInHand(hand, held.copyWithCount(held.count() - inserted));
                 level.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 1.0F, 1.0F);
             } else if (!input.isEmpty()) {
-                inventory.set(0, ItemResource.EMPTY, 0);
-
                 var amount = inventory.getAmountAsInt(0);
                 var item = new ItemEntity(level, player.getX(), player.getY(), player.getZ(), input.toStack(amount));
+
+                inventory.set(0, ItemResource.EMPTY, 0);
 
                 item.setNoPickUpDelay();
                 level.addFreshEntity(item);
