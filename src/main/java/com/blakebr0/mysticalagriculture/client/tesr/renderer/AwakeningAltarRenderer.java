@@ -1,5 +1,6 @@
 package com.blakebr0.mysticalagriculture.client.tesr.renderer;
 
+import com.blakebr0.cucumber.client.ModRenderTypes;
 import com.blakebr0.mysticalagriculture.client.tesr.state.AwakeningAltarRenderState;
 import com.blakebr0.mysticalagriculture.init.ModBlocks;
 import com.blakebr0.mysticalagriculture.tileentity.AwakeningAltarTileEntity;
@@ -17,6 +18,7 @@ import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.jspecify.annotations.Nullable;
@@ -67,7 +69,7 @@ public class AwakeningAltarRenderer implements BlockEntityRenderer<AwakeningAlta
         if (!state.itemResource.isEmpty()) {
             matrix.pushPose();
             matrix.translate(0.5D, 1.1D, 0.5D);
-            float scale = state.itemResource.getItem() instanceof BlockItem ? 0.95F : 0.75F;
+            float scale = state.itemResource.getItem() instanceof BlockItem blockItem && !(blockItem.getBlock() instanceof CropBlock) ? 0.55F : 0.35F;
             matrix.scale(scale, scale, scale);
             double tick = System.currentTimeMillis() / 800.0D;
             matrix.translate(0.0D, Math.sin(tick % (2 * Math.PI)) * 0.065D, 0.0D);
@@ -86,6 +88,7 @@ public class AwakeningAltarRenderer implements BlockEntityRenderer<AwakeningAlta
             matrix.pushPose();
             matrix.translate(aoePos.getX(), aoePos.getY(), aoePos.getZ());
 
+            blockModelRenderState.renderType = ModRenderTypes.ghostBlock();
             blockModelRenderState.submit(matrix, submitNodeCollector, state.lightCoords, OverlayTexture.NO_OVERLAY, 0);
 
             matrix.popPose();

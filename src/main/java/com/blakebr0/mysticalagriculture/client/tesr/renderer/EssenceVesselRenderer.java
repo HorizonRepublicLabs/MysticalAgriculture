@@ -14,7 +14,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
-import net.minecraft.client.renderer.texture.TextureAtlas;
+import net.minecraft.data.AtlasIds;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.phys.Vec3;
 import org.jspecify.annotations.Nullable;
@@ -42,10 +42,10 @@ public class EssenceVesselRenderer implements BlockEntityRenderer<EssenceVesselT
     @Override
     public void submit(EssenceVesselRenderState state, PoseStack matrix, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
         if (!state.itemResource.isEmpty()) {
-            var builder = Minecraft.getInstance().renderBuffers().bufferSource().getBuffer(RenderTypes.entitySolid(VESSEL_CONTENT_TEXTURE));
+            var builder = Minecraft.getInstance().renderBuffers().bufferSource().getBuffer(RenderTypes.solidMovingBlock());
             var sprite = Minecraft.getInstance()
                     .getAtlasManager()
-                    .getAtlasOrThrow(TextureAtlas.LOCATION_BLOCKS)
+                    .getAtlasOrThrow(AtlasIds.BLOCKS)
                     .getSprite(VESSEL_CONTENT_TEXTURE);
 
             float filledAmount = 0.4f * state.fillPercentage;
@@ -129,7 +129,7 @@ public class EssenceVesselRenderer implements BlockEntityRenderer<EssenceVesselT
     }
 
     private static void addVertex(VertexConsumer renderer, PoseStack stack, float x, float y, float z, float u, float v, int color, int lightCoords) {
-        renderer.addVertex(stack.last().pose(), x, y, z)
+        renderer.addVertex(stack.last(), x, y, z)
                 .setColor(color)
                 .setUv(u, v)
                 .setLight(lightCoords)
