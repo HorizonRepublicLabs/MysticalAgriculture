@@ -56,12 +56,6 @@ public class MysticalCropBlock extends CropBlock implements ICropProvider {
         return SHAPE;
     }
 
-//    TODO crop desc key
-//    @Override
-//    public String getDescriptionId() {
-//        return Localizable.of("block.mysticalagriculture.mystical_crop").args(this.crop.getDisplayName()).buildString();
-//    }
-
     @Override
     public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
         int age = state.getValue(AGE);
