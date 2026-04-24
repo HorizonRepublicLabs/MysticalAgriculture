@@ -13,6 +13,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingInput;
@@ -21,6 +22,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.transfer.item.ItemResource;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,6 +37,7 @@ public class InfusionAltarTileEntity extends BaseInventoryTileEntity implements 
     private final CachedRecipe<CraftingInput, IInfusionRecipe> recipe;
     private int progress;
     private boolean active;
+    private @Nullable Identifier recipeId;
 
     public InfusionAltarTileEntity(BlockPos pos, BlockState state) {
         super(ModTileEntities.INFUSION_ALTAR.get(), pos, state);
@@ -54,6 +57,7 @@ public class InfusionAltarTileEntity extends BaseInventoryTileEntity implements 
 
         this.progress = input.getIntOr("progress", 0);
         this.active = input.getBooleanOr("active", false);
+        this.recipeId = input.read("recipe_id", Identifier.CODEC).orElse(null);
     }
 
     @Override
@@ -62,6 +66,7 @@ public class InfusionAltarTileEntity extends BaseInventoryTileEntity implements 
 
         output.putInt("progress", this.progress);
         output.putBoolean("active", this.active);
+        output.storeNullable("recipe_id", Identifier.CODEC, this.recipeId);
     }
 
     @Override
@@ -81,52 +86,50 @@ public class InfusionAltarTileEntity extends BaseInventoryTileEntity implements 
     public static void tick(Level level, BlockPos pos, BlockState state, InfusionAltarTileEntity tile) {
         var input = tile.inventory.getResource(0);
 
-        if (input.isEmpty()) {
-            tile.reset();
-            tile.dispatchIfChanged();
-            return;
-        }
-
-        if (tile.isActive()) {
+        if (!input.isEmpty()) {
             var recipe = tile.getActiveRecipe();
 
-            if (recipe != null) {
-                tile.progress++;
+            if (tile.isActive()) {
+                if (recipe != null) {
+                    tile.progress++;
 
-                var pedestals = tile.getPedestals();
+                    var pedestals = tile.getPedestals();
 
-                if (tile.progress >= 100) {
-                    var inventory = tile.toCraftingInput();
-                    var remaining = recipe.getRemainingItems(inventory);
+                    if (tile.progress >= 100) {
+                        var inventory = tile.toCraftingInput();
+                        var remaining = recipe.getRemainingItems(inventory);
 
-                    for (var i = 1; i < remaining.size(); i++) {
-                        var pedestal = pedestals.get(i - 1);
-                        var remainder = remaining.get(i);
+                        for (var i = 1; i < remaining.size(); i++) {
+                            var pedestal = pedestals.get(i - 1);
+                            var remainder = remaining.get(i);
 
-                        pedestal.getInventory().set(0, ItemResource.of(remainder), remainder.count());
+                            pedestal.getInventory().set(0, ItemResource.of(remainder), remainder.count());
 
-                        tile.spawnParticles(ParticleTypes.SMOKE, pedestal.getBlockPos(), 1.2D, 20);
+                            tile.spawnParticles(ParticleTypes.SMOKE, pedestal.getBlockPos(), 1.2D, 20);
+                        }
+
+                        var result = recipe.assemble(inventory);
+
+                        tile.setOutput(result, remaining.getFirst());
+                        tile.reset();
+                        tile.setChangedFast();
+                        tile.spawnParticles(ParticleTypes.HAPPY_VILLAGER, pos, 1.0D, 10);
+                    } else {
+                        for (var pedestal : pedestals) {
+                            var pedestalPos = pedestal.getBlockPos();
+                            var stack = pedestal.getInventory().getResource(0);
+
+                            tile.spawnItemParticles(pedestalPos, stack);
+                        }
                     }
-
-                    var result = recipe.assemble(inventory);
-
-                    tile.setOutput(result, remaining.getFirst());
-                    tile.reset();
-                    tile.setChangedFast();
-                    tile.spawnParticles(ParticleTypes.HAPPY_VILLAGER, pos, 1.0D, 10);
                 } else {
-                    for (var pedestal : pedestals) {
-                        var pedestalPos = pedestal.getBlockPos();
-                        var stack = pedestal.getInventory().getResource(0);
-
-                        tile.spawnItemParticles(pedestalPos, stack);
-                    }
+                    tile.reset();
                 }
             } else {
-                tile.reset();
+                tile.progress = 0;
             }
         } else {
-            tile.progress = 0;
+            tile.reset();
         }
 
         tile.dispatchIfChanged();
@@ -149,8 +152,18 @@ public class InfusionAltarTileEntity extends BaseInventoryTileEntity implements 
             return null;
 
         this.updateRecipeInventory(this.getPedestals());
+        this.recipe.check(this.toCraftingInput(), (ServerLevel) this.level);
 
-        return this.recipe.checkAndGet(this.toCraftingInput(), (ServerLevel) this.level);
+        if (this.recipeId != this.recipe.id()) {
+            this.recipeId = this.recipe.id();
+            this.setChangedFast();
+        }
+
+        return this.recipe.get();
+    }
+
+    public @Nullable Identifier getActiveRecipeId() {
+        return this.recipeId;
     }
 
     private CraftingInput toCraftingInput() {
@@ -160,6 +173,7 @@ public class InfusionAltarTileEntity extends BaseInventoryTileEntity implements 
     private void reset() {
         this.progress = 0;
         this.active = false;
+        this.recipeId = null;
     }
 
     private void updateRecipeInventory(List<InfusionPedestalTileEntity> pedestals) {

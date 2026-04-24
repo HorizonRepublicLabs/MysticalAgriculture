@@ -9,6 +9,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingInput;
+import net.minecraft.world.item.crafting.display.SlotDisplayContext;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.client.event.RenderGuiEvent;
@@ -30,18 +32,34 @@ public final class GuiOverlayHandler {
             var stack = ItemStack.EMPTY;
 
             if (tile instanceof InfusionAltarTileEntity altar) {
-                var recipe = altar.getActiveRecipe();
-                if (recipe != null) {
-                    stack = recipe.assemble(CraftingInput.EMPTY);
+                var recipeId = altar.getActiveRecipeId();
+                if (recipeId != null) {
+                    var recipe = ClientRecipeHandler.INFUSION_RECIPES
+                            .stream()
+                            .filter(r -> r.id().identifier().equals(recipeId))
+                            .findFirst()
+                            .orElse(null);
+
+                    if (recipe != null) {
+                        stack = recipe.value().assemble(CraftingInput.EMPTY);
+                    }
                 }
             }
 
             if (tile instanceof AwakeningAltarTileEntity altar) {
-                var recipe = altar.getActiveRecipe();
-                if (recipe != null) {
-                    stack = recipe.assemble(CraftingInput.EMPTY);
+                var recipeId = altar.getActiveRecipeId();
+                if (recipeId != null) {
+                    var recipe = ClientRecipeHandler.AWAKENING_RECIPES
+                            .stream()
+                            .filter(r -> r.id().identifier().equals(recipeId))
+                            .findFirst()
+                            .orElse(null);
 
-                    drawEssenceRequirements(gfx, recipe, altar);
+                    if (recipe != null) {
+                        stack = recipe.value().assemble(CraftingInput.EMPTY);
+
+                        drawEssenceRequirements(gfx, recipe.value(), altar, level);
+                    }
                 }
             }
 
@@ -51,7 +69,7 @@ public final class GuiOverlayHandler {
 
                 gfx.item(stack, x + 26, y);
                 gfx.itemDecorations(mc.font, stack, x + 26, y);
-                gfx.text(mc.font, stack.getHoverName(), x + 48, y + 5, 16383998);
+                gfx.text(mc.font, stack.getHoverName(), x + 48, y + 5, 0xFFFFFFFF);
             }
         }
 
@@ -60,21 +78,24 @@ public final class GuiOverlayHandler {
             var tile = mc.level.getBlockEntity(pos);
 
             if (tile instanceof EssenceVesselTileEntity vessel) {
-                var resource = vessel.getInventory().getResource(0);
+                var inventory = vessel.getInventory();
+                var resource = inventory.getResource(0);
+
                 if (!resource.isEmpty()) {
+                    var amount = inventory.getAmountAsInt(0);
                     int x = mc.getWindow().getGuiScaledWidth() / 2 - 11;
                     int y = mc.getWindow().getGuiScaledHeight() / 2 - 8;
-                    var stack = resource.toStack();
+                    var stack = resource.toStack(amount);
 
                     gfx.item(stack, x + 26, y);
                     gfx.itemDecorations(mc.font, stack, x + 26, y);
-                    gfx.text(mc.font, resource.getHoverName(), x + 48, y + 5, 16383998);
+                    gfx.text(mc.font, resource.getHoverName(), x + 48, y + 5, 0xFFFFFFFF);
                 }
             }
         }
     }
 
-    private static void drawEssenceRequirements(GuiGraphicsExtractor gfx, IAwakeningRecipe recipe, AwakeningAltarTileEntity altar) {
+    private static void drawEssenceRequirements(GuiGraphicsExtractor gfx, IAwakeningRecipe recipe, AwakeningAltarTileEntity altar, Level level) {
         var mc = Minecraft.getInstance();
 
         int x = mc.getWindow().getGuiScaledWidth() / 2 - 11;
@@ -87,9 +108,10 @@ public final class GuiOverlayHandler {
         var missingEssences = recipe.getMissingEssences(altar.getEssenceItems());
 
         for (var essence : missingEssences.entrySet()) {
-//            TODO awakening altar requirements renderer
-//            gfx.item(essence.getKey(), x + 26 + xOffset, y + 2 * lineHeight);
-//            gfx.text(mc.font, getEssenceDisplayName(essence.getKey(), essence.getValue()), x + 48 + xOffset, y + 5 + 2 * lineHeight, 16383998);
+            var stack = essence.getKey().ingredient().display().resolveForFirstStack(SlotDisplayContext.fromLevel(level));
+
+            gfx.item(stack, x + 26 + xOffset, y + 2 * lineHeight);
+            gfx.text(mc.font, getEssenceDisplayName(stack, essence.getValue()), x + 48 + xOffset, y + 5 + 2 * lineHeight, 16383998);
 
             xOffset += 56;
             hasMissingEssences = true;

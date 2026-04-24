@@ -13,6 +13,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingInput;
@@ -21,6 +22,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.transfer.item.ItemResource;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +38,7 @@ public class AwakeningAltarTileEntity extends BaseInventoryTileEntity implements
     private final CachedRecipe<CraftingInput, IAwakeningRecipe> recipe;
     private int progress;
     private boolean active;
+    private @Nullable Identifier recipeId;
 
     public AwakeningAltarTileEntity(BlockPos pos, BlockState state) {
         super(ModTileEntities.AWAKENING_ALTAR.get(), pos, state);
@@ -59,6 +62,7 @@ public class AwakeningAltarTileEntity extends BaseInventoryTileEntity implements
 
         this.progress = input.getIntOr("progress", 0);
         this.active = input.getBooleanOr("active", false);
+        this.recipeId = input.read("recipe_id", Identifier.CODEC).orElse(null);
     }
 
     @Override
@@ -67,6 +71,7 @@ public class AwakeningAltarTileEntity extends BaseInventoryTileEntity implements
 
         output.putInt("progress", this.progress);
         output.putBoolean("active", this.active);
+        output.storeNullable("recipe_id", Identifier.CODEC, this.recipeId);
     }
 
     @Override
@@ -86,62 +91,60 @@ public class AwakeningAltarTileEntity extends BaseInventoryTileEntity implements
     public static void tick(Level level, BlockPos pos, BlockState state, AwakeningAltarTileEntity tile) {
         var input = tile.inventory.getResource(0);
 
-        if (input.isEmpty()) {
-            tile.reset();
-            tile.dispatchIfChanged();
-            return;
-        }
-
-        if (tile.isActive()) {
+        if (!input.isEmpty()) {
             var recipe = tile.getActiveRecipe();
 
-            if (recipe != null && tile.hasRequiredEssences()) {
-                tile.progress++;
+            if (tile.isActive()) {
+                if (recipe != null && tile.hasRequiredEssences()) {
+                    tile.progress++;
 
-                var collections = tile.getPedestalCollections();
+                    var collections = tile.getPedestalCollections();
 
-                if (tile.progress >= 100) {
-                    var remaining = recipe.getRemainingItems(tile.toCraftingInput());
+                    if (tile.progress >= 100) {
+                        var remaining = recipe.getRemainingItems(tile.toCraftingInput());
 
-                    for (var i = 0; i < collections.pedestals.size(); i++) {
-                        var pedestal = collections.pedestals.get(i);
-                        var inventory = pedestal.getInventory();
-                        var remainder = remaining.get(i + 1);
+                        for (var i = 0; i < collections.pedestals.size(); i++) {
+                            var pedestal = collections.pedestals.get(i);
+                            var inventory = pedestal.getInventory();
+                            var remainder = remaining.get(i + 1);
 
-                        inventory.set(0, ItemResource.of(remainder), remainder.count());
+                            inventory.set(0, ItemResource.of(remainder), remainder.count());
 
-                        tile.spawnParticles(ParticleTypes.SMOKE, pedestal.getBlockPos(), 1.2D, 20);
+                            tile.spawnParticles(ParticleTypes.SMOKE, pedestal.getBlockPos(), 1.2D, 20);
+                        }
+
+                        for (var i = 0; i < collections.vessels.size(); i++) {
+                            var vessel = collections.vessels.get(i);
+                            var inventory = vessel.getInventory();
+                            var remainder = remaining.get(i + 5);
+
+                            inventory.set(0, ItemResource.of(remainder), remainder.count());
+
+                            tile.spawnParticles(ParticleTypes.SMOKE, vessel.getBlockPos(), 1.2D, 20);
+                        }
+
+                        var result = recipe.assemble(tile.toCraftingInput());
+
+                        tile.setOutput(result, remaining.getFirst());
+                        tile.reset();
+                        tile.setChangedFast();
+                        tile.spawnParticles(ParticleTypes.HAPPY_VILLAGER, pos, 1.0D, 10);
+                    } else {
+                        for (var pedestal : collections.all()) {
+                            var pedestalPos = pedestal.getBlockPos();
+                            var resource = pedestal.getInventory().getResource(0);
+
+                            tile.spawnItemParticles(pedestalPos, resource);
+                        }
                     }
-
-                    for (var i = 0; i < collections.vessels.size(); i++) {
-                        var vessel = collections.vessels.get(i);
-                        var inventory = vessel.getInventory();
-                        var remainder = remaining.get(i + 5);
-
-                        inventory.set(0, ItemResource.of(remainder), remainder.count());
-
-                        tile.spawnParticles(ParticleTypes.SMOKE, vessel.getBlockPos(), 1.2D, 20);
-                    }
-
-                    var result = recipe.assemble(tile.toCraftingInput());
-
-                    tile.setOutput(result, remaining.getFirst());
-                    tile.reset();
-                    tile.setChangedFast();
-                    tile.spawnParticles(ParticleTypes.HAPPY_VILLAGER, pos, 1.0D, 10);
                 } else {
-                    for (var pedestal : collections.all()) {
-                        var pedestalPos = pedestal.getBlockPos();
-                        var resource = pedestal.getInventory().getResource(0);
-
-                        tile.spawnItemParticles(pedestalPos, resource);
-                    }
+                    tile.reset();
                 }
             } else {
-                tile.reset();
+                tile.progress = 0;
             }
         } else {
-            tile.progress = 0;
+            tile.reset();
         }
 
         tile.dispatchIfChanged();
@@ -154,6 +157,7 @@ public class AwakeningAltarTileEntity extends BaseInventoryTileEntity implements
     private void reset() {
         this.progress = 0;
         this.active = false;
+        this.recipeId = null;
     }
 
     public IAwakeningRecipe getActiveRecipe() {
@@ -161,8 +165,18 @@ public class AwakeningAltarTileEntity extends BaseInventoryTileEntity implements
             return null;
 
         this.updateRecipeInventory(this.getPedestalCollections());
+        this.recipe.check(this.toCraftingInput(), (ServerLevel) this.level);
 
-        return this.recipe.checkAndGet(this.toCraftingInput(), (ServerLevel) this.level);
+        if (this.recipeId != this.recipe.id()) {
+            this.recipeId = this.recipe.id();
+            this.setChangedFast();
+        }
+
+        return this.recipe.get();
+    }
+
+    public @Nullable Identifier getActiveRecipeId() {
+        return this.recipeId;
     }
 
     public NonNullList<ItemStack> getEssenceItems() {
