@@ -1,21 +1,27 @@
 package com.blakebr0.mysticalagriculture.util;
 
+import com.blakebr0.cucumber.event.RecipeManagerLoadedEvent;
 import com.blakebr0.mysticalagriculture.MysticalAgriculture;
 import com.blakebr0.mysticalagriculture.init.ModRecipeTypes;
 import com.blakebr0.mysticalagriculture.network.payloads.ReloadIngredientCachePayload;
+import com.google.common.base.Function;
 import com.google.common.base.Stopwatch;
+import net.minecraft.core.Holder;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeInput;
+import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.common.crafting.SizedIngredient;
 import net.neoforged.neoforge.event.OnDatapackSyncEvent;
-import net.neoforged.neoforge.event.TagsUpdatedEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.transfer.item.ItemResource;
+import org.jspecify.annotations.NonNull;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -49,24 +55,23 @@ public class RecipeIngredientCache {
     }
 
     @SubscribeEvent
-    public void onRecipeManagerLoaded(TagsUpdatedEvent event) {
-        if (event.getUpdateCause() == TagsUpdatedEvent.UpdateCause.SERVER_DATA_LOAD) {
-            var stopwatch = Stopwatch.createStarted();
+    public void onRecipeManagerLoaded(RecipeManagerLoadedEvent event) {
+        var stopwatch = Stopwatch.createStarted();
+        var manager = event.getRecipeManager();
 
-            this.caches.clear();
+        this.caches.clear();
 
-            cache(RecipeType.SMELTING);
-            cache(ModRecipeTypes.REPROCESSOR.get());
-            cache(ModRecipeTypes.SOUL_EXTRACTION.get());
-            cache(ModRecipeTypes.SOULIUM_SPAWNER.get());
-            cache(ModRecipeTypes.ORE_INFUSION.get());
+        cache(manager, RecipeType.SMELTING, recipe -> List.of(recipe.input()));
+        cache(manager, ModRecipeTypes.REPROCESSOR.get(), recipe -> List.of(recipe.getIngredient()));
+        cache(manager, ModRecipeTypes.SOUL_EXTRACTION.get(), recipe -> List.of(recipe.getIngredient()));
+        cache(manager, ModRecipeTypes.SOULIUM_SPAWNER.get(), recipe -> List.of(recipe.getIngredient().ingredient()));
+        cache(manager, ModRecipeTypes.ORE_INFUSION.get(), recipe -> recipe.getIngredients().stream().map(SizedIngredient::ingredient).toList());
 
-            this.validVesselItems.clear();
+        this.validVesselItems.clear();
 
-            cacheVesselItems();
+        cacheVesselItems(manager);
 
-            MysticalAgriculture.LOGGER.info("Recipe ingredient caching done in {} ms", stopwatch.stop().elapsed(TimeUnit.MILLISECONDS));
-        }
+        MysticalAgriculture.LOGGER.info("Recipe ingredient caching done in {} ms", stopwatch.stop().elapsed(TimeUnit.MILLISECONDS));
     }
 
     // called on the client by ReloadIngredientCacheMessage
@@ -86,7 +91,7 @@ public class RecipeIngredientCache {
         return cache != null && cache.stream().anyMatch(i -> i.test(stack));
     }
 
-    // soulium spawner ingredients are count dependant, and we don't care in this case
+    // soulium spawner ingredients are count-dependent, and we don't care in this case
     public boolean isValidSouliumSpawnerInput(ItemStack stack) {
         return isValidInput(stack.copyWithCount(Integer.MAX_VALUE), ModRecipeTypes.SOULIUM_SPAWNER.get());
     }
@@ -95,33 +100,31 @@ public class RecipeIngredientCache {
         return this.validVesselItems.contains(resource.getItem());
     }
 
-    private static <C extends RecipeInput, T extends Recipe<C>> void cache(RecipeType<T> type) {
+    private static <C extends RecipeInput, T extends @NonNull Recipe<C>> void cache(RecipeManager manager, RecipeType<T> type, Function<T, List<Ingredient>> ingredients) {
         INSTANCE.caches.put(type, new HashMap<>());
 
-//        TODO recipe syncing stuff
-//        for (var recipe : RecipeHelper.byType(type)) {
-//            for (var ingredient : recipe.value().placementInfo().ingredients()) {
-//                var items = new HashSet<>();
-//                for (var stack : ingredient.getValues()) {
-//                    var item = stack.value();
-//                    if (items.contains(item))
-//                        continue;
-//
-//                    var cache = INSTANCE.caches.get(type).computeIfAbsent(item, _ -> new ArrayList<>());
-//
-//                    items.add(item);
-//                    cache.add(ingredient);
-//                }
-//            }
-//        }
+        for (var recipe : manager.recipeMap().byType(type)) {
+            for (var ingredient : ingredients.apply(recipe.value())) {
+                var items = new HashSet<>();
+                for (var stack : ingredient.getValues()) {
+                    var item = stack.value();
+                    if (items.contains(item))
+                        continue;
+
+                    var cache = INSTANCE.caches.get(type).computeIfAbsent(item, _ -> new ArrayList<>());
+
+                    items.add(item);
+                    cache.add(ingredient);
+                }
+            }
+        }
     }
 
-    private static void cacheVesselItems() {
-//        TODO recipe syncing stuff
-//        for (var recipe : RecipeHelper.byType(ModRecipeTypes.AWAKENING.get())) {
-//            for (var essence : recipe.value().getEssences()) {
-//                INSTANCE.validVesselItems.add(essence.getItem());
-//            }
-//        }
+    private static void cacheVesselItems(RecipeManager manager) {
+        for (var recipe : manager.recipeMap().byType(ModRecipeTypes.AWAKENING.get())) {
+            for (var essence : recipe.value().getEssenceIngredients()) {
+                INSTANCE.validVesselItems.addAll(essence.ingredient().getValues().stream().map(Holder::value).toList());
+            }
+        }
     }
 }
