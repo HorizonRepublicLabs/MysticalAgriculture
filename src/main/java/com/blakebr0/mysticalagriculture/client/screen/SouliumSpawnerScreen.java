@@ -6,11 +6,15 @@ import com.blakebr0.cucumber.util.Formatting;
 import com.blakebr0.mysticalagriculture.MysticalAgriculture;
 import com.blakebr0.mysticalagriculture.container.SouliumSpawnerContainer;
 import com.blakebr0.mysticalagriculture.tileentity.SouliumSpawnerTileEntity;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
+import org.joml.Quaternionf;
+import org.joml.Vector3f;
 
 public class SouliumSpawnerScreen extends BaseContainerScreen<SouliumSpawnerContainer> {
     private static final Identifier BACKGROUND = MysticalAgriculture.resource("textures/gui/soulium_spawner.png");
@@ -64,8 +68,8 @@ public class SouliumSpawnerScreen extends BaseContainerScreen<SouliumSpawnerCont
     }
 
     @Override
-    public void extractBackground(GuiGraphicsExtractor gfx, int mouseX, int mouseY, float a) {
-        super.extractBackground(gfx, mouseX, mouseY, a);
+    public void extractBackground(GuiGraphicsExtractor gfx, int mouseX, int mouseY, float partialTicks) {
+        super.extractBackground(gfx, mouseX, mouseY, partialTicks);
 
         int x = this.getGuiLeft();
         int y = this.getGuiTop();
@@ -80,12 +84,7 @@ public class SouliumSpawnerScreen extends BaseContainerScreen<SouliumSpawnerCont
             gfx.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, x + 98, y + 51, 176, 14, i2 + 1, 16, 256, 256);
         }
 
-        this.renderEntityPreview(gfx);
-
-        if (isHoveringSlot(x + 134, y + 52, mouseX, mouseY)) {
-//            TODO render slot highlight
-//            renderSlotHighlight(gfx, x + 134, y + 52, 0);
-        }
+        this.extractEntityPreview(gfx, mouseX, mouseY, partialTicks);
     }
 
     private SouliumSpawnerTileEntity getTileEntity() {
@@ -114,7 +113,7 @@ public class SouliumSpawnerScreen extends BaseContainerScreen<SouliumSpawnerCont
         return (int) (j != 0 && i != 0 ? (long) i * pixels / j : 0);
     }
 
-    private void renderEntityPreview(GuiGraphicsExtractor gfx) {
+    private void extractEntityPreview(GuiGraphicsExtractor gfx, int mouseX, int mouseY, float partialTicks) {
         if (this.tile == null)
             return;
 
@@ -131,23 +130,33 @@ public class SouliumSpawnerScreen extends BaseContainerScreen<SouliumSpawnerCont
             scale /= bbMax;
         }
 
-        var matrix = gfx.pose();
+        var entityRenderer = Minecraft.getInstance().getEntityRenderDispatcher();
+        var entityRenderState = entityRenderer.extractEntity(entity, partialTicks);
 
-        matrix.pushMatrix();
-// TODO rendering entity in soulium spawner screen
-//        matrix.translate(this.leftPos + 142, this.topPos + 68, 32.0F);
-//        matrix.mul(Axis.YP.rotationDegrees(135.0F));
-//        matrix.mul(Axis.XP.rotationDegrees(180.0F));
-//        matrix.scale(scale, scale, scale);
-//
-//        var buffer = gfx.bufferSource();
-//
-//        Minecraft.getInstance().getEntityRenderDispatcher().render(entity, 0.0D, 0.0D, 0.0D, 0.0F, 1, matrix, buffer, 255);
+        if (entityRenderState instanceof LivingEntityRenderState livingRenderState) {
+            livingRenderState.bodyRot = 160.0F;
+            livingRenderState.yRot = 0F;
+            livingRenderState.xRot = 0F;
 
-        matrix.popMatrix();
-    }
+            livingRenderState.boundingBoxWidth = livingRenderState.boundingBoxWidth / livingRenderState.scale;
+            livingRenderState.boundingBoxHeight = livingRenderState.boundingBoxHeight / livingRenderState.scale;
+            livingRenderState.scale = 1.0F;
+        }
 
-    private static boolean isHoveringSlot(int x, int y, int mouseX, int mouseY) {
-        return mouseX > x - 1 && mouseX < x + 16 && mouseY > y - 1 && mouseY < y + 16;
+        var translation = new Vector3f(0.0F, entityRenderState.boundingBoxHeight / 2.0F, 0.0F);
+        var rotation = new Quaternionf().rotateY(20F).rotateZ((float) Math.PI);
+
+        int x = this.getGuiLeft();
+        int y = this.getGuiTop();
+
+        if (isHoveringSlot(x + 134, y + 52, mouseX, mouseY)) {
+            extractSlotHighlightBack(gfx, x + 130, y + 48);
+        }
+
+        gfx.entity(entityRenderState, scale, translation, rotation, null, this.leftPos + 122, this.topPos + 33, this.leftPos + 162, this.topPos + 88);
+
+        if (isHoveringSlot(x + 134, y + 52, mouseX, mouseY)) {
+            extractSlotHighlightFront(gfx, x + 130, y + 48);
+        }
     }
 }

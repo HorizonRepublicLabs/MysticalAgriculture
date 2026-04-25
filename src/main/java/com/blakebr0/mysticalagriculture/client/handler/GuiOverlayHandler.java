@@ -34,14 +34,10 @@ public final class GuiOverlayHandler {
             if (tile instanceof InfusionAltarTileEntity altar) {
                 var recipeId = altar.getActiveRecipeId();
                 if (recipeId != null) {
-                    var recipe = ClientRecipeHandler.INFUSION_RECIPES
-                            .stream()
-                            .filter(r -> r.id().identifier().equals(recipeId))
-                            .findFirst()
-                            .orElse(null);
+                    var recipe = ClientRecipeHandler.INFUSION_RECIPE_MAP.get(recipeId);
 
                     if (recipe != null) {
-                        stack = recipe.value().assemble(CraftingInput.EMPTY);
+                        stack = recipe.assemble(CraftingInput.EMPTY);
                     }
                 }
             }
@@ -49,16 +45,12 @@ public final class GuiOverlayHandler {
             if (tile instanceof AwakeningAltarTileEntity altar) {
                 var recipeId = altar.getActiveRecipeId();
                 if (recipeId != null) {
-                    var recipe = ClientRecipeHandler.AWAKENING_RECIPES
-                            .stream()
-                            .filter(r -> r.id().identifier().equals(recipeId))
-                            .findFirst()
-                            .orElse(null);
+                    var recipe = ClientRecipeHandler.AWAKENING_RECIPE_MAP.get(recipeId);
 
                     if (recipe != null) {
-                        stack = recipe.value().assemble(CraftingInput.EMPTY);
+                        stack = recipe.assemble(CraftingInput.EMPTY);
 
-                        drawEssenceRequirements(gfx, recipe.value(), altar, level);
+                        drawEssenceRequirements(gfx, recipe, altar, level);
                     }
                 }
             }

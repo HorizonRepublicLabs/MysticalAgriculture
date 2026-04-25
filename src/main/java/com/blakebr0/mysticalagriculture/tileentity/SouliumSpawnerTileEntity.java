@@ -13,6 +13,7 @@ import com.blakebr0.mysticalagriculture.api.machine.IUpgradeableMachine;
 import com.blakebr0.mysticalagriculture.api.machine.MachineUpgradeItemStackHandler;
 import com.blakebr0.mysticalagriculture.api.machine.MachineUpgradeTier;
 import com.blakebr0.mysticalagriculture.block.SouliumSpawnerBlock;
+import com.blakebr0.mysticalagriculture.client.handler.ClientRecipeHandler;
 import com.blakebr0.mysticalagriculture.container.SouliumSpawnerContainer;
 import com.blakebr0.mysticalagriculture.init.ModRecipeTypes;
 import com.blakebr0.mysticalagriculture.init.ModTileEntities;
@@ -22,6 +23,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.random.Weighted;
 import net.minecraft.world.Containers;
@@ -74,6 +76,7 @@ public class SouliumSpawnerTileEntity extends BaseInventoryTileEntity implements
     private boolean isRunning;
     private double spin, oSpin;
     private DisplayEntity[] displayEntities;
+    private @Nullable Identifier recipeId;
 
     public SouliumSpawnerTileEntity(BlockPos pos, BlockState state) {
         super(ModTileEntities.SOULIUM_SPAWNER.get(), pos, state);
@@ -105,6 +108,7 @@ public class SouliumSpawnerTileEntity extends BaseInventoryTileEntity implements
         this.progress = input.getIntOr("progress", 0);
         this.fuelLeft = input.getIntOr("fuel_left", 0);
         this.fuelItemValue = input.getIntOr("fuel_item_value", 0);
+        this.recipeId = input.read("recipe_id", Identifier.CODEC).orElse(null);
         this.energy.deserialize(input.childOrEmpty("energy"));
         this.upgradeInventory.deserialize(input.childOrEmpty("upgrade_inventory"));
     }
@@ -116,6 +120,7 @@ public class SouliumSpawnerTileEntity extends BaseInventoryTileEntity implements
         output.putInt("progress", this.progress);
         output.putInt("fuel_left", this.fuelLeft);
         output.putInt("fuel_item_value", this.fuelItemValue);
+        output.storeNullable("recipe_id", Identifier.CODEC, this.recipeId);
         output.putChild("energy", this.energy);
         output.putChild("upgrade_inventory", this.upgradeInventory);
     }
@@ -129,13 +134,13 @@ public class SouliumSpawnerTileEntity extends BaseInventoryTileEntity implements
     @Override
     public void onDataPacket(Connection net, ValueInput input) {
         super.onDataPacket(net, input);
-        this.reloadActiveRecipe();
+        this.reloadDisplayEntities();
     }
 
     @Override
     public void handleUpdateTag(ValueInput input) {
         super.handleUpdateTag(input);
-        this.reloadActiveRecipe();
+        this.reloadDisplayEntities();
     }
 
     @Override
@@ -424,12 +429,28 @@ public class SouliumSpawnerTileEntity extends BaseInventoryTileEntity implements
     }
 
     private void reloadActiveRecipe() {
+        if (this.level == null || this.level.isClientSide())
+            return;
+
+        this.recipe.check(this.toCraftingInput(), (ServerLevel) this.level);
+
+        if (this.recipeId != this.recipe.id()) {
+            this.recipeId = this.recipe.id();
+        }
+    }
+
+    private void reloadDisplayEntities() {
         if (this.level == null)
             return;
 
-        var recipe = this.recipe.checkAndGet(this.toCraftingInput(), (ServerLevel) this.level);
+        if (this.recipeId != null) {
+            var recipe = ClientRecipeHandler.SOULIUM_SPAWNER_RECIPE_MAP.get(this.recipeId);
 
-        if (recipe != null) {
+            if (recipe == null) {
+                this.displayEntities = null;
+                return;
+            }
+
             var entities = recipe.getEntityTypes().unwrap();
             var totalWeight = entities.stream().map(Weighted::weight).reduce(0, Integer::sum);
 

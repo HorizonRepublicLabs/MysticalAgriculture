@@ -32,9 +32,14 @@ public class SouliumSpawnerRenderer implements BlockEntityRenderer<SouliumSpawne
 
         var displayEntity = tile.getDisplayEntity();
         if (displayEntity != null) {
-            state.entity = displayEntity.entity();
+            var entity = displayEntity.entity();
+
+            state.displayEntity = this.entityRenderer.extractEntity(entity, state.partialTicks);
+            state.displayEntity.lightCoords = state.lightCoords;
+            state.bbWidth = entity.getBbWidth();
+            state.bbHeight = entity.getBbHeight();
         } else {
-            state.entity = null;
+            state.displayEntity = null;
         }
 
         state.spin = tile.getSpin();
@@ -47,9 +52,9 @@ public class SouliumSpawnerRenderer implements BlockEntityRenderer<SouliumSpawne
         matrix.pushPose();
         matrix.translate(0.5F, 0.0F, 0.5F);
 
-        if (state.entity != null) {
+        if (state.displayEntity != null) {
             float scale = 0.53125F;
-            float bbMax = Math.max(state.entity.getBbWidth(), state.entity.getBbHeight());
+            float bbMax = Math.max(state.bbWidth, state.bbHeight);
 
             if ((double) bbMax > 1.0D) {
                 scale /= bbMax;
@@ -61,9 +66,7 @@ public class SouliumSpawnerRenderer implements BlockEntityRenderer<SouliumSpawne
             matrix.mulPose(Axis.XP.rotationDegrees(-30.0F));
             matrix.scale(scale, scale, scale);
 
-
-//            TODO render entity in soulium spawner
-//            this.entityRenderer.submit(entity, 0.0D, 0.0D, 0.0D, 0.0F, v, matrix, buffer, i);
+            this.entityRenderer.submit(state.displayEntity, camera, 0.0, 0.0, 0.0, matrix, submitNodeCollector);
         }
 
         matrix.popPose();
