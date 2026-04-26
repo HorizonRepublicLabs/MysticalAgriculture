@@ -2,17 +2,22 @@ package com.blakebr0.mysticalagriculture.api.util;
 
 import com.blakebr0.mysticalagriculture.api.MysticalAgricultureAPI;
 import com.blakebr0.mysticalagriculture.api.MysticalAgricultureDataComponentTypes;
+import com.blakebr0.mysticalagriculture.api.components.AOEAugmentOffsetComponent;
 import com.blakebr0.mysticalagriculture.api.components.AugmentComponent;
 import com.blakebr0.mysticalagriculture.api.tinkering.AOEAugment;
 import com.blakebr0.mysticalagriculture.api.tinkering.Augment;
 import com.blakebr0.mysticalagriculture.api.tinkering.ITinkerable;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class AugmentUtils {
     /**
@@ -214,5 +219,40 @@ public class AugmentUtils {
         }
 
         return range;
+    }
+
+    /**
+     * Used to add the augment tooltip lines to an item
+     *
+     * @param tooltip the tooltip consumer from {@link Item#appendHoverText}
+     * @param stack   the {@link ITinkerable} item
+     * @param slots   the number of augment slots this {@link ITinkerable} has
+     * @param player  the player
+     */
+    public static void addAugmentListToTooltip(Consumer<Component> tooltip, ItemStack stack, int slots, Player player) {
+        tooltip.accept(Component.translatable("tooltip.mysticalagriculture.augments").withStyle(ChatFormatting.GRAY));
+
+        var augments = AugmentUtils.getAugments(stack);
+
+        for (int i = 0; i < slots; i++) {
+            var augment = i < augments.size() ? augments.get(i) : null;
+            var name = augment != null ? augment.getDisplayName() : Component.translatable("tooltip.mysticalagriculture.empty");
+
+            if (augment != null && augment.hasSetBonus() && TinkerableUtils.hasArmorSetMinimumTier(player, augment.getTier())) {
+                name.withStyle(ChatFormatting.GREEN);
+            }
+
+            if (augment instanceof AOEAugment) {
+                var offset = stack.getOrDefault(MysticalAgricultureDataComponentTypes.AOE_AUGMENT_OFFSET, AOEAugmentOffsetComponent.DEFAULT);
+                if (offset.isOffset()) {
+                    var horizontalOffset = String.format("%+d", offset.horizontalOffset());
+                    var verticalOffset = String.format("%+d", offset.verticalOffset());
+
+                    name.append(" (").append(Component.translatable("tooltip.mysticalagriculture.aoe_offset", horizontalOffset, verticalOffset).append(")"));
+                }
+            }
+
+            tooltip.accept(Component.literal(" - ").withStyle(ChatFormatting.GRAY).append(name));
+        }
     }
 }

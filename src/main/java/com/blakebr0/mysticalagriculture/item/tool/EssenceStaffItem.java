@@ -2,9 +2,11 @@ package com.blakebr0.mysticalagriculture.item.tool;
 
 import com.blakebr0.cucumber.item.BaseItem;
 import com.blakebr0.cucumber.lib.Tooltips;
+import com.blakebr0.cucumber.util.ClientPlayerUtil;
 import com.blakebr0.mysticalagriculture.api.tinkering.AugmentType;
 import com.blakebr0.mysticalagriculture.api.tinkering.IElementalItem;
 import com.blakebr0.mysticalagriculture.api.tinkering.ITinkerable;
+import com.blakebr0.mysticalagriculture.api.util.AugmentUtils;
 import com.blakebr0.mysticalagriculture.init.ModDataComponentTypes;
 import com.blakebr0.mysticalagriculture.lib.ModTooltips;
 import net.minecraft.network.chat.Component;
@@ -32,7 +34,7 @@ public class EssenceStaffItem extends BaseItem implements ITinkerable, IElementa
     public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay display, Consumer<Component> builder, TooltipFlag flag) {
         builder.accept(Tooltips.NOT_YET_IMPLEMENTED.toComponent());
         builder.accept(ModTooltips.getTooltipForTier(this.tinkerableTier));
-        ModTooltips.addAugmentListToTooltip(builder, stack, this.slots);
+        AugmentUtils.addAugmentListToTooltip(builder, stack, this.slots, ClientPlayerUtil.getClientPlayer());
     }
 
     @Override

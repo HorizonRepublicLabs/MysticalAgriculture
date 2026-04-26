@@ -1,6 +1,7 @@
 package com.blakebr0.mysticalagriculture.item.armor;
 
 import com.blakebr0.cucumber.item.BaseArmorItem;
+import com.blakebr0.cucumber.util.ClientPlayerUtil;
 import com.blakebr0.cucumber.util.Utils;
 import com.blakebr0.mysticalagriculture.api.tinkering.AugmentType;
 import com.blakebr0.mysticalagriculture.api.tinkering.ITinkerable;
@@ -78,7 +79,7 @@ public class EssenceChestplateItem extends BaseArmorItem implements ITinkerable 
             builder.accept(ModTooltips.SET_BONUS.args(ModTooltips.AWAKENED_SUPREMIUM_SET_BONUS.toComponent()).toComponent());
         }
 
-        ModTooltips.addAugmentListToTooltip(builder, stack, this.slots);
+        AugmentUtils.addAugmentListToTooltip(builder, stack, this.slots, ClientPlayerUtil.getClientPlayer());
     }
 
     @Override

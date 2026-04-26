@@ -1,18 +1,10 @@
 package com.blakebr0.mysticalagriculture.lib;
 
-import com.blakebr0.cucumber.util.ClientPlayerUtil;
 import com.blakebr0.cucumber.util.Tooltip;
-import com.blakebr0.mysticalagriculture.api.components.AOEAugmentOffsetComponent;
-import com.blakebr0.mysticalagriculture.api.tinkering.AOEAugment;
-import com.blakebr0.mysticalagriculture.api.util.AugmentUtils;
 import com.blakebr0.mysticalagriculture.api.util.TinkerableUtils;
-import com.blakebr0.mysticalagriculture.init.ModDataComponentTypes;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.ItemStack;
 import net.neoforged.fml.ModList;
-
-import java.util.function.Consumer;
 
 public final class ModTooltips {
     public static final Tooltip EMPTY = new Tooltip("tooltip.mysticalagriculture.empty");
@@ -22,7 +14,6 @@ public final class ModTooltips {
     public static final Tooltip AUGMENT_ID = new Tooltip("tooltip.mysticalagriculture.augment_id");
     public static final Tooltip ADDED_BY = new Tooltip("tooltip.mysticalagriculture.added_by");
     public static final Tooltip SET_BONUS = new Tooltip("tooltip.mysticalagriculture.set_bonus");
-    public static final Tooltip AUGMENTS = new Tooltip("tooltip.mysticalagriculture.augments");
     public static final Tooltip REQUIRED_BIOMES = new Tooltip("tooltip.mysticalagriculture.required_biomes");
     public static final Tooltip CHANCE = new Tooltip("tooltip.mysticalagriculture.chance");
     public static final Tooltip SECONDARY_CHANCE = new Tooltip("tooltip.mysticalagriculture.secondary_chance");
@@ -57,7 +48,6 @@ public final class ModTooltips {
     public static final Tooltip UPGRADE_FUEL_CAPACITY = new Tooltip("tooltip.mysticalagriculture.upgrade_fuel_capacity");
     public static final Tooltip UPGRADE_AREA = new Tooltip("tooltip.mysticalagriculture.upgrade_area");
     public static final Tooltip MISSING_ESSENCES = new Tooltip("tooltip.mysticalagriculture.missing_essences", ChatFormatting.WHITE);
-    public static final Tooltip AOE_OFFSET_TOOLTIP = new Tooltip("tooltip.mysticalagriculture.aoe_offset");
 
     public static Component getTooltipForTier(int tier) {
         return TIER.args(TinkerableUtils.getTooltipForTier(tier)).color(ChatFormatting.GRAY).toComponent();
@@ -66,33 +56,5 @@ public final class ModTooltips {
     public static Component getAddedByTooltip(String modid) {
         var name = ModList.get().getModFileById(modid).getMods().getFirst().getDisplayName();
         return ModTooltips.ADDED_BY.args(name).toComponent();
-    }
-
-    public static void addAugmentListToTooltip(Consumer<Component> tooltip, ItemStack stack, int slots) {
-        tooltip.accept(ModTooltips.AUGMENTS.toComponent());
-
-        var augments = AugmentUtils.getAugments(stack);
-        var player = ClientPlayerUtil.getClientPlayer();
-
-        for (int i = 0; i < slots; i++) {
-            var augment = i < augments.size() ? augments.get(i) : null;
-            var name = augment != null ? augment.getDisplayName() : ModTooltips.EMPTY.toComponent();
-
-            if (augment != null && augment.hasSetBonus() && TinkerableUtils.hasArmorSetMinimumTier(player, augment.getTier())) {
-                name.withStyle(ChatFormatting.GREEN);
-            }
-
-            if (augment instanceof AOEAugment) {
-                var offset = stack.getOrDefault(ModDataComponentTypes.AOE_AUGMENT_OFFSET, AOEAugmentOffsetComponent.DEFAULT);
-                if (offset.isOffset()) {
-                    var horizontalOffset = String.format("%+d", offset.horizontalOffset());
-                    var verticalOffset = String.format("%+d", offset.verticalOffset());
-
-                    name.append(" (").append(ModTooltips.AOE_OFFSET_TOOLTIP.args(horizontalOffset, verticalOffset).toComponent().append(")"));
-                }
-            }
-
-            tooltip.accept(Component.literal(" - ").withStyle(ChatFormatting.GRAY).append(name));
-        }
     }
 }
