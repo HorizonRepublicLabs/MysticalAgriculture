@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "mysticalagriculture:tertium"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "mysticalagriculture:tertium"
+      }
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "mysticalagriculture:inferium"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "mysticalagriculture:inferium"
+      }
+    ]
+  }
+}

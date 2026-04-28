@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "mysticalagriculture:supremium"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "mysticalagriculture:supremium"
+      }
+    ]
+  }
+}
