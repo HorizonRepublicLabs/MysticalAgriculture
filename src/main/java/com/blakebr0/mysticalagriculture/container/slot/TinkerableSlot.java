@@ -23,8 +23,13 @@ public class TinkerableSlot extends CSlot {
         try (var tx = Transaction.openRoot()) {
             for (int i = 0; i < 2; i++) {
                 var resource = inventory.getResource(i + 1);
-                this.getResourceHandler().extract(i + 1, resource, 1, tx);
+                if (resource.isEmpty())
+                    continue;
+
+                inventory.extract(i + 1, resource, 1, tx);
             }
+
+            tx.commit();
         }
     }
 
@@ -43,6 +48,8 @@ public class TinkerableSlot extends CSlot {
                     inventory.insert(i + 1, ItemResource.of(augment.getItem()), stack.count(), tx);
                 }
             }
+
+            tx.commit();
         }
 
         super.setStackCopy(stack);
