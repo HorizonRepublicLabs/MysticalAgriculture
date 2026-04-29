@@ -13,7 +13,6 @@ import com.blakebr0.mysticalagriculture.client.handler.ClientRecipeHandler;
 import com.blakebr0.mysticalagriculture.client.handler.GuiOverlayHandler;
 import com.blakebr0.mysticalagriculture.client.handler.ItemModelPropertyHandler;
 import com.blakebr0.mysticalagriculture.client.handler.TintSourceHandler;
-import com.blakebr0.mysticalagriculture.compat.TOPCompat;
 import com.blakebr0.mysticalagriculture.config.ModConfigs;
 import com.blakebr0.mysticalagriculture.crafting.DynamicRecipeManager;
 import com.blakebr0.mysticalagriculture.crafting.EssenceVesselColorManager;
@@ -51,7 +50,6 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.fml.event.lifecycle.InterModEnqueueEvent;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
 import org.slf4j.Logger;
@@ -126,13 +124,6 @@ public final class MysticalAgriculture {
 		NeoForge.EVENT_BUS.register(new ClientRecipeHandler());
 
 		ModelHandler.onClientSetup(event);
-	}
-
-	@SubscribeEvent
-	public void onInterModEnqueue(InterModEnqueueEvent event) {
-		if (ModConfigs.isTheOneProbeInstalled()) {
-			TOPCompat.onInterModEnqueue();
-		}
 	}
 
 	public static Identifier resource(String path) {

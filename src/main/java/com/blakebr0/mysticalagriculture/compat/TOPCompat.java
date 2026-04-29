@@ -1,14 +1,13 @@
-package com.blakebr0.mysticalagriculture.compat;
-
-import mcjty.theoneprobe.api.ITheOneProbe;
-import net.neoforged.fml.InterModComms;
-
-import java.util.function.Function;
-
-public class TOPCompat implements Function<ITheOneProbe, Void> {
-    @Override
-    public Void apply(ITheOneProbe probe) {
-//        TODO reevalute TOP integration
+//package com.blakebr0.mysticalagriculture.compat;
+//
+//import mcjty.theoneprobe.api.ITheOneProbe;
+//import net.neoforged.fml.InterModComms;
+//
+//import java.util.function.Function;
+//
+//public class TOPCompat implements Function<ITheOneProbe, Void> {
+//    @Override
+//    public Void apply(ITheOneProbe probe) {
 //        probe.registerProvider(new IProbeInfoProvider() {
 //            @Override
 //            public Identifier getID() {
@@ -90,11 +89,11 @@ public class TOPCompat implements Function<ITheOneProbe, Void> {
 //                }
 //            }
 //        });
-
-        return null;
-    }
-
-    public static void onInterModEnqueue() {
-        InterModComms.sendTo("theoneprobe", "getTheOneProbe", TOPCompat::new);
-    }
-}
+//
+//        return null;
+//    }
+//
+//    public static void onInterModEnqueue() {
+//        InterModComms.sendTo("theoneprobe", "getTheOneProbe", TOPCompat::new);
+//    }
+//}
