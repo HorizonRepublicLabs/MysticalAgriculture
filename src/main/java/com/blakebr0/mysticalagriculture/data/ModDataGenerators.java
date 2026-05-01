@@ -6,7 +6,6 @@ import com.blakebr0.mysticalagriculture.data.generator.BlockTagsJsonGenerator;
 import com.blakebr0.mysticalagriculture.data.generator.ItemModelJsonGenerator;
 import com.blakebr0.mysticalagriculture.data.generator.ItemTagsJsonGenerator;
 import com.blakebr0.mysticalagriculture.data.generator.RecipeJsonGenerator;
-import com.blakebr0.mysticalagriculture.data.generator.SpriteSourceGenerator;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 
@@ -19,7 +18,6 @@ public final class ModDataGenerators {
 
         event.addProvider(new BlockModelJsonGenerator(packOutput, MysticalAgriculture.MOD_ID));
         event.addProvider(new ItemModelJsonGenerator(packOutput, MysticalAgriculture.MOD_ID));
-        event.addProvider(new SpriteSourceGenerator(packOutput, lookupProvider, MysticalAgriculture.MOD_ID));
 
         event.addProvider(new RecipeJsonGenerator.Runner(packOutput, lookupProvider));
         event.addProvider(new BlockTagsJsonGenerator(packOutput, lookupProvider, MysticalAgriculture.MOD_ID));
