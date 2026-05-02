@@ -29,7 +29,7 @@ public class Crop {
     private int flowerColor;
     private int essenceColor;
     private int seedColor;
-    private CropTextures textures;
+    private final CropModels models;
     private Supplier<? extends CropBlock> crop;
     private Supplier<? extends Item> essence;
     private Supplier<? extends Item> seeds;
@@ -42,8 +42,8 @@ public class Crop {
     private boolean registerEssenceItem;
     private boolean registerSeedsItem;
     private boolean hasEffect;
-    private CropRecipes recipeConfig;
-    private Set<Identifier> requiredBiomes;
+    private final CropRecipes recipeConfig;
+    private final Set<Identifier> requiredBiomes;
 
     /**
      * Represents a new crop for registration
@@ -53,7 +53,7 @@ public class Crop {
      * @param craftingMaterial the crafting ingredient for this crop
      */
     public Crop(Identifier id, CropTier tier, CropType type, LazyIngredient craftingMaterial) {
-        this(id, tier, type, new CropTextures(), craftingMaterial);
+        this(id, tier, type, new CropModels(), craftingMaterial);
     }
 
     /**
@@ -64,7 +64,7 @@ public class Crop {
      * @param craftingMaterial the crafting ingredient for this crop
      */
     public Crop(Identifier id, CropTier tier, CropType type, int color, LazyIngredient craftingMaterial) {
-        this(id, tier, type, new CropTextures(), color, craftingMaterial);
+        this(id, tier, type, new CropModels(), color, craftingMaterial);
     }
 
     /**
@@ -72,11 +72,11 @@ public class Crop {
      * @param id the id of this crop, the path is used to generate the name
      * @param tier the tier of this crop
      * @param type the type of this crop, like resource or mob
-     * @param textures the textures of this crop
+     * @param models the textures of this crop
      * @param craftingMaterial the crafting ingredient for this crop
      */
-    public Crop(Identifier id, CropTier tier, CropType type, CropTextures textures, LazyIngredient craftingMaterial) {
-        this(id, tier, type, textures, 0, craftingMaterial);
+    public Crop(Identifier id, CropTier tier, CropType type, CropModels models, LazyIngredient craftingMaterial) {
+        this(id, tier, type, models, 0, craftingMaterial);
     }
 
     /**
@@ -84,15 +84,15 @@ public class Crop {
      * @param id the id of this crop, the path is used to generate the name
      * @param tier the tier of this crop
      * @param type the type of this crop, like resource or mob
-     * @param textures the textures of this crop
+     * @param models the textures of this crop
      * @param color the color to color the textures with
      * @param craftingMaterial the crafting ingredient for this crop
      */
-    public Crop(Identifier id, CropTier tier, CropType type, CropTextures textures, int color, LazyIngredient craftingMaterial) {
+    public Crop(Identifier id, CropTier tier, CropType type, CropModels models, int color, LazyIngredient craftingMaterial) {
         this.id = id;
         this.tier = tier;
         this.type = type;
-        this.textures = textures.init(id);
+        this.models = models.init(id);
         this.setColor(color);
         this.craftingMaterial = craftingMaterial;
         this.baseSecondaryChance = -1;
@@ -172,7 +172,7 @@ public class Crop {
     }
 
     /**
-     * Sets this crops tier
+     * Sets this crop's tier
      * @param tier the tier
      * @return this crop
      */
@@ -190,7 +190,7 @@ public class Crop {
     }
 
     /**
-     * Sets this crops type
+     * Sets this crop's type
      * @param type the type
      * @return this crop
      */
@@ -203,13 +203,13 @@ public class Crop {
      * All the textures related to this crop
      * @return the crop's textures
      */
-    public CropTextures getTextures() {
-        return this.textures;
+    public CropModels getModels() {
+        return this.models;
     }
 
     /**
      * Whether this crop's flower should be colored using the color defined by {@link Crop#getFlowerColor()}
-     * @return is the crop's flower colored
+     * @return is the crop's flower colored?
      */
     public boolean isFlowerColored() {
         return this.flowerColor != 0;
@@ -368,8 +368,8 @@ public class Crop {
     }
 
     /**
-     * Used to set the seeds item instance for this crop, the supplier should return the same instance every time
-     * @param seeds the seeds item
+     * Used to set the seed item instance for this crop, the supplier should return the same instance every time
+     * @param seeds the seed item
      * @return this crop
      */
     public Crop setSeedsItem(Supplier<? extends Item> seeds) {
@@ -377,8 +377,8 @@ public class Crop {
     }
 
     /**
-     * Used to set the seeds item instance for this crop, the supplier should return the same instance every time
-     * @param seeds the seeds item
+     * Used to set the seed item instance for this crop, the supplier should return the same instance every time
+     * @param seeds the seed item
      * @param register should this item be registered?
      * @return this crop
      */
@@ -389,7 +389,7 @@ public class Crop {
     }
 
     /**
-     * Should this crop's seeds item be registered?
+     * Should this crop's seed item be registered?
      * @return should be registered
      */
     public boolean shouldRegisterSeedsItem() {

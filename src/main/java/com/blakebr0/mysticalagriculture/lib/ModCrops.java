@@ -202,7 +202,7 @@ public final class ModCrops {
     public static final Crop URANINITE = new Crop(MysticalAgriculture.resource("uraninite"), CropTier.FIVE, CropType.RESOURCE, LazyIngredient.item("powah:uraninite"));
 
     public static void onRegisterCrops(ICropRegistry registry) {
-        INFERIUM.getTextures().setEssenceTexture(MysticalAgriculture.resource("item/inferium_essence"));
+        INFERIUM.getModels().setEssenceModel(MysticalAgriculture.resource("item/inferium_essence"));
         INFERIUM.getRecipeConfig().setSeedCraftingRecipeEnabled(false).setSeedInfusionRecipeEnabled(false);
         INFERIUM.setCropBlock(() -> (CropBlock) ModBlocks.INFERIUM_CROP.get())
                 .setEssenceItem(ModItems.INFERIUM_ESSENCE);

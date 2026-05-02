@@ -43,7 +43,7 @@ public class ItemModelJsonGenerator extends ModelProvider {
 
                 ModelTemplates.FLAT_ITEM.create(
                         item,
-                        TextureMapping.singleSlot(TextureSlot.LAYER0, new Material(crop.getTextures().getEssenceTexture())),
+                        TextureMapping.singleSlot(TextureSlot.LAYER0, new Material(crop.getModels().getEssenceModel())),
                         itemModels.modelOutput
                 );
             }
@@ -61,7 +61,7 @@ public class ItemModelJsonGenerator extends ModelProvider {
 
                 ModelTemplates.FLAT_ITEM.create(
                         item,
-                        TextureMapping.singleSlot(TextureSlot.LAYER0, new Material(crop.getTextures().getSeedTexture())),
+                        TextureMapping.singleSlot(TextureSlot.LAYER0, new Material(crop.getModels().getSeedModel())),
                         itemModels.modelOutput
                 );
             }

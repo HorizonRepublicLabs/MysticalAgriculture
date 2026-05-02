@@ -6,7 +6,7 @@ import com.blakebr0.mysticalagriculture.client.ModClientExtensions;
 import com.blakebr0.mysticalagriculture.client.ModClientTooltipComponentFactories;
 import com.blakebr0.mysticalagriculture.client.ModMenuScreens;
 import com.blakebr0.mysticalagriculture.client.ModTESRs;
-import com.blakebr0.mysticalagriculture.client.ModelHandler;
+import com.blakebr0.mysticalagriculture.client.handler.ModelHandler;
 import com.blakebr0.mysticalagriculture.client.handler.AOEAugmentClientHandler;
 import com.blakebr0.mysticalagriculture.client.handler.AugmentTooltipHandler;
 import com.blakebr0.mysticalagriculture.client.handler.ClientRecipeHandler;
@@ -123,7 +123,7 @@ public final class MysticalAgriculture {
 		NeoForge.EVENT_BUS.register(new AOEAugmentClientHandler());
 		NeoForge.EVENT_BUS.register(new ClientRecipeHandler());
 
-		ModelHandler.onClientSetup(event);
+		NeoForge.EVENT_BUS.addListener(ModelHandler::onRegisterClientItems);
 	}
 
 	public static Identifier resource(String path) {

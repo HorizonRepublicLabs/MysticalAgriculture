@@ -4,9 +4,9 @@ import com.blakebr0.mysticalagriculture.api.MysticalAgricultureAPI;
 import net.minecraft.resources.Identifier;
 
 /**
- * Helper class used to specify crop texture locations
+ * Helper class used to specify crop model locations
  */
-public class CropTextures {
+public class CropModels {
     public static final Identifier FLOWER_INGOT_BLANK = MysticalAgricultureAPI.resource("block/flower_ingot");
     public static final Identifier FLOWER_ROCK_BLANK = MysticalAgricultureAPI.resource("block/flower_rock");
     public static final Identifier FLOWER_DUST_BLANK = MysticalAgricultureAPI.resource("block/flower_dust");
@@ -24,68 +24,62 @@ public class CropTextures {
 
     public static final Identifier SEED_BLANK = MysticalAgricultureAPI.resource("item/mystical_seeds");
 
-    public static final CropTextures INGOT_CROP_TEXTURES = new CropTextures(FLOWER_INGOT_BLANK, ESSENCE_INGOT_BLANK);
-    public static final CropTextures ROCK_CROP_TEXTURES = new CropTextures(FLOWER_ROCK_BLANK, ESSENCE_ROCK_BLANK);
-    public static final CropTextures DUST_CROP_TEXTURES = new CropTextures(FLOWER_DUST_BLANK, ESSENCE_DUST_BLANK);
-    public static final CropTextures GEM_CROP_TEXTURES = new CropTextures(FLOWER_ROCK_BLANK, ESSENCE_GEM_BLANK);
-    public static final CropTextures ELEMENTAL_CROP_TEXTURES = new CropTextures(FLOWER_INGOT_BLANK, ESSENCE_FLAME_BLANK);
-
-    private Identifier flowerTexture;
-    private Identifier essenceTexture;
-    private Identifier seedTexture;
+    private Identifier flowerModel;
+    private Identifier essenceModel;
+    private Identifier seedModel;
 
     /**
      * Set up all crop-related textures using its specific textures
      */
-    public CropTextures() {
+    public CropModels() {
         this(null, null, null);
     }
 
     /**
      * Set up all crop-related textures using the provided resource locations, with seeds defaulting to blank
-     * @param flowerTexture flower texture location
-     * @param essenceTexture essence texture location
+     * @param flowerModel flower texture location
+     * @param essenceModel essence texture location
      */
-    public CropTextures(Identifier flowerTexture, Identifier essenceTexture) {
-        this(flowerTexture, essenceTexture, SEED_BLANK);
+    public CropModels(Identifier flowerModel, Identifier essenceModel) {
+        this(flowerModel, essenceModel, SEED_BLANK);
     }
 
     /**
      * Set up all crop-related textures using their resource locations, pass null to default to the crop-specific texture
-     * @param flowerTexture flower texture location
-     * @param essenceTexture essence texture location
-     * @param seedTexture seed texture location
+     * @param flowerModel flower texture location
+     * @param essenceModel essence texture location
+     * @param seedModel seed texture location
      */
-    public CropTextures(Identifier flowerTexture, Identifier essenceTexture, Identifier seedTexture) {
-        this.flowerTexture = flowerTexture;
-        this.essenceTexture = essenceTexture;
-        this.seedTexture = seedTexture;
+    public CropModels(Identifier flowerModel, Identifier essenceModel, Identifier seedModel) {
+        this.flowerModel = flowerModel;
+        this.essenceModel = essenceModel;
+        this.seedModel = seedModel;
     }
 
-    public Identifier getFlowerTexture() {
-        return this.flowerTexture;
+    public Identifier getFlowerModel() {
+        return this.flowerModel;
     }
 
-    public CropTextures setFlowerTexture(Identifier location) {
-        this.flowerTexture = location;
+    public CropModels setFlowerModel(Identifier location) {
+        this.flowerModel = location;
         return this;
     }
 
-    public Identifier getEssenceTexture() {
-        return this.essenceTexture;
+    public Identifier getEssenceModel() {
+        return this.essenceModel;
     }
 
-    public CropTextures setEssenceTexture(Identifier location) {
-        this.essenceTexture = location;
+    public CropModels setEssenceModel(Identifier location) {
+        this.essenceModel = location;
         return this;
     }
 
-    public Identifier getSeedTexture() {
-        return this.seedTexture;
+    public Identifier getSeedModel() {
+        return this.seedModel;
     }
 
-    public CropTextures setSeedTexture(Identifier location) {
-        this.seedTexture = location;
+    public CropModels setSeedModel(Identifier location) {
+        this.seedModel = location;
         return this;
     }
 
@@ -94,16 +88,16 @@ public class CropTextures {
      * @param id the id of the crop to generate texture locations for
      * @return this crop textures instance with non-null locations
      */
-    public CropTextures init(Identifier id) {
+    public CropModels init(Identifier id) {
         var modid = id.getNamespace();
         var name = id.getPath();
 
-        if (this.flowerTexture == null)
-            this.flowerTexture = Identifier.fromNamespaceAndPath(modid, "block/flower/" + name + "_flower");
-        if (this.essenceTexture == null)
-            this.essenceTexture = Identifier.fromNamespaceAndPath(modid, "item/essence/" + name + "_essence");
-        if (this.seedTexture == null)
-            this.seedTexture = Identifier.fromNamespaceAndPath(modid, "item/seeds/" + name + "_seeds");
+        if (this.flowerModel == null)
+            this.flowerModel = Identifier.fromNamespaceAndPath(modid, "block/flower/" + name + "_flower");
+        if (this.essenceModel == null)
+            this.essenceModel = Identifier.fromNamespaceAndPath(modid, "item/essence/" + name + "_essence");
+        if (this.seedModel == null)
+            this.seedModel = Identifier.fromNamespaceAndPath(modid, "item/seeds/" + name + "_seeds");
 
         return this;
     }

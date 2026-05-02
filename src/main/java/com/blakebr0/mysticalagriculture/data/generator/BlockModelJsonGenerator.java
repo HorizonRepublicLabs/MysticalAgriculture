@@ -53,7 +53,7 @@ public class BlockModelJsonGenerator extends ModelProvider {
                 var fullyGrownModel = fullyGrownModels.get(crop.getType().getId())
                         .create(
                                 crop.getCropBlock(),
-                                new TextureMapping().putForced(TextureSlot.create("flower"), new Material(crop.getTextures().getFlowerTexture())),
+                                new TextureMapping().putForced(TextureSlot.create("flower"), new Material(crop.getModels().getFlowerModel())),
                                 blockModels.modelOutput
                         );
 
