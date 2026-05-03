@@ -222,11 +222,11 @@ public class AwakeningAltarTileEntity extends BaseInventoryTileEntity implements
             var tile = this.level.getBlockEntity(pos);
 
             if (tile instanceof AwakeningPedestalTileEntity pedestal) {
-                collections.pedestals.add(pedestal);
+                collections.addPedestal(pedestal);
             }
 
             if (tile instanceof EssenceVesselTileEntity vessel) {
-                collections.vessels.add(vessel);
+                collections.addVessel(vessel);
             }
         }
 
@@ -281,6 +281,16 @@ public class AwakeningAltarTileEntity extends BaseInventoryTileEntity implements
 
         public final List<AwakeningPedestalTileEntity> pedestals = new ArrayList<>();
         public final List<EssenceVesselTileEntity> vessels = new ArrayList<>();
+
+        public void addPedestal(AwakeningPedestalTileEntity pedestal) {
+            if (this.pedestals.size() < 4)
+                this.pedestals.add(pedestal);
+        }
+
+        public void addVessel(EssenceVesselTileEntity vessel) {
+            if (this.vessels.size() < 4)
+                this.vessels.add(vessel);
+        }
 
         public List<BaseInventoryTileEntity> all() {
             var list = new ArrayList<BaseInventoryTileEntity>();
