@@ -28,8 +28,8 @@ public class SouliumSpawnerScreen extends BaseContainerScreen<SouliumSpawnerCont
     protected void init() {
         super.init();
 
-        int x = this.getGuiLeft();
-        int y = this.getGuiTop();
+        int x = this.getLeftPos();
+        int y = this.getTopPos();
 
         this.tile = this.getTileEntity();
 
@@ -44,8 +44,8 @@ public class SouliumSpawnerScreen extends BaseContainerScreen<SouliumSpawnerCont
 
     @Override
     protected void extractTooltip(GuiGraphicsExtractor gfx, int mouseX, int mouseY) {
-        int x = this.getGuiLeft();
-        int y = this.getGuiTop();
+        int x = this.getLeftPos();
+        int y = this.getTopPos();
 
         super.extractTooltip(gfx, mouseX, mouseY);
 
@@ -71,8 +71,8 @@ public class SouliumSpawnerScreen extends BaseContainerScreen<SouliumSpawnerCont
     public void extractBackground(GuiGraphicsExtractor gfx, int mouseX, int mouseY, float partialTicks) {
         super.extractBackground(gfx, mouseX, mouseY, partialTicks);
 
-        int x = this.getGuiLeft();
-        int y = this.getGuiTop();
+        int x = this.getLeftPos();
+        int y = this.getTopPos();
 
         if (this.menu.getFuelItemValue() > 0) {
             int i = this.getBurnLeftScaled(13);
@@ -146,8 +146,8 @@ public class SouliumSpawnerScreen extends BaseContainerScreen<SouliumSpawnerCont
         var translation = new Vector3f(0.0F, entityRenderState.boundingBoxHeight / 2.0F, 0.0F);
         var rotation = new Quaternionf().rotateY(20F).rotateZ((float) Math.PI);
 
-        int x = this.getGuiLeft();
-        int y = this.getGuiTop();
+        int x = this.getLeftPos();
+        int y = this.getTopPos();
 
         if (isHoveringSlot(x + 134, y + 52, mouseX, mouseY)) {
             extractSlotHighlightBack(gfx, x + 130, y + 48);
