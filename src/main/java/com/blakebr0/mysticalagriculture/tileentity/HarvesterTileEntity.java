@@ -100,6 +100,11 @@ public class HarvesterTileEntity extends BaseInventoryTileEntity implements Menu
         tag.put("UpgradeInventory", this.upgradeInventory.serializeNBT(lookup));
     }
 
+    @Override
+    protected void clearAdditional() {
+        this.upgradeInventory.getStacks().clear();
+    }
+
     public static void tick(Level level, BlockPos pos, BlockState state, HarvesterTileEntity tile) {
         if (tile.energy.getEnergyStored() < tile.energy.getMaxEnergyStored()) {
             var fuel = tile.inventory.getStackInSlot(0);

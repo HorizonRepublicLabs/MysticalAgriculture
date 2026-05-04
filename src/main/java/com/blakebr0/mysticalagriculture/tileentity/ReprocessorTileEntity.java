@@ -104,6 +104,11 @@ public class ReprocessorTileEntity extends BaseInventoryTileEntity implements Me
         return this.upgradeInventory;
     }
 
+    @Override
+    protected void clearAdditional() {
+        this.upgradeInventory.getStacks().clear();
+    }
+
     public IItemHandler getSidedInventory(@Nullable  Direction direction) {
         if (direction == null) direction = Direction.NORTH;
 

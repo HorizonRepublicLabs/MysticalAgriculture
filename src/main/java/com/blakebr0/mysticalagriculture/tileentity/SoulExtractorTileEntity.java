@@ -106,6 +106,11 @@ public class SoulExtractorTileEntity extends BaseInventoryTileEntity implements 
         return this.upgradeInventory;
     }
 
+    @Override
+    protected void clearAdditional() {
+        this.upgradeInventory.getStacks().clear();
+    }
+
     public IItemHandler getSidedInventory(@Nullable Direction direction) {
         if (direction == null) direction = Direction.NORTH;
 
