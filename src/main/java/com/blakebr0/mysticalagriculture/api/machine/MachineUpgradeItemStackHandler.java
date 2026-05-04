@@ -38,6 +38,10 @@ public class MachineUpgradeItemStackHandler extends ItemStackResourceHandler {
         return this.stack.copy();
     }
 
+    public void clear() {
+        this.stack = ItemStack.EMPTY;
+    }
+
     @Override
     protected int getCapacity(ItemResource resource) {
         return 1;

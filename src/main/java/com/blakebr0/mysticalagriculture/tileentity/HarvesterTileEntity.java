@@ -128,6 +128,11 @@ public class HarvesterTileEntity extends BaseInventoryTileEntity implements Menu
         return this.upgradeInventory;
     }
 
+    @Override
+    protected void clearAdditional() {
+        this.upgradeInventory.clear();
+    }
+
     public static void tick(Level level, BlockPos pos, BlockState state, HarvesterTileEntity tile) {
         if (tile.energy.getAmountAsInt() < tile.energy.getCapacityAsInt()) {
             var fuel = tile.inventory.getResource(FUEL_SLOT);
