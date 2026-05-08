@@ -54,7 +54,7 @@ public class SoulExtractionRecipe implements ISoulExtractionRecipe {
             return false;
 
         var output = inventory.getItem(2);
-        if (!output.is(this.result.stack.getItem()))
+        if (!output.is(this.result.stack().getItem()))
             return false;
 
         return MobSoulUtils.canAddTypeToJar(output, this.type) && !MobSoulUtils.isJarFull(output);
