@@ -11,12 +11,14 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
@@ -106,6 +108,10 @@ public class EnchanterRecipe implements IEnchanterRecipe {
             EnchantmentHelper.setEnchantments(result, enchantments.toImmutable());
 
             return result;
+        }
+
+        if (stack.is(Items.BOOK)) {
+            return EnchantmentHelper.createBook(new EnchantmentInstance(this.enchantment, level));
         }
 
         return ItemStack.EMPTY;
