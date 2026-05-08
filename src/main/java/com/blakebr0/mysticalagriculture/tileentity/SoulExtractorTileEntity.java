@@ -238,28 +238,6 @@ public class SoulExtractorTileEntity extends BaseInventoryTileEntity implements 
         tile.dispatchIfChanged();
     }
 
-    public static CItemStacksHandler createInventoryHandler() {
-        return createInventoryHandler(null, () -> null);
-    }
-
-    public static CItemStacksHandler createInventoryHandler(@Nullable OnContentsChangedFunction onContentsChanged, Supplier<Level> level) {
-        return CItemStacksHandler.create(3, onContentsChanged, builder -> {
-            builder.setCanInsert((slot, resource) -> switch (slot) {
-                case FUEL_SLOT -> level.get() != null && level.get().fuelValues().isFuel(resource.toStack());
-                case OUTPUT_SLOT -> resource.getItem() instanceof SoulJarItem;
-                default -> true;
-            });
-            builder.setCanExtract(slot -> switch (slot) {
-                case FUEL_SLOT -> level.get() == null || !level.get().fuelValues().isFuel(builder.getResource(slot).toStack());
-                case OUTPUT_SLOT -> {
-                    var resource = builder.getResource(slot);
-                    yield resource.getItem() instanceof SoulJarItem && MobSoulUtils.isJarFull(resource.toStack());
-                }
-                default -> false;
-            });
-        });
-    }
-
     public ISoulExtractionRecipe getActiveRecipe() {
         if (this.level == null)
             return null;
@@ -313,5 +291,27 @@ public class SoulExtractorTileEntity extends BaseInventoryTileEntity implements 
             return stack.getItem() instanceof SoulJarItem;
 
         return false;
+    }
+
+    public static CItemStacksHandler createInventoryHandler() {
+        return createInventoryHandler(null, () -> null);
+    }
+
+    public static CItemStacksHandler createInventoryHandler(@Nullable OnContentsChangedFunction onContentsChanged, Supplier<Level> level) {
+        return CItemStacksHandler.create(3, onContentsChanged, builder -> {
+            builder.setCanInsert((slot, resource) -> switch (slot) {
+                case FUEL_SLOT -> level.get() != null && level.get().fuelValues().isFuel(resource.toStack());
+                case OUTPUT_SLOT -> resource.getItem() instanceof SoulJarItem;
+                default -> true;
+            });
+            builder.setCanExtract(slot -> switch (slot) {
+                case FUEL_SLOT -> level.get() == null || !level.get().fuelValues().isFuel(builder.getResource(slot).toStack());
+                case OUTPUT_SLOT -> {
+                    var resource = builder.getResource(slot);
+                    yield resource.getItem() instanceof SoulJarItem && MobSoulUtils.isJarFull(resource.toStack());
+                }
+                default -> false;
+            });
+        });
     }
 }

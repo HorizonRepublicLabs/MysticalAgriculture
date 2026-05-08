@@ -285,10 +285,13 @@ public class OreInfuserTileEntity extends BaseInventoryTileEntity implements Men
     }
 
     private boolean canInsertStackSided(int slot, ItemResource resource, Direction direction) {
-        var stack = resource.toStack();
         if (direction == null)
             return true;
-        if (slot == INPUT_SLOTS[0] && direction == Direction.UP)
+
+        var stack = resource.toStack();
+        if (slot == INPUT_SLOTS[0] && direction == Direction.NORTH)
+            return RecipeIngredientCache.INSTANCE.isValidInput(stack, ModRecipeTypes.ORE_INFUSION.get());
+        if (slot == INPUT_SLOTS[1] && direction == Direction.UP)
             return RecipeIngredientCache.INSTANCE.isValidInput(stack, ModRecipeTypes.ORE_INFUSION.get());
         if (slot == FUEL_SLOT && direction == Direction.NORTH)
             return this.level != null && this.level.fuelValues().isFuel(stack);

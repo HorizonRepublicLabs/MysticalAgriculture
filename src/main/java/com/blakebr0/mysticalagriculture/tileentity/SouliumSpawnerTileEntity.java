@@ -184,7 +184,7 @@ public class SouliumSpawnerTileEntity extends BaseInventoryTileEntity implements
 
     public static void tick(Level level, BlockPos pos, BlockState state, SouliumSpawnerTileEntity tile) {
         if (tile.energy.getAmountAsInt() < tile.energy.getCapacityAsInt()) {
-            var fuel = tile.inventory.getResource(0);
+            var fuel = tile.inventory.getResource(FUEL_SLOT);
 
             try (var tx = Transaction.openRoot()) {
                 if (tile.fuelLeft <= 0 && !fuel.isEmpty()) {
@@ -192,7 +192,7 @@ public class SouliumSpawnerTileEntity extends BaseInventoryTileEntity implements
 
                     if (tile.fuelItemValue > 0) {
                         tile.fuelLeft = tile.fuelItemValue *= FUEL_TICK_MULTIPLIER;
-                        tile.inventory.extract(0, fuel, 1, tx, true);
+                        tile.inventory.extract(FUEL_SLOT, fuel, 1, tx, true);
 
                         tile.setChangedFast();
                     }
