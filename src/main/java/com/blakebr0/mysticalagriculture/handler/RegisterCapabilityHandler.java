@@ -2,6 +2,7 @@ package com.blakebr0.mysticalagriculture.handler;
 
 import com.blakebr0.mysticalagriculture.init.ModTileEntities;
 import com.blakebr0.mysticalagriculture.tileentity.EssenceFurnaceTileEntity;
+import com.blakebr0.mysticalagriculture.tileentity.OreInfuserTileEntity;
 import com.blakebr0.mysticalagriculture.tileentity.ReprocessorTileEntity;
 import com.blakebr0.mysticalagriculture.tileentity.SoulExtractorTileEntity;
 import com.blakebr0.mysticalagriculture.tileentity.SouliumSpawnerTileEntity;
@@ -22,6 +23,7 @@ public final class RegisterCapabilityHandler {
         event.registerBlockEntity(Capabilities.Item.BLOCK, ModTileEntities.REPROCESSOR.get(), ReprocessorTileEntity::getSidedInventory);
         event.registerBlockEntity(Capabilities.Item.BLOCK, ModTileEntities.SOUL_EXTRACTOR.get(), SoulExtractorTileEntity::getSidedInventory);
         event.registerBlockEntity(Capabilities.Item.BLOCK, ModTileEntities.SOULIUM_SPAWNER.get(), SouliumSpawnerTileEntity::getSidedInventory);
+        event.registerBlockEntity(Capabilities.Item.BLOCK, ModTileEntities.ORE_INFUSER.get(), OreInfuserTileEntity::getSidedInventory);
 
         event.registerBlockEntity(Capabilities.Energy.BLOCK, ModTileEntities.FURNACE.get(), (block, _) -> block.getEnergy());
         event.registerBlockEntity(Capabilities.Energy.BLOCK, ModTileEntities.HARVESTER.get(), (block, _) -> block.getEnergy());
