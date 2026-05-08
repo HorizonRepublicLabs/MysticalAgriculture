@@ -2,6 +2,8 @@ package com.blakebr0.mysticalagriculture.api.crop;
 
 import com.blakebr0.mysticalagriculture.api.farmland.IEssenceFarmland;
 import com.blakebr0.mysticalagriculture.api.lib.LazyIngredient;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.ARGB;
@@ -455,8 +457,8 @@ public class Crop {
      * Get the crafting ingredient for this crop from the underlying {@link LazyIngredient}
      * @return the crafting material of this crop
      */
-    public @Nullable Ingredient getCraftingMaterial() {
-        return this.craftingMaterial.getIngredient();
+    public @Nullable Ingredient getCraftingMaterial(Provider registries) {
+        return this.craftingMaterial.getIngredient(registries);
     }
 
     /**
@@ -470,7 +472,7 @@ public class Crop {
     }
 
     /**
-     * The underlying {@link LazyIngredient} for this crop, use {@link Crop#getCraftingMaterial()}
+     * The underlying {@link LazyIngredient} for this crop, use {@link Crop#getCraftingMaterial(Provider)}
      * to get the actual ingredient
      * @return the underlying lazy ingredient of this crop
      */

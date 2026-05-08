@@ -18,8 +18,6 @@ public final class ModCorePlugin implements IMysticalAgriculturePlugin {
     @Override
     public void configure(PluginConfig config) {
         config.setModId(MysticalAgriculture.MOD_ID);
-        config.disableDynamicSeedCraftingRecipes();
-        config.disableDynamicSeedInfusionRecipes();
         config.disableDynamicSeedReprocessingRecipes();
     }
 

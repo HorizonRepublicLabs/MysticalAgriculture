@@ -7,6 +7,7 @@ import com.blakebr0.mysticalagriculture.config.ModConfigs;
 import com.blakebr0.mysticalagriculture.crafting.recipe.InfusionRecipe;
 import com.blakebr0.mysticalagriculture.crafting.recipe.ReprocessorRecipe;
 import com.blakebr0.mysticalagriculture.registry.CropRegistry;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.ItemStackTemplate;
@@ -27,9 +28,11 @@ public class DynamicRecipeManager {
 
     @SubscribeEvent
     public void onRecipeManagerLoading(RecipeManagerLoadingEvent event) {
+        var registries = event.getRegistries();
+
         for (var crop : CropRegistry.getInstance().getCrops()) {
-            var seed = makeSeedRecipe(crop);
-            var seedRegular = makeRegularSeedRecipe(crop);
+            var seed = makeSeedRecipe(crop, registries);
+            var seedRegular = makeRegularSeedRecipe(crop, registries);
             var reprocessor = makeReprocessorRecipe(crop);
 
             if (seed != null)
@@ -43,7 +46,7 @@ public class DynamicRecipeManager {
         }
     }
 
-    private static RecipeHolder<Recipe<?>> makeSeedRecipe(Crop crop) {
+    private static RecipeHolder<Recipe<?>> makeSeedRecipe(Crop crop, HolderLookup.Provider registries) {
         if (!crop.isEnabled() || !crop.getRecipeConfig().isSeedInfusionRecipeEnabled())
             return null;
 
@@ -55,7 +58,7 @@ public class DynamicRecipeManager {
         if (craftingSeedItem == null)
             return null;
 
-        var material = crop.getCraftingMaterial();
+        var material = crop.getCraftingMaterial(registries);
         if (material == null)
             return null;
 
@@ -74,7 +77,7 @@ public class DynamicRecipeManager {
         );
     }
 
-    private static RecipeHolder<Recipe<?>> makeRegularSeedRecipe(Crop crop) {
+    private static RecipeHolder<Recipe<?>> makeRegularSeedRecipe(Crop crop, HolderLookup.Provider registries) {
         if (!crop.isEnabled() || !crop.getRecipeConfig().isSeedCraftingRecipeEnabled())
             return null;
 
@@ -89,7 +92,7 @@ public class DynamicRecipeManager {
         if (craftingSeedItem == null)
             return null;
 
-        var material = crop.getCraftingMaterial();
+        var material = crop.getCraftingMaterial(registries);
         if (material == null)
             return null;
 

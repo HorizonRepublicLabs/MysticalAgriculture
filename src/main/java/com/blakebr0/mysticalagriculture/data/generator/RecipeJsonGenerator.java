@@ -21,17 +21,17 @@ public class RecipeJsonGenerator extends RecipeProvider {
     @Override
     protected void buildRecipes() {
         for (var crop : CropRegistry.getInstance().getCrops()) {
-            if (crop != ModCrops.INFERIUM) {
-                {
-                    var id = MysticalAgriculture.resource("seed/crafting/" + crop.getName());
-                    CraftingRecipeBuilder.seed(id, crop).save(this.output);
-                }
-
-                {
-                    var id = MysticalAgriculture.resource("seed/infusion/" + crop.getName());
-                    InfusionRecipeBuilder.seed(id, crop).save(this.output);
-                }
-            }
+//            if (crop != ModCrops.INFERIUM) {
+//                {
+//                    var id = MysticalAgriculture.resource("seed/crafting/" + crop.getName());
+//                    CraftingRecipeBuilder.seed(id, crop).save(this.output);
+//                }
+//
+//                {
+//                    var id = MysticalAgriculture.resource("seed/infusion/" + crop.getName());
+//                    InfusionRecipeBuilder.seed(id, crop).save(this.output);
+//                }
+//            }
 
             {
                 var id = MysticalAgriculture.resource("seed/reprocessor/" + crop.getName());
