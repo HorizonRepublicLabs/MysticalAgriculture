@@ -112,7 +112,7 @@ public class OreInfuserTileEntity extends BaseInventoryTileEntity implements Men
 
     @Override
     public Component getDisplayName() {
-        return Component.translatable("container.mysticalagriculture.reprocessor");
+        return Component.translatable("container.mysticalagriculture.ore_infuser");
     }
 
     @Override

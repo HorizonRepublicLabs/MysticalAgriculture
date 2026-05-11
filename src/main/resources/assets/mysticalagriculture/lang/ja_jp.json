@@ -284,7 +284,8 @@
     "container.mysticalagriculture.soul_extractor": "魂抽出機",
     "container.mysticalagriculture.harvester": "収穫機",
     "container.mysticalagriculture.soulium_spawner": "ソウリウムのスポナー",
-  
+    "container.mysticalagriculture.ore_infuser": "鉱石注入機",
+
     "enchantment.mysticalagriculture.mystical_enlightenment": "神秘の啓示",
     "enchantment.mysticalagriculture.mystical_enlightenment.desc": "エンダードラゴンとウィザーをエッセンスの武器で倒すと、コグニザントダストをドロップします。",
     "enchantment.mysticalagriculture.soul_siphoner": "魂収集",
