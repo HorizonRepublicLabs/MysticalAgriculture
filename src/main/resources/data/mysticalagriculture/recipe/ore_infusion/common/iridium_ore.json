@@ -24,7 +24,7 @@
     }
   ],
   "result": {
-    "tag": "minecraft:iridium_ore",
+    "tag": "c:ores/iridium",
     "count": 1
   }
 }

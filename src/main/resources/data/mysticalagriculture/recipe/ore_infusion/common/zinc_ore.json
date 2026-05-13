@@ -24,7 +24,7 @@
     }
   ],
   "result": {
-    "tag": "minecraft:zinc_ore",
+    "tag": "c:ores/zinc",
     "count": 1
   }
 }

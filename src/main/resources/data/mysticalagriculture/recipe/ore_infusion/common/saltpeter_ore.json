@@ -24,7 +24,7 @@
     }
   ],
   "result": {
-    "tag": "minecraft:saltpeter_ore",
+    "tag": "c:ores/saltpeter",
     "count": 1
   }
 }

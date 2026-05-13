@@ -24,7 +24,7 @@
     }
   ],
   "result": {
-    "tag": "minecraft:aluminum_ore",
+    "tag": "c:ores/aluminum",
     "count": 1
   }
 }

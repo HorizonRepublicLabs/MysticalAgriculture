@@ -24,7 +24,7 @@
     }
   ],
   "result": {
-    "tag": "minecraft:sulfur_ore",
+    "tag": "c:ores/sulfur",
     "count": 1
   }
 }

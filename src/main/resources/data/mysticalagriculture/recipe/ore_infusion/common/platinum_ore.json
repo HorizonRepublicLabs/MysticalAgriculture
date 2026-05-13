@@ -24,7 +24,7 @@
     }
   ],
   "result": {
-    "tag": "minecraft:platinum_ore",
+    "tag": "c:ores/platinum",
     "count": 1
   }
 }

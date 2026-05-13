@@ -24,7 +24,7 @@
     }
   ],
   "result": {
-    "tag": "minecraft:uranium_ore",
+    "tag": "c:ores/uranium",
     "count": 1
   }
 }

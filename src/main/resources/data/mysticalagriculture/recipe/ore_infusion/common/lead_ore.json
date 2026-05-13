@@ -24,7 +24,7 @@
     }
   ],
   "result": {
-    "tag": "minecraft:lead_ore",
+    "tag": "c:ores/lead",
     "count": 1
   }
 }

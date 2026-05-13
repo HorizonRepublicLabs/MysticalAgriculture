@@ -24,7 +24,7 @@
     }
   ],
   "result": {
-    "tag": "minecraft:nickel_ore",
+    "tag": "c:ores/nickel",
     "count": 1
   }
 }
