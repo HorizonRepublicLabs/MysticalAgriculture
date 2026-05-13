@@ -24,7 +24,7 @@
     }
   ],
   "result": {
-    "tag": "minecraft:apatite_ore",
+    "tag": "c:ores/apatite_ore",
     "count": 1
   }
 }

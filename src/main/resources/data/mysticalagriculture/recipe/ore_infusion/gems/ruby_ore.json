@@ -24,7 +24,7 @@
     }
   ],
   "result": {
-    "tag": "minecraft:ruby_ore",
+    "tag": "c:ores/ruby_ore",
     "count": 1
   }
 }

@@ -24,7 +24,7 @@
     }
   ],
   "result": {
-    "tag": "minecraft:sapphire_ore",
+    "tag": "c:ores/sapphire_ore",
     "count": 1
   }
 }

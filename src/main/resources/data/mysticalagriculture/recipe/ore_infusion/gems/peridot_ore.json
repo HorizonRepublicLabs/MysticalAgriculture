@@ -24,7 +24,7 @@
     }
   ],
   "result": {
-    "tag": "minecraft:peridot_ore",
+    "tag": "c:ores/peridot_ore",
     "count": 1
   }
 }
