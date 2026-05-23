@@ -1,6 +1,6 @@
 package com.blakebr0.mysticalagriculture.container;
 
-import com.blakebr0.cucumber.container.ExtendedContainerMenu;
+import com.blakebr0.cucumber.container.BaseContainerMenu;
 import com.blakebr0.cucumber.inventory.CItemStacksHandler;
 import com.blakebr0.cucumber.inventory.slot.CSlot;
 import com.blakebr0.mysticalagriculture.api.machine.MachineUpgradeItemStackHandler;
@@ -18,7 +18,7 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.transfer.item.ResourceHandlerSlot;
 
-public class SouliumSpawnerContainer extends ExtendedContainerMenu {
+public class SouliumSpawnerContainer extends BaseContainerMenu {
     private final ContainerData data;
 
     public SouliumSpawnerContainer(int id, Inventory playerInventory, RegistryFriendlyByteBuf buffer) {
