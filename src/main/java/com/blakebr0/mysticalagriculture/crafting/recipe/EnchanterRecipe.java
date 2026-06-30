@@ -158,20 +158,36 @@ public class EnchanterRecipe implements IEnchanterRecipe {
 
     @Override
     public int getMaxResultEnchantmentLevel(RecipeInput inventory) {
-        var level = 0;
+        var levels = new int[this.inputs.size()];
+        var taken = new boolean[this.inputs.size()];
 
         for (var i = 0; i < this.inputs.size(); i++) {
             var stack = inventory.getItem(i);
-            var count = this.inputs.get(i).count();
+            var count = 0;
+
+            for (var input : this.inputs) {
+                if (taken[i])
+                    continue;
+
+                if (input.test(stack)) {
+                    count = input.count();
+                    break;
+                }
+            }
+
+            if (count == 0)
+                continue;
+
+            taken[i] = true;
 
             var newLevel = stack.getCount() / count;
 
-            if (level == 0 || newLevel < level) {
-                level = Math.min(newLevel, this.enchantment.value().getMaxLevel());
+            if (levels[i] == 0 || newLevel < levels[i]) {
+                levels[i] = Math.min(newLevel, this.enchantment.value().getMaxLevel());
             }
         }
 
-        return level;
+        return Arrays.stream(levels).min().orElse(0);
     }
 
     private static EnchanterRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
