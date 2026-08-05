@@ -97,7 +97,7 @@ public class FarmlandTillRecipe implements CraftingRecipe {
 
         var inputs = input.items()
                 .stream()
-                .filter(ItemStack::isEmpty)
+                .filter(s -> !s.isEmpty())
                 .toList();
 
         return RecipeMatcher.findMatches(inputs, this.inputs) != null;
