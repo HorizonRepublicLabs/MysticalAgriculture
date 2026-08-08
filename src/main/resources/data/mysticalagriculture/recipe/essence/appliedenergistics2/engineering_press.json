@@ -17,9 +17,7 @@
   ],
   "key": {
     "E": "mysticalagriculture:certus_quartz_essence",
-    "M": {
-      "tag": "c:gems/diamond"
-    }
+    "M": "#c:gems/diamond"
   },
   "result": {
     "id": "ae2:engineering_processor_press",
