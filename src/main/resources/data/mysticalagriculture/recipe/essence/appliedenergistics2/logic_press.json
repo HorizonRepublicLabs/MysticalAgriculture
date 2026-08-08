@@ -17,7 +17,7 @@
   ],
   "key": {
     "E": "mysticalagriculture:certus_quartz_essence",
-    "M": "c:ingots/gold"
+    "M": "#c:ingots/gold"
   },
   "result": {
     "id": "ae2:logic_processor_press",
