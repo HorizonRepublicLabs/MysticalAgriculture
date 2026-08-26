@@ -3,10 +3,10 @@ plugins {
     id 'eclipse'
     id 'idea'
     id 'maven-publish'
-    id 'net.neoforged.moddev' version '2.0.141'
+    id 'net.neoforged.moddev' version '2.0.144'
 }
 
-version = '26.1.2-9.0.7'
+version = '26.2-9.0.7'
 group = 'com.blakebr0.mysticalagriculture'
 
 base {
@@ -102,7 +102,8 @@ dependencies {
 //  implementation "curse.maven:the-one-probe-245211:${top_version}"
 //  implementation "com.blamejared.crafttweaker:CraftTweaker-neoforge-${crafttweaker_version}"
 
-    runtimeOnly "vazkii.patchouli:patchouli-neoforge:${patchouli_version}"
+    // TODO: re-enable once Patchouli publishes a 26.2 build (newest is 26.1-94, which FML rejects on 26.2)
+//  runtimeOnly "vazkii.patchouli:patchouli-neoforge:${patchouli_version}"
     runtimeOnly "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
 
     compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
