@@ -18,6 +18,15 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(25)
 println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
 
 repositories {
+    maven {
+        name = 'GitHubPackages'
+        url 'https://maven.pkg.github.com/HorizonRepublicLabs/maven'
+
+        credentials {
+            username = System.getenv('GITHUB_ACTOR')
+            password = System.getenv('GITHUB_TOKEN')
+        }
+    }
     maven { url 'https://maven.blakesmods.com' }
     maven { url 'https://maven.blamejared.com' }
     maven { url 'https://maven.tterrag.com' }
@@ -96,7 +105,7 @@ sourceSets.main.resources {
 }
 
 dependencies {
-    implementation "com.blakebr0.cucumber:Cucumber:${cucumber_version}"
+    implementation "com.blakebr0.cucumber:cucumber:${cucumber_version}"
 
     implementation "curse.maven:jade-324717:${jade_version}"
 //  implementation "curse.maven:the-one-probe-245211:${top_version}"
@@ -140,20 +149,20 @@ publishing {
     publications {
         maven(MavenPublication) {
             from components.java
+
+            // GitHub Packages rejects uppercase artifactIds
+            artifactId = 'mysticalagriculture'
         }
     }
 
     repositories {
         maven {
-            url = 'https://maven.blakesmods.com'
+            name = 'GitHubPackages'
+            url = 'https://maven.pkg.github.com/HorizonRepublicLabs/maven'
 
             credentials {
-                username = System.getenv('BLAKESMODS_MAVEN_USERNAME')
-                password = System.getenv('BLAKESMODS_MAVEN_PASSWORD')
-            }
-
-            authentication {
-                basic(BasicAuthentication)
+                username = System.getenv('GITHUB_ACTOR')
+                password = System.getenv('GITHUB_TOKEN')
             }
         }
     }
