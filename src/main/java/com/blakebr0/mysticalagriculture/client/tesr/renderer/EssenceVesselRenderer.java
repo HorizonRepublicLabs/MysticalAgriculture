@@ -64,7 +64,7 @@ public class EssenceVesselRenderer implements BlockEntityRenderer<EssenceVesselT
 
             matrix.pushPose();
             matrix.translate(0, 1, 1);
-            matrix.mulPose(Axis.XP.rotationDegrees(180));
+            matrix.rotate(Axis.XP.rotationDegrees(180));
 
             // bottom
             submitNodeCollector.submitCustomGeometry(matrix, RenderTypes.solidMovingBlock(), (pose, buffer) -> {
@@ -79,7 +79,7 @@ public class EssenceVesselRenderer implements BlockEntityRenderer<EssenceVesselT
             matrix.pushPose();
 
             matrix.translate(1.2, 0.55, 0);
-            matrix.mulPose(Axis.ZP.rotationDegrees(90));
+            matrix.rotate(Axis.ZP.rotationDegrees(90));
 
             // west
             submitNodeCollector.submitCustomGeometry(matrix, RenderTypes.solidMovingBlock(), (pose, buffer) -> {
@@ -93,8 +93,8 @@ public class EssenceVesselRenderer implements BlockEntityRenderer<EssenceVesselT
             matrix.pushPose();
 
             matrix.translate(-0.2, 0.55, 1);
-            matrix.mulPose(Axis.ZP.rotationDegrees(270));
-            matrix.mulPose(Axis.YP.rotationDegrees(180));
+            matrix.rotate(Axis.ZP.rotationDegrees(270));
+            matrix.rotate(Axis.YP.rotationDegrees(180));
 
             // east
             submitNodeCollector.submitCustomGeometry(matrix, RenderTypes.solidMovingBlock(), (pose, buffer) -> {
@@ -108,8 +108,8 @@ public class EssenceVesselRenderer implements BlockEntityRenderer<EssenceVesselT
             matrix.pushPose();
 
             matrix.translate(1, 0.55, -0.2);
-            matrix.mulPose(Axis.XP.rotationDegrees(90));
-            matrix.mulPose(Axis.YP.rotationDegrees(180));
+            matrix.rotate(Axis.XP.rotationDegrees(90));
+            matrix.rotate(Axis.YP.rotationDegrees(180));
 
             // south
             submitNodeCollector.submitCustomGeometry(matrix, RenderTypes.solidMovingBlock(), (pose, buffer) -> {
@@ -123,7 +123,7 @@ public class EssenceVesselRenderer implements BlockEntityRenderer<EssenceVesselT
             matrix.pushPose();
 
             matrix.translate(0, 0.55, 1.2);
-            matrix.mulPose(Axis.XP.rotationDegrees(270));
+            matrix.rotate(Axis.XP.rotationDegrees(270));
 
             // north
             submitNodeCollector.submitCustomGeometry(matrix, RenderTypes.solidMovingBlock(), (pose, buffer) -> {

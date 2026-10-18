@@ -2,33 +2,40 @@ package com.blakebr0.mysticalagriculture.world.feature;
 
 import com.blakebr0.mysticalagriculture.config.ModConfigs;
 import com.blakebr0.mysticalagriculture.init.ModBlocks;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
+import net.minecraft.world.level.levelgen.feature.AbstractOreFeature;
+import net.minecraft.world.level.levelgen.feature.BlockReplacement;
 
 import java.util.BitSet;
+import java.util.List;
 
-public class SoulstoneFeature extends Feature<OreConfiguration> {
-    public SoulstoneFeature(Codec<OreConfiguration> config) {
-        super(config);
+// 26.3 made features self-describing: the ore settings live on the feature, and the codec
+// that reads them is what gets registered. This is vanilla's ore placement with soulium ore
+// mixed in, so it keeps vanilla's ore settings via AbstractOreFeature.
+public class SoulstoneFeature extends AbstractOreFeature {
+    public static final MapCodec<SoulstoneFeature> CODEC = makeCodec(SoulstoneFeature::new);
+
+    public SoulstoneFeature(List<BlockReplacement> targetStates, int size, float discardChanceOnAirExposure) {
+        super(targetStates, size, discardChanceOnAirExposure);
     }
 
     @Override
-    public boolean place(FeaturePlaceContext<OreConfiguration> context) {
-        var random = context.random();
-        var config = context.config();
-        var pos = context.origin();
-        var level = context.level();
+    public MapCodec<SoulstoneFeature> codec() {
+        return CODEC;
+    }
 
+    @Override
+    public boolean place(WorldGenLevel level, ChunkGenerator chunkGenerator, RandomSource random, BlockPos pos) {
         float f = random.nextFloat() * (float) Math.PI;
-        float f1 = (float) config.size / 8.0F;
-        int i = Mth.ceil(((float) config.size / 16.0F * 2.0F + 1.0F) / 2.0F);
+        float f1 = (float) this.size / 8.0F;
+        int i = Mth.ceil(((float) this.size / 16.0F * 2.0F + 1.0F) / 2.0F);
         double d0 = (float) pos.getX() + Mth.sin(f) * f1;
         double d1 = (float) pos.getX() - Mth.sin(f) * f1;
         double d2 = (float) pos.getZ() + Mth.cos(f) * f1;
@@ -44,7 +51,7 @@ public class SoulstoneFeature extends Feature<OreConfiguration> {
         for (int l1 = k; l1 <= k + j1; ++l1) {
             for (int i2 = i1; i2 <= i1 + j1; ++i2) {
                 if (l <= level.getHeight(Heightmap.Types.OCEAN_FLOOR_WG, l1, i2)) {
-                    return this.doPlace(level, random,config, d0, d1, d2, d3, d4, d5, k, l, i1, j1, k1);
+                    return this.doPlace(level, random, d0, d1, d2, d3, d4, d5, k, l, i1, j1, k1);
                 }
             }
         }
@@ -52,18 +59,18 @@ public class SoulstoneFeature extends Feature<OreConfiguration> {
         return false;
     }
 
-    protected boolean doPlace(LevelAccessor world, RandomSource random, OreConfiguration config, double p_207803_4_, double p_207803_6_, double p_207803_8_, double p_207803_10_, double p_207803_12_, double p_207803_14_, int p_207803_16_, int p_207803_17_, int p_207803_18_, int p_207803_19_, int p_207803_20_) {
+    protected boolean doPlace(LevelAccessor world, RandomSource random, double p_207803_4_, double p_207803_6_, double p_207803_8_, double p_207803_10_, double p_207803_12_, double p_207803_14_, int p_207803_16_, int p_207803_17_, int p_207803_18_, int p_207803_19_, int p_207803_20_) {
         int i = 0;
         BitSet bitset = new BitSet(p_207803_19_ * p_207803_20_ * p_207803_19_);
         BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
-        double[] adouble = new double[config.size * 4];
+        double[] adouble = new double[this.size * 4];
 
-        for(int j = 0; j < config.size; ++j) {
-            float f = (float)j / (float)config.size;
+        for(int j = 0; j < this.size; ++j) {
+            float f = (float)j / (float)this.size;
             double d0 = Mth.lerp((double)f, p_207803_4_, p_207803_6_);
             double d2 = Mth.lerp((double)f, p_207803_12_, p_207803_14_);
             double d4 = Mth.lerp((double)f, p_207803_8_, p_207803_10_);
-            double d6 = random.nextDouble() * (double)config.size / 16.0D;
+            double d6 = random.nextDouble() * (double)this.size / 16.0D;
             double d7 = ((double)(Mth.sin((float)Math.PI * f) + 1.0F) * d6 + 1.0D) / 2.0D;
             adouble[j * 4 + 0] = d0;
             adouble[j * 4 + 1] = d2;
@@ -71,9 +78,9 @@ public class SoulstoneFeature extends Feature<OreConfiguration> {
             adouble[j * 4 + 3] = d7;
         }
 
-        for(int l2 = 0; l2 < config.size - 1; ++l2) {
+        for(int l2 = 0; l2 < this.size - 1; ++l2) {
             if (!(adouble[l2 * 4 + 3] <= 0.0D)) {
-                for(int j3 = l2 + 1; j3 < config.size; ++j3) {
+                for(int j3 = l2 + 1; j3 < this.size; ++j3) {
                     if (!(adouble[j3 * 4 + 3] <= 0.0D)) {
                         double d12 = adouble[l2 * 4 + 0] - adouble[j3 * 4 + 0];
                         double d13 = adouble[l2 * 4 + 1] - adouble[j3 * 4 + 1];
@@ -91,7 +98,7 @@ public class SoulstoneFeature extends Feature<OreConfiguration> {
             }
         }
 
-        for(int i3 = 0; i3 < config.size; ++i3) {
+        for(int i3 = 0; i3 < this.size; ++i3) {
             double d11 = adouble[i3 * 4 + 3];
             if (!(d11 < 0.0D)) {
                 double d1 = adouble[i3 * 4 + 0];
@@ -117,12 +124,12 @@ public class SoulstoneFeature extends Feature<OreConfiguration> {
                                         if (!bitset.get(k2)) {
                                             bitset.set(k2);
                                             blockpos$mutableblockpos.set(l1, i2, j2);
-                                            var target = config.targetStates.stream().filter(s -> s.target.test(world.getBlockState(blockpos$mutableblockpos), random)).findFirst().orElse(null);
+                                            var target = this.targetStates.stream().filter(s -> s.target().test(world.getBlockState(blockpos$mutableblockpos), blockpos$mutableblockpos, random)).findFirst().orElse(null);
                                             if (target != null) {
                                                 if (ModBlocks.SOULIUM_ORE.isBound() && random.nextDouble() < ModConfigs.SOULIUM_ORE_CHANCE.get()) {
                                                     world.setBlock(blockpos$mutableblockpos, ModBlocks.SOULIUM_ORE.get().defaultBlockState(), 2);
                                                 } else {
-                                                    world.setBlock(blockpos$mutableblockpos, target.state, 2);
+                                                    world.setBlock(blockpos$mutableblockpos, target.state(), 2);
                                                 }
 
                                                 i++;

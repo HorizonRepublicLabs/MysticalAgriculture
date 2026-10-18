@@ -35,10 +35,8 @@ public final class AOEAugmentClientHandler {
         if (!(item instanceof ITinkerable))
             return;
 
-        var window = minecraft.getWindow();
-
         // do anything only if control is pressed
-        if (!InputConstants.isKeyDown(window, InputConstants.KEY_RCONTROL) && !InputConstants.isKeyDown(window, InputConstants.KEY_LCONTROL))
+        if (!InputConstants.isKeyDown(InputConstants.KEY_RCONTROL) && !InputConstants.isKeyDown(InputConstants.KEY_LCONTROL))
             return;
 
         int range = AugmentUtils.getMaxAOEAugmentRange(stack);
@@ -48,13 +46,13 @@ public final class AOEAugmentClientHandler {
         int horizontalOffsetChange = 0;
         int verticalOffsetChange = 0;
 
-        if (InputConstants.isKeyDown(window, InputConstants.KEY_LEFT)) {
+        if (InputConstants.isKeyDown(InputConstants.KEY_LEFT)) {
             horizontalOffsetChange = -1;
-        } else if (InputConstants.isKeyDown(window, InputConstants.KEY_RIGHT)) {
+        } else if (InputConstants.isKeyDown(InputConstants.KEY_RIGHT)) {
             horizontalOffsetChange = 1;
-        } else if (InputConstants.isKeyDown(window, InputConstants.KEY_DOWN)) {
+        } else if (InputConstants.isKeyDown(InputConstants.KEY_DOWN)) {
             verticalOffsetChange = -1;
-        } else if (InputConstants.isKeyDown(window, InputConstants.KEY_UP)) {
+        } else if (InputConstants.isKeyDown(InputConstants.KEY_UP)) {
             verticalOffsetChange = 1;
         }
 
@@ -81,9 +79,7 @@ public final class AOEAugmentClientHandler {
         if (!(item instanceof ITinkerable))
             return;
 
-        var window = Minecraft.getInstance().getWindow();
-
-        if (!InputConstants.isKeyDown(window, InputConstants.KEY_RCONTROL) && !InputConstants.isKeyDown(window, InputConstants.KEY_LCONTROL))
+        if (!InputConstants.isKeyDown(InputConstants.KEY_RCONTROL) && !InputConstants.isKeyDown(InputConstants.KEY_LCONTROL))
             return;
 
         int range = AugmentUtils.getMaxAOEAugmentRange(stack);

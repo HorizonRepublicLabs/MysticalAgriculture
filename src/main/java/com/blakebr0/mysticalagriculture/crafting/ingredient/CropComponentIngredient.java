@@ -117,10 +117,10 @@ public class CropComponentIngredient implements ICustomIngredient {
     }
 
     private boolean testComponents(DataComponentGetter getter) {
-        for (var entry : components.entrySet()) {
-            var type = entry.getKey();
-            var value = entry.getValue();
-            if (value.isEmpty() && getter.has(type) || value.isPresent() && !value.get().equals(getter.get(type))) {
+        for (var type : components.keySet()) {
+            // 26.3 dropped entrySet(); a null patch value means the component is removed.
+            Object value = components.getPatch(type);
+            if (value == null ? getter.has(type) : !value.equals(getter.get(type))) {
                 return false; // One of the patch entries doesn't match
             }
         }

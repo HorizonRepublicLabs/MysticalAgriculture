@@ -1,5 +1,6 @@
 package com.blakebr0.mysticalagriculture.item;
 
+import net.minecraft.world.level.block.BonemealSource;
 import com.blakebr0.cucumber.item.BaseItem;
 import com.blakebr0.mysticalagriculture.api.crop.ICropProvider;
 import com.blakebr0.mysticalagriculture.lib.ModTooltips;
@@ -58,7 +59,7 @@ public class MysticalFertilizerItem extends BaseItem {
         var state = level.getBlockState(pos);
 
         {
-            var event = EventHooks.fireBonemealEvent(player, level, pos, state, stack);
+            var event = EventHooks.fireBonemealEvent(player, level, pos, state, BonemealSource.INTERACTION, stack);
             if (event.isCanceled()) {
                 return event.isSuccessful();
             }
@@ -66,11 +67,11 @@ public class MysticalFertilizerItem extends BaseItem {
 
         var block = state.getBlock();
 
-        if (block instanceof BonemealableBlock growable && growable.isValidBonemealTarget(level, pos, state)) {
+        if (block instanceof BonemealableBlock growable && growable.isValidBonemealTarget(level, pos, state, BonemealSource.INTERACTION)) {
             if (!level.isClientSide()) {
                 var rand = level.getRandom();
 
-                if (growable.isBonemealSuccess(level, rand, pos, state) || canGrowResourceCrops(growable) || growable instanceof SaplingBlock) {
+                if (growable.isBonemealSuccess(level, rand, pos, state, BonemealSource.INTERACTION) || canGrowResourceCrops(growable) || growable instanceof SaplingBlock) {
                     var serverWorld = (ServerLevel) level;
 
                     if (growable instanceof CropBlock crop) {
@@ -84,7 +85,7 @@ public class MysticalFertilizerItem extends BaseItem {
 
                         sapling.treeGrower.growTree(serverWorld, chunkGenerator, pos, state, rand);
                     } else {
-                        growable.performBonemeal(serverWorld, rand, pos, state);
+                        growable.performBonemeal(serverWorld, rand, pos, state, BonemealSource.INTERACTION);
                     }
                 }
 

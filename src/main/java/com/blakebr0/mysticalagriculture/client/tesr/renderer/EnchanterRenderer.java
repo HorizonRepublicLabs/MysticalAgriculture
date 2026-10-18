@@ -54,14 +54,14 @@ public class EnchanterRenderer implements BlockEntityRenderer<EnchanterTileEntit
             int index = state.facing.get2DDataValue();
 
             if (axis == Direction.Axis.X) {
-                matrix.mulPose(Axis.ZP.rotationDegrees(158 * axisDirection));
-                matrix.mulPose(Axis.YP.rotationDegrees(180 + (-90 * index)));
+                matrix.rotate(Axis.ZP.rotationDegrees(158 * axisDirection));
+                matrix.rotate(Axis.YP.rotationDegrees(180 + (-90 * index)));
             } else if (axis == Direction.Axis.Z) {
-                matrix.mulPose(Axis.XN.rotationDegrees(158 * axisDirection));
-                matrix.mulPose(Axis.YP.rotationDegrees(180 - (-90 * index)));
+                matrix.rotate(Axis.XN.rotationDegrees(158 * axisDirection));
+                matrix.rotate(Axis.YP.rotationDegrees(180 - (-90 * index)));
             }
 
-            matrix.mulPose(Axis.XP.rotationDegrees(-90));
+            matrix.rotate(Axis.XP.rotationDegrees(-90));
 
             matrix.translate(0.0D, -0.08D, 0.0D);
 

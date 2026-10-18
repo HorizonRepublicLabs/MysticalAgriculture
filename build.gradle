@@ -3,10 +3,10 @@ plugins {
     id 'eclipse'
     id 'idea'
     id 'maven-publish'
-    id 'net.neoforged.moddev' version '2.0.144'
+    id 'net.neoforged.moddev' version '2.0.148'
 }
 
-version = '26.2-9.0.10'
+version = '26.3-9.0.10'
 group = 'com.blakebr0.mysticalagriculture'
 
 base {
@@ -107,7 +107,8 @@ sourceSets.main.resources {
 dependencies {
     implementation "com.blakebr0.cucumber:cucumber:${cucumber_version}"
 
-    implementation "curse.maven:jade-324717:${jade_version}"
+    // Compile-only until a Jade 26.3 file id is pinned: the 26.2 jar is rejected at runtime on 26.3.
+    compileOnly "curse.maven:jade-324717:${jade_version}"
 //  implementation "curse.maven:the-one-probe-245211:${top_version}"
 //  implementation "com.blamejared.crafttweaker:CraftTweaker-neoforge-${crafttweaker_version}"
 

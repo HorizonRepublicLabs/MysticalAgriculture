@@ -1,5 +1,6 @@
 package com.blakebr0.mysticalagriculture.container;
 
+import com.blakebr0.mysticalagriculture.util.FuelHelper;
 import com.blakebr0.cucumber.container.BaseContainerMenu;
 import com.blakebr0.cucumber.inventory.CItemStacksHandler;
 import com.blakebr0.cucumber.inventory.slot.CSlot;
@@ -65,7 +66,7 @@ public class HarvesterContainer extends BaseContainerMenu {
                     if (!this.moveItemStackTo(itemstack1, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (itemstack1.getBurnTime(null, player.level().fuelValues()) > 0) {
+                } else if (FuelHelper.isFuel(itemstack1)) {
                     if (!this.moveItemStackTo(itemstack1, 1, 2, false)) {
                         return ItemStack.EMPTY;
                     }

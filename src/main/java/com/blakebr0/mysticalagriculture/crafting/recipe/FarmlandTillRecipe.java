@@ -7,7 +7,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.world.item.HoeItem;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
@@ -72,7 +72,7 @@ public class FarmlandTillRecipe implements CraftingRecipe {
         for (int i = 0; i < inventory.size(); i++) {
             var stack = inventory.getItem(i);
 
-            if (stack.getItem() instanceof HoeItem) {
+            if (stack.is(ItemTags.HOES)) {
                 var hoe = stack.copy();
 
                 if (hoe.isDamageableItem()) {

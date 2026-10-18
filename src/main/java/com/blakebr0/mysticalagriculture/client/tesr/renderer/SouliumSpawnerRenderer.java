@@ -61,9 +61,9 @@ public class SouliumSpawnerRenderer implements BlockEntityRenderer<SouliumSpawne
             }
 
             matrix.translate(0.0F, 0.4F, 0.0F);
-            matrix.mulPose(Axis.YP.rotationDegrees((float) Mth.lerp(state.partialTicks, state.oSpin, state.spin) * 10.0F));
+            matrix.rotate(Axis.YP.rotationDegrees((float) Mth.lerp(state.partialTicks, state.oSpin, state.spin) * 10.0F));
             matrix.translate(0.0F, -0.2F, 0.0F);
-            matrix.mulPose(Axis.XP.rotationDegrees(-30.0F));
+            matrix.rotate(Axis.XP.rotationDegrees(-30.0F));
             matrix.scale(scale, scale, scale);
 
             this.entityRenderer.submit(state.displayEntity, camera, 0.0, 0.0, 0.0, matrix, submitNodeCollector);

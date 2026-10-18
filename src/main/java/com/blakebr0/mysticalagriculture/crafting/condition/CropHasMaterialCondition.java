@@ -25,7 +25,7 @@ public class CropHasMaterialCondition implements ICondition {
         if (crop == null)
             return false;
 
-        var material = crop.getCraftingMaterial(context.registryAccess());
+        var material = crop.getCraftingMaterial(context.registries());
 
         return material != null && !material.isEmpty();
     }

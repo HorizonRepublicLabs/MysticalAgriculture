@@ -69,7 +69,7 @@ public class InfusionAltarRenderer implements BlockEntityRenderer<InfusionAltarT
             matrix.scale(scale, scale, scale);
             double tick = System.currentTimeMillis() / 800.0D;
             matrix.translate(0.0D, Math.sin(tick % (2 * Math.PI)) * 0.065D, 0.0D);
-            matrix.mulPose(Axis.YP.rotationDegrees((float) ((tick * 40.0D) % 360)));
+            matrix.rotate(Axis.YP.rotationDegrees((float) ((tick * 40.0D) % 360)));
             state.itemRenderState.submit(matrix, submitNodeCollector, state.lightCoords, OverlayTexture.NO_OVERLAY, 0);
             matrix.popPose();
         }

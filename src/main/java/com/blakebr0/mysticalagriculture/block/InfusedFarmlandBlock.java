@@ -31,7 +31,7 @@ public class InfusedFarmlandBlock extends FarmlandBlock implements IColored, IEs
     private final CropTier tier;
 
     public InfusedFarmlandBlock(Identifier id, CropTier tier) {
-        super(Properties.ofFullCopy(Blocks.FARMLAND).setId(ResourceKey.create(Registries.BLOCK, id)));
+        super(Blocks.DIRT, Properties.ofFullCopy(Blocks.FARMLAND).setId(ResourceKey.create(Registries.BLOCK, id)));
         this.tier = tier;
 
         FARMLANDS.add(this);

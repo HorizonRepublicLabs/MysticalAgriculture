@@ -1,5 +1,6 @@
 package com.blakebr0.mysticalagriculture.world.modifiers;
 
+import net.minecraft.core.RegistryAccess;
 import com.blakebr0.mysticalagriculture.config.ModConfigs;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -20,7 +21,7 @@ public record ProsperityOreModifier(HolderSet<Biome> biomes, Holder<PlacedFeatur
     );
 
     @Override
-    public void modify(Holder<Biome> biome, Phase phase, ModifiableBiomeInfo.BiomeInfo.Builder builder) {
+    public void modify(RegistryAccess registries, Holder<Biome> biome, Phase phase, ModifiableBiomeInfo.BiomeInfo.Builder builder) {
         if (phase == Phase.ADD && ModConfigs.GENERATE_PROSPERITY.get() && this.biomes.contains(biome)) {
             builder.getGenerationSettings().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, this.feature);
         }

@@ -1,5 +1,6 @@
 package com.blakebr0.mysticalagriculture.api.lib;
 
+import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -12,7 +13,7 @@ import org.jspecify.annotations.Nullable;
 public class LazyIngredient {
     public static final LazyIngredient EMPTY = new LazyIngredient(null, null, null) {
         @Override
-        public @Nullable Ingredient getIngredient(HolderLookup.Provider registries) {
+        public @Nullable Ingredient getIngredient(HolderGetter.Provider registries) {
             return null;
         }
     };
@@ -54,7 +55,7 @@ public class LazyIngredient {
         return this.type == Type.TAG;
     }
 
-    public @Nullable Ingredient getIngredient(HolderLookup.Provider registries) {
+    public @Nullable Ingredient getIngredient(HolderGetter.Provider registries) {
         if (!this.loadedIngredient) {
             if (this.isTag()) {
                 registries.get(ItemTags.create(Identifier.parse(this.id))).ifPresent(item -> {

@@ -1,5 +1,6 @@
 package com.blakebr0.mysticalagriculture.container;
 
+import com.blakebr0.mysticalagriculture.util.FuelHelper;
 import com.blakebr0.cucumber.container.BaseContainerMenu;
 import com.blakebr0.cucumber.inventory.CItemStacksHandler;
 import com.blakebr0.cucumber.inventory.slot.CSlot;
@@ -53,7 +54,7 @@ public class OreInfuserContainer extends BaseContainerMenu {
         this.mover.after(5)
                 .add((slot, stack, player) -> stack.getItem() instanceof IMachineUpgrade, 0, 1) // machine upgrade
                 .add((slot, stack, player) -> isRecipeInput(stack), 1, 2) // inputs
-                .add((slot, stack, player) -> stack.getBurnTime(null, player.level().fuelValues()) > 0, 4, 1) // fuel
+                .add((slot, stack, player) -> FuelHelper.isFuel(stack), 4, 1) // fuel
                 .add((slot, stack, player) -> slot < this.slots.size() - 4, this.slots.size() - 4, 9) // hotbar
                 .add((slot, stack, player) -> slot >= this.slots.size() - 4, this.slots.size() - 31, 27); // inventory
         this.mover.fallback(5, 36);

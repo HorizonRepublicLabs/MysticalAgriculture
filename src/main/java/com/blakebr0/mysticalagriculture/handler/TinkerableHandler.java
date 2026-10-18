@@ -1,5 +1,6 @@
 package com.blakebr0.mysticalagriculture.handler;
 
+import net.minecraft.util.Prediction;
 import com.blakebr0.cucumber.event.ItemBreakEvent;
 import com.blakebr0.mysticalagriculture.api.tinkering.ITinkerable;
 import com.blakebr0.mysticalagriculture.api.util.AugmentUtils;
@@ -19,7 +20,7 @@ public final class TinkerableHandler {
             var augments = AugmentUtils.getAugments(stack);
 
             for (var augment : augments) {
-                player.getInventory().placeItemBackInInventory(new ItemStack(augment.getItem()));
+                player.getInventory().placeItemBackInInventory(new ItemStack(augment.getItem()), Prediction.SERVER_ONLY);
             }
         }
     }

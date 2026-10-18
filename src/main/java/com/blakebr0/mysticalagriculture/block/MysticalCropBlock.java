@@ -1,5 +1,6 @@
 package com.blakebr0.mysticalagriculture.block;
 
+import net.minecraft.world.level.block.BonemealSource;
 import com.blakebr0.mysticalagriculture.api.crop.Crop;
 import com.blakebr0.mysticalagriculture.api.crop.ICropProvider;
 import com.blakebr0.mysticalagriculture.config.ModConfigs;
@@ -38,7 +39,7 @@ public class MysticalCropBlock extends CropBlock implements ICropProvider {
     }
 
     @Override
-    public boolean isBonemealSuccess(Level level, RandomSource random, BlockPos pos, BlockState state) {
+    public boolean isBonemealSuccess(Level level, RandomSource random, BlockPos pos, BlockState state, BonemealSource source) {
         return false;
     }
 
@@ -100,20 +101,20 @@ public class MysticalCropBlock extends CropBlock implements ICropProvider {
     }
 
     @Override
-    public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
+    public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state, BonemealSource source) {
         if (!this.canGrow(level, pos))
             return;
 
-        super.performBonemeal(level, random, pos, state);
+        super.performBonemeal(level, random, pos, state, source);
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
+    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, BonemealSource source) {
         if (level instanceof Level) {
-            return this.canGrow((Level) level, pos) && super.isValidBonemealTarget(level, pos, state);
+            return this.canGrow((Level) level, pos) && super.isValidBonemealTarget(level, pos, state, source);
         }
 
-        return super.isValidBonemealTarget(level, pos, state);
+        return super.isValidBonemealTarget(level, pos, state, source);
     }
 
     @Override

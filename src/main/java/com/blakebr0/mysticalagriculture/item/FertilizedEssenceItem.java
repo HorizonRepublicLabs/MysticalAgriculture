@@ -1,5 +1,6 @@
 package com.blakebr0.mysticalagriculture.item;
 
+import net.minecraft.world.level.block.BonemealSource;
 import com.blakebr0.cucumber.item.BaseItem;
 import com.blakebr0.mysticalagriculture.api.crop.ICropProvider;
 import com.blakebr0.mysticalagriculture.config.ModConfigs;
@@ -59,19 +60,19 @@ public class FertilizedEssenceItem extends BaseItem {
     public static boolean applyFertilizer(ItemStack stack, Level level, BlockPos pos, @Nullable Player player) {
         var state = level.getBlockState(pos);
 
-        var event = EventHooks.fireBonemealEvent(player, level, pos, state, stack);
+        var event = EventHooks.fireBonemealEvent(player, level, pos, state, BonemealSource.INTERACTION, stack);
         if (event.isCanceled()) {
             return event.isSuccessful();
         }
 
         var block = state.getBlock();
 
-        if (block instanceof BonemealableBlock growable && growable.isValidBonemealTarget(level, pos, state)) {
+        if (block instanceof BonemealableBlock growable && growable.isValidBonemealTarget(level, pos, state, BonemealSource.INTERACTION)) {
             if (!level.isClientSide()) {
                 var random = level.getRandom();
 
-                if (growable.isBonemealSuccess(level, random, pos, state) || canGrowResourceCrops(growable)) {
-                    growable.performBonemeal((ServerLevel) level, random, pos, state);
+                if (growable.isBonemealSuccess(level, random, pos, state, BonemealSource.INTERACTION) || canGrowResourceCrops(growable)) {
+                    growable.performBonemeal((ServerLevel) level, random, pos, state, BonemealSource.INTERACTION);
                 }
 
                 stack.shrink(1);

@@ -1,5 +1,6 @@
 package com.blakebr0.mysticalagriculture.tileentity;
 
+import com.blakebr0.mysticalagriculture.util.FuelHelper;
 import com.blakebr0.cucumber.energy.CEnergyStorage;
 import com.blakebr0.cucumber.inventory.CItemStacksHandler;
 import com.blakebr0.cucumber.inventory.CachedRecipe;
@@ -155,7 +156,7 @@ public class SoulExtractorTileEntity extends BaseInventoryTileEntity implements 
 
             try (var tx = Transaction.openRoot()) {
                 if (tile.fuelLeft <= 0 && !fuel.isEmpty()) {
-                    tile.fuelItemValue = fuel.toStack().getBurnTime(null, level.fuelValues());
+                    tile.fuelItemValue = FuelHelper.burnTime(level, pos, fuel.toStack());
 
                     if (tile.fuelItemValue > 0) {
                         tile.fuelLeft = tile.fuelItemValue *= FUEL_TICK_MULTIPLIER;
@@ -286,7 +287,7 @@ public class SoulExtractorTileEntity extends BaseInventoryTileEntity implements 
         if (slot == INPUT_SLOT && direction == Direction.UP)
             return RecipeIngredientCache.INSTANCE.isValidInput(stack, ModRecipeTypes.SOUL_EXTRACTION.get());
         if (slot == FUEL_SLOT && direction == Direction.NORTH)
-            return this.level != null && this.level.fuelValues().isFuel(stack);
+            return FuelHelper.isFuel(stack);
         if (slot == OUTPUT_SLOT && direction == Direction.NORTH)
             return stack.getItem() instanceof SoulJarItem;
 
@@ -300,12 +301,12 @@ public class SoulExtractorTileEntity extends BaseInventoryTileEntity implements 
     public static CItemStacksHandler createInventoryHandler(@Nullable OnContentsChangedFunction onContentsChanged, Supplier<Level> level) {
         return CItemStacksHandler.create(3, onContentsChanged, builder -> {
             builder.setCanInsert((slot, resource) -> switch (slot) {
-                case FUEL_SLOT -> level.get() != null && level.get().fuelValues().isFuel(resource.toStack());
+                case FUEL_SLOT -> FuelHelper.isFuel(resource.toStack());
                 case OUTPUT_SLOT -> resource.getItem() instanceof SoulJarItem;
                 default -> true;
             });
             builder.setCanExtract(slot -> switch (slot) {
-                case FUEL_SLOT -> level.get() == null || !level.get().fuelValues().isFuel(builder.getResource(slot).toStack());
+                case FUEL_SLOT -> !FuelHelper.isFuel(builder.getResource(slot).toStack());
                 case OUTPUT_SLOT -> {
                     var resource = builder.getResource(slot);
                     yield resource.getItem() instanceof SoulJarItem && MobSoulUtils.isJarFull(resource.toStack());

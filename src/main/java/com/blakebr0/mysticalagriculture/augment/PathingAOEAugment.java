@@ -1,5 +1,7 @@
 package com.blakebr0.mysticalagriculture.augment;
 
+import com.blakebr0.mysticalagriculture.util.BlockTransformHelper;
+import net.minecraft.world.item.component.BlockTransformers;
 import com.blakebr0.cucumber.helper.ColorHelper;
 import com.blakebr0.mysticalagriculture.api.tinkering.AOEAugment;
 import com.blakebr0.mysticalagriculture.api.tinkering.AugmentType;
@@ -11,7 +13,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.neoforged.neoforge.common.ItemAbilities;
 
 import java.util.EnumSet;
 
@@ -33,7 +34,7 @@ public class PathingAOEAugment extends AOEAugment {
         var playedSound = false;
 
         if (path(context, pos)) {
-            level.playSound(player, pos, SoundEvents.SHOVEL_FLATTEN, SoundSource.BLOCKS, 1.0F, 1.0F);
+            level.playSound(player, pos, SoundEvents.SHOVEL_FLATTEN.value(), SoundSource.BLOCKS, 1.0F, 1.0F);
 
             playedSound = true;
 
@@ -48,7 +49,7 @@ public class PathingAOEAugment extends AOEAugment {
                 var aoePos = positions.next();
 
                 if (path(context, aoePos) && !playedSound) {
-                    level.playSound(player, pos, SoundEvents.HOE_TILL, SoundSource.BLOCKS, 1.0F, 1.0F);
+                    level.playSound(player, pos, SoundEvents.HOE_TILL.value(), SoundSource.BLOCKS, 1.0F, 1.0F);
 
                     playedSound = true;
                 }
@@ -63,7 +64,7 @@ public class PathingAOEAugment extends AOEAugment {
         var direction = context.getClickedFace();
 
         if (direction != Direction.DOWN && level.isEmptyBlock(pos.above())) {
-            var modifiedState = level.getBlockState(pos).getToolModifiedState(context, ItemAbilities.SHOVEL_FLATTEN, false);
+            var modifiedState = BlockTransformHelper.transformedState(level, pos, direction, BlockTransformers.SHOVEL);
             if (modifiedState != null) {
                 if (!level.isClientSide()) {
                     var stack = context.getItemInHand();
